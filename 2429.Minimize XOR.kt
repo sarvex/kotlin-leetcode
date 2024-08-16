@@ -1,19 +1,25 @@
-class Solution {
-    public int minimizeXor(int num1, int num2) {
-        int cnt = Integer.bitCount(num2);
-        int x = 0;
-        for (int i = 30; i >= 0 && cnt > 0; --i) {
-            if ((num1 >> i & 1) == 1) {
-                x |= 1 << i;
-                --cnt;
-            }
+internal class Solution {
+  fun minimizeXor(num1: Int, num2: Int): Int {
+    var cnt = Integer.bitCount(num2)
+    var x = 0
+    run {
+      var i = 30
+      while (i >= 0 && cnt > 0) {
+        if ((num1 shr i and 1) == 1) {
+          x = x or (1 shl i)
+          --cnt
         }
-        for (int i = 0; cnt > 0; ++i) {
-            if ((num1 >> i & 1) == 0) {
-                x |= 1 << i;
-                --cnt;
-            }
-        }
-        return x;
+        --i
+      }
     }
+    var i = 0
+    while (cnt > 0) {
+      if ((num1 shr i and 1) == 0) {
+        x = x or (1 shl i)
+        --cnt
+      }
+      ++i
+    }
+    return x
+  }
 }

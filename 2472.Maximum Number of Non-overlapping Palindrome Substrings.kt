@@ -1,42 +1,44 @@
-class Solution {
-    private boolean[][] dp;
-    private int[] f;
-    private String s;
-    private int n;
-    private int k;
+import java.util.*
 
-    public int maxPalindromes(String s, int k) {
-        n = s.length();
-        f = new int[n];
-        this.s = s;
-        this.k = k;
-        dp = new boolean[n][n];
-        for (int i = 0; i < n; ++i) {
-            Arrays.fill(dp[i], true);
-            f[i] = -1;
-        }
-        for (int i = n - 1; i >= 0; --i) {
-            for (int j = i + 1; j < n; ++j) {
-                dp[i][j] = s.charAt(i) == s.charAt(j) && dp[i + 1][j - 1];
-            }
-        }
-        return dfs(0);
-    }
+internal class Solution {
+  private var dp: Array<BooleanArray>
+  private var f: IntArray
+  private var s: String? = null
+  private var n = 0
+  private var k = 0
 
-    private int dfs(int i) {
-        if (i >= n) {
-            return 0;
-        }
-        if (f[i] != -1) {
-            return f[i];
-        }
-        int ans = dfs(i + 1);
-        for (int j = i + k - 1; j < n; ++j) {
-            if (dp[i][j]) {
-                ans = Math.max(ans, 1 + dfs(j + 1));
-            }
-        }
-        f[i] = ans;
-        return ans;
+  fun maxPalindromes(s: String, k: Int): Int {
+    n = s.length
+    f = IntArray(n)
+    this.s = s
+    this.k = k
+    dp = Array(n) { BooleanArray(n) }
+    for (i in 0 until n) {
+      Arrays.fill(dp[i], true)
+      f[i] = -1
     }
+    for (i in n - 1 downTo 0) {
+      for (j in i + 1 until n) {
+        dp[i][j] = s[i] == s[j] && dp[i + 1][j - 1]
+      }
+    }
+    return dfs(0)
+  }
+
+  private fun dfs(i: Int): Int {
+    if (i >= n) {
+      return 0
+    }
+    if (f[i] != -1) {
+      return f[i]
+    }
+    var ans = dfs(i + 1)
+    for (j in i + k - 1 until n) {
+      if (dp[i][j]) {
+        ans = max(ans, 1 + dfs(j + 1))
+      }
+    }
+    f[i] = ans
+    return ans
+  }
 }

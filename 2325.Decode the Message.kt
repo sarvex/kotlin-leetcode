@@ -1,17 +1,22 @@
-class Solution {
-    public String decodeMessage(String key, String message) {
-        char[] d = new char[128];
-        d[' '] = ' ';
-        for (int i = 0, j = 0; i < key.length(); ++i) {
-            char c = key.charAt(i);
-            if (d[c] == 0) {
-                d[c] = (char) ('a' + j++);
-            }
+internal class Solution {
+  fun decodeMessage(key: String, message: String): String {
+    val d = CharArray(128)
+    d.get(' ') = ' '
+    run {
+      var i = 0
+      var j = 0
+      while (i < key.length) {
+        val c = key[i]
+        if (d[c.code].code == 0) {
+          d[c.code] = ('a'.code + j++).toChar()
         }
-        char[] ans = message.toCharArray();
-        for (int i = 0; i < ans.length; ++i) {
-            ans[i] = d[ans[i]];
-        }
-        return String.valueOf(ans);
+        ++i
+      }
     }
+    val ans: CharArray = message.toCharArray()
+    for (i in ans.indices) {
+      ans[i] = d[ans[i].code]
+    }
+    return String(ans)
+  }
 }

@@ -1,15 +1,15 @@
-class Solution {
-    public boolean areNumbersAscending(String s) {
-        int pre = 0;
-        for (var t : s.split(" ")) {
-            if (t.charAt(0) <= '9') {
-                int cur = Integer.parseInt(t);
-                if (pre >= cur) {
-                    return false;
-                }
-                pre = cur;
-            }
+internal class Solution {
+  fun areNumbersAscending(s: String): Boolean {
+    var pre = 0
+    for (t in s.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()) {
+      if (t[0] <= '9') {
+        val cur: Int = t.toInt()
+        if (pre >= cur) {
+          return false
         }
-        return true;
+        pre = cur
+      }
     }
+    return true
+  }
 }

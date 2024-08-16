@@ -1,23 +1,27 @@
-class Solution {
-    private final int mod = 1337;
+internal class Solution {
+  private val mod = 1337
 
-    public int superPow(int a, int[] b) {
-        long ans = 1;
-        for (int i = b.length - 1; i >= 0; --i) {
-            ans = ans * qpow(a, b[i]) % mod;
-            a = qpow(a, 10);
-        }
-        return (int) ans;
+  fun superPow(a: Int, b: IntArray): Int {
+    var a = a
+    var ans: Long = 1
+    for (i in b.indices.reversed()) {
+      ans = ans * qpow(a.toLong(), b[i]) % mod
+      a = qpow(a.toLong(), 10).toInt()
     }
+    return ans.toInt()
+  }
 
-    private long qpow(long a, int n) {
-        long ans = 1;
-        for (; n > 0; n >>= 1) {
-            if ((n & 1) == 1) {
-                ans = ans * a % mod;
-            }
-            a = a * a % mod;
-        }
-        return ans;
+  private fun qpow(a: Long, n: Int): Long {
+    var a = a
+    var n = n
+    var ans: Long = 1
+    while (n > 0) {
+      if ((n and 1) == 1) {
+        ans = ans * a % mod
+      }
+      a = a * a % mod
+      n = n shr 1
     }
+    return ans
+  }
 }

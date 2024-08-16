@@ -1,13 +1,15 @@
-class Solution {
-    public int minAddToMakeValid(String s) {
-        Deque<Character> stk = new ArrayDeque<>();
-        for (char c : s.toCharArray()) {
-            if (c == ')' && !stk.isEmpty() && stk.peek() == '(') {
-                stk.pop();
-            } else {
-                stk.push(c);
-            }
-        }
-        return stk.size();
+import java.util.*
+
+internal class Solution {
+  fun minAddToMakeValid(s: String): Int {
+    val stk: Deque<Char> = ArrayDeque()
+    for (c in s.toCharArray()) {
+      if (c == ')' && !stk.isEmpty() && stk.peek() === '(') {
+        stk.pop()
+      } else {
+        stk.push(c)
+      }
     }
+    return stk.size()
+  }
 }

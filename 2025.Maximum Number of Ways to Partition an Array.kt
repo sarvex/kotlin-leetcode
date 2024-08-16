@@ -1,28 +1,28 @@
-class Solution {
-    public int waysToPartition(int[] nums, int k) {
-        int n = nums.length;
-        int[] s = new int[n];
-        s[0] = nums[0];
-        Map<Integer, Integer> right = new HashMap<>();
-        for (int i = 0; i < n - 1; ++i) {
-            right.merge(s[i], 1, Integer::sum);
-            s[i + 1] = s[i] + nums[i + 1];
-        }
-        int ans = 0;
-        if (s[n - 1] % 2 == 0) {
-            ans = right.getOrDefault(s[n - 1] / 2, 0);
-        }
-        Map<Integer, Integer> left = new HashMap<>();
-        for (int i = 0; i < n; ++i) {
-            int d = k - nums[i];
-            if ((s[n - 1] + d) % 2 == 0) {
-                int t = left.getOrDefault((s[n - 1] + d) / 2, 0)
-                    + right.getOrDefault((s[n - 1] - d) / 2, 0);
-                ans = Math.max(ans, t);
-            }
-            left.merge(s[i], 1, Integer::sum);
-            right.merge(s[i], -1, Integer::sum);
-        }
-        return ans;
+internal class Solution {
+  fun waysToPartition(nums: IntArray, k: Int): Int {
+    val n = nums.size
+    val s = IntArray(n)
+    s[0] = nums[0]
+    val right: Map<Int, Int> = HashMap()
+    for (i in 0 until n - 1) {
+      right.merge(s[i], 1) { a: Int, b: Int -> Integer.sum(a, b) }
+      s[i + 1] = s[i] + nums[i + 1]
     }
+    var ans = 0
+    if (s[n - 1] % 2 == 0) {
+      ans = right.getOrDefault(s[n - 1] / 2, 0)
+    }
+    val left: Map<Int, Int> = HashMap()
+    for (i in 0 until n) {
+      val d = k - nums[i]
+      if ((s[n - 1] + d) % 2 == 0) {
+        val t = (left.getOrDefault((s[n - 1] + d) / 2, 0)
+            + right.getOrDefault((s[n - 1] - d) / 2, 0))
+        ans = max(ans, t)
+      }
+      left.merge(s[i], 1) { a: Int, b: Int -> Integer.sum(a, b) }
+      right.merge(s[i], -1) { a: Int, b: Int -> Integer.sum(a, b) }
+    }
+    return ans
+  }
 }

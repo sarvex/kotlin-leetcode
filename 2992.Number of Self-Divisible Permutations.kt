@@ -1,27 +1,27 @@
-class Solution {
-    private int n;
-    private Integer[] f;
+internal class Solution {
+  private var n = 0
+  private var f: Array<Int>
 
-    public int selfDivisiblePermutationCount(int n) {
-        this.n = n;
-        f = new Integer[1 << (n + 1)];
-        return dfs(0);
-    }
+  fun selfDivisiblePermutationCount(n: Int): Int {
+    this.n = n
+    f = arrayOfNulls(1 shl (n + 1))
+    return dfs(0)
+  }
 
-    private int dfs(int mask) {
-        if (f[mask] != null) {
-            return f[mask];
-        }
-        int i = Integer.bitCount(mask) + 1;
-        if (i > n) {
-            return 1;
-        }
-        f[mask] = 0;
-        for (int j = 1; j <= n; ++j) {
-            if ((mask >> j & 1) == 0 && (i % j == 0 || j % i == 0)) {
-                f[mask] += dfs(mask | 1 << j);
-            }
-        }
-        return f[mask];
+  private fun dfs(mask: Int): Int {
+    if (f[mask] != null) {
+      return f[mask]
     }
+    val i = Integer.bitCount(mask) + 1
+    if (i > n) {
+      return 1
+    }
+    f[mask] = 0
+    for (j in 1..n) {
+      if ((mask shr j and 1) == 0 && (i % j == 0 || j % i == 0)) {
+        f[mask] += dfs(mask or (1 shl j))
+      }
+    }
+    return f[mask]
+  }
 }

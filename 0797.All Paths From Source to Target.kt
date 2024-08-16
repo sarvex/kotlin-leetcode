@@ -1,22 +1,22 @@
-class Solution {
-    public List<List<Integer>> allPathsSourceTarget(int[][] graph) {
-        int n = graph.length;
-        Queue<List<Integer>> queue = new ArrayDeque<>();
-        queue.offer(Arrays.asList(0));
-        List<List<Integer>> ans = new ArrayList<>();
-        while (!queue.isEmpty()) {
-            List<Integer> path = queue.poll();
-            int u = path.get(path.size() - 1);
-            if (u == n - 1) {
-                ans.add(path);
-                continue;
-            }
-            for (int v : graph[u]) {
-                List<Integer> next = new ArrayList<>(path);
-                next.add(v);
-                queue.offer(next);
-            }
-        }
-        return ans;
+internal class Solution {
+  fun allPathsSourceTarget(graph: Array<IntArray>): List<List<Int>> {
+    val n = graph.size
+    val queue: Queue<List<Int>> = ArrayDeque()
+    queue.offer(Arrays.asList(0))
+    val ans: List<List<Int>> = ArrayList()
+    while (!queue.isEmpty()) {
+      val path: List<Int> = queue.poll()
+      val u = path[path.size() - 1]
+      if (u == n - 1) {
+        ans.add(path)
+        continue
+      }
+      for (v in graph[u]) {
+        val next: List<Int> = ArrayList(path)
+        next.add(v)
+        queue.offer(next)
+      }
     }
+    return ans
+  }
 }

@@ -1,19 +1,19 @@
-class Solution {
-    public long countInterestingSubarrays(List<Integer> nums, int modulo, int k) {
-        int n = nums.size();
-        int[] arr = new int[n];
-        for (int i = 0; i < n; ++i) {
-            arr[i] = nums.get(i) % modulo == k ? 1 : 0;
-        }
-        Map<Integer, Integer> cnt = new HashMap<>();
-        cnt.put(0, 1);
-        long ans = 0;
-        int s = 0;
-        for (int x : arr) {
-            s += x;
-            ans += cnt.getOrDefault((s - k + modulo) % modulo, 0);
-            cnt.merge(s % modulo, 1, Integer::sum);
-        }
-        return ans;
+internal class Solution {
+  fun countInterestingSubarrays(nums: List<Int>, modulo: Int, k: Int): Long {
+    val n: Int = nums.size()
+    val arr = IntArray(n)
+    for (i in 0 until n) {
+      arr[i] = if (nums[i] % modulo === k) 1 else 0
     }
+    val cnt: Map<Int, Int> = HashMap()
+    cnt.put(0, 1)
+    var ans: Long = 0
+    var s = 0
+    for (x in arr) {
+      s += x
+      ans += cnt.getOrDefault((s - k + modulo) % modulo, 0)
+      cnt.merge(s % modulo, 1) { a: Int, b: Int -> Integer.sum(a, b) }
+    }
+    return ans
+  }
 }

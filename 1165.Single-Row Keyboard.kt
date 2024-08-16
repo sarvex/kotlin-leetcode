@@ -1,15 +1,16 @@
-class Solution {
-    public int calculateTime(String keyboard, String word) {
-        int[] pos = new int[26];
-        for (int i = 0; i < 26; ++i) {
-            pos[keyboard.charAt(i) - 'a'] = i;
-        }
-        int ans = 0, i = 0;
-        for (int k = 0; k < word.length(); ++k) {
-            int j = pos[word.charAt(k) - 'a'];
-            ans += Math.abs(i - j);
-            i = j;
-        }
-        return ans;
+internal class Solution {
+  fun calculateTime(keyboard: String, word: String): Int {
+    val pos = IntArray(26)
+    for (i in 0..25) {
+      pos[keyboard[i].code - 'a'.code] = i
     }
+    var ans = 0
+    var i = 0
+    for (k in 0 until word.length) {
+      val j = pos[word[k].code - 'a'.code]
+      ans += abs(i - j)
+      i = j
+    }
+    return ans
+  }
 }

@@ -1,23 +1,23 @@
-class Solution {
-    public int countTriplets(int[] nums) {
-        int mx = 0;
-        for (int x : nums) {
-            mx = Math.max(mx, x);
-        }
-        int[] cnt = new int[mx + 1];
-        for (int x : nums) {
-            for (int y : nums) {
-                cnt[x & y]++;
-            }
-        }
-        int ans = 0;
-        for (int xy = 0; xy <= mx; ++xy) {
-            for (int z : nums) {
-                if ((xy & z) == 0) {
-                    ans += cnt[xy];
-                }
-            }
-        }
-        return ans;
+internal class Solution {
+  fun countTriplets(nums: IntArray): Int {
+    var mx = 0
+    for (x in nums) {
+      mx = max(mx, x)
     }
+    val cnt = IntArray(mx + 1)
+    for (x in nums) {
+      for (y in nums) {
+        cnt[x and y]++
+      }
+    }
+    var ans = 0
+    for (xy in 0..mx) {
+      for (z in nums) {
+        if ((xy and z) == 0) {
+          ans += cnt[xy]
+        }
+      }
+    }
+    return ans
+  }
 }

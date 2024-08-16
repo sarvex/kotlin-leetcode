@@ -1,14 +1,14 @@
-class Solution {
-    public int singleNumber(int[] nums) {
-        int ans = 0;
-        for (int i = 0; i < 32; i++) {
-            int cnt = 0;
-            for (int num : nums) {
-                cnt += num >> i & 1;
-            }
-            cnt %= 3;
-            ans |= cnt << i;
-        }
-        return ans;
+internal class Solution {
+  fun singleNumber(nums: IntArray): Int {
+    var ans = 0
+    for (i in 0..31) {
+      var cnt = 0
+      for (num in nums) {
+        cnt += num shr i and 1
+      }
+      cnt %= 3
+      ans = ans or (cnt shl i)
     }
+    return ans
+  }
 }

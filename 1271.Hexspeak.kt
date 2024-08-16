@@ -1,14 +1,19 @@
-class Solution {
-    private static final Set<Character> S = Set.of('A', 'B', 'C', 'D', 'E', 'F', 'I', 'O');
+import java.util.*
 
-    public String toHexspeak(String num) {
-        String t
-            = Long.toHexString(Long.valueOf(num)).toUpperCase().replace("0", "O").replace("1", "I");
-        for (char c : t.toCharArray()) {
-            if (!S.contains(c)) {
-                return "ERROR";
-            }
-        }
-        return t;
+internal class Solution {
+  fun toHexspeak(num: String): String {
+    val t
+        : String =
+      java.lang.Long.toHexString(num.toLong()).uppercase(Locale.getDefault()).replace("0", "O").replace("1", "I")
+    for (c in t.toCharArray()) {
+      if (!Solution.Companion.S.contains(c)) {
+        return "ERROR"
+      }
     }
+    return t
+  }
+
+  companion object {
+    private val S: Set<Char> = Set.of('A', 'B', 'C', 'D', 'E', 'F', 'I', 'O')
+  }
 }

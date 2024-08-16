@@ -1,20 +1,20 @@
-class Solution {
-    public int numberOfSpecialChars(String word) {
-        int[] first = new int['z' + 1];
-        int[] last = new int['z' + 1];
-        for (int i = 1; i <= word.length(); ++i) {
-            int j = word.charAt(i - 1);
-            if (first[j] == 0) {
-                first[j] = i;
-            }
-            last[j] = i;
-        }
-        int ans = 0;
-        for (int i = 0; i < 26; ++i) {
-            if (last['a' + i] > 0 && first['A' + i] > 0 && last['a' + i] < first['A' + i]) {
-                ++ans;
-            }
-        }
-        return ans;
+internal class Solution {
+  fun numberOfSpecialChars(word: String): Int {
+    val first = IntArray('z'.code + 1)
+    val last = IntArray('z'.code + 1)
+    for (i in 1..word.length) {
+      val j: Int = word[i - 1].code
+      if (first[j] == 0) {
+        first[j] = i
+      }
+      last[j] = i
     }
+    var ans = 0
+    for (i in 0..25) {
+      if (last['a'.code + i] > 0 && first['A'.code + i] > 0 && last['a'.code + i] < first['A'.code + i]) {
+        ++ans
+      }
+    }
+    return ans
+  }
 }

@@ -1,16 +1,16 @@
-class Solution {
-    public int[] maxSubsequence(int[] nums, int k) {
-        int n = nums.length;
-        Integer[] idx = new Integer[n];
-        for (int i = 0; i < n; ++i) {
-            idx[i] = i;
-        }
-        Arrays.sort(idx, (i, j) -> nums[i] - nums[j]);
-        Arrays.sort(idx, n - k, n);
-        int[] ans = new int[k];
-        for (int i = n - k; i < n; ++i) {
-            ans[i - (n - k)] = nums[idx[i]];
-        }
-        return ans;
+internal class Solution {
+  fun maxSubsequence(nums: IntArray, k: Int): IntArray {
+    val n = nums.size
+    val idx: Array<Int> = arrayOfNulls(n)
+    for (i in 0 until n) {
+      idx[i] = i
     }
+    Arrays.sort(idx) { i, j -> nums[i] - nums[j] }
+    Arrays.sort(idx, n - k, n)
+    val ans = IntArray(k)
+    for (i in n - k until n) {
+      ans[i - (n - k)] = nums[idx[i]]
+    }
+    return ans
+  }
 }

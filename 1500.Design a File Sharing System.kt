@@ -1,54 +1,50 @@
-class FileSharing {
-    private int chunks;
-    private int cur;
-    private TreeSet<Integer> reused;
-    private TreeMap<Integer, Set<Integer>> userChunks;
+internal class FileSharing(private val chunks: Int) {
+  private var cur = 0
+  private val reused: TreeSet<Int>
+  private val userChunks: TreeMap<Int, Set<Int>>
 
-    public FileSharing(int m) {
-        cur = 0;
-        chunks = m;
-        reused = new TreeSet<>();
-        userChunks = new TreeMap<>();
-    }
+  init {
+    reused = TreeSet()
+    userChunks = TreeMap()
+  }
 
-    public int join(List<Integer> ownedChunks) {
-        int userID;
-        if (reused.isEmpty()) {
-            ++cur;
-            userID = cur;
-        } else {
-            userID = reused.pollFirst();
-        }
-        userChunks.put(userID, new HashSet<>(ownedChunks));
-        return userID;
+  fun join(ownedChunks: List<Int?>?): Int {
+    val userID: Int
+    if (reused.isEmpty()) {
+      ++cur
+      userID = cur
+    } else {
+      userID = reused.pollFirst()
     }
+    userChunks.put(userID, HashSet(ownedChunks))
+    return userID
+  }
 
-    public void leave(int userID) {
-        reused.add(userID);
-        userChunks.remove(userID);
-    }
+  fun leave(userID: Int) {
+    reused.add(userID)
+    userChunks.remove(userID)
+  }
 
-    public List<Integer> request(int userID, int chunkID) {
-        if (chunkID < 1 || chunkID > chunks) {
-            return Collections.emptyList();
-        }
-        List<Integer> res = new ArrayList<>();
-        for (Map.Entry<Integer, Set<Integer>> entry : userChunks.entrySet()) {
-            if (entry.getValue().contains(chunkID)) {
-                res.add(entry.getKey());
-            }
-        }
-        if (!res.isEmpty()) {
-            userChunks.computeIfAbsent(userID, k -> new HashSet<>()).add(chunkID);
-        }
-        return res;
+  fun request(userID: Int, chunkID: Int): List<Int> {
+    if (chunkID < 1 || chunkID > chunks) {
+      return Collections.emptyList()
     }
+    val res: List<Int> = ArrayList()
+    for (entry in userChunks.entrySet()) {
+      if (entry.getValue().contains(chunkID)) {
+        res.add(entry.getKey())
+      }
+    }
+    if (!res.isEmpty()) {
+      userChunks.computeIfAbsent(userID) { k -> HashSet() }.add(chunkID)
+    }
+    return res
+  }
 }
-
 /**
  * Your FileSharing object will be instantiated and called as such:
  * FileSharing obj = new FileSharing(m);
  * int param_1 = obj.join(ownedChunks);
  * obj.leave(userID);
  * List<Integer> param_3 = obj.request(userID,chunkID);
- */
+</Integer> */

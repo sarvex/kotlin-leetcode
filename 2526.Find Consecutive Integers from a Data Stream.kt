@@ -1,19 +1,11 @@
-class DataStream {
-    private int cnt;
-    private int val;
-    private int k;
+internal class DataStream(private val `val`: Int, private val k: Int) {
+  private var cnt = 0
 
-    public DataStream(int value, int k) {
-        val = value;
-        this.k = k;
-    }
-
-    public boolean consec(int num) {
-        cnt = num == val ? cnt + 1 : 0;
-        return cnt >= k;
-    }
+  fun consec(num: Int): Boolean {
+    cnt = if (num == `val`) cnt + 1 else 0
+    return cnt >= k
+  }
 }
-
 /**
  * Your DataStream object will be instantiated and called as such:
  * DataStream obj = new DataStream(value, k);

@@ -1,17 +1,17 @@
-class Solution {
-    public List<List<Integer>> minimumAbsDifference(int[] arr) {
-        Arrays.sort(arr);
-        int n = arr.length;
-        int mi = 1 << 30;
-        for (int i = 0; i < n - 1; ++i) {
-            mi = Math.min(mi, arr[i + 1] - arr[i]);
-        }
-        List<List<Integer>> ans = new ArrayList<>();
-        for (int i = 0; i < n - 1; ++i) {
-            if (arr[i + 1] - arr[i] == mi) {
-                ans.add(List.of(arr[i], arr[i + 1]));
-            }
-        }
-        return ans;
+internal class Solution {
+  fun minimumAbsDifference(arr: IntArray): List<List<Int>> {
+    Arrays.sort(arr)
+    val n = arr.size
+    var mi = 1 shl 30
+    for (i in 0 until n - 1) {
+      mi = min(mi, arr[i + 1] - arr[i])
     }
+    val ans: List<List<Int>> = ArrayList()
+    for (i in 0 until n - 1) {
+      if (arr[i + 1] - arr[i] == mi) {
+        ans.add(List.of(arr[i], arr[i + 1]))
+      }
+    }
+    return ans
+  }
 }

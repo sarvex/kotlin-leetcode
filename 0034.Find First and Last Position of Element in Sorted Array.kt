@@ -1,20 +1,21 @@
-class Solution {
-    public int[] searchRange(int[] nums, int target) {
-        int l = search(nums, target);
-        int r = search(nums, target + 1);
-        return l == r ? new int[] {-1, -1} : new int[] {l, r - 1};
-    }
+internal class Solution {
+  fun searchRange(nums: IntArray, target: Int): IntArray {
+    val l = search(nums, target)
+    val r = search(nums, target + 1)
+    return if (l == r) intArrayOf(-1, -1) else intArrayOf(l, r - 1)
+  }
 
-    private int search(int[] nums, int x) {
-        int left = 0, right = nums.length;
-        while (left < right) {
-            int mid = (left + right) >>> 1;
-            if (nums[mid] >= x) {
-                right = mid;
-            } else {
-                left = mid + 1;
-            }
-        }
-        return left;
+  private fun search(nums: IntArray, x: Int): Int {
+    var left = 0
+    var right = nums.size
+    while (left < right) {
+      val mid = (left + right) ushr 1
+      if (nums[mid] >= x) {
+        right = mid
+      } else {
+        left = mid + 1
+      }
     }
+    return left
+  }
 }

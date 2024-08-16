@@ -1,33 +1,35 @@
-class Solution {
-    private Integer[] f;
-    private int[] s;
-    private int k;
-    private int n;
+internal class Solution {
+  private var f: Array<Int>
+  private var s: IntArray
+  private var k = 0
+  private var n = 0
 
-    public int minimumCost(String sentence, int k) {
-        this.k = k;
-        String[] words = sentence.split(" ");
-        n = words.length;
-        f = new Integer[n];
-        s = new int[n + 1];
-        for (int i = 0; i < n; ++i) {
-            s[i + 1] = s[i] + words[i].length();
-        }
-        return dfs(0);
+  fun minimumCost(sentence: String, k: Int): Int {
+    this.k = k
+    val words: Array<String> = sentence.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+    n = words.size
+    f = arrayOfNulls(n)
+    s = IntArray(n + 1)
+    for (i in 0 until n) {
+      s[i + 1] = s[i] + words[i].length
     }
+    return dfs(0)
+  }
 
-    private int dfs(int i) {
-        if (s[n] - s[i] + n - i - 1 <= k) {
-            return 0;
-        }
-        if (f[i] != null) {
-            return f[i];
-        }
-        int ans = Integer.MAX_VALUE;
-        for (int j = i + 1; j < n && s[j] - s[i] + j - i - 1 <= k; ++j) {
-            int m = s[j] - s[i] + j - i - 1;
-            ans = Math.min(ans, dfs(j) + (k - m) * (k - m));
-        }
-        return f[i] = ans;
+  private fun dfs(i: Int): Int {
+    if (s[n] - s[i] + n - i - 1 <= k) {
+      return 0
     }
+    if (f[i] != null) {
+      return f[i]
+    }
+    var ans: Int = MAX_VALUE
+    var j = i + 1
+    while (j < n && s[j] - s[i] + j - i - 1 <= k) {
+      val m = s[j] - s[i] + j - i - 1
+      ans = min(ans, dfs(j) + (k - m) * (k - m))
+      ++j
+    }
+    return ans.also { f[i] = it }
+  }
 }

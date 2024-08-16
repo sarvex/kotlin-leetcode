@@ -1,23 +1,26 @@
-class Solution {
-    public int longestAwesome(String s) {
-        int[] d = new int[1024];
-        int st = 0, ans = 1;
-        Arrays.fill(d, -1);
-        d[0] = 0;
-        for (int i = 1; i <= s.length(); ++i) {
-            int v = s.charAt(i - 1) - '0';
-            st ^= 1 << v;
-            if (d[st] >= 0) {
-                ans = Math.max(ans, i - d[st]);
-            } else {
-                d[st] = i;
-            }
-            for (v = 0; v < 10; ++v) {
-                if (d[st ^ (1 << v)] >= 0) {
-                    ans = Math.max(ans, i - d[st ^ (1 << v)]);
-                }
-            }
+internal class Solution {
+  fun longestAwesome(s: String): Int {
+    val d = IntArray(1024)
+    var st = 0
+    var ans = 1
+    Arrays.fill(d, -1)
+    d[0] = 0
+    for (i in 1..s.length) {
+      var v: Int = s[i - 1].code - '0'.code
+      st = st xor (1 shl v)
+      if (d[st] >= 0) {
+        ans = max(ans, i - d[st])
+      } else {
+        d[st] = i
+      }
+      v = 0
+      while (v < 10) {
+        if (d[st xor (1 shl v)] >= 0) {
+          ans = max(ans, i - d[st xor (1 shl v)])
         }
-        return ans;
+        ++v
+      }
     }
+    return ans
+  }
 }

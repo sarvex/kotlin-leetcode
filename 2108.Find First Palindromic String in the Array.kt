@@ -1,16 +1,20 @@
-class Solution {
-    public String firstPalindrome(String[] words) {
-        for (var w : words) {
-            boolean ok = true;
-            for (int i = 0, j = w.length() - 1; i < j && ok; ++i, --j) {
-                if (w.charAt(i) != w.charAt(j)) {
-                    ok = false;
-                }
-            }
-            if (ok) {
-                return w;
-            }
+internal class Solution {
+  fun firstPalindrome(words: Array<String>): String {
+    for (w in words) {
+      var ok = true
+      var i = 0
+      var j = w.length - 1
+      while (i < j && ok) {
+        if (w[i] != w[j]) {
+          ok = false
         }
-        return "";
+        ++i
+        --j
+      }
+      if (ok) {
+        return w
+      }
     }
+    return ""
+  }
 }

@@ -1,20 +1,21 @@
-class Solution {
-    public int[] cycleLengthQueries(int n, int[][] queries) {
-        int m = queries.length;
-        int[] ans = new int[m];
-        for (int i = 0; i < m; ++i) {
-            int a = queries[i][0], b = queries[i][1];
-            int t = 1;
-            while (a != b) {
-                if (a > b) {
-                    a >>= 1;
-                } else {
-                    b >>= 1;
-                }
-                ++t;
-            }
-            ans[i] = t;
+internal class Solution {
+  fun cycleLengthQueries(n: Int, queries: Array<IntArray>): IntArray {
+    val m = queries.size
+    val ans = IntArray(m)
+    for (i in 0 until m) {
+      var a = queries[i][0]
+      var b = queries[i][1]
+      var t = 1
+      while (a != b) {
+        if (a > b) {
+          a = a shr 1
+        } else {
+          b = b shr 1
         }
-        return ans;
+        ++t
+      }
+      ans[i] = t
     }
+    return ans
+  }
 }

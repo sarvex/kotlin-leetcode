@@ -1,20 +1,20 @@
-class Solution {
-    public long subsequenceSumOr(int[] nums) {
-        long[] cnt = new long[64];
-        long ans = 0;
-        for (int v : nums) {
-            for (int i = 0; i < 31; ++i) {
-                if (((v >> i) & 1) == 1) {
-                    ++cnt[i];
-                }
-            }
+internal class Solution {
+  fun subsequenceSumOr(nums: IntArray): Long {
+    val cnt = LongArray(64)
+    var ans: Long = 0
+    for (v in nums) {
+      for (i in 0..30) {
+        if (((v shr i) and 1) == 1) {
+          ++cnt[i]
         }
-        for (int i = 0; i < 63; ++i) {
-            if (cnt[i] > 0) {
-                ans |= 1l << i;
-            }
-            cnt[i + 1] += cnt[i] / 2;
-        }
-        return ans;
+      }
     }
+    for (i in 0..62) {
+      if (cnt[i] > 0) {
+        ans = ans or (1L shl i)
+      }
+      cnt[i + 1] += cnt[i] / 2
+    }
+    return ans
+  }
 }

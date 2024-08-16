@@ -1,15 +1,15 @@
-class Solution {
-    public int minDifference(int[] nums) {
-        int n = nums.length;
-        if (n < 5) {
-            return 0;
-        }
-        Arrays.sort(nums);
-        long ans = 1L << 60;
-        for (int l = 0; l <= 3; ++l) {
-            int r = 3 - l;
-            ans = Math.min(ans, (long) nums[n - 1 - r] - nums[l]);
-        }
-        return (int) ans;
+internal class Solution {
+  fun minDifference(nums: IntArray): Int {
+    val n = nums.size
+    if (n < 5) {
+      return 0
     }
+    Arrays.sort(nums)
+    var ans = 1L shl 60
+    for (l in 0..3) {
+      val r = 3 - l
+      ans = min(ans, nums[n - 1 - r].toLong() - nums[l])
+    }
+    return ans.toInt()
+  }
 }

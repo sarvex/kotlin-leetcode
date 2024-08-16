@@ -1,17 +1,17 @@
-class Solution {
-    public List<Integer> intersection(int[][] nums) {
-        int[] cnt = new int[1001];
-        for (var arr : nums) {
-            for (int x : arr) {
-                ++cnt[x];
-            }
-        }
-        List<Integer> ans = new ArrayList<>();
-        for (int x = 0; x < 1001; ++x) {
-            if (cnt[x] == nums.length) {
-                ans.add(x);
-            }
-        }
-        return ans;
+internal class Solution {
+  fun intersection(nums: Array<IntArray>): List<Int> {
+    val cnt = IntArray(1001)
+    for (arr in nums) {
+      for (x in arr) {
+        ++cnt[x]
+      }
     }
+    val ans: List<Int> = ArrayList()
+    for (x in 0..1000) {
+      if (cnt[x] == nums.size) {
+        ans.add(x)
+      }
+    }
+    return ans
+  }
 }

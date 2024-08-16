@@ -1,33 +1,35 @@
-class Solution {
-    private long[] h;
-    private long[] p;
+internal class Solution {
+  private var h: LongArray
+  private var p: LongArray
 
-    public int distinctEchoSubstrings(String text) {
-        int n = text.length();
-        int base = 131;
-        h = new long[n + 10];
-        p = new long[n + 10];
-        p[0] = 1;
-        for (int i = 0; i < n; ++i) {
-            int t = text.charAt(i) - 'a' + 1;
-            h[i + 1] = h[i] * base + t;
-            p[i + 1] = p[i] * base;
-        }
-        Set<Long> vis = new HashSet<>();
-        for (int i = 0; i < n - 1; ++i) {
-            for (int j = i + 1; j < n; j += 2) {
-                int k = (i + j) >> 1;
-                long a = get(i + 1, k + 1);
-                long b = get(k + 2, j + 1);
-                if (a == b) {
-                    vis.add(a);
-                }
-            }
-        }
-        return vis.size();
+  fun distinctEchoSubstrings(text: String): Int {
+    val n = text.length
+    val base = 131
+    h = LongArray(n + 10)
+    p = LongArray(n + 10)
+    p[0] = 1
+    for (i in 0 until n) {
+      val t: Int = text[i].code - 'a'.code + 1
+      h[i + 1] = h[i] * base + t
+      p[i + 1] = p[i] * base
     }
+    val vis: Set<Long> = HashSet()
+    for (i in 0 until n - 1) {
+      var j: Int = i + 1
+      while (j < n) {
+        val k: Int = (i + j) shr 1
+        val a = get(i + 1, k + 1)
+        val b = get(k + 2, j + 1)
+        if (a == b) {
+          vis.add(a)
+        }
+        j += 2
+      }
+    }
+    return vis.size()
+  }
 
-    private long get(int i, int j) {
-        return h[j] - h[i - 1] * p[j - i + 1];
-    }
+  private fun get(i: Int, j: Int): Long {
+    return h[j] - h[i - 1] * p[j - i + 1]
+  }
 }

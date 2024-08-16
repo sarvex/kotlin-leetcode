@@ -1,19 +1,24 @@
-class Solution {
-    public double largestTriangleArea(int[][] points) {
-        double ans = 0;
-        for (int[] p1 : points) {
-            int x1 = p1[0], y1 = p1[1];
-            for (int[] p2 : points) {
-                int x2 = p2[0], y2 = p2[1];
-                for (int[] p3 : points) {
-                    int x3 = p3[0], y3 = p3[1];
-                    int u1 = x2 - x1, v1 = y2 - y1;
-                    int u2 = x3 - x1, v2 = y3 - y1;
-                    double t = Math.abs(u1 * v2 - u2 * v1) / 2.0;
-                    ans = Math.max(ans, t);
-                }
-            }
+internal class Solution {
+  fun largestTriangleArea(points: Array<IntArray>): Double {
+    var ans = 0.0
+    for (p1 in points) {
+      val x1 = p1[0]
+      val y1 = p1[1]
+      for (p2 in points) {
+        val x2 = p2[0]
+        val y2 = p2[1]
+        for (p3 in points) {
+          val x3 = p3[0]
+          val y3 = p3[1]
+          val u1 = x2 - x1
+          val v1 = y2 - y1
+          val u2 = x3 - x1
+          val v2 = y3 - y1
+          val t: Double = abs(u1 * v2 - u2 * v1) / 2.0
+          ans = max(ans, t)
         }
-        return ans;
+      }
     }
+    return ans
+  }
 }

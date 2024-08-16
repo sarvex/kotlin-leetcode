@@ -1,37 +1,40 @@
-class Solution {
-    private List<Integer>[] g;
-    private int[] colors;
-    private int[] size;
-    private int ans;
+import java.util.*
 
-    public int maximumSubtreeSize(int[][] edges, int[] colors) {
-        int n = edges.length + 1;
-        g = new List[n];
-        size = new int[n];
-        this.colors = colors;
-        Arrays.fill(size, 1);
-        Arrays.setAll(g, i -> new ArrayList<>());
-        for (var e : edges) {
-            int a = e[0], b = e[1];
-            g[a].add(b);
-            g[b].add(a);
-        }
-        dfs(0, -1);
-        return ans;
-    }
+internal class Solution {
+  private var g: Array<List<Int>>
+  private var colors: IntArray
+  private var size: IntArray
+  private var ans = 0
 
-    private boolean dfs(int a, int fa) {
-        boolean ok = true;
-        for (int b : g[a]) {
-            if (b != fa) {
-                boolean t = dfs(b, a);
-                ok = ok && colors[a] == colors[b] && t;
-                size[a] += size[b];
-            }
-        }
-        if (ok) {
-            ans = Math.max(ans, size[a]);
-        }
-        return ok;
+  fun maximumSubtreeSize(edges: Array<IntArray>, colors: IntArray): Int {
+    val n = edges.size + 1
+    g = arrayOfNulls(n)
+    size = IntArray(n)
+    this.colors = colors
+    Arrays.fill(size, 1)
+    Arrays.setAll(g) { i -> ArrayList() }
+    for (e in edges) {
+      val a = e[0]
+      val b = e[1]
+      g[a].add(b)
+      g[b].add(a)
     }
+    dfs(0, -1)
+    return ans
+  }
+
+  private fun dfs(a: Int, fa: Int): Boolean {
+    var ok = true
+    for (b in g[a]) {
+      if (b != fa) {
+        val t = dfs(b, a)
+        ok = ok && colors[a] == colors[b] && t
+        size[a] += size[b]
+      }
+    }
+    if (ok) {
+      ans = max(ans, size[a])
+    }
+    return ok
+  }
 }

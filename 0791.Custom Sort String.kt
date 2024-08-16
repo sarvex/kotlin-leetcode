@@ -1,14 +1,14 @@
-class Solution {
-    public String customSortString(String order, String s) {
-        int[] d = new int[26];
-        for (int i = 0; i < order.length(); ++i) {
-            d[order.charAt(i) - 'a'] = i;
-        }
-        List<Character> cs = new ArrayList<>();
-        for (int i = 0; i < s.length(); ++i) {
-            cs.add(s.charAt(i));
-        }
-        cs.sort((a, b) -> d[a - 'a'] - d[b - 'a']);
-        return cs.stream().map(String::valueOf).collect(Collectors.joining());
+internal class Solution {
+  fun customSortString(order: String, s: String): String {
+    val d = IntArray(26)
+    for (i in 0 until order.length) {
+      d[order[i].code - 'a'.code] = i
     }
+    val cs: List<Char> = ArrayList()
+    for (i in 0 until s.length) {
+      cs.add(s[i])
+    }
+    cs.sort { a, b -> d[a - 'a'] - d[b - 'a'] }
+    return cs.stream().map(java.lang.String::valueOf).collect(Collectors.joining())
+  }
 }

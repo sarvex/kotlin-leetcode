@@ -1,116 +1,101 @@
-class LFUCache {
+internal class LFUCache(private val capacity: Int) {
+  private val map: Map<Int, Node>
+  private val freqMap: Map<Int, DoublyLinkedList>
+  private var minFreq = 0
 
-    private final Map<Integer, Node> map;
-    private final Map<Integer, DoublyLinkedList> freqMap;
-    private final int capacity;
-    private int minFreq;
+  init {
+    map = HashMap(capacity, 1)
+    freqMap = HashMap()
+  }
 
-    public LFUCache(int capacity) {
-        this.capacity = capacity;
-        map = new HashMap<>(capacity, 1);
-        freqMap = new HashMap<>();
+  fun get(key: Int): Int {
+    if (capacity == 0) {
+      return -1
+    }
+    if (!map.containsKey(key)) {
+      return -1
+    }
+    val node = map[key]!!
+    incrFreq(node)
+    return node.value
+  }
+
+  fun put(key: Int, value: Int) {
+    if (capacity == 0) {
+      return
+    }
+    if (map.containsKey(key)) {
+      val node = map[key]!!
+      node.value = value
+      incrFreq(node)
+      return
+    }
+    if (map.size() === capacity) {
+      val list = freqMap[minFreq]!!
+      map.remove(list.removeLast().key)
+    }
+    val node = Node(key, value)
+    addNode(node)
+    map.put(key, node)
+    minFreq = 1
+  }
+
+  private fun incrFreq(node: Node) {
+    val freq = node.freq
+    val list = freqMap[freq]!!
+    list.remove(node)
+    if (list.isEmpty()) {
+      freqMap.remove(freq)
+      if (freq == minFreq) {
+        minFreq++
+      }
+    }
+    node.freq++
+    addNode(node)
+  }
+
+  private fun addNode(node: Node) {
+    val freq = node.freq
+    val list = freqMap.getOrDefault(freq, DoublyLinkedList())
+    list.addFirst(node)
+    freqMap.put(freq, list)
+  }
+
+  private class Node(var key: Int, var value: Int) {
+    var freq: Int = 1
+    var prev: Node? = null
+    var next: Node? = null
+  }
+
+  private class DoublyLinkedList {
+    private val head = Node(-1, -1)
+    private val tail = Node(-1, -1)
+
+    init {
+      head.next = tail
+      tail.prev = head
     }
 
-    public int get(int key) {
-        if (capacity == 0) {
-            return -1;
-        }
-        if (!map.containsKey(key)) {
-            return -1;
-        }
-        Node node = map.get(key);
-        incrFreq(node);
-        return node.value;
+    fun addFirst(node: Node) {
+      node.prev = head
+      node.next = head.next
+      head.next!!.prev = node
+      head.next = node
     }
 
-    public void put(int key, int value) {
-        if (capacity == 0) {
-            return;
-        }
-        if (map.containsKey(key)) {
-            Node node = map.get(key);
-            node.value = value;
-            incrFreq(node);
-            return;
-        }
-        if (map.size() == capacity) {
-            DoublyLinkedList list = freqMap.get(minFreq);
-            map.remove(list.removeLast().key);
-        }
-        Node node = new Node(key, value);
-        addNode(node);
-        map.put(key, node);
-        minFreq = 1;
+    fun remove(node: Node): Node {
+      node.next!!.prev = node.prev
+      node.prev!!.next = node.next
+      node.next = null
+      node.prev = null
+      return node
     }
 
-    private void incrFreq(Node node) {
-        int freq = node.freq;
-        DoublyLinkedList list = freqMap.get(freq);
-        list.remove(node);
-        if (list.isEmpty()) {
-            freqMap.remove(freq);
-            if (freq == minFreq) {
-                minFreq++;
-            }
-        }
-        node.freq++;
-        addNode(node);
+    fun removeLast(): Node {
+      return remove(tail.prev!!)
     }
 
-    private void addNode(Node node) {
-        int freq = node.freq;
-        DoublyLinkedList list = freqMap.getOrDefault(freq, new DoublyLinkedList());
-        list.addFirst(node);
-        freqMap.put(freq, list);
-    }
-
-    private static class Node {
-        int key;
-        int value;
-        int freq;
-        Node prev;
-        Node next;
-
-        Node(int key, int value) {
-            this.key = key;
-            this.value = value;
-            this.freq = 1;
-        }
-    }
-
-    private static class DoublyLinkedList {
-
-        private final Node head;
-        private final Node tail;
-
-        public DoublyLinkedList() {
-            head = new Node(-1, -1);
-            tail = new Node(-1, -1);
-            head.next = tail;
-            tail.prev = head;
-        }
-
-        public void addFirst(Node node) {
-            node.prev = head;
-            node.next = head.next;
-            head.next.prev = node;
-            head.next = node;
-        }
-
-        public Node remove(Node node) {
-            node.next.prev = node.prev;
-            node.prev.next = node.next;
-            node.next = null;
-            node.prev = null;
-            return node;
-        }
-
-        public Node removeLast() {
-            return remove(tail.prev);
-        }
-
-        public boolean isEmpty() {
-            return head.next == tail;
-        }
-    }
+    val isEmpty: Boolean
+      get() = head.next === tail
+  }
 }

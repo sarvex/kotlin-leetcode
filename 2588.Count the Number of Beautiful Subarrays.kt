@@ -1,14 +1,14 @@
-class Solution {
-    public long beautifulSubarrays(int[] nums) {
-        Map<Integer, Integer> cnt = new HashMap<>();
-        cnt.put(0, 1);
-        long ans = 0;
-        int mask = 0;
-        for (int x : nums) {
-            mask ^= x;
-            ans += cnt.getOrDefault(mask, 0);
-            cnt.merge(mask, 1, Integer::sum);
-        }
-        return ans;
+internal class Solution {
+  fun beautifulSubarrays(nums: IntArray): Long {
+    val cnt: Map<Int, Int> = HashMap()
+    cnt.put(0, 1)
+    var ans: Long = 0
+    var mask = 0
+    for (x in nums) {
+      mask = mask xor x
+      ans += cnt.getOrDefault(mask, 0)
+      cnt.merge(mask, 1) { a: Int, b: Int -> Integer.sum(a, b) }
     }
+    return ans
+  }
 }

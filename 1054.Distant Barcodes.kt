@@ -1,23 +1,28 @@
-class Solution {
-    public int[] rearrangeBarcodes(int[] barcodes) {
-        int n = barcodes.length;
-        Integer[] t = new Integer[n];
-        int mx = 0;
-        for (int i = 0; i < n; ++i) {
-            t[i] = barcodes[i];
-            mx = Math.max(mx, barcodes[i]);
-        }
-        int[] cnt = new int[mx + 1];
-        for (int x : barcodes) {
-            ++cnt[x];
-        }
-        Arrays.sort(t, (a, b) -> cnt[a] == cnt[b] ? a - b : cnt[b] - cnt[a]);
-        int[] ans = new int[n];
-        for (int k = 0, j = 0; k < 2; ++k) {
-            for (int i = k; i < n; i += 2) {
-                ans[i] = t[j++];
-            }
-        }
-        return ans;
+internal class Solution {
+  fun rearrangeBarcodes(barcodes: IntArray): IntArray {
+    val n = barcodes.size
+    val t: Array<Int> = arrayOfNulls(n)
+    var mx = 0
+    for (i in 0 until n) {
+      t[i] = barcodes[i]
+      mx = max(mx, barcodes[i])
     }
+    val cnt = IntArray(mx + 1)
+    for (x in barcodes) {
+      ++cnt[x]
+    }
+    Arrays.sort(t) { a, b -> if (cnt[a] == cnt[b]) a - b else cnt[b] - cnt[a] }
+    val ans = IntArray(n)
+    var k = 0
+    var j = 0
+    while (k < 2) {
+      var i = k
+      while (i < n) {
+        ans[i] = t[j++]
+        i += 2
+      }
+      ++k
+    }
+    return ans
+  }
 }

@@ -1,34 +1,34 @@
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
+ * int val;
+ * TreeNode left;
+ * TreeNode right;
+ * TreeNode() {}
+ * TreeNode(int val) { this.val = val; }
+ * TreeNode(int val, TreeNode left, TreeNode right) {
+ * this.val = val;
+ * this.left = left;
+ * this.right = right;
+ * }
  * }
  */
-class Solution {
-    private int ans;
+internal class Solution {
+  private var ans = 0
 
-    public int findTilt(TreeNode root) {
-        ans = 0;
-        sum(root);
-        return ans;
-    }
+  fun findTilt(root: TreeNode?): Int {
+    ans = 0
+    sum(root)
+    return ans
+  }
 
-    private int sum(TreeNode root) {
-        if (root == null) {
-            return 0;
-        }
-        int left = sum(root.left);
-        int right = sum(root.right);
-        ans += Math.abs(left - right);
-        return root.val + left + right;
+  private fun sum(root: TreeNode?): Int {
+    if (root == null) {
+      return 0
     }
+    val left = sum(root.left)
+    val right = sum(root.right)
+    ans += abs(left - right)
+    return root.`val` + left + right
+  }
 }

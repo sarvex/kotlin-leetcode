@@ -1,11 +1,11 @@
-class Solution {
-    public int busyStudent(int[] startTime, int[] endTime, int queryTime) {
-        int ans = 0;
-        for (int i = 0; i < startTime.length; ++i) {
-            if (startTime[i] <= queryTime && queryTime <= endTime[i]) {
-                ++ans;
-            }
-        }
-        return ans;
+internal class Solution {
+  fun busyStudent(startTime: IntArray, endTime: IntArray, queryTime: Int): Int {
+    var ans = 0
+    for (i in startTime.indices) {
+      if (startTime[i] <= queryTime && queryTime <= endTime[i]) {
+        ++ans
+      }
     }
+    return ans
+  }
 }

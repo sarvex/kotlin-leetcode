@@ -1,22 +1,22 @@
-class Solution {
-    public int countTriplets(int[] arr) {
-        int n = arr.length;
-        int[] pre = new int[n + 1];
-        for (int i = 0; i < n; ++i) {
-            pre[i + 1] = pre[i] ^ arr[i];
-        }
-        int ans = 0;
-        for (int i = 0; i < n - 1; ++i) {
-            for (int j = i + 1; j < n; ++j) {
-                for (int k = j; k < n; ++k) {
-                    int a = pre[j] ^ pre[i];
-                    int b = pre[k + 1] ^ pre[j];
-                    if (a == b) {
-                        ++ans;
-                    }
-                }
-            }
-        }
-        return ans;
+internal class Solution {
+  fun countTriplets(arr: IntArray): Int {
+    val n = arr.size
+    val pre = IntArray(n + 1)
+    for (i in 0 until n) {
+      pre[i + 1] = pre[i] xor arr[i]
     }
+    var ans = 0
+    for (i in 0 until n - 1) {
+      for (j in i + 1 until n) {
+        for (k in j until n) {
+          val a = pre[j] xor pre[i]
+          val b = pre[k + 1] xor pre[j]
+          if (a == b) {
+            ++ans
+          }
+        }
+      }
+    }
+    return ans
+  }
 }

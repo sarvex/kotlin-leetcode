@@ -1,22 +1,24 @@
-class Solution {
-    public int numMatchingSubseq(String s, String[] words) {
-        Deque<String>[] d = new Deque[26];
-        Arrays.setAll(d, k -> new ArrayDeque<>());
-        for (String w : words) {
-            d[w.charAt(0) - 'a'].add(w);
-        }
-        int ans = 0;
-        for (char c : s.toCharArray()) {
-            var q = d[c - 'a'];
-            for (int k = q.size(); k > 0; --k) {
-                String t = q.pollFirst();
-                if (t.length() == 1) {
-                    ++ans;
-                } else {
-                    d[t.charAt(1) - 'a'].offer(t.substring(1));
-                }
-            }
-        }
-        return ans;
+import java.util.Deque
+
+internal class Solution {
+  fun numMatchingSubseq(s: String, words: Array<String>): Int {
+    val d: Array<Deque<String>> = arrayOfNulls(26)
+    Arrays.setAll(d) { k -> ArrayDeque() }
+    for (w in words) {
+      d[w[0].code - 'a'.code].add(w)
     }
+    var ans = 0
+    for (c in s.toCharArray()) {
+      val q = d[c.code - 'a'.code]
+      for (k in q.size() downTo 1) {
+        val t = q.pollFirst()
+        if (t.length == 1) {
+          ++ans
+        } else {
+          d[t[1].code - 'a'.code].offer(t.substring(1))
+        }
+      }
+    }
+    return ans
+  }
 }

@@ -1,18 +1,21 @@
-class Solution {
-    public int totalFruit(int[] fruits) {
-        Map<Integer, Integer> cnt = new HashMap<>();
-        int ans = 0;
-        for (int i = 0, j = 0; i < fruits.length; ++i) {
-            int x = fruits[i];
-            cnt.merge(x, 1, Integer::sum);
-            while (cnt.size() > 2) {
-                int y = fruits[j++];
-                if (cnt.merge(y, -1, Integer::sum) == 0) {
-                    cnt.remove(y);
-                }
-            }
-            ans = Math.max(ans, i - j + 1);
+internal class Solution {
+  fun totalFruit(fruits: IntArray): Int {
+    val cnt: Map<Int, Int> = HashMap()
+    var ans = 0
+    var i = 0
+    var j = 0
+    while (i < fruits.size) {
+      val x = fruits[i]
+      cnt.merge(x, 1) { a: Int, b: Int -> Integer.sum(a, b) }
+      while (cnt.size() > 2) {
+        val y = fruits[j++]
+        if (cnt.merge(y, -1) { a: Int, b: Int -> Integer.sum(a, b) } === 0) {
+          cnt.remove(y)
         }
-        return ans;
+      }
+      ans = max(ans, i - j + 1)
+      ++i
     }
+    return ans
+  }
 }

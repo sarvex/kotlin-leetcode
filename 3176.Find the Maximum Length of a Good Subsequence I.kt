@@ -1,21 +1,21 @@
-class Solution {
-    public int maximumLength(int[] nums, int k) {
-        int n = nums.length;
-        int[][] f = new int[n][k + 1];
-        int ans = 0;
-        for (int i = 0; i < n; ++i) {
-            for (int h = 0; h <= k; ++h) {
-                for (int j = 0; j < i; ++j) {
-                    if (nums[i] == nums[j]) {
-                        f[i][h] = Math.max(f[i][h], f[j][h]);
-                    } else if (h > 0) {
-                        f[i][h] = Math.max(f[i][h], f[j][h - 1]);
-                    }
-                }
-                ++f[i][h];
-            }
-            ans = Math.max(ans, f[i][k]);
+internal class Solution {
+  fun maximumLength(nums: IntArray, k: Int): Int {
+    val n = nums.size
+    val f = Array(n) { IntArray(k + 1) }
+    var ans = 0
+    for (i in 0 until n) {
+      for (h in 0..k) {
+        for (j in 0 until i) {
+          if (nums[i] == nums[j]) {
+            f[i][h] = max(f[i][h], f[j][h])
+          } else if (h > 0) {
+            f[i][h] = max(f[i][h], f[j][h - 1])
+          }
         }
-        return ans;
+        ++f[i][h]
+      }
+      ans = max(ans, f[i][k])
     }
+    return ans
+  }
 }

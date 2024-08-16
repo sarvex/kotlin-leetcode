@@ -1,23 +1,22 @@
-class MyHashMap {
-    private int[] data = new int[1000001];
+internal class MyHashMap {
+  private val data = IntArray(1000001)
 
-    public MyHashMap() {
-        Arrays.fill(data, -1);
-    }
+  init {
+    Arrays.fill(data, -1)
+  }
 
-    public void put(int key, int value) {
-        data[key] = value;
-    }
+  fun put(key: Int, value: Int) {
+    data[key] = value
+  }
 
-    public int get(int key) {
-        return data[key];
-    }
+  fun get(key: Int): Int {
+    return data[key]
+  }
 
-    public void remove(int key) {
-        data[key] = -1;
-    }
+  fun remove(key: Int) {
+    data[key] = -1
+  }
 }
-
 /**
  * Your MyHashMap object will be instantiated and called as such:
  * MyHashMap obj = new MyHashMap();

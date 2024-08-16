@@ -1,19 +1,21 @@
-class Solution {
-    public int mostFrequentEven(int[] nums) {
-        Map<Integer, Integer> cnt = new HashMap<>();
-        for (int x : nums) {
-            if (x % 2 == 0) {
-                cnt.merge(x, 1, Integer::sum);
-            }
-        }
-        int ans = -1, mx = 0;
-        for (var e : cnt.entrySet()) {
-            int x = e.getKey(), v = e.getValue();
-            if (mx < v || (mx == v && ans > x)) {
-                ans = x;
-                mx = v;
-            }
-        }
-        return ans;
+internal class Solution {
+  fun mostFrequentEven(nums: IntArray): Int {
+    val cnt: Map<Int, Int> = HashMap()
+    for (x in nums) {
+      if (x % 2 == 0) {
+        cnt.merge(x, 1) { a: Int, b: Int -> Integer.sum(a, b) }
+      }
     }
+    var ans = -1
+    var mx = 0
+    for (e in cnt.entrySet()) {
+      val x: Int = e.getKey()
+      val v: Int = e.getValue()
+      if (mx < v || (mx == v && ans > x)) {
+        ans = x
+        mx = v
+      }
+    }
+    return ans
+  }
 }

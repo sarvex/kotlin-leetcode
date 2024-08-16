@@ -1,35 +1,34 @@
 /*
 // Definition for a Node.
 class Node {
-    public int val;
-    public Node prev;
-    public Node next;
-    public Node child;
+   public int val;
+   public Node prev;
+   public Node next;
+   public Node child;
 };
 */
-
-class Solution {
-    public Node flatten(Node head) {
-        if (head == null) {
-            return null;
-        }
-        Node dummy = new Node();
-        dummy.next = head;
-        preorder(dummy, head);
-        dummy.next.prev = null;
-        return dummy.next;
+internal class Solution {
+  fun flatten(head: Node?): Node? {
+    if (head == null) {
+      return null
     }
+    val dummy = Node()
+    dummy.next = head
+    preorder(dummy, head)
+    dummy.next.prev = null
+    return dummy.next
+  }
 
-    private Node preorder(Node pre, Node cur) {
-        if (cur == null) {
-            return pre;
-        }
-        cur.prev = pre;
-        pre.next = cur;
-
-        Node t = cur.next;
-        Node tail = preorder(cur, cur.child);
-        cur.child = null;
-        return preorder(tail, t);
+  private fun preorder(pre: Node, cur: Node?): Node {
+    if (cur == null) {
+      return pre
     }
+    cur.prev = pre
+    pre.next = cur
+
+    val t: Node = cur.next
+    val tail = preorder(cur, cur.child)
+    cur.child = null
+    return preorder(tail, t)
+  }
 }

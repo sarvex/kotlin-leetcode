@@ -1,5 +1,5 @@
-class Solution {
-    public boolean canWinNim(int n) {
-        return n % 4 != 0;
-    }
+internal class Solution {
+  fun canWinNim(n: Int): Boolean {
+    return n % 4 != 0
+  }
 }

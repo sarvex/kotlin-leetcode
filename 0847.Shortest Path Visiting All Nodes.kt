@@ -1,27 +1,32 @@
-class Solution {
-    public int shortestPathLength(int[][] graph) {
-        int n = graph.length;
-        Deque<int[]> q = new ArrayDeque<>();
-        boolean[][] vis = new boolean[n][1 << n];
-        for (int i = 0; i < n; ++i) {
-            q.offer(new int[] {i, 1 << i});
-            vis[i][1 << i] = true;
-        }
-        for (int ans = 0;; ++ans) {
-            for (int k = q.size(); k > 0; --k) {
-                var p = q.poll();
-                int i = p[0], st = p[1];
-                if (st == (1 << n) - 1) {
-                    return ans;
-                }
-                for (int j : graph[i]) {
-                    int nst = st | 1 << j;
-                    if (!vis[j][nst]) {
-                        vis[j][nst] = true;
-                        q.offer(new int[] {j, nst});
-                    }
-                }
-            }
-        }
+import java.util.*
+
+internal class Solution {
+  fun shortestPathLength(graph: Array<IntArray>): Int {
+    val n = graph.size
+    val q: Deque<IntArray> = ArrayDeque()
+    val vis = Array(n) { BooleanArray(1 shl n) }
+    for (i in 0 until n) {
+      q.offer(intArrayOf(i, 1 shl i))
+      vis[i][1 shl i] = true
     }
+    var ans = 0
+    while (true) {
+      for (k in q.size() downTo 1) {
+        val p: Unit = q.poll()
+        val i: Int = p.get(0)
+        val st: Int = p.get(1)
+        if (st == (1 shl n) - 1) {
+          return ans
+        }
+        for (j in graph[i]) {
+          val nst = st or (1 shl j)
+          if (!vis[j][nst]) {
+            vis[j][nst] = true
+            q.offer(intArrayOf(j, nst))
+          }
+        }
+      }
+      ++ans
+    }
+  }
 }

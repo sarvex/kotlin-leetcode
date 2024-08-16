@@ -1,23 +1,19 @@
-class MedianFinder {
-    private PriorityQueue<Integer> minQ = new PriorityQueue<>();
-    private PriorityQueue<Integer> maxQ = new PriorityQueue<>(Collections.reverseOrder());
+internal class MedianFinder {
+  private val minQ: PriorityQueue<Int> = PriorityQueue()
+  private val maxQ: PriorityQueue<Int> = PriorityQueue(Collections.reverseOrder())
 
-    public MedianFinder() {
+  fun addNum(num: Int) {
+    maxQ.offer(num)
+    minQ.offer(maxQ.poll())
+    if (minQ.size() - maxQ.size() > 1) {
+      maxQ.offer(minQ.poll())
     }
+  }
 
-    public void addNum(int num) {
-        maxQ.offer(num);
-        minQ.offer(maxQ.poll());
-        if (minQ.size() - maxQ.size() > 1) {
-            maxQ.offer(minQ.poll());
-        }
-    }
-
-    public double findMedian() {
-        return minQ.size() == maxQ.size() ? (minQ.peek() + maxQ.peek()) / 2.0 : minQ.peek();
-    }
+  fun findMedian(): Double {
+    return if (minQ.size() === maxQ.size()) (minQ.peek() + maxQ.peek()) / 2.0 else minQ.peek()
+  }
 }
-
 /**
  * Your MedianFinder object will be instantiated and called as such:
  * MedianFinder obj = new MedianFinder();

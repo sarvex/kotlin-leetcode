@@ -1,9 +1,9 @@
-class Solution {
-    public int minimizedStringLength(String s) {
-        Set<Character> ss = new HashSet<>();
-        for (int i = 0; i < s.length(); ++i) {
-            ss.add(s.charAt(i));
-        }
-        return ss.size();
+internal class Solution {
+  fun minimizedStringLength(s: String): Int {
+    val ss: Set<Char> = HashSet()
+    for (i in 0 until s.length) {
+      ss.add(s[i])
     }
+    return ss.size()
+  }
 }

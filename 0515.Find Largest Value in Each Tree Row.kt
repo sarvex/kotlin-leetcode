@@ -1,40 +1,42 @@
+import java.util.*
+
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
+ * int val;
+ * TreeNode left;
+ * TreeNode right;
+ * TreeNode() {}
+ * TreeNode(int val) { this.val = val; }
+ * TreeNode(int val, TreeNode left, TreeNode right) {
+ * this.val = val;
+ * this.left = left;
+ * this.right = right;
+ * }
  * }
  */
-class Solution {
-    public List<Integer> largestValues(TreeNode root) {
-        List<Integer> ans = new ArrayList<>();
-        if (root == null) {
-            return ans;
-        }
-        Deque<TreeNode> q = new ArrayDeque<>();
-        q.offer(root);
-        while (!q.isEmpty()) {
-            int t = q.peek().val;
-            for (int i = q.size(); i > 0; --i) {
-                TreeNode node = q.poll();
-                t = Math.max(t, node.val);
-                if (node.left != null) {
-                    q.offer(node.left);
-                }
-                if (node.right != null) {
-                    q.offer(node.right);
-                }
-            }
-            ans.add(t);
-        }
-        return ans;
+internal class Solution {
+  fun largestValues(root: TreeNode?): List<Int> {
+    val ans: List<Int> = ArrayList()
+    if (root == null) {
+      return ans
     }
+    val q: Deque<TreeNode> = ArrayDeque()
+    q.offer(root)
+    while (!q.isEmpty()) {
+      var t: Int = q.peek().`val`
+      for (i in q.size() downTo 1) {
+        val node: TreeNode = q.poll()
+        t = Math.max(t, node.`val`)
+        if (node.left != null) {
+          q.offer(node.left)
+        }
+        if (node.right != null) {
+          q.offer(node.right)
+        }
+      }
+      ans.add(t)
+    }
+    return ans
+  }
 }

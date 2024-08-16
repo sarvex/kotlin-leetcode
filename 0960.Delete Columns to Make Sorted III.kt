@@ -1,26 +1,26 @@
-class Solution {
-    public int minDeletionSize(String[] strs) {
-        int n = strs[0].length();
-        int[] dp = new int[n];
-        Arrays.fill(dp, 1);
-        int mx = 1;
-        for (int i = 1; i < n; ++i) {
-            for (int j = 0; j < i; ++j) {
-                if (check(i, j, strs)) {
-                    dp[i] = Math.max(dp[i], dp[j] + 1);
-                }
-            }
-            mx = Math.max(mx, dp[i]);
+internal class Solution {
+  fun minDeletionSize(strs: Array<String>): Int {
+    val n = strs[0].length
+    val dp = IntArray(n)
+    Arrays.fill(dp, 1)
+    var mx = 1
+    for (i in 1 until n) {
+      for (j in 0 until i) {
+        if (check(i, j, strs)) {
+          dp[i] = max(dp[i], dp[j] + 1)
         }
-        return n - mx;
+      }
+      mx = max(mx, dp[i])
     }
+    return n - mx
+  }
 
-    private boolean check(int i, int j, String[] strs) {
-        for (String s : strs) {
-            if (s.charAt(i) < s.charAt(j)) {
-                return false;
-            }
-        }
-        return true;
+  private fun check(i: Int, j: Int, strs: Array<String>): Boolean {
+    for (s in strs) {
+      if (s[i] < s[j]) {
+        return false
+      }
     }
+    return true
+  }
 }

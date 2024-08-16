@@ -1,21 +1,21 @@
-class Solution {
-    public String shortestBeautifulSubstring(String s, int k) {
-        int n = s.length();
-        String ans = "";
-        for (int i = 0; i < n; ++i) {
-            for (int j = i + k; j <= n; ++j) {
-                String t = s.substring(i, j);
-                int cnt = 0;
-                for (char c : t.toCharArray()) {
-                    cnt += c - '0';
-                }
-                if (cnt == k
-                    && ("".equals(ans) || j - i < ans.length()
-                        || (j - i == ans.length() && t.compareTo(ans) < 0))) {
-                    ans = t;
-                }
-            }
+internal class Solution {
+  fun shortestBeautifulSubstring(s: String, k: Int): String {
+    val n = s.length
+    var ans = ""
+    for (i in 0 until n) {
+      for (j in i + k..n) {
+        val t: String = s.substring(i, j)
+        var cnt = 0
+        for (c in t.toCharArray()) {
+          cnt += c.code - '0'.code
         }
-        return ans;
+        if (cnt == k
+          && ("" == ans || j - i < ans.length || (j - i == ans.length && t.compareTo(ans) < 0))
+        ) {
+          ans = t
+        }
+      }
     }
+    return ans
+  }
 }

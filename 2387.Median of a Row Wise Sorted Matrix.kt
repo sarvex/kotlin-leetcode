@@ -1,36 +1,39 @@
-class Solution {
-    private int[][] grid;
+internal class Solution {
+  private var grid: Array<IntArray>
 
-    public int matrixMedian(int[][] grid) {
-        this.grid = grid;
-        int m = grid.length, n = grid[0].length;
-        int target = (m * n + 1) >> 1;
-        int left = 0, right = 1000010;
-        while (left < right) {
-            int mid = (left + right) >> 1;
-            if (count(mid) >= target) {
-                right = mid;
-            } else {
-                left = mid + 1;
-            }
-        }
-        return left;
+  fun matrixMedian(grid: Array<IntArray>): Int {
+    this.grid = grid
+    val m = grid.size
+    val n = grid[0].size
+    val target = (m * n + 1) shr 1
+    var left = 0
+    var right = 1000010
+    while (left < right) {
+      val mid = (left + right) shr 1
+      if (count(mid) >= target) {
+        right = mid
+      } else {
+        left = mid + 1
+      }
     }
+    return left
+  }
 
-    private int count(int x) {
-        int cnt = 0;
-        for (var row : grid) {
-            int left = 0, right = row.length;
-            while (left < right) {
-                int mid = (left + right) >> 1;
-                if (row[mid] > x) {
-                    right = mid;
-                } else {
-                    left = mid + 1;
-                }
-            }
-            cnt += left;
+  private fun count(x: Int): Int {
+    var cnt = 0
+    for (row in grid) {
+      var left = 0
+      var right = row.size
+      while (left < right) {
+        val mid = (left + right) shr 1
+        if (row[mid] > x) {
+          right = mid
+        } else {
+          left = mid + 1
         }
-        return cnt;
+      }
+      cnt += left
     }
+    return cnt
+  }
 }

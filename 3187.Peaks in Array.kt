@@ -1,63 +1,63 @@
-class BinaryIndexedTree {
-    private int n;
-    private int[] c;
+internal class BinaryIndexedTree(private val n: Int) {
+  private val c = IntArray(n + 1)
 
-    public BinaryIndexedTree(int n) {
-        this.n = n;
-        this.c = new int[n + 1];
+  fun update(x: Int, delta: Int) {
+    var x = x
+    while (x <= n) {
+      c[x] += delta
+      x += x and -x
     }
+  }
 
-    public void update(int x, int delta) {
-        for (; x <= n; x += x & -x) {
-            c[x] += delta;
-        }
+  fun query(x: Int): Int {
+    var x = x
+    var s = 0
+    while (x > 0) {
+      s += c[x]
+      x -= x and -x
     }
-
-    public int query(int x) {
-        int s = 0;
-        for (; x > 0; x -= x & -x) {
-            s += c[x];
-        }
-        return s;
-    }
+    return s
+  }
 }
 
-class Solution {
-    private BinaryIndexedTree tree;
-    private int[] nums;
+internal class Solution {
+  private var tree: BinaryIndexedTree? = null
+  private var nums: IntArray
 
-    public List<Integer> countOfPeaks(int[] nums, int[][] queries) {
-        int n = nums.length;
-        this.nums = nums;
-        tree = new BinaryIndexedTree(n - 1);
-        for (int i = 1; i < n - 1; ++i) {
-            update(i, 1);
-        }
-        List<Integer> ans = new ArrayList<>();
-        for (var q : queries) {
-            if (q[0] == 1) {
-                int l = q[1] + 1, r = q[2] - 1;
-                ans.add(l > r ? 0 : tree.query(r) - tree.query(l - 1));
-            } else {
-                int idx = q[1], val = q[2];
-                for (int i = idx - 1; i <= idx + 1; ++i) {
-                    update(i, -1);
-                }
-                nums[idx] = val;
-                for (int i = idx - 1; i <= idx + 1; ++i) {
-                    update(i, 1);
-                }
-            }
-        }
-        return ans;
+  fun countOfPeaks(nums: IntArray, queries: Array<IntArray>): List<Int> {
+    val n = nums.size
+    this.nums = nums
+    tree = BinaryIndexedTree(n - 1)
+    for (i in 1 until n - 1) {
+      update(i, 1)
     }
+    val ans: List<Int> = ArrayList()
+    for (q in queries) {
+      if (q[0] == 1) {
+        val l = q[1] + 1
+        val r = q[2] - 1
+        ans.add(if (l > r) 0 else tree!!.query(r) - tree!!.query(l - 1))
+      } else {
+        val idx = q[1]
+        val `val` = q[2]
+        for (i in idx - 1..(idx + 1)) {
+          update(i, -1)
+        }
+        nums[idx] = `val`
+        for (i in idx - 1..(idx + 1)) {
+          update(i, 1)
+        }
+      }
+    }
+    return ans
+  }
 
-    private void update(int i, int val) {
-        if (i <= 0 || i >= nums.length - 1) {
-            return;
-        }
-        if (nums[i - 1] < nums[i] && nums[i] > nums[i + 1]) {
-            tree.update(i, val);
-        }
+  private fun update(i: Int, `val`: Int) {
+    if (i <= 0 || i >= nums.size - 1) {
+      return
     }
+    if (nums[i - 1] < nums[i] && nums[i] > nums[i + 1]) {
+      tree!!.update(i, `val`)
+    }
+  }
 }

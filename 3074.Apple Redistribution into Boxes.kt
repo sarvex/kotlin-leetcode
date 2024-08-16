@@ -1,15 +1,20 @@
-class Solution {
-    public int minimumBoxes(int[] apple, int[] capacity) {
-        Arrays.sort(capacity);
-        int s = 0;
-        for (int x : apple) {
-            s += x;
-        }
-        for (int i = 1, n = capacity.length;; ++i) {
-            s -= capacity[n - i];
-            if (s <= 0) {
-                return i;
-            }
-        }
+import java.util.*
+
+internal class Solution {
+  fun minimumBoxes(apple: IntArray, capacity: IntArray): Int {
+    Arrays.sort(capacity)
+    var s = 0
+    for (x in apple) {
+      s += x
     }
+    var i = 1
+    val n = capacity.size
+    while (true) {
+      s -= capacity[n - i]
+      if (s <= 0) {
+        return i
+      }
+      ++i
+    }
+  }
 }

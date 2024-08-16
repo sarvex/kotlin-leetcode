@@ -1,11 +1,11 @@
-class Solution {
-    public int numOfStrings(String[] patterns, String word) {
-        int ans = 0;
-        for (String p : patterns) {
-            if (word.contains(p)) {
-                ++ans;
-            }
-        }
-        return ans;
+internal class Solution {
+  fun numOfStrings(patterns: Array<String>, word: String): Int {
+    var ans = 0
+    for (p in patterns) {
+      if (word.contains(p)) {
+        ++ans
+      }
     }
+    return ans
+  }
 }

@@ -1,11 +1,11 @@
-class Solution {
-    public int firstDayBeenInAllRooms(int[] nextVisit) {
-        int n = nextVisit.length;
-        long[] f = new long[n];
-        final int mod = (int) 1e9 + 7;
-        for (int i = 1; i < n; ++i) {
-            f[i] = (f[i - 1] + 1 + f[i - 1] - f[nextVisit[i - 1]] + 1 + mod) % mod;
-        }
-        return (int) f[n - 1];
+internal class Solution {
+  fun firstDayBeenInAllRooms(nextVisit: IntArray): Int {
+    val n = nextVisit.size
+    val f = LongArray(n)
+    val mod = 1e9.toInt() + 7
+    for (i in 1 until n) {
+      f[i] = (f[i - 1] + 1 + f[i - 1] - f[nextVisit[i - 1]] + 1 + mod) % mod
     }
+    return f[n - 1].toInt()
+  }
 }

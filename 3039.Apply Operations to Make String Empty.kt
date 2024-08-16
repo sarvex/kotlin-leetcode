@@ -1,21 +1,21 @@
-class Solution {
-    public String lastNonEmptyString(String s) {
-        int[] cnt = new int[26];
-        int[] last = new int[26];
-        int n = s.length();
-        int mx = 0;
-        for (int i = 0; i < n; ++i) {
-            int c = s.charAt(i) - 'a';
-            mx = Math.max(mx, ++cnt[c]);
-            last[c] = i;
-        }
-        StringBuilder ans = new StringBuilder();
-        for (int i = 0; i < n; ++i) {
-            int c = s.charAt(i) - 'a';
-            if (cnt[c] == mx && last[c] == i) {
-                ans.append(s.charAt(i));
-            }
-        }
-        return ans.toString();
+internal class Solution {
+  fun lastNonEmptyString(s: String): String {
+    val cnt = IntArray(26)
+    val last = IntArray(26)
+    val n = s.length
+    var mx = 0
+    for (i in 0 until n) {
+      val c: Int = s[i].code - 'a'.code
+      mx = max(mx, ++cnt[c])
+      last[c] = i
     }
+    val ans = StringBuilder()
+    for (i in 0 until n) {
+      val c: Int = s[i].code - 'a'.code
+      if (cnt[c] == mx && last[c] == i) {
+        ans.append(s[i])
+      }
+    }
+    return ans.toString()
+  }
 }

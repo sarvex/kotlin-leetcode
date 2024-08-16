@@ -1,17 +1,17 @@
-class Solution {
-    public String optimalDivision(int[] nums) {
-        int n = nums.length;
-        if (n == 1) {
-            return nums[0] + "";
-        }
-        if (n == 2) {
-            return nums[0] + "/" + nums[1];
-        }
-        StringBuilder ans = new StringBuilder(nums[0] + "/(");
-        for (int i = 1; i < n - 1; ++i) {
-            ans.append(nums[i] + "/");
-        }
-        ans.append(nums[n - 1] + ")");
-        return ans.toString();
+internal class Solution {
+  fun optimalDivision(nums: IntArray): String {
+    val n = nums.size
+    if (n == 1) {
+      return nums[0].toString() + ""
     }
+    if (n == 2) {
+      return nums[0].toString() + "/" + nums[1]
+    }
+    val ans = StringBuilder(nums[0].toString() + "/(")
+    for (i in 1 until n - 1) {
+      ans.append(nums[i].toString() + "/")
+    }
+    ans.append(nums[n - 1].toString() + ")")
+    return ans.toString()
+  }
 }

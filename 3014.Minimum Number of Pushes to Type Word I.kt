@@ -1,12 +1,13 @@
-class Solution {
-    public int minimumPushes(String word) {
-        int n = word.length();
-        int ans = 0, k = 1;
-        for (int i = 0; i < n / 8; ++i) {
-            ans += k * 8;
-            ++k;
-        }
-        ans += k * (n % 8);
-        return ans;
+internal class Solution {
+  fun minimumPushes(word: String): Int {
+    val n = word.length
+    var ans = 0
+    var k = 1
+    for (i in 0 until n / 8) {
+      ans += k * 8
+      ++k
     }
+    ans += k * (n % 8)
+    return ans
+  }
 }

@@ -1,20 +1,21 @@
-class Solution {
-    public int maxIncreaseKeepingSkyline(int[][] grid) {
-        int m = grid.length, n = grid[0].length;
-        int[] rowMax = new int[m];
-        int[] colMax = new int[n];
-        for (int i = 0; i < m; ++i) {
-            for (int j = 0; j < n; ++j) {
-                rowMax[i] = Math.max(rowMax[i], grid[i][j]);
-                colMax[j] = Math.max(colMax[j], grid[i][j]);
-            }
-        }
-        int ans = 0;
-        for (int i = 0; i < m; ++i) {
-            for (int j = 0; j < n; ++j) {
-                ans += Math.min(rowMax[i], colMax[j]) - grid[i][j];
-            }
-        }
-        return ans;
+internal class Solution {
+  fun maxIncreaseKeepingSkyline(grid: Array<IntArray>): Int {
+    val m = grid.size
+    val n = grid[0].size
+    val rowMax = IntArray(m)
+    val colMax = IntArray(n)
+    for (i in 0 until m) {
+      for (j in 0 until n) {
+        rowMax[i] = max(rowMax[i], grid[i][j])
+        colMax[j] = max(colMax[j], grid[i][j])
+      }
     }
+    var ans = 0
+    for (i in 0 until m) {
+      for (j in 0 until n) {
+        ans += min(rowMax[i], colMax[j]) - grid[i][j]
+      }
+    }
+    return ans
+  }
 }

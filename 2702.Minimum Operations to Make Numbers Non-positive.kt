@@ -1,34 +1,35 @@
-class Solution {
-    private int[] nums;
-    private int x;
-    private int y;
+internal class Solution {
+  private var nums: IntArray
+  private var x = 0
+  private var y = 0
 
-    public int minOperations(int[] nums, int x, int y) {
-        this.nums = nums;
-        this.x = x;
-        this.y = y;
-        int l = 0, r = 0;
-        for (int v : nums) {
-            r = Math.max(r, v);
-        }
-        while (l < r) {
-            int mid = (l + r) >>> 1;
-            if (check(mid)) {
-                r = mid;
-            } else {
-                l = mid + 1;
-            }
-        }
-        return l;
+  fun minOperations(nums: IntArray, x: Int, y: Int): Int {
+    this.nums = nums
+    this.x = x
+    this.y = y
+    var l = 0
+    var r = 0
+    for (v in nums) {
+      r = max(r, v)
     }
+    while (l < r) {
+      val mid = (l + r) ushr 1
+      if (check(mid)) {
+        r = mid
+      } else {
+        l = mid + 1
+      }
+    }
+    return l
+  }
 
-    private boolean check(int t) {
-        long cnt = 0;
-        for (int v : nums) {
-            if (v > (long) t * y) {
-                cnt += (v - (long) t * y + x - y - 1) / (x - y);
-            }
-        }
-        return cnt <= t;
+  private fun check(t: Int): Boolean {
+    var cnt: Long = 0
+    for (v in nums) {
+      if (v > t.toLong() * y) {
+        cnt += (v - t.toLong() * y + x - y - 1) / (x - y)
+      }
     }
+    return cnt <= t
+  }
 }

@@ -1,39 +1,41 @@
-class Solution {
-    private int[][] c;
-    private final int mod = (int) 1e9 + 7;
+internal class Solution {
+  private var c: Array<IntArray>
+  private val mod = 1e9.toInt() + 7
 
-    public int numOfWays(int[] nums) {
-        int n = nums.length;
-        c = new int[n][n];
-        c[0][0] = 1;
-        for (int i = 1; i < n; ++i) {
-            c[i][0] = 1;
-            for (int j = 1; j <= i; ++j) {
-                c[i][j] = (c[i - 1][j] + c[i - 1][j - 1]) % mod;
-            }
-        }
-        List<Integer> list = new ArrayList<>();
-        for (int x : nums) {
-            list.add(x);
-        }
-        return (dfs(list) - 1 + mod) % mod;
+  fun numOfWays(nums: IntArray): Int {
+    val n = nums.size
+    c = Array(n) { IntArray(n) }
+    c[0][0] = 1
+    for (i in 1 until n) {
+      c[i][0] = 1
+      for (j in 1..i) {
+        c[i][j] = (c[i - 1][j] + c[i - 1][j - 1]) % mod
+      }
     }
+    val list: List<Int> = ArrayList()
+    for (x in nums) {
+      list.add(x)
+    }
+    return (dfs(list) - 1 + mod) % mod
+  }
 
-    private int dfs(List<Integer> nums) {
-        if (nums.size() < 2) {
-            return 1;
-        }
-        List<Integer> left = new ArrayList<>();
-        List<Integer> right = new ArrayList<>();
-        for (int x : nums) {
-            if (x < nums.get(0)) {
-                left.add(x);
-            } else if (x > nums.get(0)) {
-                right.add(x);
-            }
-        }
-        int m = left.size(), n = right.size();
-        int a = dfs(left), b = dfs(right);
-        return (int) ((long) a * b % mod * c[m + n][n] % mod);
+  private fun dfs(nums: List<Int>): Int {
+    if (nums.size() < 2) {
+      return 1
     }
+    val left: List<Int> = ArrayList()
+    val right: List<Int> = ArrayList()
+    for (x in nums) {
+      if (x < nums[0]) {
+        left.add(x)
+      } else if (x > nums[0]) {
+        right.add(x)
+      }
+    }
+    val m: Int = left.size()
+    val n: Int = right.size()
+    val a = dfs(left)
+    val b = dfs(right)
+    return (a.toLong() * b % mod * c[m + n][n] % mod).toInt()
+  }
 }

@@ -1,23 +1,24 @@
-class Solution {
-    public String shortestPalindrome(String s) {
-        int base = 131;
-        int mul = 1;
-        int mod = (int) 1e9 + 7;
-        int prefix = 0, suffix = 0;
-        int idx = 0;
-        int n = s.length();
-        for (int i = 0; i < n; ++i) {
-            int t = s.charAt(i) - 'a' + 1;
-            prefix = (int) (((long) prefix * base + t) % mod);
-            suffix = (int) ((suffix + (long) t * mul) % mod);
-            mul = (int) (((long) mul * base) % mod);
-            if (prefix == suffix) {
-                idx = i + 1;
-            }
-        }
-        if (idx == n) {
-            return s;
-        }
-        return new StringBuilder(s.substring(idx)).reverse().toString() + s;
+internal class Solution {
+  fun shortestPalindrome(s: String): String {
+    val base = 131
+    var mul = 1
+    val mod = 1e9.toInt() + 7
+    var prefix = 0
+    var suffix = 0
+    var idx = 0
+    val n = s.length
+    for (i in 0 until n) {
+      val t: Int = s[i].code - 'a'.code + 1
+      prefix = ((prefix.toLong() * base + t) % mod).toInt()
+      suffix = ((suffix + t.toLong() * mul) % mod).toInt()
+      mul = ((mul.toLong() * base) % mod).toInt()
+      if (prefix == suffix) {
+        idx = i + 1
+      }
     }
+    if (idx == n) {
+      return s
+    }
+    return StringBuilder(s.substring(idx)).reverse().toString() + s
+  }
 }

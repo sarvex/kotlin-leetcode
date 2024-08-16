@@ -1,32 +1,35 @@
-class Solution {
-    public int[] fullBloomFlowers(int[][] flowers, int[] people) {
-        int n = flowers.length;
-        int[] start = new int[n];
-        int[] end = new int[n];
-        for (int i = 0; i < n; ++i) {
-            start[i] = flowers[i][0];
-            end[i] = flowers[i][1];
-        }
-        Arrays.sort(start);
-        Arrays.sort(end);
-        int m = people.length;
-        int[] ans = new int[m];
-        for (int i = 0; i < m; ++i) {
-            ans[i] = search(start, people[i] + 1) - search(end, people[i]);
-        }
-        return ans;
-    }
+import java.util.*
 
-    private int search(int[] nums, int x) {
-        int l = 0, r = nums.length;
-        while (l < r) {
-            int mid = (l + r) >> 1;
-            if (nums[mid] >= x) {
-                r = mid;
-            } else {
-                l = mid + 1;
-            }
-        }
-        return l;
+internal class Solution {
+  fun fullBloomFlowers(flowers: Array<IntArray>, people: IntArray): IntArray {
+    val n = flowers.size
+    val start = IntArray(n)
+    val end = IntArray(n)
+    for (i in 0 until n) {
+      start[i] = flowers[i][0]
+      end[i] = flowers[i][1]
     }
+    Arrays.sort(start)
+    Arrays.sort(end)
+    val m = people.size
+    val ans = IntArray(m)
+    for (i in 0 until m) {
+      ans[i] = search(start, people[i] + 1) - search(end, people[i])
+    }
+    return ans
+  }
+
+  private fun search(nums: IntArray, x: Int): Int {
+    var l = 0
+    var r = nums.size
+    while (l < r) {
+      val mid = (l + r) shr 1
+      if (nums[mid] >= x) {
+        r = mid
+      } else {
+        l = mid + 1
+      }
+    }
+    return l
+  }
 }

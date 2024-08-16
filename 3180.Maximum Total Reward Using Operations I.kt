@@ -1,25 +1,28 @@
-class Solution {
-    private int[] nums;
-    private Integer[] f;
+import java.util.*
 
-    public int maxTotalReward(int[] rewardValues) {
-        nums = rewardValues;
-        Arrays.sort(nums);
-        int n = nums.length;
-        f = new Integer[nums[n - 1] << 1];
-        return dfs(0);
-    }
+internal class Solution {
+  private var nums: IntArray
+  private var f: Array<Int>
 
-    private int dfs(int x) {
-        if (f[x] != null) {
-            return f[x];
-        }
-        int i = Arrays.binarySearch(nums, x + 1);
-        i = i < 0 ? -i - 1 : i;
-        int ans = 0;
-        for (; i < nums.length; ++i) {
-            ans = Math.max(ans, nums[i] + dfs(x + nums[i]));
-        }
-        return f[x] = ans;
+  fun maxTotalReward(rewardValues: IntArray): Int {
+    nums = rewardValues
+    Arrays.sort(nums)
+    val n = nums.size
+    f = arrayOfNulls(nums[n - 1] shl 1)
+    return dfs(0)
+  }
+
+  private fun dfs(x: Int): Int {
+    if (f[x] != null) {
+      return f[x]
     }
+    var i = Arrays.binarySearch(nums, x + 1)
+    i = if (i < 0) -i - 1 else i
+    var ans = 0
+    while (i < nums.size) {
+      ans = max(ans, nums[i] + dfs(x + nums[i]))
+      ++i
+    }
+    return ans.also { f[x] = it }
+  }
 }

@@ -1,48 +1,49 @@
-class Solution {
-    private int m;
-    private int n;
-    private int[][] grid;
+internal class Solution {
+  private var m = 0
+  private var n = 0
+  private var grid: Array<IntArray>
 
-    public int[][] rotateGrid(int[][] grid, int k) {
-        m = grid.length;
-        n = grid[0].length;
-        this.grid = grid;
-        for (int p = 0; p < Math.min(m, n) / 2; ++p) {
-            rotate(p, k);
-        }
-        return grid;
+  fun rotateGrid(grid: Array<IntArray>, k: Int): Array<IntArray> {
+    m = grid.size
+    n = grid[0].size
+    this.grid = grid
+    for (p in 0 until min(m, n) / 2) {
+      rotate(p, k)
     }
+    return grid
+  }
 
-    private void rotate(int p, int k) {
-        List<Integer> nums = new ArrayList<>();
-        for (int j = p; j < n - p - 1; ++j) {
-            nums.add(grid[p][j]);
-        }
-        for (int i = p; i < m - p - 1; ++i) {
-            nums.add(grid[i][n - p - 1]);
-        }
-        for (int j = n - p - 1; j > p; --j) {
-            nums.add(grid[m - p - 1][j]);
-        }
-        for (int i = m - p - 1; i > p; --i) {
-            nums.add(grid[i][p]);
-        }
-        int l = nums.size();
-        k %= l;
-        if (k == 0) {
-            return;
-        }
-        for (int j = p; j < n - p - 1; ++j) {
-            grid[p][j] = nums.get(k++ % l);
-        }
-        for (int i = p; i < m - p - 1; ++i) {
-            grid[i][n - p - 1] = nums.get(k++ % l);
-        }
-        for (int j = n - p - 1; j > p; --j) {
-            grid[m - p - 1][j] = nums.get(k++ % l);
-        }
-        for (int i = m - p - 1; i > p; --i) {
-            grid[i][p] = nums.get(k++ % l);
-        }
+  private fun rotate(p: Int, k: Int) {
+    var k = k
+    val nums: List<Int> = ArrayList()
+    for (j in p until n - p - 1) {
+      nums.add(grid[p][j])
     }
+    for (i in p until m - p - 1) {
+      nums.add(grid[i][n - p - 1])
+    }
+    for (j in n - p - 1 downTo p + 1) {
+      nums.add(grid[m - p - 1][j])
+    }
+    for (i in m - p - 1 downTo p + 1) {
+      nums.add(grid[i][p])
+    }
+    val l: Int = nums.size()
+    k %= l
+    if (k == 0) {
+      return
+    }
+    for (j in p until n - p - 1) {
+      grid[p][j] = nums[k++ % l]
+    }
+    for (i in p until m - p - 1) {
+      grid[i][n - p - 1] = nums[k++ % l]
+    }
+    for (j in n - p - 1 downTo p + 1) {
+      grid[m - p - 1][j] = nums[k++ % l]
+    }
+    for (i in m - p - 1 downTo p + 1) {
+      grid[i][p] = nums[k++ % l]
+    }
+  }
 }

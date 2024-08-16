@@ -1,27 +1,29 @@
-class Solution {
-    public int countDifferentSubsequenceGCDs(int[] nums) {
-        int mx = Arrays.stream(nums).max().getAsInt();
-        boolean[] vis = new boolean[mx + 1];
-        for (int x : nums) {
-            vis[x] = true;
-        }
-        int ans = 0;
-        for (int x = 1; x <= mx; ++x) {
-            int g = 0;
-            for (int y = x; y <= mx; y += x) {
-                if (vis[y]) {
-                    g = gcd(g, y);
-                    if (x == g) {
-                        ++ans;
-                        break;
-                    }
-                }
-            }
-        }
-        return ans;
+internal class Solution {
+  fun countDifferentSubsequenceGCDs(nums: IntArray): Int {
+    val mx: Int = Arrays.stream(nums).max().getAsInt()
+    val vis = BooleanArray(mx + 1)
+    for (x in nums) {
+      vis[x] = true
     }
+    var ans = 0
+    for (x in 1..mx) {
+      var g = 0
+      var y = x
+      while (y <= mx) {
+        if (vis[y]) {
+          g = gcd(g, y)
+          if (x == g) {
+            ++ans
+            break
+          }
+        }
+        y += x
+      }
+    }
+    return ans
+  }
 
-    private int gcd(int a, int b) {
-        return b == 0 ? a : gcd(b, a % b);
-    }
+  private fun gcd(a: Int, b: Int): Int {
+    return if (b == 0) a else gcd(b, a % b)
+  }
 }

@@ -1,19 +1,21 @@
-class Solution {
-    public int largestPalindrome(int n) {
-        int mx = (int) Math.pow(10, n) - 1;
-        for (int a = mx; a > mx / 10; --a) {
-            int b = a;
-            long x = a;
-            while (b != 0) {
-                x = x * 10 + b % 10;
-                b /= 10;
-            }
-            for (long t = mx; t * t >= x; --t) {
-                if (x % t == 0) {
-                    return (int) (x % 1337);
-                }
-            }
+internal class Solution {
+  fun largestPalindrome(n: Int): Int {
+    val mx = 10.pow(n) as Int - 1
+    for (a in mx downTo mx / 10 + 1) {
+      var b: Int = a
+      var x: Long = a.toLong()
+      while (b != 0) {
+        x = x * 10 + b % 10
+        b /= 10
+      }
+      var t = mx.toLong()
+      while (t * t >= x) {
+        if (x % t == 0L) {
+          return (x % 1337).toInt()
         }
-        return 9;
+        --t
+      }
     }
+    return 9
+  }
 }

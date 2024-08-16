@@ -1,26 +1,26 @@
-class Solution {
-    public boolean checkValid(int[][] matrix) {
-        int n = matrix.length;
-        for (int i = 0; i < n; ++i) {
-            boolean[] seen = new boolean[n];
-            for (int j = 0; j < n; ++j) {
-                int v = matrix[i][j] - 1;
-                if (seen[v]) {
-                    return false;
-                }
-                seen[v] = true;
-            }
+internal class Solution {
+  fun checkValid(matrix: Array<IntArray>): Boolean {
+    val n = matrix.size
+    for (i in 0 until n) {
+      val seen = BooleanArray(n)
+      for (j in 0 until n) {
+        val v = matrix[i][j] - 1
+        if (seen[v]) {
+          return false
         }
-        for (int j = 0; j < n; ++j) {
-            boolean[] seen = new boolean[n];
-            for (int i = 0; i < n; ++i) {
-                int v = matrix[i][j] - 1;
-                if (seen[v]) {
-                    return false;
-                }
-                seen[v] = true;
-            }
-        }
-        return true;
+        seen[v] = true
+      }
     }
+    for (j in 0 until n) {
+      val seen = BooleanArray(n)
+      for (i in 0 until n) {
+        val v = matrix[i][j] - 1
+        if (seen[v]) {
+          return false
+        }
+        seen[v] = true
+      }
+    }
+    return true
+  }
 }

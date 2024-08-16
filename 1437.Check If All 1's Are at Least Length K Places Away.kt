@@ -1,14 +1,14 @@
-class Solution {
-    public boolean kLengthApart(int[] nums, int k) {
-        int j = -(k + 1);
-        for (int i = 0; i < nums.length; ++i) {
-            if (nums[i] == 1) {
-                if (i - j - 1 < k) {
-                    return false;
-                }
-                j = i;
-            }
+internal class Solution {
+  fun kLengthApart(nums: IntArray, k: Int): Boolean {
+    var j = -(k + 1)
+    for (i in nums.indices) {
+      if (nums[i] == 1) {
+        if (i - j - 1 < k) {
+          return false
         }
-        return true;
+        j = i
+      }
     }
+    return true
+  }
 }

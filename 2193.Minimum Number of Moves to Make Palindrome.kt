@@ -1,27 +1,33 @@
-class Solution {
-    public int minMovesToMakePalindrome(String s) {
-        int n = s.length();
-        int ans = 0;
-        char[] cs = s.toCharArray();
-        for (int i = 0, j = n - 1; i < j; ++i) {
-            boolean even = false;
-            for (int k = j; k != i; --k) {
-                if (cs[i] == cs[k]) {
-                    even = true;
-                    for (; k < j; ++k) {
-                        char t = cs[k];
-                        cs[k] = cs[k + 1];
-                        cs[k + 1] = t;
-                        ++ans;
-                    }
-                    --j;
-                    break;
-                }
-            }
-            if (!even) {
-                ans += n / 2 - i;
-            }
+internal class Solution {
+  fun minMovesToMakePalindrome(s: String): Int {
+    val n = s.length
+    var ans = 0
+    val cs: CharArray = s.toCharArray()
+    var i = 0
+    var j = n - 1
+    while (i < j) {
+      var even = false
+      var k = j
+      while (k != i) {
+        if (cs[i] == cs[k]) {
+          even = true
+          while (k < j) {
+            val t = cs[k]
+            cs[k] = cs[k + 1]
+            cs[k + 1] = t
+            ++ans
+            ++k
+          }
+          --j
+          break
         }
-        return ans;
+        --k
+      }
+      if (!even) {
+        ans += n / 2 - i
+      }
+      ++i
     }
+    return ans
+  }
 }

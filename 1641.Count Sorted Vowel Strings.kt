@@ -1,24 +1,24 @@
-class Solution {
-    private Integer[][] f;
-    private int n;
+internal class Solution {
+  private var f: Array<Array<Int>>
+  private var n = 0
 
-    public int countVowelStrings(int n) {
-        this.n = n;
-        f = new Integer[n][5];
-        return dfs(0, 0);
-    }
+  fun countVowelStrings(n: Int): Int {
+    this.n = n
+    f = Array(n) { arrayOfNulls(5) }
+    return dfs(0, 0)
+  }
 
-    private int dfs(int i, int j) {
-        if (i >= n) {
-            return 1;
-        }
-        if (f[i][j] != null) {
-            return f[i][j];
-        }
-        int ans = 0;
-        for (int k = j; k < 5; ++k) {
-            ans += dfs(i + 1, k);
-        }
-        return f[i][j] = ans;
+  private fun dfs(i: Int, j: Int): Int {
+    if (i >= n) {
+      return 1
     }
+    if (f[i][j] != null) {
+      return f[i][j]
+    }
+    var ans = 0
+    for (k in j..4) {
+      ans += dfs(i + 1, k)
+    }
+    return ans.also { f[i][j] = it }
+  }
 }

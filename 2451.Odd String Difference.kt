@@ -1,21 +1,21 @@
-class Solution {
-    public String oddString(String[] words) {
-        var d = new HashMap<String, List<String>>();
-        for (var s : words) {
-            int m = s.length();
-            var cs = new char[m - 1];
-            for (int i = 0; i < m - 1; ++i) {
-                cs[i] = (char) (s.charAt(i + 1) - s.charAt(i));
-            }
-            var t = String.valueOf(cs);
-            d.putIfAbsent(t, new ArrayList<>());
-            d.get(t).add(s);
-        }
-        for (var ss : d.values()) {
-            if (ss.size() == 1) {
-                return ss.get(0);
-            }
-        }
-        return "";
+internal class Solution {
+  fun oddString(words: Array<String>): String {
+    val d: HashMap<String, List<String>> = HashMap<String, List<String>>()
+    for (s in words) {
+      val m = s.length
+      val cs = CharArray(m - 1)
+      for (i in 0 until m - 1) {
+        cs[i] = (s[i + 1].code - s[i].code).toChar()
+      }
+      val t = String(cs)
+      d.putIfAbsent(t, ArrayList())
+      d.get(t).add(s)
     }
+    for (ss in d.values()) {
+      if (ss.size() === 1) {
+        return ss.get(0)
+      }
+    }
+    return ""
+  }
 }

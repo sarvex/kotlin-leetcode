@@ -1,36 +1,37 @@
-class Solution {
-    public int maximumGap(int[] nums) {
-        int n = nums.length;
-        if (n < 2) {
-            return 0;
-        }
-        int inf = 0x3f3f3f3f;
-        int mi = inf, mx = -inf;
-        for (int v : nums) {
-            mi = Math.min(mi, v);
-            mx = Math.max(mx, v);
-        }
-        int bucketSize = Math.max(1, (mx - mi) / (n - 1));
-        int bucketCount = (mx - mi) / bucketSize + 1;
-        int[][] buckets = new int[bucketCount][2];
-        for (var bucket : buckets) {
-            bucket[0] = inf;
-            bucket[1] = -inf;
-        }
-        for (int v : nums) {
-            int i = (v - mi) / bucketSize;
-            buckets[i][0] = Math.min(buckets[i][0], v);
-            buckets[i][1] = Math.max(buckets[i][1], v);
-        }
-        int prev = inf;
-        int ans = 0;
-        for (var bucket : buckets) {
-            if (bucket[0] > bucket[1]) {
-                continue;
-            }
-            ans = Math.max(ans, bucket[0] - prev);
-            prev = bucket[1];
-        }
-        return ans;
+internal class Solution {
+  fun maximumGap(nums: IntArray): Int {
+    val n = nums.size
+    if (n < 2) {
+      return 0
     }
+    val inf = 0x3f3f3f3f
+    var mi = inf
+    var mx = -inf
+    for (v in nums) {
+      mi = min(mi, v)
+      mx = max(mx, v)
+    }
+    val bucketSize: Int = max(1, (mx - mi) / (n - 1))
+    val bucketCount = (mx - mi) / bucketSize + 1
+    val buckets = Array(bucketCount) { IntArray(2) }
+    for (bucket in buckets) {
+      bucket[0] = inf
+      bucket[1] = -inf
+    }
+    for (v in nums) {
+      val i = (v - mi) / bucketSize
+      buckets[i][0] = min(buckets[i][0], v)
+      buckets[i][1] = max(buckets[i][1], v)
+    }
+    var prev = inf
+    var ans = 0
+    for (bucket in buckets) {
+      if (bucket[0] > bucket[1]) {
+        continue
+      }
+      ans = max(ans, bucket[0] - prev)
+      prev = bucket[1]
+    }
+    return ans
+  }
 }

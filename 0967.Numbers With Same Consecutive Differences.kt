@@ -1,28 +1,28 @@
-class Solution {
-    private List<Integer> ans = new ArrayList<>();
-    private int boundary;
-    private int k;
+internal class Solution {
+  private val ans: List<Int> = ArrayList()
+  private var boundary = 0
+  private var k = 0
 
-    public int[] numsSameConsecDiff(int n, int k) {
-        this.k = k;
-        boundary = (int) Math.pow(10, n - 1);
-        for (int i = 1; i < 10; ++i) {
-            dfs(i);
-        }
-        return ans.stream().mapToInt(i -> i).toArray();
+  fun numsSameConsecDiff(n: Int, k: Int): IntArray {
+    this.k = k
+    boundary = 10.pow(n - 1) as Int
+    for (i in 1..9) {
+      dfs(i)
     }
+    return ans.stream().mapToInt { i -> i }.toArray()
+  }
 
-    private void dfs(int x) {
-        if (x >= boundary) {
-            ans.add(x);
-            return;
-        }
-        int last = x % 10;
-        if (last + k < 10) {
-            dfs(x * 10 + last + k);
-        }
-        if (k != 0 && last - k >= 0) {
-            dfs(x * 10 + last - k);
-        }
+  private fun dfs(x: Int) {
+    if (x >= boundary) {
+      ans.add(x)
+      return
     }
+    val last = x % 10
+    if (last + k < 10) {
+      dfs(x * 10 + last + k)
+    }
+    if (k != 0 && last - k >= 0) {
+      dfs(x * 10 + last - k)
+    }
+  }
 }

@@ -1,12 +1,13 @@
-class Solution {
-    public int maxAbsoluteSum(int[] nums) {
-        int f = 0, g = 0;
-        int ans = 0;
-        for (int x : nums) {
-            f = Math.max(f, 0) + x;
-            g = Math.min(g, 0) + x;
-            ans = Math.max(ans, Math.max(f, Math.abs(g)));
-        }
-        return ans;
+internal class Solution {
+  fun maxAbsoluteSum(nums: IntArray): Int {
+    var f = 0
+    var g = 0
+    var ans = 0
+    for (x in nums) {
+      f = max(f, 0) + x
+      g = min(g, 0) + x
+      ans = max(ans, max(f, abs(g)))
     }
+    return ans
+  }
 }

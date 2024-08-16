@@ -1,11 +1,11 @@
-class Solution {
-    public List<String> getWordsInLongestSubsequence(int n, String[] words, int[] groups) {
-        List<String> ans = new ArrayList<>();
-        for (int i = 0; i < n; ++i) {
-            if (i == 0 || groups[i] != groups[i - 1]) {
-                ans.add(words[i]);
-            }
-        }
-        return ans;
+internal class Solution {
+  fun getWordsInLongestSubsequence(n: Int, words: Array<String?>, groups: IntArray): List<String> {
+    val ans: List<String> = ArrayList()
+    for (i in 0 until n) {
+      if (i == 0 || groups[i] != groups[i - 1]) {
+        ans.add(words[i])
+      }
     }
+    return ans
+  }
 }

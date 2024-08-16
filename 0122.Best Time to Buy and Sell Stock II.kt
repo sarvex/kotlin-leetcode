@@ -1,9 +1,9 @@
-class Solution {
-    public int maxProfit(int[] prices) {
-        int ans = 0;
-        for (int i = 1; i < prices.length; ++i) {
-            ans += Math.max(0, prices[i] - prices[i - 1]);
-        }
-        return ans;
+internal class Solution {
+  fun maxProfit(prices: IntArray): Int {
+    var ans = 0
+    for (i in 1 until prices.size) {
+      ans += max(0, prices[i] - prices[i - 1])
     }
+    return ans
+  }
 }

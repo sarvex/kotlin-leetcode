@@ -1,15 +1,15 @@
-class Solution {
-    public int minimumRecolors(String blocks, int k) {
-        int cnt = 0;
-        for (int i = 0; i < k; ++i) {
-            cnt += blocks.charAt(i) == 'W' ? 1 : 0;
-        }
-        int ans = cnt;
-        for (int i = k; i < blocks.length(); ++i) {
-            cnt += blocks.charAt(i) == 'W' ? 1 : 0;
-            cnt -= blocks.charAt(i - k) == 'W' ? 1 : 0;
-            ans = Math.min(ans, cnt);
-        }
-        return ans;
+internal class Solution {
+  fun minimumRecolors(blocks: String, k: Int): Int {
+    var cnt = 0
+    for (i in 0 until k) {
+      cnt += if (blocks[i] == 'W') 1 else 0
     }
+    var ans = cnt
+    for (i in k until blocks.length) {
+      cnt += if (blocks[i] == 'W') 1 else 0
+      cnt -= if (blocks[i - k] == 'W') 1 else 0
+      ans = min(ans, cnt)
+    }
+    return ans
+  }
 }

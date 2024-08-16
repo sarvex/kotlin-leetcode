@@ -1,13 +1,13 @@
-class Solution {
-    public int largestCombination(int[] candidates) {
-        int ans = 0;
-        for (int i = 0; i < 32; ++i) {
-            int t = 0;
-            for (int x : candidates) {
-                t += (x >> i) & 1;
-            }
-            ans = Math.max(ans, t);
-        }
-        return ans;
+internal class Solution {
+  fun largestCombination(candidates: IntArray): Int {
+    var ans = 0
+    for (i in 0..31) {
+      var t = 0
+      for (x in candidates) {
+        t += (x shr i) and 1
+      }
+      ans = max(ans, t)
     }
+    return ans
+  }
 }

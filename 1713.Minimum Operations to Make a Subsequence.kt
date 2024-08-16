@@ -1,47 +1,45 @@
-class BinaryIndexedTree {
-    private int n;
-    private int[] c;
+internal class BinaryIndexedTree(private val n: Int) {
+  private val c = IntArray(n + 1)
 
-    public BinaryIndexedTree(int n) {
-        this.n = n;
-        this.c = new int[n + 1];
+  fun update(x: Int, v: Int) {
+    var x = x
+    while (x <= n) {
+      c[x] = max(c[x], v)
+      x += x and -x
     }
+  }
 
-    public void update(int x, int v) {
-        for (; x <= n; x += x & -x) {
-            c[x] = Math.max(c[x], v);
-        }
+  fun query(x: Int): Int {
+    var x = x
+    var ans = 0
+    while (x > 0) {
+      ans = max(ans, c[x])
+      x -= x and -x
     }
-
-    public int query(int x) {
-        int ans = 0;
-        for (; x > 0; x -= x & -x) {
-            ans = Math.max(ans, c[x]);
-        }
-        return ans;
-    }
+    return ans
+  }
 }
 
-class Solution {
-    public int minOperations(int[] target, int[] arr) {
-        int m = target.length;
-        Map<Integer, Integer> d = new HashMap<>(m);
-        for (int i = 0; i < m; i++) {
-            d.put(target[i], i + 1);
-        }
-        List<Integer> nums = new ArrayList<>();
-        for (int x : arr) {
-            if (d.containsKey(x)) {
-                nums.add(d.get(x));
-            }
-        }
-        BinaryIndexedTree tree = new BinaryIndexedTree(m);
-        int ans = 0;
-        for (int x : nums) {
-            int v = tree.query(x - 1) + 1;
-            ans = Math.max(ans, v);
-            tree.update(x, v);
-        }
-        return m - ans;
+internal class Solution {
+  fun minOperations(target: IntArray, arr: IntArray): Int {
+    val m = target.size
+    val d: Map<Int, Int> = HashMap(m)
+    for (i in 0 until m) {
+      d.put(target[i], i + 1)
     }
+    val nums: List<Int> = ArrayList()
+    for (x in arr) {
+      if (d.containsKey(x)) {
+        nums.add(d[x])
+      }
+    }
+    val tree = BinaryIndexedTree(m)
+    var ans = 0
+    for (x in nums) {
+      val v = tree.query(x - 1) + 1
+      ans = max(ans, v)
+      tree.update(x, v)
+    }
+    return m - ans
+  }
 }

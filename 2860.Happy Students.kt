@@ -1,13 +1,13 @@
-class Solution {
-    public int countWays(List<Integer> nums) {
-        Collections.sort(nums);
-        int n = nums.size();
-        int ans = 0;
-        for (int i = 0; i <= n; i++) {
-            if ((i == 0 || nums.get(i - 1) < i) && (i == n || nums.get(i) > i)) {
-                ans++;
-            }
-        }
-        return ans;
+internal class Solution {
+  fun countWays(nums: List<Int>): Int {
+    Collections.sort(nums)
+    val n: Int = nums.size()
+    var ans = 0
+    for (i in 0..n) {
+      if ((i == 0 || nums[i - 1] < i) && (i == n || nums[i] > i)) {
+        ans++
+      }
     }
+    return ans
+  }
 }

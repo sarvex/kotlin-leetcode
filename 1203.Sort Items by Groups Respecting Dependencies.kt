@@ -1,68 +1,68 @@
-class Solution {
-    public int[] sortItems(int n, int m, int[] group, List<List<Integer>> beforeItems) {
-        int idx = m;
-        List<Integer>[] groupItems = new List[n + m];
-        int[] itemDegree = new int[n];
-        int[] groupDegree = new int[n + m];
-        List<Integer>[] itemGraph = new List[n];
-        List<Integer>[] groupGraph = new List[n + m];
-        Arrays.setAll(groupItems, k -> new ArrayList<>());
-        Arrays.setAll(itemGraph, k -> new ArrayList<>());
-        Arrays.setAll(groupGraph, k -> new ArrayList<>());
-        for (int i = 0; i < n; ++i) {
-            if (group[i] == -1) {
-                group[i] = idx++;
-            }
-            groupItems[group[i]].add(i);
-        }
-        for (int i = 0; i < n; ++i) {
-            for (int j : beforeItems.get(i)) {
-                if (group[i] == group[j]) {
-                    ++itemDegree[i];
-                    itemGraph[j].add(i);
-                } else {
-                    ++groupDegree[group[i]];
-                    groupGraph[group[j]].add(group[i]);
-                }
-            }
-        }
-        List<Integer> items = new ArrayList<>();
-        for (int i = 0; i < n + m; ++i) {
-            items.add(i);
-        }
-        var groupOrder = topoSort(groupDegree, groupGraph, items);
-        if (groupOrder.isEmpty()) {
-            return new int[0];
-        }
-        List<Integer> ans = new ArrayList<>();
-        for (int gi : groupOrder) {
-            items = groupItems[gi];
-            var itemOrder = topoSort(itemDegree, itemGraph, items);
-            if (itemOrder.size() != items.size()) {
-                return new int[0];
-            }
-            ans.addAll(itemOrder);
-        }
-        return ans.stream().mapToInt(Integer::intValue).toArray();
+internal class Solution {
+  fun sortItems(n: Int, m: Int, group: IntArray, beforeItems: List<List<Int>>): IntArray {
+    var idx = m
+    val groupItems: Array<List<Int>> = arrayOfNulls(n + m)
+    val itemDegree = IntArray(n)
+    val groupDegree = IntArray(n + m)
+    val itemGraph: Array<List<Int>> = arrayOfNulls(n)
+    val groupGraph: Array<List<Int>> = arrayOfNulls(n + m)
+    Arrays.setAll(groupItems) { k -> ArrayList() }
+    Arrays.setAll(itemGraph) { k -> ArrayList() }
+    Arrays.setAll(groupGraph) { k -> ArrayList() }
+    for (i in 0 until n) {
+      if (group[i] == -1) {
+        group[i] = idx++
+      }
+      groupItems[group[i]].add(i)
     }
+    for (i in 0 until n) {
+      for (j in beforeItems[i]) {
+        if (group[i] == group[j]) {
+          ++itemDegree[i]
+          itemGraph[j].add(i)
+        } else {
+          ++groupDegree[group[i]]
+          groupGraph[group[j]].add(group[i])
+        }
+      }
+    }
+    var items: List<Int> = ArrayList()
+    for (i in 0 until n + m) {
+      items.add(i)
+    }
+    val groupOrder = topoSort(groupDegree, groupGraph, items)
+    if (groupOrder.isEmpty()) {
+      return IntArray(0)
+    }
+    val ans: List<Int> = ArrayList()
+    for (gi in groupOrder) {
+      items = groupItems[gi]
+      val itemOrder = topoSort(itemDegree, itemGraph, items)
+      if (itemOrder.size() !== items.size()) {
+        return IntArray(0)
+      }
+      ans.addAll(itemOrder)
+    }
+    return ans.stream().mapToInt(Integer::intValue).toArray()
+  }
 
-    private List<Integer> topoSort(int[] degree, List<Integer>[] graph, List<Integer> items) {
-        Deque<Integer> q = new ArrayDeque<>();
-        for (int i : items) {
-            if (degree[i] == 0) {
-                q.offer(i);
-            }
-        }
-        List<Integer> ans = new ArrayList<>();
-        while (!q.isEmpty()) {
-            int i = q.poll();
-            ans.add(i);
-            for (int j : graph[i]) {
-                if (--degree[j] == 0) {
-                    q.offer(j);
-                }
-            }
-        }
-        return ans.size() == items.size() ? ans : List.of();
+  private fun topoSort(degree: IntArray, graph: Array<List<Int>>, items: List<Int>): List<Int> {
+    val q: Deque<Int> = ArrayDeque()
+    for (i in items) {
+      if (degree[i] == 0) {
+        q.offer(i)
+      }
     }
+    val ans: List<Int> = ArrayList()
+    while (!q.isEmpty()) {
+      val i: Int = q.poll()
+      ans.add(i)
+      for (j in graph[i]) {
+        if (--degree[j] == 0) {
+          q.offer(j)
+        }
+      }
+    }
+    return if (ans.size() === items.size()) ans else List.of()
+  }
 }

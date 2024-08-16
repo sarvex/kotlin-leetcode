@@ -1,13 +1,14 @@
-class Solution {
-    public int numOfSubarrays(int[] arr) {
-        final int mod = (int) 1e9 + 7;
-        int[] cnt = {1, 0};
-        int ans = 0, s = 0;
-        for (int x : arr) {
-            s += x;
-            ans = (ans + cnt[s & 1 ^ 1]) % mod;
-            ++cnt[s & 1];
-        }
-        return ans;
+internal class Solution {
+  fun numOfSubarrays(arr: IntArray): Int {
+    val mod = 1e9.toInt() + 7
+    val cnt = intArrayOf(1, 0)
+    var ans = 0
+    var s = 0
+    for (x in arr) {
+      s += x
+      ans = (ans + cnt[s and 1 xor 1]) % mod
+      ++cnt[s and 1]
     }
+    return ans
+  }
 }

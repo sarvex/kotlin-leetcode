@@ -1,20 +1,23 @@
-class Solution {
-    public String removeKdigits(String num, int k) {
-        StringBuilder stk = new StringBuilder();
-        for (char c : num.toCharArray()) {
-            while (k > 0 && stk.length() > 0 && stk.charAt(stk.length() - 1) > c) {
-                stk.deleteCharAt(stk.length() - 1);
-                --k;
-            }
-            stk.append(c);
-        }
-        for (; k > 0; --k) {
-            stk.deleteCharAt(stk.length() - 1);
-        }
-        int i = 0;
-        for (; i < stk.length() && stk.charAt(i) == '0'; ++i) {
-        }
-        String ans = stk.substring(i);
-        return "".equals(ans) ? "0" : ans;
+internal class Solution {
+  fun removeKdigits(num: String, k: Int): String {
+    var k = k
+    val stk = StringBuilder()
+    for (c in num.toCharArray()) {
+      while (k > 0 && stk.length > 0 && stk[stk.length - 1] > c) {
+        stk.deleteCharAt(stk.length - 1)
+        --k
+      }
+      stk.append(c)
     }
+    while (k > 0) {
+      stk.deleteCharAt(stk.length - 1)
+      --k
+    }
+    var i = 0
+    while (i < stk.length && stk[i] == '0') {
+      ++i
+    }
+    val ans = stk.substring(i)
+    return if ("" == ans) "0" else ans
+  }
 }

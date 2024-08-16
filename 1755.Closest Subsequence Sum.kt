@@ -1,43 +1,44 @@
-class Solution {
-    public int minAbsDifference(int[] nums, int goal) {
-        int n = nums.length;
-        List<Integer> lsum = new ArrayList<>();
-        List<Integer> rsum = new ArrayList<>();
-        dfs(nums, lsum, 0, n / 2, 0);
-        dfs(nums, rsum, n / 2, n, 0);
+internal class Solution {
+  fun minAbsDifference(nums: IntArray, goal: Int): Int {
+    val n = nums.size
+    val lsum: List<Int> = ArrayList()
+    val rsum: List<Int> = ArrayList()
+    dfs(nums, lsum, 0, n / 2, 0)
+    dfs(nums, rsum, n / 2, n, 0)
 
-        rsum.sort(Integer::compareTo);
-        int res = Integer.MAX_VALUE;
+    rsum.sort(Integer::compareTo)
+    var res: Int = MAX_VALUE
 
-        for (Integer x : lsum) {
-            int target = goal - x;
-            int left = 0, right = rsum.size();
-            while (left < right) {
-                int mid = (left + right) >> 1;
-                if (rsum.get(mid) < target) {
-                    left = mid + 1;
-                } else {
-                    right = mid;
-                }
-            }
-            if (left < rsum.size()) {
-                res = Math.min(res, Math.abs(target - rsum.get(left)));
-            }
-            if (left > 0) {
-                res = Math.min(res, Math.abs(target - rsum.get(left - 1)));
-            }
+    for (x in lsum) {
+      val target = goal - x
+      var left = 0
+      var right: Int = rsum.size()
+      while (left < right) {
+        val mid = (left + right) shr 1
+        if (rsum[mid] < target) {
+          left = mid + 1
+        } else {
+          right = mid
         }
-
-        return res;
+      }
+      if (left < rsum.size()) {
+        res = Math.min(res, Math.abs(target - rsum[left]))
+      }
+      if (left > 0) {
+        res = Math.min(res, Math.abs(target - rsum[left - 1]))
+      }
     }
 
-    private void dfs(int[] nums, List<Integer> sum, int i, int n, int cur) {
-        if (i == n) {
-            sum.add(cur);
-            return;
-        }
+    return res
+  }
 
-        dfs(nums, sum, i + 1, n, cur);
-        dfs(nums, sum, i + 1, n, cur + nums[i]);
+  private fun dfs(nums: IntArray, sum: List<Int>, i: Int, n: Int, cur: Int) {
+    if (i == n) {
+      sum.add(cur)
+      return
     }
+
+    dfs(nums, sum, i + 1, n, cur)
+    dfs(nums, sum, i + 1, n, cur + nums[i])
+  }
 }

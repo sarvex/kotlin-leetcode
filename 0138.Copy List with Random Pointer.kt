@@ -1,32 +1,38 @@
 /*
 // Definition for a Node.
 class Node {
-    int val;
-    Node next;
-    Node random;
+   int val;
+   Node next;
+   Node random;
 
-    public Node(int val) {
-        this.val = val;
-        this.next = null;
-        this.random = null;
-    }
+   public Node(int val) {
+       this.val = val;
+       this.next = null;
+       this.random = null;
+   }
 }
 */
-class Solution {
-    public Node copyRandomList(Node head) {
-        Map<Node, Node> d = new HashMap<>();
-        Node dummy = new Node(0);
-        Node tail = dummy;
-        for (Node cur = head; cur != null; cur = cur.next) {
-            tail.next = new Node(cur.val);
-            tail = tail.next;
-            d.put(cur, tail);
-        }
-        tail = dummy.next;
-        for (Node cur = head; cur != null; cur = cur.next) {
-            tail.random = d.get(cur.random);
-            tail = tail.next;
-        }
-        return dummy.next;
+internal class Solution {
+  fun copyRandomList(head: Node?): Node? {
+    val d: Map<Node, Node> = HashMap()
+    val dummy = Node(0)
+    var tail: Node? = dummy
+    run {
+      var cur = head
+      while (cur != null) {
+        tail!!.next = Node(cur!!.`val`)
+        tail = tail!!.next
+        d.put(cur, tail)
+        cur = cur!!.next
+      }
     }
+    tail = dummy.next
+    var cur = head
+    while (cur != null) {
+      tail.random = d[cur.random]
+      tail = tail!!.next
+      cur = cur!!.next
+    }
+    return dummy.next
+  }
 }

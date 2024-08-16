@@ -1,18 +1,18 @@
-class Solution {
-    public int[] canSeePersonsCount(int[] heights) {
-        int n = heights.length;
-        int[] ans = new int[n];
-        Deque<Integer> stk = new ArrayDeque<>();
-        for (int i = n - 1; i >= 0; --i) {
-            while (!stk.isEmpty() && stk.peek() < heights[i]) {
-                stk.pop();
-                ++ans[i];
-            }
-            if (!stk.isEmpty()) {
-                ++ans[i];
-            }
-            stk.push(heights[i]);
-        }
-        return ans;
+internal class Solution {
+  fun canSeePersonsCount(heights: IntArray): IntArray {
+    val n = heights.size
+    val ans = IntArray(n)
+    val stk: Deque<Int> = ArrayDeque()
+    for (i in n - 1 downTo 0) {
+      while (!stk.isEmpty() && stk.peek() < heights[i]) {
+        stk.pop()
+        ++ans[i]
+      }
+      if (!stk.isEmpty()) {
+        ++ans[i]
+      }
+      stk.push(heights[i])
     }
+    return ans
+  }
 }

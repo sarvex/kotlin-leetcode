@@ -1,20 +1,21 @@
-class Solution {
-    public int maximumLength(int[] nums) {
-        Map<Long, Integer> cnt = new HashMap<>();
-        for (int x : nums) {
-            cnt.merge((long) x, 1, Integer::sum);
-        }
-        Integer t = cnt.remove(1L);
-        int ans = t == null ? 0 : t - (t % 2 ^ 1);
-        for (long x : cnt.keySet()) {
-            t = 0;
-            while (cnt.getOrDefault(x, 0) > 1) {
-                x = x * x;
-                t += 2;
-            }
-            t += cnt.getOrDefault(x, -1);
-            ans = Math.max(ans, t);
-        }
-        return ans;
+internal class Solution {
+  fun maximumLength(nums: IntArray): Int {
+    val cnt: Map<Long, Int> = HashMap()
+    for (x in nums) {
+      cnt.merge(x.toLong(), 1) { a: Int, b: Int -> Integer.sum(a, b) }
     }
+    var t: Int = cnt.remove(1L)
+    var ans = if (t == null) 0 else t - (t % 2 xor 1)
+    for (x in cnt.keySet()) {
+      var x = x
+      t = 0
+      while (cnt.getOrDefault(x, 0) > 1) {
+        x = x * x
+        t += 2
+      }
+      t += cnt.getOrDefault(x, -1)
+      ans = max(ans, t)
+    }
+    return ans
+  }
 }

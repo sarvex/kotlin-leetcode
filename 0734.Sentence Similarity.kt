@@ -1,19 +1,21 @@
-class Solution {
-    public boolean areSentencesSimilar(
-        String[] sentence1, String[] sentence2, List<List<String>> similarPairs) {
-        if (sentence1.length != sentence2.length) {
-            return false;
-        }
-        Set<String> s = new HashSet<>();
-        for (List<String> e : similarPairs) {
-            s.add(e.get(0) + "." + e.get(1));
-        }
-        for (int i = 0; i < sentence1.length; ++i) {
-            String a = sentence1[i], b = sentence2[i];
-            if (!a.equals(b) && !s.contains(a + "." + b) && !s.contains(b + "." + a)) {
-                return false;
-            }
-        }
-        return true;
+internal class Solution {
+  fun areSentencesSimilar(
+    sentence1: Array<String>, sentence2: Array<String>, similarPairs: List<List<String>>
+  ): Boolean {
+    if (sentence1.size != sentence2.size) {
+      return false
     }
+    val s: Set<String> = HashSet()
+    for (e in similarPairs) {
+      s.add(e[0] + "." + e[1])
+    }
+    for (i in sentence1.indices) {
+      val a = sentence1[i]
+      val b = sentence2[i]
+      if (a != b && !s.contains("$a.$b") && !s.contains("$b.$a")) {
+        return false
+      }
+    }
+    return true
+  }
 }

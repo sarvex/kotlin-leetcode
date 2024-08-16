@@ -1,16 +1,16 @@
-class Solution {
-    public int countPrefixSuffixPairs(String[] words) {
-        int ans = 0;
-        int n = words.length;
-        for (int i = 0; i < n; ++i) {
-            String s = words[i];
-            for (int j = i + 1; j < n; ++j) {
-                String t = words[j];
-                if (t.startsWith(s) && t.endsWith(s)) {
-                    ++ans;
-                }
-            }
+internal class Solution {
+  fun countPrefixSuffixPairs(words: Array<String>): Int {
+    var ans = 0
+    val n = words.size
+    for (i in 0 until n) {
+      val s = words[i]
+      for (j in i + 1 until n) {
+        val t = words[j]
+        if (t.startsWith(s) && t.endsWith(s)) {
+          ++ans
         }
-        return ans;
+      }
     }
+    return ans
+  }
 }

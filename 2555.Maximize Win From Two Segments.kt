@@ -1,27 +1,28 @@
-class Solution {
-    public int maximizeWin(int[] prizePositions, int k) {
-        int n = prizePositions.length;
-        int[] f = new int[n + 1];
-        int ans = 0;
-        for (int i = 1; i <= n; ++i) {
-            int x = prizePositions[i - 1];
-            int j = search(prizePositions, x - k);
-            ans = Math.max(ans, f[j] + i - j);
-            f[i] = Math.max(f[i - 1], i - j);
-        }
-        return ans;
+internal class Solution {
+  fun maximizeWin(prizePositions: IntArray, k: Int): Int {
+    val n = prizePositions.size
+    val f = IntArray(n + 1)
+    var ans = 0
+    for (i in 1..n) {
+      val x = prizePositions[i - 1]
+      val j = search(prizePositions, x - k)
+      ans = max(ans, f[j] + i - j)
+      f[i] = max(f[i - 1], i - j)
     }
+    return ans
+  }
 
-    private int search(int[] nums, int x) {
-        int left = 0, right = nums.length;
-        while (left < right) {
-            int mid = (left + right) >> 1;
-            if (nums[mid] >= x) {
-                right = mid;
-            } else {
-                left = mid + 1;
-            }
-        }
-        return left;
+  private fun search(nums: IntArray, x: Int): Int {
+    var left = 0
+    var right = nums.size
+    while (left < right) {
+      val mid = (left + right) shr 1
+      if (nums[mid] >= x) {
+        right = mid
+      } else {
+        left = mid + 1
+      }
     }
+    return left
+  }
 }

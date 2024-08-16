@@ -1,16 +1,16 @@
-class Solution {
-    public List<List<Integer>> generate(int numRows) {
-        List<List<Integer>> f = new ArrayList<>();
-        f.add(List.of(1));
-        for (int i = 0; i < numRows - 1; ++i) {
-            List<Integer> g = new ArrayList<>();
-            g.add(1);
-            for (int j = 0; j < f.get(i).size() - 1; ++j) {
-                g.add(f.get(i).get(j) + f.get(i).get(j + 1));
-            }
-            g.add(1);
-            f.add(g);
-        }
-        return f;
+internal class Solution {
+  fun generate(numRows: Int): List<List<Int>> {
+    val f: List<List<Int>> = ArrayList()
+    f.add(List.of(1))
+    for (i in 0 until numRows - 1) {
+      val g: List<Int> = ArrayList()
+      g.add(1)
+      for (j in 0 until f[i].size() - 1) {
+        g.add(f[i][j] + f[i][j + 1])
+      }
+      g.add(1)
+      f.add(g)
     }
+    return f
+  }
 }

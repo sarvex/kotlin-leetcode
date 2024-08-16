@@ -1,35 +1,43 @@
-class Solution {
-    public long[] maximumCoins(int[] heroes, int[] monsters, int[] coins) {
-        int m = monsters.length;
-        Integer[] idx = new Integer[m];
-        for (int i = 0; i < m; ++i) {
-            idx[i] = i;
-        }
+import java.util.*
+import kotlin.Array
+import kotlin.Int
+import kotlin.IntArray
+import kotlin.LongArray
+import kotlin.arrayOfNulls
 
-        Arrays.sort(idx, Comparator.comparingInt(j -> monsters[j]));
-        long[] s = new long[m + 1];
-        for (int i = 0; i < m; ++i) {
-            s[i + 1] = s[i] + coins[idx[i]];
-        }
-        int n = heroes.length;
-        long[] ans = new long[n];
-        for (int k = 0; k < n; ++k) {
-            int i = search(monsters, idx, heroes[k]);
-            ans[k] = s[i];
-        }
-        return ans;
+internal class Solution {
+  fun maximumCoins(heroes: IntArray, monsters: IntArray, coins: IntArray): LongArray {
+    val m = monsters.size
+    val idx: Array<Int> = arrayOfNulls(m)
+    for (i in 0 until m) {
+      idx[i] = i
     }
 
-    private int search(int[] nums, Integer[] idx, int x) {
-        int l = 0, r = idx.length;
-        while (l < r) {
-            int mid = (l + r) >> 1;
-            if (nums[idx[mid]] > x) {
-                r = mid;
-            } else {
-                l = mid + 1;
-            }
-        }
-        return l;
+    Arrays.sort(idx, Comparator.comparingInt { j -> monsters[j] })
+    val s = LongArray(m + 1)
+    for (i in 0 until m) {
+      s[i + 1] = s[i] + coins[idx[i]]
     }
+    val n = heroes.size
+    val ans = LongArray(n)
+    for (k in 0 until n) {
+      val i = search(monsters, idx, heroes[k])
+      ans[k] = s[i]
+    }
+    return ans
+  }
+
+  private fun search(nums: IntArray, idx: Array<Int>, x: Int): Int {
+    var l = 0
+    var r = idx.size
+    while (l < r) {
+      val mid = (l + r) shr 1
+      if (nums[idx[mid]] > x) {
+        r = mid
+      } else {
+        l = mid + 1
+      }
+    }
+    return l
+  }
 }

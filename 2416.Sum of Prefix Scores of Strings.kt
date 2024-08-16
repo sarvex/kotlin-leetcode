@@ -1,44 +1,46 @@
-class Trie {
-    private Trie[] children = new Trie[26];
-    private int cnt;
+internal class Trie {
+  private val children: Array<Trie> = arrayOfNulls(26)
+  private var cnt = 0
 
-    public void insert(String w) {
-        Trie node = this;
-        for (char c : w.toCharArray()) {
-            c -= 'a';
-            if (node.children[c] == null) {
-                node.children[c] = new Trie();
-            }
-            node = node.children[c];
-            ++node.cnt;
-        }
+  fun insert(w: String) {
+    var node = this
+    for (c in w.toCharArray()) {
+      var c = c
+      (c -= 'a').toChar()
+      if (node.children[c.code] == null) {
+        node.children[c.code] = Trie()
+      }
+      node = node.children[c.code]
+      ++node.cnt
     }
+  }
 
-    public int search(String w) {
-        Trie node = this;
-        int ans = 0;
-        for (char c : w.toCharArray()) {
-            c -= 'a';
-            if (node.children[c] == null) {
-                return ans;
-            }
-            node = node.children[c];
-            ans += node.cnt;
-        }
-        return ans;
+  fun search(w: String): Int {
+    var node = this
+    var ans = 0
+    for (c in w.toCharArray()) {
+      var c = c
+      (c -= 'a').toChar()
+      if (node.children[c.code] == null) {
+        return ans
+      }
+      node = node.children[c.code]
+      ans += node.cnt
     }
+    return ans
+  }
 }
 
-class Solution {
-    public int[] sumPrefixScores(String[] words) {
-        Trie trie = new Trie();
-        for (String w : words) {
-            trie.insert(w);
-        }
-        int[] ans = new int[words.length];
-        for (int i = 0; i < words.length; ++i) {
-            ans[i] = trie.search(words[i]);
-        }
-        return ans;
+internal class Solution {
+  fun sumPrefixScores(words: Array<String>): IntArray {
+    val trie = Trie()
+    for (w in words) {
+      trie.insert(w)
     }
+    val ans = IntArray(words.size)
+    for (i in words.indices) {
+      ans[i] = trie.search(words[i])
+    }
+    return ans
+  }
 }

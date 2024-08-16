@@ -1,24 +1,24 @@
-class Solution {
-    public String toGoatLatin(String sentence) {
-        List<String> ans = new ArrayList<>();
-        Set<Character> vowels
-            = new HashSet<>(Arrays.asList('a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'));
-        int i = 1;
-        for (String word : sentence.split(" ")) {
-            StringBuilder t = new StringBuilder();
-            if (!vowels.contains(word.charAt(0))) {
-                t.append(word.substring(1));
-                t.append(word.charAt(0));
-            } else {
-                t.append(word);
-            }
-            t.append("ma");
-            for (int j = 0; j < i; ++j) {
-                t.append("a");
-            }
-            ++i;
-            ans.add(t.toString());
-        }
-        return String.join(" ", ans);
+internal class Solution {
+  fun toGoatLatin(sentence: String): String {
+    val ans: List<String> = ArrayList()
+    val vowels
+        : Set<Char> = HashSet(Arrays.asList('a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'))
+    var i = 1
+    for (word in sentence.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()) {
+      val t = StringBuilder()
+      if (!vowels.contains(word[0])) {
+        t.append(word.substring(1))
+        t.append(word[0])
+      } else {
+        t.append(word)
+      }
+      t.append("ma")
+      for (j in 0 until i) {
+        t.append("a")
+      }
+      ++i
+      ans.add(t.toString())
     }
+    return java.lang.String.join(" ", ans)
+  }
 }

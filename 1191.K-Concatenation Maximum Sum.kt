@@ -1,22 +1,25 @@
-class Solution {
-    public int kConcatenationMaxSum(int[] arr, int k) {
-        long s = 0, mxPre = 0, miPre = 0, mxSub = 0;
-        for (int x : arr) {
-            s += x;
-            mxPre = Math.max(mxPre, s);
-            miPre = Math.min(miPre, s);
-            mxSub = Math.max(mxSub, s - miPre);
-        }
-        long ans = mxSub;
-        final int mod = (int) 1e9 + 7;
-        if (k == 1) {
-            return (int) (ans % mod);
-        }
-        long mxSuf = s - miPre;
-        ans = Math.max(ans, mxPre + mxSuf);
-        if (s > 0) {
-            ans = Math.max(ans, (k - 2) * s + mxPre + mxSuf);
-        }
-        return (int) (ans % mod);
+internal class Solution {
+  fun kConcatenationMaxSum(arr: IntArray, k: Int): Int {
+    var s: Long = 0
+    var mxPre: Long = 0
+    var miPre: Long = 0
+    var mxSub: Long = 0
+    for (x in arr) {
+      s += x.toLong()
+      mxPre = max(mxPre, s)
+      miPre = min(miPre, s)
+      mxSub = max(mxSub, s - miPre)
     }
+    var ans = mxSub
+    val mod = 1e9.toInt() + 7
+    if (k == 1) {
+      return (ans % mod).toInt()
+    }
+    val mxSuf = s - miPre
+    ans = max(ans, mxPre + mxSuf)
+    if (s > 0) {
+      ans = max(ans, (k - 2) * s + mxPre + mxSuf)
+    }
+    return (ans % mod).toInt()
+  }
 }

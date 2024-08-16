@@ -1,11 +1,11 @@
-class Solution {
-    public String largestOddNumber(String num) {
-        for (int i = num.length() - 1; i >= 0; --i) {
-            int c = num.charAt(i) - '0';
-            if ((c & 1) == 1) {
-                return num.substring(0, i + 1);
-            }
-        }
-        return "";
+internal class Solution {
+  fun largestOddNumber(num: String): String {
+    for (i in num.length - 1 downTo 0) {
+      val c: Int = num[i].code - '0'.code
+      if ((c and 1) == 1) {
+        return num.substring(0, i + 1)
+      }
     }
+    return ""
+  }
 }

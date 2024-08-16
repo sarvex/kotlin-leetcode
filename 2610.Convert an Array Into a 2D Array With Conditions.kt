@@ -1,20 +1,20 @@
-class Solution {
-    public List<List<Integer>> findMatrix(int[] nums) {
-        List<List<Integer>> ans = new ArrayList<>();
-        int n = nums.length;
-        int[] cnt = new int[n + 1];
-        for (int x : nums) {
-            ++cnt[x];
-        }
-        for (int x = 1; x <= n; ++x) {
-            int v = cnt[x];
-            for (int j = 0; j < v; ++j) {
-                if (ans.size() <= j) {
-                    ans.add(new ArrayList<>());
-                }
-                ans.get(j).add(x);
-            }
-        }
-        return ans;
+internal class Solution {
+  fun findMatrix(nums: IntArray): List<List<Int>> {
+    val ans: List<List<Int>> = ArrayList()
+    val n = nums.size
+    val cnt = IntArray(n + 1)
+    for (x in nums) {
+      ++cnt[x]
     }
+    for (x in 1..n) {
+      val v = cnt[x]
+      for (j in 0 until v) {
+        if (ans.size() <= j) {
+          ans.add(ArrayList())
+        }
+        ans[j].add(x)
+      }
+    }
+    return ans
+  }
 }

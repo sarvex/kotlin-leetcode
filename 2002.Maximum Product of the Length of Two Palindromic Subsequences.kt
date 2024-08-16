@@ -1,35 +1,41 @@
-class Solution {
-    public int maxProduct(String s) {
-        int n = s.length();
-        boolean[] p = new boolean[1 << n];
-        Arrays.fill(p, true);
-        for (int k = 1; k < 1 << n; ++k) {
-            for (int i = 0, j = n - 1; i < n; ++i, --j) {
-                while (i < j && (k >> i & 1) == 0) {
-                    ++i;
-                }
-                while (i < j && (k >> j & 1) == 0) {
-                    --j;
-                }
-                if (i < j && s.charAt(i) != s.charAt(j)) {
-                    p[k] = false;
-                    break;
-                }
-            }
+internal class Solution {
+  fun maxProduct(s: String): Int {
+    val n = s.length
+    val p = BooleanArray(1 shl n)
+    Arrays.fill(p, true)
+    for (k in 1 until (1 shl n)) {
+      var i = 0
+      var j = n - 1
+      while (i < n) {
+        while (i < j && (k shr i and 1) == 0) {
+          ++i
         }
-        int ans = 0;
-        for (int i = 1; i < 1 << n; ++i) {
-            if (p[i]) {
-                int a = Integer.bitCount(i);
-                int mx = ((1 << n) - 1) ^ i;
-                for (int j = mx; j > 0; j = (j - 1) & mx) {
-                    if (p[j]) {
-                        int b = Integer.bitCount(j);
-                        ans = Math.max(ans, a * b);
-                    }
-                }
-            }
+        while (i < j && (k shr j and 1) == 0) {
+          --j
         }
-        return ans;
+        if (i < j && s[i] != s[j]) {
+          p[k] = false
+          break
+        }
+        ++i
+        --j
+      }
     }
+    var ans = 0
+    for (i in 1 until (1 shl n)) {
+      if (p[i]) {
+        val a = Integer.bitCount(i)
+        val mx = ((1 shl n) - 1) xor i
+        var j = mx
+        while (j > 0) {
+          if (p[j]) {
+            val b = Integer.bitCount(j)
+            ans = max(ans, a * b)
+          }
+          j = (j - 1) and mx
+        }
+      }
+    }
+    return ans
+  }
 }

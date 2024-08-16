@@ -1,23 +1,23 @@
-class Solution {
-    private Boolean[] f;
+internal class Solution {
+  private var f: Array<Boolean>
 
-    public boolean winnerSquareGame(int n) {
-        f = new Boolean[n + 1];
-        return dfs(n);
-    }
+  fun winnerSquareGame(n: Int): Boolean {
+    f = arrayOfNulls(n + 1)
+    return dfs(n)
+  }
 
-    private boolean dfs(int i) {
-        if (i <= 0) {
-            return false;
-        }
-        if (f[i] != null) {
-            return f[i];
-        }
-        for (int j = 1; j <= i / j; ++j) {
-            if (!dfs(i - j * j)) {
-                return f[i] = true;
-            }
-        }
-        return f[i] = false;
+  private fun dfs(i: Int): Boolean {
+    if (i <= 0) {
+      return false
     }
+    if (f[i] != null) {
+      return f[i]
+    }
+    for (j in 1..(i / j)) {
+      if (!dfs(i - j * j)) {
+        return true.also { f[i] = it }
+      }
+    }
+    return false.also { f[i] = it }
+  }
 }

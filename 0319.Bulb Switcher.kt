@@ -1,5 +1,5 @@
-class Solution {
-    public int bulbSwitch(int n) {
-        return (int) Math.sqrt(n);
-    }
+internal class Solution {
+  fun bulbSwitch(n: Int): Int {
+    return sqrt(n) as Int
+  }
 }

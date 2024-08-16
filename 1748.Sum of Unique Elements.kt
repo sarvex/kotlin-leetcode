@@ -1,15 +1,15 @@
-class Solution {
-    public int sumOfUnique(int[] nums) {
-        int[] cnt = new int[101];
-        for (int x : nums) {
-            ++cnt[x];
-        }
-        int ans = 0;
-        for (int x = 0; x < 101; ++x) {
-            if (cnt[x] == 1) {
-                ans += x;
-            }
-        }
-        return ans;
+internal class Solution {
+  fun sumOfUnique(nums: IntArray): Int {
+    val cnt = IntArray(101)
+    for (x in nums) {
+      ++cnt[x]
     }
+    var ans = 0
+    for (x in 0..100) {
+      if (cnt[x] == 1) {
+        ans += x
+      }
+    }
+    return ans
+  }
 }

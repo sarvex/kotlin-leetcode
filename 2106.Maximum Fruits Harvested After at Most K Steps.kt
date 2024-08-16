@@ -1,17 +1,23 @@
-class Solution {
-    public int maxTotalFruits(int[][] fruits, int startPos, int k) {
-        int ans = 0, s = 0;
-        for (int i = 0, j = 0; j < fruits.length; ++j) {
-            int pj = fruits[j][0], fj = fruits[j][1];
-            s += fj;
-            while (i <= j
-                && pj - fruits[i][0]
-                        + Math.min(Math.abs(startPos - fruits[i][0]), Math.abs(startPos - pj))
-                    > k) {
-                s -= fruits[i++][1];
-            }
-            ans = Math.max(ans, s);
-        }
-        return ans;
+internal class Solution {
+  fun maxTotalFruits(fruits: Array<IntArray>, startPos: Int, k: Int): Int {
+    var ans = 0
+    var s = 0
+    var i = 0
+    var j = 0
+    while (j < fruits.size) {
+      val pj = fruits[j][0]
+      val fj = fruits[j][1]
+      s += fj
+      while (i <= j
+        && (pj - fruits[i][0]
+            + min(abs(startPos - fruits[i][0]), abs(startPos - pj))
+            > k)
+      ) {
+        s -= fruits[i++][1]
+      }
+      ans = max(ans, s)
+      ++j
     }
+    return ans
+  }
 }

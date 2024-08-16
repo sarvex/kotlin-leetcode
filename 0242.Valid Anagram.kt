@@ -1,18 +1,18 @@
-class Solution {
-    public boolean isAnagram(String s, String t) {
-        if (s.length() != t.length()) {
-            return false;
-        }
-        int[] cnt = new int[26];
-        for (int i = 0; i < s.length(); ++i) {
-            ++cnt[s.charAt(i) - 'a'];
-            --cnt[t.charAt(i) - 'a'];
-        }
-        for (int i = 0; i < 26; ++i) {
-            if (cnt[i] != 0) {
-                return false;
-            }
-        }
-        return true;
+internal class Solution {
+  fun isAnagram(s: String, t: String): Boolean {
+    if (s.length != t.length) {
+      return false
     }
+    val cnt = IntArray(26)
+    for (i in 0 until s.length) {
+      ++cnt[s[i].code - 'a'.code]
+      --cnt[t[i].code - 'a'.code]
+    }
+    for (i in 0..25) {
+      if (cnt[i] != 0) {
+        return false
+      }
+    }
+    return true
+  }
 }

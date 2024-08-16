@@ -1,26 +1,28 @@
-class Solution {
-    public int minCapability(int[] nums, int k) {
-        int left = 0, right = (int) 1e9;
-        while (left < right) {
-            int mid = (left + right) >> 1;
-            if (f(nums, mid) >= k) {
-                right = mid;
-            } else {
-                left = mid + 1;
-            }
-        }
-        return left;
+internal class Solution {
+  fun minCapability(nums: IntArray, k: Int): Int {
+    var left = 0
+    var right = 1e9.toInt()
+    while (left < right) {
+      val mid = (left + right) shr 1
+      if (f(nums, mid) >= k) {
+        right = mid
+      } else {
+        left = mid + 1
+      }
     }
+    return left
+  }
 
-    private int f(int[] nums, int x) {
-        int cnt = 0, j = -2;
-        for (int i = 0; i < nums.length; ++i) {
-            if (nums[i] > x || i == j + 1) {
-                continue;
-            }
-            ++cnt;
-            j = i;
-        }
-        return cnt;
+  private fun f(nums: IntArray, x: Int): Int {
+    var cnt = 0
+    var j = -2
+    for (i in nums.indices) {
+      if (nums[i] > x || i == j + 1) {
+        continue
+      }
+      ++cnt
+      j = i
     }
+    return cnt
+  }
 }

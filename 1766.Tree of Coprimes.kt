@@ -1,56 +1,58 @@
-class Solution {
-    private List<Integer>[] g;
-    private List<Integer>[] f;
-    private Deque<int[]>[] stks;
-    private int[] nums;
-    private int[] ans;
+internal class Solution {
+  private var g: Array<List<Int>>
+  private var f: Array<List<Int>>
+  private var stks: Array<Deque<IntArray>>
+  private var nums: IntArray
+  private var ans: IntArray
 
-    public int[] getCoprimes(int[] nums, int[][] edges) {
-        int n = nums.length;
-        g = new List[n];
-        Arrays.setAll(g, k -> new ArrayList<>());
-        for (var e : edges) {
-            int u = e[0], v = e[1];
-            g[u].add(v);
-            g[v].add(u);
-        }
-        f = new List[51];
-        stks = new Deque[51];
-        Arrays.setAll(f, k -> new ArrayList<>());
-        Arrays.setAll(stks, k -> new ArrayDeque<>());
-        for (int i = 1; i < 51; ++i) {
-            for (int j = 1; j < 51; ++j) {
-                if (gcd(i, j) == 1) {
-                    f[i].add(j);
-                }
-            }
-        }
-        this.nums = nums;
-        ans = new int[n];
-        dfs(0, -1, 0);
-        return ans;
+  fun getCoprimes(nums: IntArray, edges: Array<IntArray>): IntArray {
+    val n = nums.size
+    g = arrayOfNulls(n)
+    Arrays.setAll(g) { k -> ArrayList() }
+    for (e in edges) {
+      val u = e[0]
+      val v = e[1]
+      g[u].add(v)
+      g[v].add(u)
     }
+    f = arrayOfNulls(51)
+    stks = arrayOfNulls<Deque>(51)
+    Arrays.setAll(f) { k -> ArrayList() }
+    Arrays.setAll(stks) { k -> ArrayDeque() }
+    for (i in 1..50) {
+      for (j in 1..50) {
+        if (gcd(i, j) == 1) {
+          f[i].add(j)
+        }
+      }
+    }
+    this.nums = nums
+    ans = IntArray(n)
+    dfs(0, -1, 0)
+    return ans
+  }
 
-    private void dfs(int i, int fa, int depth) {
-        int t = -1, k = -1;
-        for (int v : f[nums[i]]) {
-            var stk = stks[v];
-            if (!stk.isEmpty() && stk.peek()[1] > k) {
-                t = stk.peek()[0];
-                k = stk.peek()[1];
-            }
-        }
-        ans[i] = t;
-        for (int j : g[i]) {
-            if (j != fa) {
-                stks[nums[i]].push(new int[] {i, depth});
-                dfs(j, i, depth + 1);
-                stks[nums[i]].pop();
-            }
-        }
+  private fun dfs(i: Int, fa: Int, depth: Int) {
+    var t = -1
+    var k = -1
+    for (v in f[nums[i]]) {
+      val stk: Deque<IntArray> = stks[v]
+      if (!stk.isEmpty() && stk.peek().get(1) > k) {
+        t = stk.peek().get(0)
+        k = stk.peek().get(1)
+      }
     }
+    ans[i] = t
+    for (j in g[i]) {
+      if (j != fa) {
+        stks[nums[i]].push(intArrayOf(i, depth))
+        dfs(j, i, depth + 1)
+        stks[nums[i]].pop()
+      }
+    }
+  }
 
-    private int gcd(int a, int b) {
-        return b == 0 ? a : gcd(b, a % b);
-    }
+  private fun gcd(a: Int, b: Int): Int {
+    return if (b == 0) a else gcd(b, a % b)
+  }
 }

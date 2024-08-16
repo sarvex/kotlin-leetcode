@@ -1,15 +1,15 @@
-class Solution {
-    public boolean canBeEqual(String s1, String s2) {
-        int[][] cnt = new int[2][26];
-        for (int i = 0; i < s1.length(); ++i) {
-            ++cnt[i & 1][s1.charAt(i) - 'a'];
-            --cnt[i & 1][s2.charAt(i) - 'a'];
-        }
-        for (int i = 0; i < 26; ++i) {
-            if (cnt[0][i] != 0 || cnt[1][i] != 0) {
-                return false;
-            }
-        }
-        return true;
+internal class Solution {
+  fun canBeEqual(s1: String, s2: String): Boolean {
+    val cnt = Array(2) { IntArray(26) }
+    for (i in 0 until s1.length) {
+      ++cnt[i and 1][s1[i].code - 'a'.code]
+      --cnt[i and 1][s2[i].code - 'a'.code]
     }
+    for (i in 0..25) {
+      if (cnt[0][i] != 0 || cnt[1][i] != 0) {
+        return false
+      }
+    }
+    return true
+  }
 }

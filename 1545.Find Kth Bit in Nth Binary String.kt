@@ -1,19 +1,19 @@
-class Solution {
-    public char findKthBit(int n, int k) {
-        return (char) ('0' + dfs(n, k));
-    }
+internal class Solution {
+  fun findKthBit(n: Int, k: Int): Char {
+    return ('0'.code + dfs(n, k)).toChar()
+  }
 
-    private int dfs(int n, int k) {
-        if (k == 1) {
-            return 0;
-        }
-        if ((k & (k - 1)) == 0) {
-            return 1;
-        }
-        int m = 1 << n;
-        if (k * 2 < m - 1) {
-            return dfs(n - 1, k);
-        }
-        return dfs(n - 1, m - k) ^ 1;
+  private fun dfs(n: Int, k: Int): Int {
+    if (k == 1) {
+      return 0
     }
+    if ((k and (k - 1)) == 0) {
+      return 1
+    }
+    val m = 1 shl n
+    if (k * 2 < m - 1) {
+      return dfs(n - 1, k)
+    }
+    return dfs(n - 1, m - k) xor 1
+  }
 }

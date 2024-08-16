@@ -1,23 +1,24 @@
-class Solution {
-    public int binarySearchableNumbers(int[] nums) {
-        int n = nums.length;
-        int[] ok = new int[n];
-        Arrays.fill(ok, 1);
-        int mx = -1000000, mi = 1000000;
-        for (int i = 0; i < n; ++i) {
-            if (nums[i] < mx) {
-                ok[i] = 0;
-            }
-            mx = Math.max(mx, nums[i]);
-        }
-        int ans = 0;
-        for (int i = n - 1; i >= 0; --i) {
-            if (nums[i] > mi) {
-                ok[i] = 0;
-            }
-            mi = Math.min(mi, nums[i]);
-            ans += ok[i];
-        }
-        return ans;
+internal class Solution {
+  fun binarySearchableNumbers(nums: IntArray): Int {
+    val n = nums.size
+    val ok = IntArray(n)
+    Arrays.fill(ok, 1)
+    var mx = -1000000
+    var mi = 1000000
+    for (i in 0 until n) {
+      if (nums[i] < mx) {
+        ok[i] = 0
+      }
+      mx = max(mx, nums[i])
     }
+    var ans = 0
+    for (i in n - 1 downTo 0) {
+      if (nums[i] > mi) {
+        ok[i] = 0
+      }
+      mi = min(mi, nums[i])
+      ans += ok[i]
+    }
+    return ans
+  }
 }

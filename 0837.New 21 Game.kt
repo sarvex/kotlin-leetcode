@@ -1,25 +1,27 @@
-class Solution {
-    private double[] f;
-    private int n, k, maxPts;
+internal class Solution {
+  private var f: DoubleArray
+  private var n = 0
+  private var k = 0
+  private var maxPts = 0
 
-    public double new21Game(int n, int k, int maxPts) {
-        f = new double[k];
-        this.n = n;
-        this.k = k;
-        this.maxPts = maxPts;
-        return dfs(0);
-    }
+  fun new21Game(n: Int, k: Int, maxPts: Int): Double {
+    f = DoubleArray(k)
+    this.n = n
+    this.k = k
+    this.maxPts = maxPts
+    return dfs(0)
+  }
 
-    private double dfs(int i) {
-        if (i >= k) {
-            return i <= n ? 1 : 0;
-        }
-        if (i == k - 1) {
-            return Math.min(n - k + 1, maxPts) * 1.0 / maxPts;
-        }
-        if (f[i] != 0) {
-            return f[i];
-        }
-        return f[i] = dfs(i + 1) + (dfs(i + 1) - dfs(i + maxPts + 1)) / maxPts;
+  private fun dfs(i: Int): Double {
+    if (i >= k) {
+      return if (i <= n) 1 else 0
     }
+    if (i == k - 1) {
+      return min(n - k + 1, maxPts) * 1.0 / maxPts
+    }
+    if (f[i] != 0.0) {
+      return f[i]
+    }
+    return (dfs(i + 1) + (dfs(i + 1) - dfs(i + maxPts + 1)) / maxPts).also { f[i] = it }
+  }
 }

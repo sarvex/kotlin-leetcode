@@ -1,17 +1,17 @@
-class Solution {
-    public int fourSumCount(int[] nums1, int[] nums2, int[] nums3, int[] nums4) {
-        Map<Integer, Integer> cnt = new HashMap<>();
-        for (int a : nums1) {
-            for (int b : nums2) {
-                cnt.merge(a + b, 1, Integer::sum);
-            }
-        }
-        int ans = 0;
-        for (int c : nums3) {
-            for (int d : nums4) {
-                ans += cnt.getOrDefault(-(c + d), 0);
-            }
-        }
-        return ans;
+internal class Solution {
+  fun fourSumCount(nums1: IntArray, nums2: IntArray, nums3: IntArray, nums4: IntArray): Int {
+    val cnt: Map<Int, Int> = HashMap()
+    for (a in nums1) {
+      for (b in nums2) {
+        cnt.merge(a + b, 1) { a: Int, b: Int -> Integer.sum(a, b) }
+      }
     }
+    var ans = 0
+    for (c in nums3) {
+      for (d in nums4) {
+        ans += cnt.getOrDefault(-(c + d), 0)
+      }
+    }
+    return ans
+  }
 }

@@ -1,22 +1,22 @@
-class Solution {
-    public int bestTeamScore(int[] scores, int[] ages) {
-        int n = ages.length;
-        int[][] arr = new int[n][2];
-        for (int i = 0; i < n; ++i) {
-            arr[i] = new int[] {scores[i], ages[i]};
-        }
-        Arrays.sort(arr, (a, b) -> a[0] == b[0] ? a[1] - b[1] : a[0] - b[0]);
-        int[] f = new int[n];
-        int ans = 0;
-        for (int i = 0; i < n; ++i) {
-            for (int j = 0; j < i; ++j) {
-                if (arr[i][1] >= arr[j][1]) {
-                    f[i] = Math.max(f[i], f[j]);
-                }
-            }
-            f[i] += arr[i][0];
-            ans = Math.max(ans, f[i]);
-        }
-        return ans;
+internal class Solution {
+  fun bestTeamScore(scores: IntArray, ages: IntArray): Int {
+    val n = ages.size
+    val arr = Array(n) { IntArray(2) }
+    for (i in 0 until n) {
+      arr[i] = intArrayOf(scores[i], ages[i])
     }
+    Arrays.sort(arr) { a, b -> if (a.get(0) === b.get(0)) a.get(1) - b.get(1) else a.get(0) - b.get(0) }
+    val f = IntArray(n)
+    var ans = 0
+    for (i in 0 until n) {
+      for (j in 0 until i) {
+        if (arr[i][1] >= arr[j][1]) {
+          f[i] = max(f[i], f[j])
+        }
+      }
+      f[i] += arr[i][0]
+      ans = max(ans, f[i])
+    }
+    return ans
+  }
 }

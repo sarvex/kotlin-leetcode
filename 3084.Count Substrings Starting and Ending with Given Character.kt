@@ -1,6 +1,6 @@
-class Solution {
-    public long countSubstrings(String s, char c) {
-        long cnt = s.chars().filter(ch -> ch == c).count();
-        return cnt + cnt * (cnt - 1) / 2;
-    }
+internal class Solution {
+  fun countSubstrings(s: String, c: Char): Long {
+    val cnt = s.chars().filter { ch: Int -> ch == c.code }.count()
+    return cnt + cnt * (cnt - 1) / 2
+  }
 }

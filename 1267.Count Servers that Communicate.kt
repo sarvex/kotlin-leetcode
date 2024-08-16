@@ -1,24 +1,25 @@
-class Solution {
-    public int countServers(int[][] grid) {
-        int m = grid.length, n = grid[0].length;
-        int[] row = new int[m];
-        int[] col = new int[n];
-        for (int i = 0; i < m; ++i) {
-            for (int j = 0; j < n; ++j) {
-                if (grid[i][j] == 1) {
-                    row[i]++;
-                    col[j]++;
-                }
-            }
+internal class Solution {
+  fun countServers(grid: Array<IntArray>): Int {
+    val m = grid.size
+    val n = grid[0].size
+    val row = IntArray(m)
+    val col = IntArray(n)
+    for (i in 0 until m) {
+      for (j in 0 until n) {
+        if (grid[i][j] == 1) {
+          row[i]++
+          col[j]++
         }
-        int ans = 0;
-        for (int i = 0; i < m; ++i) {
-            for (int j = 0; j < n; ++j) {
-                if (grid[i][j] == 1 && (row[i] > 1 || col[j] > 1)) {
-                    ++ans;
-                }
-            }
-        }
-        return ans;
+      }
     }
+    var ans = 0
+    for (i in 0 until m) {
+      for (j in 0 until n) {
+        if (grid[i][j] == 1 && (row[i] > 1 || col[j] > 1)) {
+          ++ans
+        }
+      }
+    }
+    return ans
+  }
 }

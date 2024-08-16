@@ -1,15 +1,15 @@
-class Solution {
-    public int connectSticks(int[] sticks) {
-        PriorityQueue<Integer> pq = new PriorityQueue<>();
-        for (int x : sticks) {
-            pq.offer(x);
-        }
-        int ans = 0;
-        while (pq.size() > 1) {
-            int z = pq.poll() + pq.poll();
-            ans += z;
-            pq.offer(z);
-        }
-        return ans;
+internal class Solution {
+  fun connectSticks(sticks: IntArray): Int {
+    val pq: PriorityQueue<Int> = PriorityQueue()
+    for (x in sticks) {
+      pq.offer(x)
     }
+    var ans = 0
+    while (pq.size() > 1) {
+      val z: Int = pq.poll() + pq.poll()
+      ans += z
+      pq.offer(z)
+    }
+    return ans
+  }
 }

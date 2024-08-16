@@ -1,24 +1,24 @@
-class Solution {
-    private List<Integer> t = new ArrayList<>();
-    private List<List<Integer>> ans = new ArrayList<>();
+internal class Solution {
+  private val t: List<Int> = ArrayList()
+  private val ans: List<List<Int>> = ArrayList()
 
-    public List<List<Integer>> getFactors(int n) {
-        dfs(n, 2);
-        return ans;
-    }
+  fun getFactors(n: Int): List<List<Int>> {
+    dfs(n, 2)
+    return ans
+  }
 
-    private void dfs(int n, int i) {
-        if (!t.isEmpty()) {
-            List<Integer> cp = new ArrayList<>(t);
-            cp.add(n);
-            ans.add(cp);
-        }
-        for (int j = i; j <= n / j; ++j) {
-            if (n % j == 0) {
-                t.add(j);
-                dfs(n / j, j);
-                t.remove(t.size() - 1);
-            }
-        }
+  private fun dfs(n: Int, i: Int) {
+    if (!t.isEmpty()) {
+      val cp: List<Int> = ArrayList(t)
+      cp.add(n)
+      ans.add(cp)
     }
+    for (j in i..(n / j)) {
+      if (n % j == 0) {
+        t.add(j)
+        dfs(n / j, j)
+        t.remove(t.size() - 1)
+      }
+    }
+  }
 }

@@ -1,73 +1,75 @@
-class Solution {
-    private int i;
-    private String expr;
-    private Map<String, Deque<Integer>> scope = new HashMap<>();
+import java.util.*
 
-    public int evaluate(String expression) {
-        expr = expression;
-        return eval();
-    }
+internal class Solution {
+  private var i = 0
+  private var expr: String? = null
+  private val scope: Map<String, Deque<Int>> = HashMap()
 
-    private int eval() {
-        char c = expr.charAt(i);
-        if (c != '(') {
-            return Character.isLowerCase(c) ? scope.get(parseVar()).peekLast() : parseInt();
-        }
-        ++i;
-        c = expr.charAt(i);
-        int ans = 0;
-        if (c == 'l') {
-            i += 4;
-            List<String> vars = new ArrayList<>();
-            while (true) {
-                String var = parseVar();
-                if (expr.charAt(i) == ')') {
-                    ans = scope.get(var).peekLast();
-                    break;
-                }
-                vars.add(var);
-                ++i;
-                scope.computeIfAbsent(var, k -> new ArrayDeque<>()).offer(eval());
-                ++i;
-                if (!Character.isLowerCase(expr.charAt(i))) {
-                    ans = eval();
-                    break;
-                }
-            }
-            for (String v : vars) {
-                scope.get(v).pollLast();
-            }
-        } else {
-            boolean add = c == 'a';
-            i += add ? 4 : 5;
-            int a = eval();
-            ++i;
-            int b = eval();
-            ans = add ? a + b : a * b;
-        }
-        ++i;
-        return ans;
-    }
+  fun evaluate(expression: String?): Int {
+    expr = expression
+    return eval()
+  }
 
-    private String parseVar() {
-        int j = i;
-        while (i < expr.length() && expr.charAt(i) != ' ' && expr.charAt(i) != ')') {
-            ++i;
-        }
-        return expr.substring(j, i);
+  private fun eval(): Int {
+    var c = expr!![i]
+    if (c != '(') {
+      return if (Character.isLowerCase(c)) scope[parseVar()]!!.peekLast() else parseInt()
     }
+    ++i
+    c = expr!![i]
+    var ans = 0
+    if (c == 'l') {
+      i += 4
+      val vars: List<String> = ArrayList()
+      while (true) {
+        val `var` = parseVar()
+        if (expr!![i] == ')') {
+          ans = scope[`var`]!!.peekLast()
+          break
+        }
+        vars.add(`var`)
+        ++i
+        scope.computeIfAbsent(`var`) { k -> ArrayDeque() }.offer(eval())
+        ++i
+        if (!Character.isLowerCase(expr!![i])) {
+          ans = eval()
+          break
+        }
+      }
+      for (v in vars) {
+        scope[v]!!.pollLast()
+      }
+    } else {
+      val add = c == 'a'
+      i += if (add) 4 else 5
+      val a = eval()
+      ++i
+      val b = eval()
+      ans = if (add) a + b else a * b
+    }
+    ++i
+    return ans
+  }
 
-    private int parseInt() {
-        int sign = 1;
-        if (expr.charAt(i) == '-') {
-            sign = -1;
-            ++i;
-        }
-        int v = 0;
-        while (i < expr.length() && Character.isDigit(expr.charAt(i))) {
-            v = v * 10 + (expr.charAt(i) - '0');
-            ++i;
-        }
-        return sign * v;
+  private fun parseVar(): String {
+    val j = i
+    while (i < expr!!.length && expr!![i] != ' ' && expr!![i] != ')') {
+      ++i
     }
+    return expr.substring(j, i)
+  }
+
+  private fun parseInt(): Int {
+    var sign = 1
+    if (expr!![i] == '-') {
+      sign = -1
+      ++i
+    }
+    var v = 0
+    while (i < expr!!.length && Character.isDigit(expr!![i])) {
+      v = v * 10 + (expr!![i].code - '0'.code)
+      ++i
+    }
+    return sign * v
+  }
 }

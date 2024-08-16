@@ -1,21 +1,22 @@
-class Solution {
-    public int countBattleships(char[][] board) {
-        int m = board.length, n = board[0].length;
-        int ans = 0;
-        for (int i = 0; i < m; ++i) {
-            for (int j = 0; j < n; ++j) {
-                if (board[i][j] == '.') {
-                    continue;
-                }
-                if (i > 0 && board[i - 1][j] == 'X') {
-                    continue;
-                }
-                if (j > 0 && board[i][j - 1] == 'X') {
-                    continue;
-                }
-                ++ans;
-            }
+internal class Solution {
+  fun countBattleships(board: Array<CharArray>): Int {
+    val m = board.size
+    val n = board[0].size
+    var ans = 0
+    for (i in 0 until m) {
+      for (j in 0 until n) {
+        if (board[i][j] == '.') {
+          continue
         }
-        return ans;
+        if (i > 0 && board[i - 1][j] == 'X') {
+          continue
+        }
+        if (j > 0 && board[i][j - 1] == 'X') {
+          continue
+        }
+        ++ans
+      }
     }
+    return ans
+  }
 }

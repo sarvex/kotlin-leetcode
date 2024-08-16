@@ -1,13 +1,13 @@
-class Solution {
-    public int maximumStrongPairXor(int[] nums) {
-        int ans = 0;
-        for (int x : nums) {
-            for (int y : nums) {
-                if (Math.abs(x - y) <= Math.min(x, y)) {
-                    ans = Math.max(ans, x ^ y);
-                }
-            }
+internal class Solution {
+  fun maximumStrongPairXor(nums: IntArray): Int {
+    var ans = 0
+    for (x in nums) {
+      for (y in nums) {
+        if (abs(x - y) <= min(x, y)) {
+          ans = max(ans, x xor y)
         }
-        return ans;
+      }
     }
+    return ans
+  }
 }

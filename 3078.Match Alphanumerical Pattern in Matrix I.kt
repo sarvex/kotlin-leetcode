@@ -1,43 +1,48 @@
-class Solution {
-    public int[] findPattern(int[][] board, String[] pattern) {
-        int m = board.length, n = board[0].length;
-        int r = pattern.length, c = pattern[0].length();
-        for (int i = 0; i < m - r + 1; ++i) {
-            for (int j = 0; j < n - c + 1; ++j) {
-                if (check(board, pattern, i, j)) {
-                    return new int[] {i, j};
-                }
-            }
-        }
-        return new int[] {-1, -1};
-    }
+import java.util.*
 
-    private boolean check(int[][] board, String[] pattern, int i, int j) {
-        int[] d1 = new int[26];
-        int[] d2 = new int[10];
-        Arrays.fill(d1, -1);
-        Arrays.fill(d2, -1);
-        for (int a = 0; a < pattern.length; ++a) {
-            for (int b = 0; b < pattern[0].length(); ++b) {
-                int x = i + a, y = j + b;
-                if (Character.isDigit(pattern[a].charAt(b))) {
-                    int v = pattern[a].charAt(b) - '0';
-                    if (v != board[x][y]) {
-                        return false;
-                    }
-                } else {
-                    int v = pattern[a].charAt(b) - 'a';
-                    if (d1[v] != -1 && d1[v] != board[x][y]) {
-                        return false;
-                    }
-                    if (d2[board[x][y]] != -1 && d2[board[x][y]] != v) {
-                        return false;
-                    }
-                    d1[v] = board[x][y];
-                    d2[board[x][y]] = v;
-                }
-            }
+internal class Solution {
+  fun findPattern(board: Array<IntArray>, pattern: Array<String>): IntArray {
+    val m = board.size
+    val n = board[0].size
+    val r = pattern.size
+    val c = pattern[0].length
+    for (i in 0 until m - r + 1) {
+      for (j in 0 until n - c + 1) {
+        if (check(board, pattern, i, j)) {
+          return intArrayOf(i, j)
         }
-        return true;
+      }
     }
+    return intArrayOf(-1, -1)
+  }
+
+  private fun check(board: Array<IntArray>, pattern: Array<String>, i: Int, j: Int): Boolean {
+    val d1 = IntArray(26)
+    val d2 = IntArray(10)
+    Arrays.fill(d1, -1)
+    Arrays.fill(d2, -1)
+    for (a in pattern.indices) {
+      for (b in 0 until pattern[0].length) {
+        val x: Int = i + a
+        val y: Int = j + b
+        if (Character.isDigit(pattern[a][b])) {
+          val v: Int = pattern[a][b].code - '0'.code
+          if (v != board[x][y]) {
+            return false
+          }
+        } else {
+          val v: Int = pattern[a][b].code - 'a'.code
+          if (d1[v] != -1 && d1[v] != board[x][y]) {
+            return false
+          }
+          if (d2[board[x][y]] != -1 && d2[board[x][y]] != v) {
+            return false
+          }
+          d1[v] = board[x][y]
+          d2[board[x][y]] = v
+        }
+      }
+    }
+    return true
+  }
 }

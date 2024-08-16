@@ -1,28 +1,33 @@
-class Solution {
-    private static int[] cnt = new int[100010];
-    private static int[] ccnt = new int[100010];
-
-    public int maxEqualFreq(int[] nums) {
-        Arrays.fill(cnt, 0);
-        Arrays.fill(ccnt, 0);
-        int ans = 0;
-        int mx = 0;
-        for (int i = 1; i <= nums.length; ++i) {
-            int v = nums[i - 1];
-            if (cnt[v] > 0) {
-                --ccnt[cnt[v]];
-            }
-            ++cnt[v];
-            mx = Math.max(mx, cnt[v]);
-            ++ccnt[cnt[v]];
-            if (mx == 1) {
-                ans = i;
-            } else if (ccnt[mx] * mx + ccnt[mx - 1] * (mx - 1) == i && ccnt[mx] == 1) {
-                ans = i;
-            } else if (ccnt[mx] * mx + 1 == i && ccnt[1] == 1) {
-                ans = i;
-            }
-        }
-        return ans;
+internal class Solution {
+  fun maxEqualFreq(nums: IntArray): Int {
+    Arrays.fill(Solution.Companion.cnt, 0)
+    Arrays.fill(Solution.Companion.ccnt, 0)
+    var ans = 0
+    var mx = 0
+    for (i in 1..nums.size) {
+      val v = nums[i - 1]
+      if (Solution.Companion.cnt.get(v) > 0) {
+        --Solution.Companion.ccnt.get(Solution.Companion.cnt.get(v))
+      }
+      ++Solution.Companion.cnt.get(v)
+      mx = max(mx, Solution.Companion.cnt.get(v))
+      ++Solution.Companion.ccnt.get(Solution.Companion.cnt.get(v))
+      if (mx == 1) {
+        ans = i
+      } else if (Solution.Companion.ccnt.get(mx) * mx + Solution.Companion.ccnt.get(mx - 1) * (mx - 1) == i && Solution.Companion.ccnt.get(
+          mx
+        ) == 1
+      ) {
+        ans = i
+      } else if (Solution.Companion.ccnt.get(mx) * mx + 1 == i && Solution.Companion.ccnt.get(1) == 1) {
+        ans = i
+      }
     }
+    return ans
+  }
+
+  companion object {
+    private val cnt = IntArray(100010)
+    private val ccnt = IntArray(100010)
+  }
 }

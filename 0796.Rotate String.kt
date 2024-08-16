@@ -1,5 +1,5 @@
-class Solution {
-    public boolean rotateString(String s, String goal) {
-        return s.length() == goal.length() && (s + s).contains(goal);
-    }
+internal class Solution {
+  fun rotateString(s: String, goal: String): Boolean {
+    return s.length == goal.length && (s + s).contains(goal)
+  }
 }

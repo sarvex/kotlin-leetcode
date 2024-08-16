@@ -1,16 +1,16 @@
-class Solution {
-    public boolean containsNearbyAlmostDuplicate(int[] nums, int indexDiff, int valueDiff) {
-        TreeSet<Long> ts = new TreeSet<>();
-        for (int i = 0; i < nums.length; ++i) {
-            Long x = ts.ceiling((long) nums[i] - (long) valueDiff);
-            if (x != null && x <= (long) nums[i] + (long) valueDiff) {
-                return true;
-            }
-            ts.add((long) nums[i]);
-            if (i >= indexDiff) {
-                ts.remove((long) nums[i - indexDiff]);
-            }
-        }
-        return false;
+internal class Solution {
+  fun containsNearbyAlmostDuplicate(nums: IntArray, indexDiff: Int, valueDiff: Int): Boolean {
+    val ts: TreeSet<Long> = TreeSet()
+    for (i in nums.indices) {
+      val x: Long = ts.ceiling(nums[i].toLong() - valueDiff.toLong())
+      if (x != null && x <= nums[i].toLong() + valueDiff.toLong()) {
+        return true
+      }
+      ts.add(nums[i].toLong())
+      if (i >= indexDiff) {
+        ts.remove(nums[i - indexDiff].toLong())
+      }
     }
+    return false
+  }
 }

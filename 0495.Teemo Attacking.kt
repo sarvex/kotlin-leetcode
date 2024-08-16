@@ -1,10 +1,10 @@
-class Solution {
-    public int findPoisonedDuration(int[] timeSeries, int duration) {
-        int n = timeSeries.length;
-        int ans = duration;
-        for (int i = 1; i < n; ++i) {
-            ans += Math.min(duration, timeSeries[i] - timeSeries[i - 1]);
-        }
-        return ans;
+internal class Solution {
+  fun findPoisonedDuration(timeSeries: IntArray, duration: Int): Int {
+    val n = timeSeries.size
+    var ans = duration
+    for (i in 1 until n) {
+      ans += min(duration, timeSeries[i] - timeSeries[i - 1])
     }
+    return ans
+  }
 }

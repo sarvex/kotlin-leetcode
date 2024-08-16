@@ -1,15 +1,18 @@
-class Solution {
-    public String reversePrefix(String word, char ch) {
-        int j = word.indexOf(ch);
-        if (j == -1) {
-            return word;
-        }
-        char[] cs = word.toCharArray();
-        for (int i = 0; i < j; ++i, --j) {
-            char t = cs[i];
-            cs[i] = cs[j];
-            cs[j] = t;
-        }
-        return String.valueOf(cs);
+internal class Solution {
+  fun reversePrefix(word: String, ch: Char): String {
+    var j: Int = word.indexOf(ch)
+    if (j == -1) {
+      return word
     }
+    val cs: CharArray = word.toCharArray()
+    var i = 0
+    while (i < j) {
+      val t = cs[i]
+      cs[i] = cs[j]
+      cs[j] = t
+      ++i
+      --j
+    }
+    return String(cs)
+  }
 }

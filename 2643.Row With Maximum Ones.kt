@@ -1,18 +1,18 @@
-class Solution {
-    public int[] rowAndMaximumOnes(int[][] mat) {
-        int[] ans = new int[2];
-        for (int i = 0; i < mat.length; ++i) {
-            int cnt = 0;
-            for (int x : mat[i]) {
-                if (x == 1) {
-                    ++cnt;
-                }
-            }
-            if (ans[1] < cnt) {
-                ans[0] = i;
-                ans[1] = cnt;
-            }
+internal class Solution {
+  fun rowAndMaximumOnes(mat: Array<IntArray>): IntArray {
+    val ans = IntArray(2)
+    for (i in mat.indices) {
+      var cnt = 0
+      for (x in mat[i]) {
+        if (x == 1) {
+          ++cnt
         }
-        return ans;
+      }
+      if (ans[1] < cnt) {
+        ans[0] = i
+        ans[1] = cnt
+      }
     }
+    return ans
+  }
 }

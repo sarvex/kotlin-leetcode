@@ -1,33 +1,33 @@
-class Solution {
-    public int maxScoreWords(String[] words, char[] letters, int[] score) {
-        int[] cnt = new int[26];
-        for (int i = 0; i < letters.length; ++i) {
-            cnt[letters[i] - 'a']++;
-        }
-        int n = words.length;
-        int ans = 0;
-        for (int i = 0; i < 1 << n; ++i) {
-            int[] cur = new int[26];
-            for (int j = 0; j < n; ++j) {
-                if (((i >> j) & 1) == 1) {
-                    for (int k = 0; k < words[j].length(); ++k) {
-                        cur[words[j].charAt(k) - 'a']++;
-                    }
-                }
-            }
-            boolean ok = true;
-            int t = 0;
-            for (int j = 0; j < 26; ++j) {
-                if (cur[j] > cnt[j]) {
-                    ok = false;
-                    break;
-                }
-                t += cur[j] * score[j];
-            }
-            if (ok && ans < t) {
-                ans = t;
-            }
-        }
-        return ans;
+internal class Solution {
+  fun maxScoreWords(words: Array<String>, letters: CharArray, score: IntArray): Int {
+    val cnt = IntArray(26)
+    for (i in letters.indices) {
+      cnt[letters[i].code - 'a'.code]++
     }
+    val n = words.size
+    var ans = 0
+    for (i in 0 until (1 shl n)) {
+      val cur = IntArray(26)
+      for (j in 0 until n) {
+        if (((i shr j) and 1) == 1) {
+          for (k in 0 until words[j].length) {
+            cur[words[j][k].code - 'a'.code]++
+          }
+        }
+      }
+      var ok = true
+      var t = 0
+      for (j in 0..25) {
+        if (cur[j] > cnt[j]) {
+          ok = false
+          break
+        }
+        t += cur[j] * score[j]
+      }
+      if (ok && ans < t) {
+        ans = t
+      }
+    }
+    return ans
+  }
 }

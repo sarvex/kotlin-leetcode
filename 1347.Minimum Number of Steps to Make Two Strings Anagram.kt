@@ -1,15 +1,15 @@
-class Solution {
-    public int minSteps(String s, String t) {
-        int[] cnt = new int[26];
-        for (int i = 0; i < s.length(); ++i) {
-            ++cnt[s.charAt(i) - 'a'];
-        }
-        int ans = 0;
-        for (int i = 0; i < t.length(); ++i) {
-            if (--cnt[t.charAt(i) - 'a'] < 0) {
-                ++ans;
-            }
-        }
-        return ans;
+internal class Solution {
+  fun minSteps(s: String, t: String): Int {
+    val cnt = IntArray(26)
+    for (i in 0 until s.length) {
+      ++cnt[s[i].code - 'a'.code]
     }
+    var ans = 0
+    for (i in 0 until t.length) {
+      if (--cnt[t[i].code - 'a'.code] < 0) {
+        ++ans
+      }
+    }
+    return ans
+  }
 }

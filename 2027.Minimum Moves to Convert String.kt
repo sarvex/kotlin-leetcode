@@ -1,12 +1,14 @@
-class Solution {
-    public int minimumMoves(String s) {
-        int ans = 0;
-        for (int i = 0; i < s.length(); ++i) {
-            if (s.charAt(i) == 'X') {
-                ++ans;
-                i += 2;
-            }
-        }
-        return ans;
+internal class Solution {
+  fun minimumMoves(s: String): Int {
+    var ans = 0
+    var i = 0
+    while (i < s.length) {
+      if (s[i] == 'X') {
+        ++ans
+        i += 2
+      }
+      ++i
     }
+    return ans
+  }
 }

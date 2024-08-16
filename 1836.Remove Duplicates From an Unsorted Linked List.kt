@@ -1,27 +1,34 @@
 /**
  * Definition for singly-linked list.
  * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * int val;
+ * ListNode next;
+ * ListNode() {}
+ * ListNode(int val) { this.val = val; }
+ * ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  * }
  */
-class Solution {
-    public ListNode deleteDuplicatesUnsorted(ListNode head) {
-        Map<Integer, Integer> cnt = new HashMap<>();
-        for (ListNode cur = head; cur != null; cur = cur.next) {
-            cnt.put(cur.val, cnt.getOrDefault(cur.val, 0) + 1);
-        }
-        ListNode dummy = new ListNode(0, head);
-        for (ListNode pre = dummy, cur = head; cur != null; cur = cur.next) {
-            if (cnt.get(cur.val) > 1) {
-                pre.next = cur.next;
-            } else {
-                pre = cur;
-            }
-        }
-        return dummy.next;
+internal class Solution {
+  fun deleteDuplicatesUnsorted(head: ListNode): ListNode {
+    val cnt: Map<Int, Int> = HashMap()
+    run {
+      var cur: ListNode = head
+      while (cur != null) {
+        cnt.put(cur.`val`, cnt.getOrDefault(cur.`val`, 0) + 1)
+        cur = cur.next
+      }
     }
+    val dummy: ListNode = ListNode(0, head)
+    var pre: ListNode = dummy
+    var cur: ListNode = head
+    while (cur != null) {
+      if (cnt[cur.`val`]!! > 1) {
+        pre.next = cur.next
+      } else {
+        pre = cur
+      }
+      cur = cur.next
+    }
+    return dummy.next
+  }
 }

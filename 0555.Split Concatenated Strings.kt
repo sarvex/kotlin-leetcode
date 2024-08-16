@@ -1,41 +1,41 @@
-class Solution {
-    public String splitLoopedString(String[] strs) {
-        int n = strs.length;
-        for (int i = 0; i < n; ++i) {
-            String s = strs[i];
-            String t = new StringBuilder(s).reverse().toString();
-            if (s.compareTo(t) < 0) {
-                strs[i] = t;
-            }
-        }
-        String ans = "";
-        for (int i = 0; i < n; ++i) {
-            String s = strs[i];
-            StringBuilder sb = new StringBuilder();
-            for (int j = i + 1; j < n; ++j) {
-                sb.append(strs[j]);
-            }
-            for (int j = 0; j < i; ++j) {
-                sb.append(strs[j]);
-            }
-            String t = sb.toString();
-            for (int j = 0; j < s.length(); ++j) {
-                String a = s.substring(j);
-                String b = s.substring(0, j);
-                String cur = a + t + b;
-                if (ans.compareTo(cur) < 0) {
-                    ans = cur;
-                }
-                cur = new StringBuilder(b)
-                          .reverse()
-                          .append(t)
-                          .append(new StringBuilder(a).reverse().toString())
-                          .toString();
-                if (ans.compareTo(cur) < 0) {
-                    ans = cur;
-                }
-            }
-        }
-        return ans;
+internal class Solution {
+  fun splitLoopedString(strs: Array<String>): String {
+    val n = strs.size
+    for (i in 0 until n) {
+      val s = strs[i]
+      val t = StringBuilder(s).reverse().toString()
+      if (s.compareTo(t) < 0) {
+        strs[i] = t
+      }
     }
+    var ans = ""
+    for (i in 0 until n) {
+      val s = strs[i]
+      val sb = StringBuilder()
+      for (j in i + 1 until n) {
+        sb.append(strs[j])
+      }
+      for (j in 0 until i) {
+        sb.append(strs[j])
+      }
+      val t = sb.toString()
+      for (j in 0 until s.length) {
+        val a: String = s.substring(j)
+        val b: String = s.substring(0, j)
+        var cur = a + t + b
+        if (ans.compareTo(cur) < 0) {
+          ans = cur
+        }
+        cur = StringBuilder(b)
+          .reverse()
+          .append(t)
+          .append(StringBuilder(a).reverse().toString())
+          .toString()
+        if (ans.compareTo(cur) < 0) {
+          ans = cur
+        }
+      }
+    }
+    return ans
+  }
 }

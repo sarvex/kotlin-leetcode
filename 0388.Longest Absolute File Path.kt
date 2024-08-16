@@ -1,42 +1,46 @@
-class Solution {
-    public int lengthLongestPath(String input) {
-        int i = 0;
-        int n = input.length();
-        int ans = 0;
-        Deque<Integer> stack = new ArrayDeque<>();
-        while (i < n) {
-            int ident = 0;
-            for (; input.charAt(i) == '\t'; i++) {
-                ident++;
-            }
+import java.util.*
 
-            int cur = 0;
-            boolean isFile = false;
-            for (; i < n && input.charAt(i) != '\n'; i++) {
-                cur++;
-                if (input.charAt(i) == '.') {
-                    isFile = true;
-                }
-            }
-            i++;
+internal class Solution {
+  fun lengthLongestPath(input: String): Int {
+    var i = 0
+    val n = input.length
+    var ans = 0
+    val stack: Deque<Int> = ArrayDeque()
+    while (i < n) {
+      var ident = 0
+      while (input[i] == '\t') {
+        ident++
+        i++
+      }
 
-            // popd
-            while (!stack.isEmpty() && stack.size() > ident) {
-                stack.pop();
-            }
-
-            if (stack.size() > 0) {
-                cur += stack.peek() + 1;
-            }
-
-            // pushd
-            if (!isFile) {
-                stack.push(cur);
-                continue;
-            }
-
-            ans = Math.max(ans, cur);
+      var cur = 0
+      var isFile = false
+      while (i < n && input[i] != '\n') {
+        cur++
+        if (input[i] == '.') {
+          isFile = true
         }
-        return ans;
+        i++
+      }
+      i++
+
+      // popd
+      while (!stack.isEmpty() && stack.size() > ident) {
+        stack.pop()
+      }
+
+      if (stack.size() > 0) {
+        cur += stack.peek() + 1
+      }
+
+      // pushd
+      if (!isFile) {
+        stack.push(cur)
+        continue
+      }
+
+      ans = max(ans, cur)
     }
+    return ans
+  }
 }

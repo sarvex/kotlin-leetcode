@@ -1,11 +1,11 @@
-class Solution {
-    public String toLowerCase(String s) {
-        char[] cs = s.toCharArray();
-        for (int i = 0; i < cs.length; ++i) {
-            if (cs[i] >= 'A' && cs[i] <= 'Z') {
-                cs[i] |= 32;
-            }
-        }
-        return String.valueOf(cs);
+internal class Solution {
+  fun toLowerCase(s: String): String {
+    val cs: CharArray = s.toCharArray()
+    for (i in cs.indices) {
+      if (cs[i] >= 'A' && cs[i] <= 'Z') {
+        cs[i] = cs[i].code or 32
+      }
     }
+    return String(cs)
+  }
 }

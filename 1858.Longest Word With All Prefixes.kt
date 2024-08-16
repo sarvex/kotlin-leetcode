@@ -1,48 +1,46 @@
-class Trie {
-    private Trie[] children = new Trie[26];
-    private boolean isEnd;
+internal class Trie {
+  private val children: Array<Trie> = arrayOfNulls(26)
+  private var isEnd = false
 
-    public Trie() {
+  fun insert(w: String) {
+    var node = this
+    for (c in w.toCharArray()) {
+      val idx: Int = c.code - 'a'.code
+      if (node.children[idx] == null) {
+        node.children[idx] = Trie()
+      }
+      node = node.children[idx]
     }
+    node.isEnd = true
+  }
 
-    public void insert(String w) {
-        Trie node = this;
-        for (char c : w.toCharArray()) {
-            int idx = c - 'a';
-            if (node.children[idx] == null) {
-                node.children[idx] = new Trie();
-            }
-            node = node.children[idx];
-        }
-        node.isEnd = true;
+  fun search(w: String): Boolean {
+    var node = this
+    for (c in w.toCharArray()) {
+      val idx: Int = c.code - 'a'.code
+      node = node.children[idx]
+      if (!node.isEnd) {
+        return false
+      }
     }
-
-    public boolean search(String w) {
-        Trie node = this;
-        for (char c : w.toCharArray()) {
-            int idx = c - 'a';
-            node = node.children[idx];
-            if (!node.isEnd) {
-                return false;
-            }
-        }
-        return true;
-    }
+    return true
+  }
 }
 
-class Solution {
-    public String longestWord(String[] words) {
-        Trie trie = new Trie();
-        for (String w : words) {
-            trie.insert(w);
-        }
-        String ans = "";
-        for (String w : words) {
-            if ((w.length() > ans.length() || (w.length() == ans.length() && w.compareTo(ans) < 0))
-                && trie.search(w)) {
-                ans = w;
-            }
-        }
-        return ans;
+internal class Solution {
+  fun longestWord(words: Array<String>): String {
+    val trie = Trie()
+    for (w in words) {
+      trie.insert(w)
     }
+    var ans = ""
+    for (w in words) {
+      if ((w.length > ans.length || (w.length == ans.length && w.compareTo(ans) < 0))
+        && trie.search(w)
+      ) {
+        ans = w
+      }
+    }
+    return ans
+  }
 }

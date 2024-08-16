@@ -1,12 +1,13 @@
-class Solution {
-    public int maximumNumberOfStringPairs(String[] words) {
-        Map<Integer, Integer> cnt = new HashMap<>();
-        int ans = 0;
-        for (var w : words) {
-            int a = w.charAt(0) - 'a', b = w.charAt(1) - 'a';
-            ans += cnt.getOrDefault(b << 5 | a, 0);
-            cnt.merge(a << 5 | b, 1, Integer::sum);
-        }
-        return ans;
+internal class Solution {
+  fun maximumNumberOfStringPairs(words: Array<String>): Int {
+    val cnt: Map<Int, Int> = HashMap()
+    var ans = 0
+    for (w in words) {
+      val a: Int = w[0].code - 'a'.code
+      val b: Int = w[1].code - 'a'.code
+      ans += cnt.getOrDefault(b shl 5 or a, 0)
+      cnt.merge(a shl 5 or b, 1) { a: Int, b: Int -> Integer.sum(a, b) }
     }
+    return ans
+  }
 }

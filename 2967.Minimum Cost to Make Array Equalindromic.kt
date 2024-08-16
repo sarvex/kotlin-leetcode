@@ -1,38 +1,45 @@
-public class Solution {
-    private static long[] ps;
-    private int[] nums;
+import java.util.*
 
-    static {
-        ps = new long[2 * (int) 1e5];
-        for (int i = 1; i <= 1e5; i++) {
-            String s = Integer.toString(i);
-            String t1 = new StringBuilder(s).reverse().toString();
-            String t2 = new StringBuilder(s.substring(0, s.length() - 1)).reverse().toString();
-            ps[2 * i - 2] = Long.parseLong(s + t1);
-            ps[2 * i - 1] = Long.parseLong(s + t2);
-        }
-        Arrays.sort(ps);
-    }
+class Solution {
+  private var nums: IntArray
 
-    public long minimumCost(int[] nums) {
-        this.nums = nums;
-        Arrays.sort(nums);
-        int i = Arrays.binarySearch(ps, nums[nums.length / 2]);
-        i = i < 0 ? -i - 1 : i;
-        long ans = 1L << 60;
-        for (int j = i - 1; j <= i + 1; j++) {
-            if (0 <= j && j < ps.length) {
-                ans = Math.min(ans, f(ps[j]));
-            }
-        }
-        return ans;
+  fun minimumCost(nums: IntArray): Long {
+    this.nums = nums
+    Arrays.sort(nums)
+    var i: Int = Arrays.binarySearch(Solution.Companion.ps, nums[nums.size / 2])
+    i = if (i < 0) -i - 1 else i
+    var ans = 1L shl 60
+    for (j in i - 1..(i + 1)) {
+      if (0 <= j && j < Solution.Companion.ps.size) {
+        ans = min(ans, f(Solution.Companion.ps.get(j)))
+      }
     }
+    return ans
+  }
 
-    private long f(long x) {
-        long ans = 0;
-        for (int v : nums) {
-            ans += Math.abs(v - x);
-        }
-        return ans;
+  private fun f(x: Long): Long {
+    var ans: Long = 0
+    for (v in nums) {
+      ans += abs(v - x)
     }
+    return ans
+  }
+
+  companion object {
+    private val ps: LongArray
+
+    init {
+      Solution.Companion.ps = LongArray(2 * 1e5.toInt())
+      var i = 1
+      while (i <= 1e5) {
+        val s = i.toString()
+        val t1 = StringBuilder(s).reverse().toString()
+        val t2: String = StringBuilder(s.substring(0, s.length - 1)).reverse().toString()
+        Solution.Companion.ps.get(2 * i - 2) = (s + t1).toLong()
+        Solution.Companion.ps.get(2 * i - 1) = (s + t2).toLong()
+        i++
+      }
+      Arrays.sort(Solution.Companion.ps)
+    }
+  }
 }

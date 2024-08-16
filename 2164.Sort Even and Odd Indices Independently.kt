@@ -1,24 +1,40 @@
-class Solution {
-    public int[] sortEvenOdd(int[] nums) {
-        int n = nums.length;
-        int[] a = new int[(n + 1) >> 1];
-        int[] b = new int[n >> 1];
-        for (int i = 0, j = 0; j < n >> 1; i += 2, ++j) {
-            a[j] = nums[i];
-            b[j] = nums[i + 1];
-        }
-        if (n % 2 == 1) {
-            a[a.length - 1] = nums[n - 1];
-        }
-        Arrays.sort(a);
-        Arrays.sort(b);
-        int[] ans = new int[n];
-        for (int i = 0, j = 0; j < a.length; i += 2, ++j) {
-            ans[i] = a[j];
-        }
-        for (int i = 1, j = b.length - 1; j >= 0; i += 2, --j) {
-            ans[i] = b[j];
-        }
-        return ans;
+internal class Solution {
+  fun sortEvenOdd(nums: IntArray): IntArray {
+    val n = nums.size
+    val a = IntArray((n + 1) shr 1)
+    val b = IntArray(n shr 1)
+    run {
+      var i = 0
+      var j = 0
+      while (j < n shr 1) {
+        a[j] = nums[i]
+        b[j] = nums[i + 1]
+        i += 2
+        ++j
+      }
     }
+    if (n % 2 == 1) {
+      a[a.size - 1] = nums[n - 1]
+    }
+    Arrays.sort(a)
+    Arrays.sort(b)
+    val ans = IntArray(n)
+    run {
+      var i = 0
+      var j = 0
+      while (j < a.size) {
+        ans[i] = a[j]
+        i += 2
+        ++j
+      }
+    }
+    var i = 1
+    var j = b.size - 1
+    while (j >= 0) {
+      ans[i] = b[j]
+      i += 2
+      --j
+    }
+    return ans
+  }
 }

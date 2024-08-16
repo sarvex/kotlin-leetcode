@@ -1,27 +1,29 @@
-import java.math.BigInteger;
+import java.math.BigInteger
 
-class Solution {
-    private static final int MOD = (int) 1e9 + 7;
-
-    public int countAnagrams(String s) {
-        int n = s.length();
-        long[] f = new long[n + 1];
-        f[0] = 1;
-        for (int i = 1; i <= n; ++i) {
-            f[i] = f[i - 1] * i % MOD;
-        }
-        long p = 1;
-        for (String w : s.split(" ")) {
-            int[] cnt = new int[26];
-            for (int i = 0; i < w.length(); ++i) {
-                ++cnt[w.charAt(i) - 'a'];
-            }
-            p = p * f[w.length()] % MOD;
-            for (int v : cnt) {
-                p = p * BigInteger.valueOf(f[v]).modInverse(BigInteger.valueOf(MOD)).intValue()
-                    % MOD;
-            }
-        }
-        return (int) p;
+internal class Solution {
+  fun countAnagrams(s: String): Int {
+    val n = s.length
+    val f = LongArray(n + 1)
+    f[0] = 1
+    for (i in 1..n) {
+      f[i] = f[i - 1] * i % Solution.Companion.MOD
     }
+    var p: Long = 1
+    for (w in s.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()) {
+      val cnt = IntArray(26)
+      for (i in 0 until w.length) {
+        ++cnt[w[i].code - 'a'.code]
+      }
+      p = p * f[w.length] % Solution.Companion.MOD
+      for (v in cnt) {
+        p = (p * BigInteger.valueOf(f[v]).modInverse(BigInteger.valueOf(Solution.Companion.MOD.toLong())).toInt()
+            % Solution.Companion.MOD)
+      }
+    }
+    return p.toInt()
+  }
+
+  companion object {
+    private const val MOD = 1e9.toInt() + 7
+  }
 }

@@ -1,11 +1,11 @@
-class Solution {
-    public int minOperations(int k) {
-        int ans = k;
-        for (int a = 0; a < k; ++a) {
-            int x = a + 1;
-            int b = (k + x - 1) / x - 1;
-            ans = Math.min(ans, a + b);
-        }
-        return ans;
+internal class Solution {
+  fun minOperations(k: Int): Int {
+    var ans = k
+    for (a in 0 until k) {
+      val x: Int = a + 1
+      val b = (k + x - 1) / x - 1
+      ans = min(ans, a + b)
     }
+    return ans
+  }
 }

@@ -1,32 +1,32 @@
-class Solution {
-    public List<String> wordSubsets(String[] words1, String[] words2) {
-        int[] cnt = new int[26];
-        for (var b : words2) {
-            int[] t = new int[26];
-            for (int i = 0; i < b.length(); ++i) {
-                t[b.charAt(i) - 'a']++;
-            }
-            for (int i = 0; i < 26; ++i) {
-                cnt[i] = Math.max(cnt[i], t[i]);
-            }
-        }
-        List<String> ans = new ArrayList<>();
-        for (var a : words1) {
-            int[] t = new int[26];
-            for (int i = 0; i < a.length(); ++i) {
-                t[a.charAt(i) - 'a']++;
-            }
-            boolean ok = true;
-            for (int i = 0; i < 26; ++i) {
-                if (cnt[i] > t[i]) {
-                    ok = false;
-                    break;
-                }
-            }
-            if (ok) {
-                ans.add(a);
-            }
-        }
-        return ans;
+internal class Solution {
+  fun wordSubsets(words1: Array<String>, words2: Array<String>): List<String> {
+    val cnt = IntArray(26)
+    for (b in words2) {
+      val t = IntArray(26)
+      for (i in 0 until b.length) {
+        t[b[i].code - 'a'.code]++
+      }
+      for (i in 0..25) {
+        cnt[i] = max(cnt[i], t[i])
+      }
     }
+    val ans: List<String> = ArrayList()
+    for (a in words1) {
+      val t = IntArray(26)
+      for (i in 0 until a.length) {
+        t[a[i].code - 'a'.code]++
+      }
+      var ok = true
+      for (i in 0..25) {
+        if (cnt[i] > t[i]) {
+          ok = false
+          break
+        }
+      }
+      if (ok) {
+        ans.add(a)
+      }
+    }
+    return ans
+  }
 }

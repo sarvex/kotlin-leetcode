@@ -1,64 +1,66 @@
-class BinaryIndexedTree {
-    private final int inf = 1 << 30;
-    private int n;
-    private int[] c;
+import java.util.*
 
-    public BinaryIndexedTree(int n) {
-        this.n = n;
-        c = new int[n + 1];
-        Arrays.fill(c, inf);
-    }
+internal class BinaryIndexedTree(private val n: Int) {
+  private val inf = 1 shl 30
+  private val c = IntArray(n + 1)
 
-    public void update(int x, int v) {
-        while (x <= n) {
-            c[x] = Math.min(c[x], v);
-            x += x & -x;
-        }
-    }
+  init {
+    Arrays.fill(c, inf)
+  }
 
-    public int query(int x) {
-        int mi = inf;
-        while (x > 0) {
-            mi = Math.min(mi, c[x]);
-            x -= x & -x;
-        }
-        return mi == inf ? -1 : mi;
+  fun update(x: Int, v: Int) {
+    var x = x
+    while (x <= n) {
+      c[x] = min(c[x], v)
+      x += x and -x
     }
+  }
+
+  fun query(x: Int): Int {
+    var x = x
+    var mi = inf
+    while (x > 0) {
+      mi = min(mi, c[x])
+      x -= x and -x
+    }
+    return if (mi == inf) -1 else mi
+  }
 }
 
-class Solution {
-    public int[] leftmostBuildingQueries(int[] heights, int[][] queries) {
-        int n = heights.length;
-        int m = queries.length;
-        for (int i = 0; i < m; ++i) {
-            if (queries[i][0] > queries[i][1]) {
-                queries[i] = new int[] {queries[i][1], queries[i][0]};
-            }
-        }
-        Integer[] idx = new Integer[m];
-        for (int i = 0; i < m; ++i) {
-            idx[i] = i;
-        }
-        Arrays.sort(idx, (i, j) -> queries[j][1] - queries[i][1]);
-        int[] s = heights.clone();
-        Arrays.sort(s);
-        int[] ans = new int[m];
-        int j = n - 1;
-        BinaryIndexedTree tree = new BinaryIndexedTree(n);
-        for (int i : idx) {
-            int l = queries[i][0], r = queries[i][1];
-            while (j > r) {
-                int k = n - Arrays.binarySearch(s, heights[j]) + 1;
-                tree.update(k, j);
-                --j;
-            }
-            if (l == r || heights[l] < heights[r]) {
-                ans[i] = r;
-            } else {
-                int k = n - Arrays.binarySearch(s, heights[l]);
-                ans[i] = tree.query(k);
-            }
-        }
-        return ans;
+internal class Solution {
+  fun leftmostBuildingQueries(heights: IntArray, queries: Array<IntArray>): IntArray {
+    val n = heights.size
+    val m = queries.size
+    for (i in 0 until m) {
+      if (queries[i][0] > queries[i][1]) {
+        queries[i] = intArrayOf(queries[i][1], queries[i][0])
+      }
     }
+    val idx: Array<Int> = arrayOfNulls(m)
+    for (i in 0 until m) {
+      idx[i] = i
+    }
+    Arrays.sort(idx) { i, j -> queries[j][1] - queries[i][1] }
+    val s = heights.clone()
+    Arrays.sort(s)
+    val ans = IntArray(m)
+    var j = n - 1
+    val tree = BinaryIndexedTree(n)
+    for (i in idx) {
+      val l = queries[i][0]
+      val r = queries[i][1]
+      while (j > r) {
+        val k = n - Arrays.binarySearch(s, heights[j]) + 1
+        tree.update(k, j)
+        --j
+      }
+      if (l == r || heights[l] < heights[r]) {
+        ans[i] = r
+      } else {
+        val k = n - Arrays.binarySearch(s, heights[l])
+        ans[i] = tree.query(k)
+      }
+    }
+    return ans
+  }
 }

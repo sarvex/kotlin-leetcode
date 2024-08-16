@@ -1,32 +1,39 @@
-class Solution {
-    private int[][] dirs = new int[][] {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
-    private static final int N = (int) 1e6;
-    private Set<Integer> blocked;
+internal class Solution {
+  private val dirs = arrayOf(intArrayOf(1, 0), intArrayOf(-1, 0), intArrayOf(0, 1), intArrayOf(0, -1))
+  private var blocked: Set<Int>? = null
 
-    public boolean isEscapePossible(int[][] blocked, int[] source, int[] target) {
-        this.blocked = new HashSet<>();
-        for (int[] b : blocked) {
-            this.blocked.add(b[0] * N + b[1]);
-        }
-        return dfs(source, target, new HashSet<>()) && dfs(target, source, new HashSet<>());
+  fun isEscapePossible(blocked: Array<IntArray>, source: IntArray, target: IntArray): Boolean {
+    this.blocked = HashSet()
+    for (b in blocked) {
+      this.blocked.add(b[0] * Solution.Companion.N + b[1])
     }
+    return dfs(source, target, HashSet()) && dfs(target, source, HashSet())
+  }
 
-    private boolean dfs(int[] source, int[] target, Set<Integer> seen) {
-        int sx = source[0], sy = source[1];
-        int tx = target[0], ty = target[1];
-        if (sx < 0 || sx >= N || sy < 0 || sy >= N || tx < 0 || tx >= N || ty < 0 || ty >= N
-            || blocked.contains(sx * N + sy) || seen.contains(sx * N + sy)) {
-            return false;
-        }
-        seen.add(sx * N + sy);
-        if (seen.size() > 20000 || (sx == target[0] && sy == target[1])) {
-            return true;
-        }
-        for (int[] dir : dirs) {
-            if (dfs(new int[] {sx + dir[0], sy + dir[1]}, target, seen)) {
-                return true;
-            }
-        }
-        return false;
+  private fun dfs(source: IntArray, target: IntArray, seen: Set<Int>): Boolean {
+    val sx = source[0]
+    val sy = source[1]
+    val tx = target[0]
+    val ty = target[1]
+    if (sx < 0 || sx >= Solution.Companion.N || sy < 0 || sy >= Solution.Companion.N || tx < 0 || tx >= Solution.Companion.N || ty < 0 || ty >= Solution.Companion.N || blocked!!.contains(
+        sx * Solution.Companion.N + sy
+      ) || seen.contains(sx * Solution.Companion.N + sy)
+    ) {
+      return false
     }
+    seen.add(sx * Solution.Companion.N + sy)
+    if (seen.size() > 20000 || (sx == target[0] && sy == target[1])) {
+      return true
+    }
+    for (dir in dirs) {
+      if (dfs(intArrayOf(sx + dir[0], sy + dir[1]), target, seen)) {
+        return true
+      }
+    }
+    return false
+  }
+
+  companion object {
+    private const val N = 1e6.toInt()
+  }
 }

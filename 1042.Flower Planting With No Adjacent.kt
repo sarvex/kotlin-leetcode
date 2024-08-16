@@ -1,26 +1,27 @@
-class Solution {
-    public int[] gardenNoAdj(int n, int[][] paths) {
-        List<Integer>[] g = new List[n];
-        Arrays.setAll(g, k -> new ArrayList<>());
-        for (var p : paths) {
-            int x = p[0] - 1, y = p[1] - 1;
-            g[x].add(y);
-            g[y].add(x);
-        }
-        int[] ans = new int[n];
-        boolean[] used = new boolean[5];
-        for (int x = 0; x < n; ++x) {
-            Arrays.fill(used, false);
-            for (int y : g[x]) {
-                used[ans[y]] = true;
-            }
-            for (int c = 1; c < 5; ++c) {
-                if (!used[c]) {
-                    ans[x] = c;
-                    break;
-                }
-            }
-        }
-        return ans;
+internal class Solution {
+  fun gardenNoAdj(n: Int, paths: Array<IntArray>): IntArray {
+    val g: Array<List<Int>> = arrayOfNulls(n)
+    Arrays.setAll(g) { k -> ArrayList() }
+    for (p in paths) {
+      val x = p[0] - 1
+      val y = p[1] - 1
+      g[x].add(y)
+      g[y].add(x)
     }
+    val ans = IntArray(n)
+    val used = BooleanArray(5)
+    for (x in 0 until n) {
+      Arrays.fill(used, false)
+      for (y in g[x]) {
+        used[ans[y]] = true
+      }
+      for (c in 1..4) {
+        if (!used[c]) {
+          ans[x] = c
+          break
+        }
+      }
+    }
+    return ans
+  }
 }

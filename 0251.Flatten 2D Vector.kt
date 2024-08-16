@@ -1,30 +1,24 @@
-class Vector2D {
-    private int i;
-    private int j;
-    private int[][] vec;
+internal class Vector2D(private val vec: Array<IntArray>) {
+  private var i = 0
+  private var j = 0
 
-    public Vector2D(int[][] vec) {
-        this.vec = vec;
-    }
+  fun next(): Int {
+    forward()
+    return vec[i][j++]
+  }
 
-    public int next() {
-        forward();
-        return vec[i][j++];
-    }
+  fun hasNext(): Boolean {
+    forward()
+    return i < vec.size
+  }
 
-    public boolean hasNext() {
-        forward();
-        return i < vec.length;
+  private fun forward() {
+    while (i < vec.size && j >= vec[i].size) {
+      ++i
+      j = 0
     }
-
-    private void forward() {
-        while (i < vec.length && j >= vec[i].length) {
-            ++i;
-            j = 0;
-        }
-    }
+  }
 }
-
 /**
  * Your Vector2D object will be instantiated and called as such:
  * Vector2D obj = new Vector2D(vec);

@@ -1,26 +1,28 @@
-class Solution {
-    private int[] p;
+internal class Solution {
+  private var p: IntArray
 
-    public boolean validTree(int n, int[][] edges) {
-        p = new int[n];
-        for (int i = 0; i < n; ++i) {
-            p[i] = i;
-        }
-        for (var e : edges) {
-            int pa = find(e[0]), pb = find(e[1]);
-            if (pa == pb) {
-                return false;
-            }
-            p[pa] = pb;
-            --n;
-        }
-        return n == 1;
+  fun validTree(n: Int, edges: Array<IntArray>): Boolean {
+    var n = n
+    p = IntArray(n)
+    for (i in 0 until n) {
+      p[i] = i
     }
+    for (e in edges) {
+      val pa = find(e[0])
+      val pb = find(e[1])
+      if (pa == pb) {
+        return false
+      }
+      p[pa] = pb
+      --n
+    }
+    return n == 1
+  }
 
-    private int find(int x) {
-        if (p[x] != x) {
-            p[x] = find(p[x]);
-        }
-        return p[x];
+  private fun find(x: Int): Int {
+    if (p[x] != x) {
+      p[x] = find(p[x])
     }
+    return p[x]
+  }
 }

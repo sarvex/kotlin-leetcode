@@ -1,30 +1,35 @@
-class Solution {
-    public int maxIncreasingCells(int[][] mat) {
-        int m = mat.length, n = mat[0].length;
-        TreeMap<Integer, List<int[]>> g = new TreeMap<>();
-        for (int i = 0; i < m; ++i) {
-            for (int j = 0; j < n; ++j) {
-                g.computeIfAbsent(mat[i][j], k -> new ArrayList<>()).add(new int[] {i, j});
-            }
-        }
-        int[] rowMax = new int[m];
-        int[] colMax = new int[n];
-        int ans = 0;
-        for (var e : g.entrySet()) {
-            var pos = e.getValue();
-            int[] mx = new int[pos.size()];
-            int k = 0;
-            for (var p : pos) {
-                int i = p[0], j = p[1];
-                mx[k] = Math.max(rowMax[i], colMax[j]) + 1;
-                ans = Math.max(ans, mx[k++]);
-            }
-            for (k = 0; k < mx.length; ++k) {
-                int i = pos.get(k)[0], j = pos.get(k)[1];
-                rowMax[i] = Math.max(rowMax[i], mx[k]);
-                colMax[j] = Math.max(colMax[j], mx[k]);
-            }
-        }
-        return ans;
+internal class Solution {
+  fun maxIncreasingCells(mat: Array<IntArray>): Int {
+    val m = mat.size
+    val n = mat[0].size
+    val g: TreeMap<Int, List<IntArray>> = TreeMap()
+    for (i in 0 until m) {
+      for (j in 0 until n) {
+        g.computeIfAbsent(mat[i][j]) { k -> ArrayList() }.add(intArrayOf(i, j))
+      }
     }
+    val rowMax = IntArray(m)
+    val colMax = IntArray(n)
+    var ans = 0
+    for (e in g.entrySet()) {
+      val pos = e.getValue()
+      val mx = IntArray(pos.size())
+      var k = 0
+      for (p in pos) {
+        val i: Int = p.get(0)
+        val j: Int = p.get(1)
+        mx[k] = max(rowMax[i], colMax[j]) + 1
+        ans = max(ans, mx[k++])
+      }
+      k = 0
+      while (k < mx.size) {
+        val i: Int = pos.get(k).get(0)
+        val j: Int = pos.get(k).get(1)
+        rowMax[i] = max(rowMax[i], mx[k])
+        colMax[j] = max(colMax[j], mx[k])
+        ++k
+      }
+    }
+    return ans
+  }
 }

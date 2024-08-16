@@ -1,18 +1,23 @@
-class Solution {
-    private static final int MOD = (int) 1e9 + 7;
-
-    public int countHomogenous(String s) {
-        int n = s.length();
-        long ans = 0;
-        for (int i = 0, j = 0; i < n; i = j) {
-            j = i;
-            while (j < n && s.charAt(j) == s.charAt(i)) {
-                ++j;
-            }
-            int cnt = j - i;
-            ans += (long) (1 + cnt) * cnt / 2;
-            ans %= MOD;
-        }
-        return (int) ans;
+internal class Solution {
+  fun countHomogenous(s: String): Int {
+    val n = s.length
+    var ans: Long = 0
+    var i = 0
+    var j = 0
+    while (i < n) {
+      j = i
+      while (j < n && s[j] == s[i]) {
+        ++j
+      }
+      val cnt = j - i
+      ans += (1 + cnt).toLong() * cnt / 2
+      ans %= Solution.Companion.MOD.toLong()
+      i = j
     }
+    return ans.toInt()
+  }
+
+  companion object {
+    private const val MOD = 1e9.toInt() + 7
+  }
 }

@@ -1,12 +1,12 @@
-class Solution {
-    public String sortSentence(String s) {
-        String[] ws = s.split(" ");
-        int n = ws.length;
-        String[] ans = new String[n];
-        for (int i = 0; i < n; ++i) {
-            String w = ws[i];
-            ans[w.charAt(w.length() - 1) - '1'] = w.substring(0, w.length() - 1);
-        }
-        return String.join(" ", ans);
+internal class Solution {
+  fun sortSentence(s: String): String {
+    val ws: Array<String> = s.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+    val n = ws.size
+    val ans: Array<String> = arrayOfNulls(n)
+    for (i in 0 until n) {
+      val w = ws[i]
+      ans[w[w.length - 1].code - '1'.code] = w.substring(0, w.length - 1)
     }
+    return java.lang.String.join(" ", *ans)
+  }
 }

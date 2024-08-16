@@ -1,18 +1,19 @@
-class Solution {
-    public int[] frequencySort(int[] nums) {
-        int[] cnt = new int[201];
-        List<Integer> t = new ArrayList<>();
-        for (int v : nums) {
-            v += 100;
-            ++cnt[v];
-            t.add(v);
-        }
-        t.sort((a, b) -> cnt[a] == cnt[b] ? b - a : cnt[a] - cnt[b]);
-        int[] ans = new int[nums.length];
-        int i = 0;
-        for (int v : t) {
-            ans[i++] = v - 100;
-        }
-        return ans;
+internal class Solution {
+  fun frequencySort(nums: IntArray): IntArray {
+    val cnt = IntArray(201)
+    val t: List<Int> = ArrayList()
+    for (v in nums) {
+      var v = v
+      v += 100
+      ++cnt[v]
+      t.add(v)
     }
+    t.sort { a, b -> if (cnt[a] == cnt[b]) b - a else cnt[a] - cnt[b] }
+    val ans = IntArray(nums.size)
+    var i = 0
+    for (v in t) {
+      ans[i++] = v - 100
+    }
+    return ans
+  }
 }

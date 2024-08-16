@@ -1,11 +1,11 @@
-class Solution {
-    public int minMoves2(int[] nums) {
-        Arrays.sort(nums);
-        int k = nums[nums.length >> 1];
-        int ans = 0;
-        for (int v : nums) {
-            ans += Math.abs(v - k);
-        }
-        return ans;
+internal class Solution {
+  fun minMoves2(nums: IntArray): Int {
+    Arrays.sort(nums)
+    val k = nums[nums.size shr 1]
+    var ans = 0
+    for (v in nums) {
+      ans += abs(v - k)
     }
+    return ans
+  }
 }

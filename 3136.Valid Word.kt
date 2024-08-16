@@ -1,24 +1,25 @@
-class Solution {
-    public boolean isValid(String word) {
-        if (word.length() < 3) {
-            return false;
-        }
-        boolean hasVowel = false, hasConsonant = false;
-        boolean[] vs = new boolean[26];
-        for (char c : "aeiou".toCharArray()) {
-            vs[c - 'a'] = true;
-        }
-        for (char c : word.toCharArray()) {
-            if (Character.isAlphabetic(c)) {
-                if (vs[Character.toLowerCase(c) - 'a']) {
-                    hasVowel = true;
-                } else {
-                    hasConsonant = true;
-                }
-            } else if (!Character.isDigit(c)) {
-                return false;
-            }
-        }
-        return hasVowel && hasConsonant;
+internal class Solution {
+  fun isValid(word: String): Boolean {
+    if (word.length < 3) {
+      return false
     }
+    var hasVowel = false
+    var hasConsonant = false
+    val vs = BooleanArray(26)
+    for (c in "aeiou".toCharArray()) {
+      vs[c.code - 'a'.code] = true
+    }
+    for (c in word.toCharArray()) {
+      if (Character.isAlphabetic(c.code)) {
+        if (vs[c.lowercaseChar() - 'a']) {
+          hasVowel = true
+        } else {
+          hasConsonant = true
+        }
+      } else if (!Character.isDigit(c)) {
+        return false
+      }
+    }
+    return hasVowel && hasConsonant
+  }
 }

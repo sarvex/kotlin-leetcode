@@ -1,64 +1,66 @@
-class BinaryIndexedTree {
-    private int n;
-    private long[] c;
-    private final long inf = 1L << 60;
+import java.util.*
 
-    public BinaryIndexedTree(int n) {
-        this.n = n;
-        c = new long[n + 1];
-        Arrays.fill(c, -inf);
-    }
+internal class BinaryIndexedTree(private val n: Int) {
+  private val c = LongArray(n + 1)
+  private val inf = 1L shl 60
 
-    public void update(int x, long v) {
-        while (x <= n) {
-            c[x] = Math.max(c[x], v);
-            x += x & -x;
-        }
-    }
+  init {
+    Arrays.fill(c, -inf)
+  }
 
-    public long query(int x) {
-        long mx = -inf;
-        while (x > 0) {
-            mx = Math.max(mx, c[x]);
-            x -= x & -x;
-        }
-        return mx;
+  fun update(x: Int, v: Long) {
+    var x = x
+    while (x <= n) {
+      c[x] = max(c[x], v)
+      x += x and -x
     }
+  }
+
+  fun query(x: Int): Long {
+    var x = x
+    var mx = -inf
+    while (x > 0) {
+      mx = max(mx, c[x])
+      x -= x and -x
+    }
+    return mx
+  }
 }
 
-class Solution {
-    public long maxBalancedSubsequenceSum(int[] nums) {
-        int n = nums.length;
-        int[] arr = new int[n];
-        for (int i = 0; i < n; ++i) {
-            arr[i] = nums[i] - i;
-        }
-        Arrays.sort(arr);
-        int m = 0;
-        for (int i = 0; i < n; ++i) {
-            if (i == 0 || arr[i] != arr[i - 1]) {
-                arr[m++] = arr[i];
-            }
-        }
-        BinaryIndexedTree tree = new BinaryIndexedTree(m);
-        for (int i = 0; i < n; ++i) {
-            int j = search(arr, nums[i] - i, m) + 1;
-            long v = Math.max(tree.query(j), 0) + nums[i];
-            tree.update(j, v);
-        }
-        return tree.query(m);
+internal class Solution {
+  fun maxBalancedSubsequenceSum(nums: IntArray): Long {
+    val n = nums.size
+    val arr = IntArray(n)
+    for (i in 0 until n) {
+      arr[i] = nums[i] - i
     }
+    Arrays.sort(arr)
+    var m = 0
+    for (i in 0 until n) {
+      if (i == 0 || arr[i] != arr[i - 1]) {
+        arr[m++] = arr[i]
+      }
+    }
+    val tree = BinaryIndexedTree(m)
+    for (i in 0 until n) {
+      val j = search(arr, nums[i] - i, m) + 1
+      val v: Long = max(tree.query(j), 0) + nums[i]
+      tree.update(j, v.toInt())
+    }
+    return tree.query(m).toLong()
+  }
 
-    private int search(int[] nums, int x, int r) {
-        int l = 0;
-        while (l < r) {
-            int mid = (l + r) >> 1;
-            if (nums[mid] >= x) {
-                r = mid;
-            } else {
-                l = mid + 1;
-            }
-        }
-        return l;
+  private fun search(nums: IntArray, x: Int, r: Int): Int {
+    var r = r
+    var l = 0
+    while (l < r) {
+      val mid = (l + r) shr 1
+      if (nums[mid] >= x) {
+        r = mid
+      } else {
+        l = mid + 1
+      }
     }
+    return l
+  }
 }

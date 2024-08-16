@@ -1,21 +1,21 @@
-class Solution {
-    public long maximumSumOfHeights(List<Integer> maxHeights) {
-        long ans = 0;
-        int n = maxHeights.size();
-        for (int i = 0; i < n; ++i) {
-            int y = maxHeights.get(i);
-            long t = y;
-            for (int j = i - 1; j >= 0; --j) {
-                y = Math.min(y, maxHeights.get(j));
-                t += y;
-            }
-            y = maxHeights.get(i);
-            for (int j = i + 1; j < n; ++j) {
-                y = Math.min(y, maxHeights.get(j));
-                t += y;
-            }
-            ans = Math.max(ans, t);
-        }
-        return ans;
+internal class Solution {
+  fun maximumSumOfHeights(maxHeights: List<Int>): Long {
+    var ans: Long = 0
+    val n: Int = maxHeights.size()
+    for (i in 0 until n) {
+      var y = maxHeights[i]
+      var t = y.toLong()
+      for (j in i - 1 downTo 0) {
+        y = Math.min(y, maxHeights[j])
+        t += y.toLong()
+      }
+      y = maxHeights[i]
+      for (j in i + 1 until n) {
+        y = Math.min(y, maxHeights[j])
+        t += y.toLong()
+      }
+      ans = max(ans, t)
     }
+    return ans
+  }
 }

@@ -1,32 +1,35 @@
-class Solution {
-    public int[][] averageHeightOfBuildings(int[][] buildings) {
-        Map<Integer, Integer> cnt = new HashMap<>();
-        TreeMap<Integer, Integer> d = new TreeMap<>();
-        for (var e : buildings) {
-            int start = e[0], end = e[1], height = e[2];
-            cnt.merge(start, 1, Integer::sum);
-            cnt.merge(end, -1, Integer::sum);
-            d.merge(start, height, Integer::sum);
-            d.merge(end, -height, Integer::sum);
-        }
-        int s = 0, m = 0;
-        int last = -1;
-        List<int[]> ans = new ArrayList<>();
-        for (var e : d.entrySet()) {
-            int k = e.getKey(), v = e.getValue();
-            if (m > 0) {
-                int avg = s / m;
-                if (!ans.isEmpty() && ans.get(ans.size() - 1)[2] == avg
-                    && ans.get(ans.size() - 1)[1] == last) {
-                    ans.get(ans.size() - 1)[1] = k;
-                } else {
-                    ans.add(new int[] {last, k, avg});
-                }
-            }
-            s += v;
-            m += cnt.get(k);
-            last = k;
-        }
-        return ans.toArray(new int[0][]);
+internal class Solution {
+  fun averageHeightOfBuildings(buildings: Array<IntArray>): Array<IntArray> {
+    val cnt: Map<Int, Int> = HashMap()
+    val d: TreeMap<Int, Int> = TreeMap()
+    for (e in buildings) {
+      val start = e[0]
+      val end = e[1]
+      val height = e[2]
+      cnt.merge(start, 1) { a: Int, b: Int -> Integer.sum(a, b) }
+      cnt.merge(end, -1) { a: Int, b: Int -> Integer.sum(a, b) }
+      d.merge(start, height) { a: Int, b: Int -> Integer.sum(a, b) }
+      d.merge(end, -height) { a: Int, b: Int -> Integer.sum(a, b) }
     }
+    var s = 0
+    var m = 0
+    var last = -1
+    val ans: List<IntArray> = ArrayList()
+    for (e in d.entrySet()) {
+      val k: Int = e.getKey()
+      val v: Int = e.getValue()
+      if (m > 0) {
+        val avg = s / m
+        if (!ans.isEmpty() && ans[ans.size() - 1][2] === avg && ans[ans.size() - 1][1] === last) {
+          ans[ans.size() - 1][1] = k
+        } else {
+          ans.add(intArrayOf(last, k, avg))
+        }
+      }
+      s += v
+      m += cnt[k]!!
+      last = k
+    }
+    return ans.toArray(arrayOfNulls<IntArray>(0))
+  }
 }

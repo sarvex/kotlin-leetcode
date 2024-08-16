@@ -1,14 +1,16 @@
-class Solution {
-    public int makeTheIntegerZero(int num1, int num2) {
-        for (long k = 1;; ++k) {
-            long x = num1 - k * num2;
-            if (x < 0) {
-                break;
-            }
-            if (Long.bitCount(x) <= k && k <= x) {
-                return (int) k;
-            }
-        }
-        return -1;
+internal class Solution {
+  fun makeTheIntegerZero(num1: Int, num2: Int): Int {
+    var k: Long = 1
+    while (true) {
+      val x = num1 - k * num2
+      if (x < 0) {
+        break
+      }
+      if (java.lang.Long.bitCount(x) <= k && k <= x) {
+        return k.toInt()
+      }
+      ++k
     }
+    return -1
+  }
 }

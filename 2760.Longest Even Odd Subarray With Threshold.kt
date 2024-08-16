@@ -1,15 +1,16 @@
-class Solution {
-    public int longestAlternatingSubarray(int[] nums, int threshold) {
-        int ans = 0, n = nums.length;
-        for (int l = 0; l < n; ++l) {
-            if (nums[l] % 2 == 0 && nums[l] <= threshold) {
-                int r = l + 1;
-                while (r < n && nums[r] % 2 != nums[r - 1] % 2 && nums[r] <= threshold) {
-                    ++r;
-                }
-                ans = Math.max(ans, r - l);
-            }
+internal class Solution {
+  fun longestAlternatingSubarray(nums: IntArray, threshold: Int): Int {
+    var ans = 0
+    val n = nums.size
+    for (l in 0 until n) {
+      if (nums[l] % 2 == 0 && nums[l] <= threshold) {
+        var r: Int = l + 1
+        while (r < n && nums[r] % 2 != nums[r - 1] % 2 && nums[r] <= threshold) {
+          ++r
         }
-        return ans;
+        ans = max(ans, r - l)
+      }
     }
+    return ans
+  }
 }

@@ -1,37 +1,35 @@
-class MyQueue {
-    private Deque<Integer> stk1 = new ArrayDeque<>();
-    private Deque<Integer> stk2 = new ArrayDeque<>();
+import java.util.*
 
-    public MyQueue() {
-    }
+internal class MyQueue {
+  private val stk1: Deque<Int> = ArrayDeque()
+  private val stk2: Deque<Int> = ArrayDeque()
 
-    public void push(int x) {
-        stk1.push(x);
-    }
+  fun push(x: Int) {
+    stk1.push(x)
+  }
 
-    public int pop() {
-        move();
-        return stk2.pop();
-    }
+  fun pop(): Int {
+    move()
+    return stk2.pop()
+  }
 
-    public int peek() {
-        move();
-        return stk2.peek();
-    }
+  fun peek(): Int {
+    move()
+    return stk2.peek()
+  }
 
-    public boolean empty() {
-        return stk1.isEmpty() && stk2.isEmpty();
-    }
+  fun empty(): Boolean {
+    return stk1.isEmpty() && stk2.isEmpty()
+  }
 
-    private void move() {
-        while (stk2.isEmpty()) {
-            while (!stk1.isEmpty()) {
-                stk2.push(stk1.pop());
-            }
-        }
+  private fun move() {
+    while (stk2.isEmpty()) {
+      while (!stk1.isEmpty()) {
+        stk2.push(stk1.pop())
+      }
     }
+  }
 }
-
 /**
  * Your MyQueue object will be instantiated and called as such:
  * MyQueue obj = new MyQueue();

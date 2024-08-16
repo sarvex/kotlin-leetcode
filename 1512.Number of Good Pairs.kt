@@ -1,10 +1,10 @@
-class Solution {
-    public int numIdenticalPairs(int[] nums) {
-        int ans = 0;
-        int[] cnt = new int[101];
-        for (int x : nums) {
-            ans += cnt[x]++;
-        }
-        return ans;
+internal class Solution {
+  fun numIdenticalPairs(nums: IntArray): Int {
+    var ans = 0
+    val cnt = IntArray(101)
+    for (x in nums) {
+      ans += cnt[x]++
     }
+    return ans
+  }
 }

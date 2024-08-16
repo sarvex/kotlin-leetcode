@@ -1,5 +1,5 @@
-class Solution {
-    public int addDigits(int num) {
-        return (num - 1) % 9 + 1;
-    }
+internal class Solution {
+  fun addDigits(num: Int): Int {
+    return (num - 1) % 9 + 1
+  }
 }

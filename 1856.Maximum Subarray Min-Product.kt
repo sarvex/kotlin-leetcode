@@ -1,39 +1,39 @@
-class Solution {
-    public int maxSumMinProduct(int[] nums) {
-        int n = nums.length;
-        int[] left = new int[n];
-        int[] right = new int[n];
-        Arrays.fill(left, -1);
-        Arrays.fill(right, n);
-        Deque<Integer> stk = new ArrayDeque<>();
-        for (int i = 0; i < n; ++i) {
-            while (!stk.isEmpty() && nums[stk.peek()] >= nums[i]) {
-                stk.pop();
-            }
-            if (!stk.isEmpty()) {
-                left[i] = stk.peek();
-            }
-            stk.push(i);
-        }
-        stk.clear();
-        for (int i = n - 1; i >= 0; --i) {
-            while (!stk.isEmpty() && nums[stk.peek()] > nums[i]) {
-                stk.pop();
-            }
-            if (!stk.isEmpty()) {
-                right[i] = stk.peek();
-            }
-            stk.push(i);
-        }
-        long[] s = new long[n + 1];
-        for (int i = 0; i < n; ++i) {
-            s[i + 1] = s[i] + nums[i];
-        }
-        long ans = 0;
-        for (int i = 0; i < n; ++i) {
-            ans = Math.max(ans, nums[i] * (s[right[i]] - s[left[i] + 1]));
-        }
-        final int mod = (int) 1e9 + 7;
-        return (int) (ans % mod);
+internal class Solution {
+  fun maxSumMinProduct(nums: IntArray): Int {
+    val n = nums.size
+    val left = IntArray(n)
+    val right = IntArray(n)
+    Arrays.fill(left, -1)
+    Arrays.fill(right, n)
+    val stk: Deque<Int> = ArrayDeque()
+    for (i in 0 until n) {
+      while (!stk.isEmpty() && nums[stk.peek()] >= nums[i]) {
+        stk.pop()
+      }
+      if (!stk.isEmpty()) {
+        left[i] = stk.peek()
+      }
+      stk.push(i)
     }
+    stk.clear()
+    for (i in n - 1 downTo 0) {
+      while (!stk.isEmpty() && nums[stk.peek()] > nums[i]) {
+        stk.pop()
+      }
+      if (!stk.isEmpty()) {
+        right[i] = stk.peek()
+      }
+      stk.push(i)
+    }
+    val s = LongArray(n + 1)
+    for (i in 0 until n) {
+      s[i + 1] = s[i] + nums[i]
+    }
+    var ans: Long = 0
+    for (i in 0 until n) {
+      ans = max(ans, nums[i] * (s[right[i]] - s[left[i] + 1]))
+    }
+    val mod = 1e9.toInt() + 7
+    return (ans % mod).toInt()
+  }
 }

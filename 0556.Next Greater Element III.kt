@@ -1,30 +1,38 @@
-class Solution {
-    public int nextGreaterElement(int n) {
-        char[] cs = String.valueOf(n).toCharArray();
-        n = cs.length;
-        int i = n - 2, j = n - 1;
-        for (; i >= 0 && cs[i] >= cs[i + 1]; --i)
-            ;
-        if (i < 0) {
-            return -1;
-        }
-        for (; cs[i] >= cs[j]; --j)
-            ;
-        swap(cs, i, j);
-        reverse(cs, i + 1, n - 1);
-        long ans = Long.parseLong(String.valueOf(cs));
-        return ans > Integer.MAX_VALUE ? -1 : (int) ans;
+internal class Solution {
+  fun nextGreaterElement(n: Int): Int {
+    var n = n
+    val cs: CharArray = n.toString().toCharArray()
+    n = cs.size
+    var i = n - 2
+    var j = n - 1
+    while (i >= 0 && cs[i] >= cs[i + 1]) {
+      --i
     }
+    if (i < 0) {
+      return -1
+    }
+    while (cs[i] >= cs[j]) {
+      --j
+    }
+    swap(cs, i, j)
+    reverse(cs, i + 1, n - 1)
+    val ans: Long = String(cs).toLong()
+    return if (ans > MAX_VALUE) -1 else ans.toInt()
+  }
 
-    private void swap(char[] cs, int i, int j) {
-        char t = cs[i];
-        cs[i] = cs[j];
-        cs[j] = t;
-    }
+  private fun swap(cs: CharArray, i: Int, j: Int) {
+    val t = cs[i]
+    cs[i] = cs[j]
+    cs[j] = t
+  }
 
-    private void reverse(char[] cs, int i, int j) {
-        for (; i < j; ++i, --j) {
-            swap(cs, i, j);
-        }
+  private fun reverse(cs: CharArray, i: Int, j: Int) {
+    var i = i
+    var j = j
+    while (i < j) {
+      swap(cs, i, j)
+      ++i
+      --j
     }
+  }
 }

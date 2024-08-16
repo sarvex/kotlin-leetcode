@@ -1,15 +1,15 @@
-class Solution {
-    public int minNumber(int[] nums1, int[] nums2) {
-        int ans = 100;
-        for (int a : nums1) {
-            for (int b : nums2) {
-                if (a == b) {
-                    ans = Math.min(ans, a);
-                } else {
-                    ans = Math.min(ans, Math.min(a * 10 + b, b * 10 + a));
-                }
-            }
+internal class Solution {
+  fun minNumber(nums1: IntArray, nums2: IntArray): Int {
+    var ans = 100
+    for (a in nums1) {
+      for (b in nums2) {
+        if (a == b) {
+          ans = min(ans, a)
+        } else {
+          ans = min(ans, min(a * 10 + b, b * 10 + a))
         }
-        return ans;
+      }
     }
+    return ans
+  }
 }

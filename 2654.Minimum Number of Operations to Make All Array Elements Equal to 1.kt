@@ -1,29 +1,29 @@
-class Solution {
-    public int minOperations(int[] nums) {
-        int n = nums.length;
-        int cnt = 0;
-        for (int x : nums) {
-            if (x == 1) {
-                ++cnt;
-            }
-        }
-        if (cnt > 0) {
-            return n - cnt;
-        }
-        int mi = n + 1;
-        for (int i = 0; i < n; ++i) {
-            int g = 0;
-            for (int j = i; j < n; ++j) {
-                g = gcd(g, nums[j]);
-                if (g == 1) {
-                    mi = Math.min(mi, j - i + 1);
-                }
-            }
-        }
-        return mi > n ? -1 : n - 1 + mi - 1;
+internal class Solution {
+  fun minOperations(nums: IntArray): Int {
+    val n = nums.size
+    var cnt = 0
+    for (x in nums) {
+      if (x == 1) {
+        ++cnt
+      }
     }
+    if (cnt > 0) {
+      return n - cnt
+    }
+    var mi = n + 1
+    for (i in 0 until n) {
+      var g = 0
+      for (j in i until n) {
+        g = gcd(g, nums[j])
+        if (g == 1) {
+          mi = min(mi, j - i + 1)
+        }
+      }
+    }
+    return if (mi > n) -1 else n - 1 + mi - 1
+  }
 
-    private int gcd(int a, int b) {
-        return b == 0 ? a : gcd(b, a % b);
-    }
+  private fun gcd(a: Int, b: Int): Int {
+    return if (b == 0) a else gcd(b, a % b)
+  }
 }

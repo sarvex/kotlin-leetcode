@@ -1,62 +1,57 @@
-class PersistentUnionFind {
-    private final int inf = 1 << 30;
-    private int[] rank;
-    private int[] parent;
-    private int[] version;
+internal class PersistentUnionFind(n: Int) {
+  private val inf = 1 shl 30
+  private val rank = IntArray(n)
+  private val parent = IntArray(n)
+  private val version = IntArray(n)
 
-    public PersistentUnionFind(int n) {
-        rank = new int[n];
-        parent = new int[n];
-        version = new int[n];
-        for (int i = 0; i < n; i++) {
-            parent[i] = i;
-            version[i] = inf;
-        }
+  init {
+    for (i in 0 until n) {
+      parent[i] = i
+      version[i] = inf
     }
+  }
 
-    public int find(int x, int t) {
-        if (parent[x] == x || version[x] >= t) {
-            return x;
-        }
-        return find(parent[x], t);
+  fun find(x: Int, t: Int): Int {
+    if (parent[x] == x || version[x] >= t) {
+      return x
     }
+    return find(parent[x], t)
+  }
 
-    public boolean union(int a, int b, int t) {
-        int pa = find(a, inf);
-        int pb = find(b, inf);
-        if (pa == pb) {
-            return false;
-        }
-        if (rank[pa] > rank[pb]) {
-            version[pb] = t;
-            parent[pb] = pa;
-        } else {
-            version[pa] = t;
-            parent[pa] = pb;
-            if (rank[pa] == rank[pb]) {
-                rank[pb]++;
-            }
-        }
-        return true;
+  fun union(a: Int, b: Int, t: Int): Boolean {
+    val pa = find(a, inf)
+    val pb = find(b, inf)
+    if (pa == pb) {
+      return false
     }
+    if (rank[pa] > rank[pb]) {
+      version[pb] = t
+      parent[pb] = pa
+    } else {
+      version[pa] = t
+      parent[pa] = pb
+      if (rank[pa] == rank[pb]) {
+        rank[pb]++
+      }
+    }
+    return true
+  }
 }
 
-public class DistanceLimitedPathsExist {
-    private PersistentUnionFind puf;
+class DistanceLimitedPathsExist(n: Int, edgeList: Array<IntArray>) {
+  private val puf = PersistentUnionFind(n)
 
-    public DistanceLimitedPathsExist(int n, int[][] edgeList) {
-        puf = new PersistentUnionFind(n);
-        Arrays.sort(edgeList, (a, b) -> a[2] - b[2]);
-        for (var e : edgeList) {
-            puf.union(e[0], e[1], e[2]);
-        }
+  init {
+    Arrays.sort(edgeList) { a, b -> a.get(2) - b.get(2) }
+    for (e in edgeList) {
+      puf.union(e[0], e[1], e[2])
     }
+  }
 
-    public boolean query(int p, int q, int limit) {
-        return puf.find(p, limit) == puf.find(q, limit);
-    }
+  fun query(p: Int, q: Int, limit: Int): Boolean {
+    return puf.find(p, limit) == puf.find(q, limit)
+  }
 }
-
 /**
  * Your DistanceLimitedPathsExist object will be instantiated and called as such:
  * DistanceLimitedPathsExist obj = new DistanceLimitedPathsExist(n, edgeList);

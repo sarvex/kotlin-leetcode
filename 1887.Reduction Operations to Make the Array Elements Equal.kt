@@ -1,13 +1,14 @@
-class Solution {
-    public int reductionOperations(int[] nums) {
-        Arrays.sort(nums);
-        int ans = 0, cnt = 0;
-        for (int i = 1; i < nums.length; ++i) {
-            if (nums[i] != nums[i - 1]) {
-                ++cnt;
-            }
-            ans += cnt;
-        }
-        return ans;
+internal class Solution {
+  fun reductionOperations(nums: IntArray): Int {
+    Arrays.sort(nums)
+    var ans = 0
+    var cnt = 0
+    for (i in 1 until nums.size) {
+      if (nums[i] != nums[i - 1]) {
+        ++cnt
+      }
+      ans += cnt
     }
+    return ans
+  }
 }

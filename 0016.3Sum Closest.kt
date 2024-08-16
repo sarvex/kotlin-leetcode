@@ -1,25 +1,26 @@
-class Solution {
-    public int threeSumClosest(int[] nums, int target) {
-        Arrays.sort(nums);
-        int ans = 1 << 30;
-        int n = nums.length;
-        for (int i = 0; i < n; ++i) {
-            int j = i + 1, k = n - 1;
-            while (j < k) {
-                int t = nums[i] + nums[j] + nums[k];
-                if (t == target) {
-                    return t;
-                }
-                if (Math.abs(t - target) < Math.abs(ans - target)) {
-                    ans = t;
-                }
-                if (t > target) {
-                    --k;
-                } else {
-                    ++j;
-                }
-            }
+internal class Solution {
+  fun threeSumClosest(nums: IntArray, target: Int): Int {
+    Arrays.sort(nums)
+    var ans = 1 shl 30
+    val n = nums.size
+    for (i in 0 until n) {
+      var j: Int = i + 1
+      var k = n - 1
+      while (j < k) {
+        val t = nums[i] + nums[j] + nums[k]
+        if (t == target) {
+          return t
         }
-        return ans;
+        if (abs(t - target) < abs(ans - target)) {
+          ans = t
+        }
+        if (t > target) {
+          --k
+        } else {
+          ++j
+        }
+      }
     }
+    return ans
+  }
 }

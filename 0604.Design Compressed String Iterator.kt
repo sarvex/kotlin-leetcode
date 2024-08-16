@@ -1,46 +1,37 @@
-class StringIterator {
-    private List<Node> d = new ArrayList<>();
-    private int p;
+internal class StringIterator(compressedString: String) {
+  private val d: List<Node> = ArrayList()
+  private var p = 0
 
-    public StringIterator(String compressedString) {
-        int n = compressedString.length();
-        int i = 0;
-        while (i < n) {
-            char c = compressedString.charAt(i);
-            int x = 0;
-            while (++i < n && Character.isDigit(compressedString.charAt(i))) {
-                x = x * 10 + (compressedString.charAt(i) - '0');
-            }
-            d.add(new Node(c, x));
-        }
+  init {
+    val n = compressedString.length
+    var i = 0
+    while (i < n) {
+      val c = compressedString[i]
+      var x = 0
+      while (++i < n && Character.isDigit(compressedString[i])) {
+        x = x * 10 + (compressedString[i].code - '0'.code)
+      }
+      d.add(Node(c.code, x))
     }
+  }
 
-    public char next() {
-        if (!hasNext()) {
-            return ' ';
-        }
-        char ans = d.get(p).c;
-        if (--d.get(p).x == 0) {
-            ++p;
-        }
-        return ans;
+  fun next(): Char {
+    if (!hasNext()) {
+      return ' '
     }
+    val ans = d[p].c
+    if (--d[p].x === 0) {
+      ++p
+    }
+    return ans
+  }
 
-    public boolean hasNext() {
-        return p < d.size() && d.get(p).x > 0;
-    }
+  fun hasNext(): Boolean {
+    return p < d.size() && d[p].x > 0
+  }
 }
 
-class Node {
-    char c;
-    int x;
-
-    Node(char c, int x) {
-        this.c = c;
-        this.x = x;
-    }
-}
-
+internal open class Node(@kotlin.jvm.JvmField var c: Char, @kotlin.jvm.JvmField var x: Int)
 /**
  * Your StringIterator object will be instantiated and called as such:
  * StringIterator obj = new StringIterator(compressedString);

@@ -1,15 +1,16 @@
-class Solution {
-    public void wiggleSort(int[] nums) {
-        int[] arr = nums.clone();
-        Arrays.sort(arr);
-        int n = nums.length;
-        int i = (n - 1) >> 1, j = n - 1;
-        for (int k = 0; k < n; ++k) {
-            if (k % 2 == 0) {
-                nums[k] = arr[i--];
-            } else {
-                nums[k] = arr[j--];
-            }
-        }
+internal class Solution {
+  fun wiggleSort(nums: IntArray) {
+    val arr = nums.clone()
+    Arrays.sort(arr)
+    val n = nums.size
+    var i = (n - 1) shr 1
+    var j = n - 1
+    for (k in 0 until n) {
+      if (k % 2 == 0) {
+        nums[k] = arr[i--]
+      } else {
+        nums[k] = arr[j--]
+      }
     }
+  }
 }

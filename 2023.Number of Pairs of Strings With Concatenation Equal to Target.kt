@@ -1,14 +1,14 @@
-class Solution {
-    public int numOfPairs(String[] nums, String target) {
-        int n = nums.length;
-        int ans = 0;
-        for (int i = 0; i < n; ++i) {
-            for (int j = 0; j < n; ++j) {
-                if (i != j && target.equals(nums[i] + nums[j])) {
-                    ++ans;
-                }
-            }
+internal class Solution {
+  fun numOfPairs(nums: Array<String>, target: String): Int {
+    val n = nums.size
+    var ans = 0
+    for (i in 0 until n) {
+      for (j in 0 until n) {
+        if (i != j && target == nums[i] + nums[j]) {
+          ++ans
         }
-        return ans;
+      }
     }
+    return ans
+  }
 }

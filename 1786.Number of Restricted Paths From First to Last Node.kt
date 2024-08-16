@@ -1,58 +1,64 @@
-class Solution {
-    private static final int INF = Integer.MAX_VALUE;
-    private static final int MOD = (int) 1e9 + 7;
-    private List<int[]>[] g;
-    private int[] dist;
-    private int[] f;
-    private int n;
+internal class Solution {
+  private var g: Array<List<IntArray>>
+  private var dist: IntArray
+  private var f: IntArray
+  private var n = 0
 
-    public int countRestrictedPaths(int n, int[][] edges) {
-        this.n = n;
-        g = new List[n + 1];
-        for (int i = 0; i < g.length; ++i) {
-            g[i] = new ArrayList<>();
-        }
-        for (int[] e : edges) {
-            int u = e[0], v = e[1], w = e[2];
-            g[u].add(new int[] {v, w});
-            g[v].add(new int[] {u, w});
-        }
-        PriorityQueue<int[]> q = new PriorityQueue<>((a, b) -> a[0] - b[0]);
-        q.offer(new int[] {0, n});
-        dist = new int[n + 1];
-        f = new int[n + 1];
-        Arrays.fill(dist, INF);
-        Arrays.fill(f, -1);
-        dist[n] = 0;
-        while (!q.isEmpty()) {
-            int[] p = q.poll();
-            int u = p[1];
-            for (int[] ne : g[u]) {
-                int v = ne[0], w = ne[1];
-                if (dist[v] > dist[u] + w) {
-                    dist[v] = dist[u] + w;
-                    q.offer(new int[] {dist[v], v});
-                }
-            }
-        }
-        return dfs(1);
+  fun countRestrictedPaths(n: Int, edges: Array<IntArray>): Int {
+    this.n = n
+    g = arrayOfNulls(n + 1)
+    for (i in g.indices) {
+      g[i] = ArrayList()
     }
+    for (e in edges) {
+      val u = e[0]
+      val v = e[1]
+      val w = e[2]
+      g[u].add(intArrayOf(v, w))
+      g[v].add(intArrayOf(u, w))
+    }
+    val q: PriorityQueue<IntArray> = PriorityQueue { a, b -> a.get(0) - b.get(0) }
+    q.offer(intArrayOf(0, n))
+    dist = IntArray(n + 1)
+    f = IntArray(n + 1)
+    Arrays.fill(dist, Solution.Companion.INF)
+    Arrays.fill(f, -1)
+    dist[n] = 0
+    while (!q.isEmpty()) {
+      val p: IntArray = q.poll()
+      val u = p[1]
+      for (ne in g[u]) {
+        val v = ne[0]
+        val w = ne[1]
+        if (dist[v] > dist[u] + w) {
+          dist[v] = dist[u] + w
+          q.offer(intArrayOf(dist[v], v))
+        }
+      }
+    }
+    return dfs(1)
+  }
 
-    private int dfs(int i) {
-        if (f[i] != -1) {
-            return f[i];
-        }
-        if (i == n) {
-            return 1;
-        }
-        int ans = 0;
-        for (int[] ne : g[i]) {
-            int j = ne[0];
-            if (dist[i] > dist[j]) {
-                ans = (ans + dfs(j)) % MOD;
-            }
-        }
-        f[i] = ans;
-        return ans;
+  private fun dfs(i: Int): Int {
+    if (f[i] != -1) {
+      return f[i]
     }
+    if (i == n) {
+      return 1
+    }
+    var ans = 0
+    for (ne in g[i]) {
+      val j = ne[0]
+      if (dist[i] > dist[j]) {
+        ans = (ans + dfs(j)) % Solution.Companion.MOD
+      }
+    }
+    f[i] = ans
+    return ans
+  }
+
+  companion object {
+    private val INF: Int = MAX_VALUE
+    private const val MOD = 1e9.toInt() + 7
+  }
 }

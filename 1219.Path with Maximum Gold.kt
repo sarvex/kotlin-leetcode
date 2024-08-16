@@ -1,33 +1,33 @@
-class Solution {
-    private final int[] dirs = {-1, 0, 1, 0, -1};
-    private int[][] grid;
-    private int m;
-    private int n;
+internal class Solution {
+  private val dirs = intArrayOf(-1, 0, 1, 0, -1)
+  private var grid: Array<IntArray>
+  private var m = 0
+  private var n = 0
 
-    public int getMaximumGold(int[][] grid) {
-        m = grid.length;
-        n = grid[0].length;
-        this.grid = grid;
-        int ans = 0;
-        for (int i = 0; i < m; ++i) {
-            for (int j = 0; j < n; ++j) {
-                ans = Math.max(ans, dfs(i, j));
-            }
-        }
-        return ans;
+  fun getMaximumGold(grid: Array<IntArray>): Int {
+    m = grid.size
+    n = grid[0].size
+    this.grid = grid
+    var ans = 0
+    for (i in 0 until m) {
+      for (j in 0 until n) {
+        ans = max(ans, dfs(i, j))
+      }
     }
+    return ans
+  }
 
-    private int dfs(int i, int j) {
-        if (i < 0 || i >= m || j < 0 || j >= n || grid[i][j] == 0) {
-            return 0;
-        }
-        int v = grid[i][j];
-        grid[i][j] = 0;
-        int ans = 0;
-        for (int k = 0; k < 4; ++k) {
-            ans = Math.max(ans, v + dfs(i + dirs[k], j + dirs[k + 1]));
-        }
-        grid[i][j] = v;
-        return ans;
+  private fun dfs(i: Int, j: Int): Int {
+    if (i < 0 || i >= m || j < 0 || j >= n || grid[i][j] == 0) {
+      return 0
     }
+    val v = grid[i][j]
+    grid[i][j] = 0
+    var ans = 0
+    for (k in 0..3) {
+      ans = max(ans, v + dfs(i + dirs[k], j + dirs[k + 1]))
+    }
+    grid[i][j] = v
+    return ans
+  }
 }

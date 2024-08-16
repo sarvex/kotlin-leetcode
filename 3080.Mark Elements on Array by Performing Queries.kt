@@ -1,30 +1,37 @@
-class Solution {
-    public long[] unmarkedSumArray(int[] nums, int[][] queries) {
-        int n = nums.length;
-        long s = Arrays.stream(nums).asLongStream().sum();
-        boolean[] mark = new boolean[n];
-        int[][] arr = new int[n][0];
-        for (int i = 0; i < n; ++i) {
-            arr[i] = new int[] {nums[i], i};
-        }
-        Arrays.sort(arr, (a, b) -> a[0] == b[0] ? a[1] - b[1] : a[0] - b[0]);
-        int m = queries.length;
-        long[] ans = new long[m];
-        for (int i = 0, j = 0; i < m; ++i) {
-            int index = queries[i][0], k = queries[i][1];
-            if (!mark[index]) {
-                mark[index] = true;
-                s -= nums[index];
-            }
-            for (; k > 0 && j < n; ++j) {
-                if (!mark[arr[j][1]]) {
-                    mark[arr[j][1]] = true;
-                    s -= arr[j][0];
-                    --k;
-                }
-            }
-            ans[i] = s;
-        }
-        return ans;
+import java.util.*
+
+internal class Solution {
+  fun unmarkedSumArray(nums: IntArray, queries: Array<IntArray>): LongArray {
+    val n = nums.size
+    var s = Arrays.stream(nums).asLongStream().sum()
+    val mark = BooleanArray(n)
+    val arr = Array(n) { IntArray(0) }
+    for (i in 0 until n) {
+      arr[i] = intArrayOf(nums[i], i)
     }
+    Arrays.sort(arr) { a, b -> if (a[0] === b[0]) a[1] - b[1] else a[0] - b[0] }
+    val m = queries.size
+    val ans = LongArray(m)
+    var i = 0
+    var j = 0
+    while (i < m) {
+      val index = queries[i][0]
+      var k = queries[i][1]
+      if (!mark[index]) {
+        mark[index] = true
+        s -= nums[index].toLong()
+      }
+      while (k > 0 && j < n) {
+        if (!mark[arr[j][1]]) {
+          mark[arr[j][1]] = true
+          s -= arr[j][0].toLong()
+          --k
+        }
+        ++j
+      }
+      ans[i] = s
+      ++i
+    }
+    return ans
+  }
 }

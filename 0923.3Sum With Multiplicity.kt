@@ -1,21 +1,21 @@
-class Solution {
-    public int threeSumMulti(int[] arr, int target) {
-        final int mod = (int) 1e9 + 7;
-        int[] cnt = new int[101];
-        for (int x : arr) {
-            ++cnt[x];
-        }
-        int n = arr.length;
-        int ans = 0;
-        for (int j = 0; j < n; ++j) {
-            --cnt[arr[j]];
-            for (int i = 0; i < j; ++i) {
-                int c = target - arr[i] - arr[j];
-                if (c >= 0 && c < cnt.length) {
-                    ans = (ans + cnt[c]) % mod;
-                }
-            }
-        }
-        return ans;
+internal class Solution {
+  fun threeSumMulti(arr: IntArray, target: Int): Int {
+    val mod = 1e9.toInt() + 7
+    val cnt = IntArray(101)
+    for (x in arr) {
+      ++cnt[x]
     }
+    val n = arr.size
+    var ans = 0
+    for (j in 0 until n) {
+      --cnt[arr[j]]
+      for (i in 0 until j) {
+        val c = target - arr[i] - arr[j]
+        if (c >= 0 && c < cnt.size) {
+          ans = (ans + cnt[c]) % mod
+        }
+      }
+    }
+    return ans
+  }
 }

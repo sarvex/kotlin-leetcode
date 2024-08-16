@@ -1,32 +1,33 @@
-class Solution {
-    public double maxProbability(int n, int[][] edges, double[] succProb, int start, int end) {
-        List<Pair<Integer, Double>>[] g = new List[n];
-        Arrays.setAll(g, k -> new ArrayList<>());
-        for (int i = 0; i < edges.length; ++i) {
-            int a = edges[i][0], b = edges[i][1];
-            double s = succProb[i];
-            g[a].add(new Pair<>(b, s));
-            g[b].add(new Pair<>(a, s));
-        }
-        PriorityQueue<Pair<Double, Integer>> q
-            = new PriorityQueue<>(Comparator.comparingDouble(Pair::getKey));
-        double[] d = new double[n];
-        d[start] = 1.0;
-        q.offer(new Pair<>(-1.0, start));
-        while (!q.isEmpty()) {
-            Pair<Double, Integer> p = q.poll();
-            double w = p.getKey();
-            w *= -1;
-            int u = p.getValue();
-            for (Pair<Integer, Double> ne : g[u]) {
-                int v = ne.getKey();
-                double t = ne.getValue();
-                if (d[v] < d[u] * t) {
-                    d[v] = d[u] * t;
-                    q.offer(new Pair<>(-d[v], v));
-                }
-            }
-        }
-        return d[end];
+internal class Solution {
+  fun maxProbability(n: Int, edges: Array<IntArray>, succProb: DoubleArray, start: Int, end: Int): Double {
+    val g: Array<List<Pair<Int, Double>>> = arrayOfNulls(n)
+    Arrays.setAll(g) { k -> ArrayList() }
+    for (i in edges.indices) {
+      val a = edges[i][0]
+      val b = edges[i][1]
+      val s = succProb[i]
+      g[a].add(Pair(b, s.toInt()))
+      g[b].add(Pair(a, s.toInt()))
     }
+    val q
+        : PriorityQueue<Pair<Double, Int>> = PriorityQueue(Comparator.comparingDouble(Pair::getKey))
+    val d = DoubleArray(n)
+    d[start] = 1.0
+    q.offer(Pair(-1.0.toInt(), start))
+    while (!q.isEmpty()) {
+      val p: Pair<Double, Int> = q.poll()
+      var w: Double = p.getKey()
+      w *= -1.0
+      val u: Int = p.getValue()
+      for (ne in g[u]) {
+        val v: Int = ne.getKey()
+        val t: Double = ne.getValue()
+        if (d[v] < d[u] * t) {
+          d[v] = d[u] * t
+          q.offer(Pair(-d[v].toInt(), v))
+        }
+      }
+    }
+    return d[end]
+  }
 }

@@ -1,5 +1,5 @@
-class Solution {
-    public int theMaximumAchievableX(int num, int t) {
-        return num + t * 2;
-    }
+internal class Solution {
+  fun theMaximumAchievableX(num: Int, t: Int): Int {
+    return num + t * 2
+  }
 }

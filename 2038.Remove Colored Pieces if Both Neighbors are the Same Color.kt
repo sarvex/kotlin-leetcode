@@ -1,20 +1,24 @@
-class Solution {
-    public boolean winnerOfGame(String colors) {
-        int n = colors.length();
-        int a = 0, b = 0;
-        for (int i = 0, j = 0; i < n; i = j) {
-            while (j < n && colors.charAt(j) == colors.charAt(i)) {
-                ++j;
-            }
-            int m = j - i - 2;
-            if (m > 0) {
-                if (colors.charAt(i) == 'A') {
-                    a += m;
-                } else {
-                    b += m;
-                }
-            }
+internal class Solution {
+  fun winnerOfGame(colors: String): Boolean {
+    val n = colors.length
+    var a = 0
+    var b = 0
+    var i = 0
+    var j = 0
+    while (i < n) {
+      while (j < n && colors[j] == colors[i]) {
+        ++j
+      }
+      val m = j - i - 2
+      if (m > 0) {
+        if (colors[i] == 'A') {
+          a += m
+        } else {
+          b += m
         }
-        return a > b;
+      }
+      i = j
     }
+    return a > b
+  }
 }

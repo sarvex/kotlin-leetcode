@@ -1,11 +1,12 @@
-class Solution {
-
-    public int maxCoins(int[] piles) {
-        Arrays.sort(piles);
-        int ans = 0;
-        for (int i = piles.length - 2; i >= piles.length / 3; i -= 2) {
-            ans += piles[i];
-        }
-        return ans;
+internal class Solution {
+  fun maxCoins(piles: IntArray): Int {
+    Arrays.sort(piles)
+    var ans = 0
+    var i = piles.size - 2
+    while (i >= piles.size / 3) {
+      ans += piles[i]
+      i -= 2
     }
+    return ans
+  }
 }

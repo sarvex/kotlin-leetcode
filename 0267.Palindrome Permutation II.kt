@@ -1,38 +1,38 @@
-class Solution {
-    private List<String> ans = new ArrayList<>();
-    private int[] cnt = new int[26];
-    private int n;
+internal class Solution {
+  private val ans: List<String> = ArrayList()
+  private val cnt = IntArray(26)
+  private var n = 0
 
-    public List<String> generatePalindromes(String s) {
-        n = s.length();
-        for (char c : s.toCharArray()) {
-            ++cnt[c - 'a'];
-        }
-        String mid = "";
-        for (int i = 0; i < 26; ++i) {
-            if (cnt[i] % 2 == 1) {
-                if (!"".equals(mid)) {
-                    return ans;
-                }
-                mid = String.valueOf((char) (i + 'a'));
-            }
-        }
-        dfs(mid);
-        return ans;
+  fun generatePalindromes(s: String): List<String> {
+    n = s.length
+    for (c in s.toCharArray()) {
+      ++cnt[c.code - 'a'.code]
     }
+    var mid = ""
+    for (i in 0..25) {
+      if (cnt[i] % 2 == 1) {
+        if ("" != mid) {
+          return ans
+        }
+        mid = (i + 'a'.code).toChar().toString()
+      }
+    }
+    dfs(mid)
+    return ans
+  }
 
-    private void dfs(String t) {
-        if (t.length() == n) {
-            ans.add(t);
-            return;
-        }
-        for (int i = 0; i < 26; ++i) {
-            if (cnt[i] > 1) {
-                String c = String.valueOf((char) (i + 'a'));
-                cnt[i] -= 2;
-                dfs(c + t + c);
-                cnt[i] += 2;
-            }
-        }
+  private fun dfs(t: String) {
+    if (t.length == n) {
+      ans.add(t)
+      return
     }
+    for (i in 0..25) {
+      if (cnt[i] > 1) {
+        val c: String = (i + 'a'.code).toChar().toString()
+        cnt[i] -= 2
+        dfs(c + t + c)
+        cnt[i] += 2
+      }
+    }
+  }
 }

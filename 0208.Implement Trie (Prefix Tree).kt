@@ -1,46 +1,45 @@
-class Trie {
-    private Trie[] children;
-    private boolean isEnd;
+internal class Trie {
+  private val children: Array<Trie>
+  private var isEnd = false
 
-    public Trie() {
-        children = new Trie[26];
-    }
+  init {
+    children = arrayOfNulls(26)
+  }
 
-    public void insert(String word) {
-        Trie node = this;
-        for (char c : word.toCharArray()) {
-            int idx = c - 'a';
-            if (node.children[idx] == null) {
-                node.children[idx] = new Trie();
-            }
-            node = node.children[idx];
-        }
-        node.isEnd = true;
+  fun insert(word: String) {
+    var node = this
+    for (c in word.toCharArray()) {
+      val idx: Int = c.code - 'a'.code
+      if (node.children[idx] == null) {
+        node.children[idx] = Trie()
+      }
+      node = node.children[idx]
     }
+    node.isEnd = true
+  }
 
-    public boolean search(String word) {
-        Trie node = searchPrefix(word);
-        return node != null && node.isEnd;
-    }
+  fun search(word: String): Boolean {
+    val node = searchPrefix(word)
+    return node != null && node.isEnd
+  }
 
-    public boolean startsWith(String prefix) {
-        Trie node = searchPrefix(prefix);
-        return node != null;
-    }
+  fun startsWith(prefix: String): Boolean {
+    val node = searchPrefix(prefix)
+    return node != null
+  }
 
-    private Trie searchPrefix(String s) {
-        Trie node = this;
-        for (char c : s.toCharArray()) {
-            int idx = c - 'a';
-            if (node.children[idx] == null) {
-                return null;
-            }
-            node = node.children[idx];
-        }
-        return node;
+  private fun searchPrefix(s: String): Trie? {
+    var node = this
+    for (c in s.toCharArray()) {
+      val idx: Int = c.code - 'a'.code
+      if (node.children[idx] == null) {
+        return null
+      }
+      node = node.children[idx]
     }
+    return node
+  }
 }
-
 /**
  * Your Trie object will be instantiated and called as such:
  * Trie obj = new Trie();

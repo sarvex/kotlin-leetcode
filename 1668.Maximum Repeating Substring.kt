@@ -1,10 +1,10 @@
-class Solution {
-    public int maxRepeating(String sequence, String word) {
-        for (int k = sequence.length() / word.length(); k > 0; --k) {
-            if (sequence.contains(word.repeat(k))) {
-                return k;
-            }
-        }
-        return 0;
+internal class Solution {
+  fun maxRepeating(sequence: String, word: String): Int {
+    for (k in sequence.length / word.length downTo 1) {
+      if (sequence.contains(word.repeat(k))) {
+        return k
+      }
     }
+    return 0
+  }
 }

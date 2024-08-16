@@ -1,25 +1,25 @@
-class Solution {
-    private Set<String> vis = new HashSet<>();
-    private int ans = 1;
-    private String s;
+internal class Solution {
+  private val vis: Set<String> = HashSet()
+  private var ans = 1
+  private var s: String? = null
 
-    public int maxUniqueSplit(String s) {
-        this.s = s;
-        dfs(0, 0);
-        return ans;
-    }
+  fun maxUniqueSplit(s: String?): Int {
+    this.s = s
+    dfs(0, 0)
+    return ans
+  }
 
-    private void dfs(int i, int t) {
-        if (i >= s.length()) {
-            ans = Math.max(ans, t);
-            return;
-        }
-        for (int j = i + 1; j <= s.length(); ++j) {
-            String x = s.substring(i, j);
-            if (vis.add(x)) {
-                dfs(j, t + 1);
-                vis.remove(x);
-            }
-        }
+  private fun dfs(i: Int, t: Int) {
+    if (i >= s!!.length) {
+      ans = max(ans, t)
+      return
     }
+    for (j in i + 1..s!!.length) {
+      val x: String = s.substring(i, j)
+      if (vis.add(x)) {
+        dfs(j, t + 1)
+        vis.remove(x)
+      }
+    }
+  }
 }

@@ -1,5 +1,5 @@
-class Solution {
-    public String defangIPaddr(String address) {
-        return address.replace(".", "[.]");
-    }
+internal class Solution {
+  fun defangIPaddr(address: String): String {
+    return address.replace(".", "[.]")
+  }
 }

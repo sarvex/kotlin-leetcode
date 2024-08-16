@@ -1,17 +1,19 @@
-class Solution {
-    public int getLucky(String s, int k) {
-        StringBuilder sb = new StringBuilder();
-        for (char c : s.toCharArray()) {
-            sb.append(c - 'a' + 1);
-        }
-        s = sb.toString();
-        while (k-- > 0) {
-            int t = 0;
-            for (char c : s.toCharArray()) {
-                t += c - '0';
-            }
-            s = String.valueOf(t);
-        }
-        return Integer.parseInt(s);
+internal class Solution {
+  fun getLucky(s: String, k: Int): Int {
+    var s = s
+    var k = k
+    val sb = StringBuilder()
+    for (c in s.toCharArray()) {
+      sb.append(c.code - 'a'.code + 1)
     }
+    s = sb.toString()
+    while (k-- > 0) {
+      var t = 0
+      for (c in s.toCharArray()) {
+        t += c.code - '0'.code
+      }
+      s = t.toString()
+    }
+    return s.toInt()
+  }
 }

@@ -1,23 +1,21 @@
-class TimeMap {
-    private Map<String, TreeMap<Integer, String>> ktv = new HashMap<>();
+import java.util.*
 
-    public TimeMap() {
-    }
+internal class TimeMap {
+  private val ktv: Map<String, TreeMap<Int, String>> = HashMap()
 
-    public void set(String key, String value, int timestamp) {
-        ktv.computeIfAbsent(key, k -> new TreeMap<>()).put(timestamp, value);
-    }
+  fun set(key: String?, value: String?, timestamp: Int) {
+    ktv.computeIfAbsent(key) { k -> TreeMap() }.put(timestamp, value)
+  }
 
-    public String get(String key, int timestamp) {
-        if (!ktv.containsKey(key)) {
-            return "";
-        }
-        var tv = ktv.get(key);
-        Integer t = tv.floorKey(timestamp);
-        return t == null ? "" : tv.get(t);
+  fun get(key: String, timestamp: Int): String {
+    if (!ktv.containsKey(key)) {
+      return ""
     }
+    val tv: Unit = ktv[key]
+    val t: Int = tv.floorKey(timestamp)
+    return if (t == null) "" else tv.get(t)
+  }
 }
-
 /**
  * Your TimeMap object will be instantiated and called as such:
  * TimeMap obj = new TimeMap();

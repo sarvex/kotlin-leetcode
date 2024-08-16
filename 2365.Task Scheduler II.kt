@@ -1,12 +1,12 @@
-class Solution {
-    public long taskSchedulerII(int[] tasks, int space) {
-        Map<Integer, Long> day = new HashMap<>();
-        long ans = 0;
-        for (int task : tasks) {
-            ++ans;
-            ans = Math.max(ans, day.getOrDefault(task, 0L));
-            day.put(task, ans + space + 1);
-        }
-        return ans;
+internal class Solution {
+  fun taskSchedulerII(tasks: IntArray, space: Int): Long {
+    val day: Map<Int, Long> = HashMap()
+    var ans: Long = 0
+    for (task in tasks) {
+      ++ans
+      ans = Math.max(ans, day.getOrDefault(task, 0L))
+      day.put(task, ans + space + 1)
     }
+    return ans
+  }
 }

@@ -1,39 +1,41 @@
-class ZeroEvenOdd {
-    private int n;
-    private Semaphore z = new Semaphore(1);
-    private Semaphore e = new Semaphore(0);
-    private Semaphore o = new Semaphore(0);
+internal class ZeroEvenOdd(private val n: Int) {
+  private val z: Semaphore = Semaphore(1)
+  private val e: Semaphore = Semaphore(0)
+  private val o: Semaphore = Semaphore(0)
 
-    public ZeroEvenOdd(int n) {
-        this.n = n;
+  // printNumber.accept(x) outputs "x", where x is an integer.
+  @kotlin.Throws(InterruptedException::class)
+  fun zero(printNumber: IntConsumer) {
+    for (i in 0 until n) {
+      z.acquire(1)
+      printNumber.accept(0)
+      if (i % 2 == 0) {
+        o.release(1)
+      } else {
+        e.release(1)
+      }
     }
+  }
 
-    // printNumber.accept(x) outputs "x", where x is an integer.
-    public void zero(IntConsumer printNumber) throws InterruptedException {
-        for (int i = 0; i < n; ++i) {
-            z.acquire(1);
-            printNumber.accept(0);
-            if (i % 2 == 0) {
-                o.release(1);
-            } else {
-                e.release(1);
-            }
-        }
+  @kotlin.Throws(InterruptedException::class)
+  fun even(printNumber: IntConsumer) {
+    var i = 2
+    while (i <= n) {
+      e.acquire(1)
+      printNumber.accept(i)
+      z.release(1)
+      i += 2
     }
+  }
 
-    public void even(IntConsumer printNumber) throws InterruptedException {
-        for (int i = 2; i <= n; i += 2) {
-            e.acquire(1);
-            printNumber.accept(i);
-            z.release(1);
-        }
+  @kotlin.Throws(InterruptedException::class)
+  fun odd(printNumber: IntConsumer) {
+    var i = 1
+    while (i <= n) {
+      o.acquire(1)
+      printNumber.accept(i)
+      z.release(1)
+      i += 2
     }
-
-    public void odd(IntConsumer printNumber) throws InterruptedException {
-        for (int i = 1; i <= n; i += 2) {
-            o.acquire(1);
-            printNumber.accept(i);
-            z.release(1);
-        }
-    }
+  }
 }

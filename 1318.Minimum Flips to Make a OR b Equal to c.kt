@@ -1,10 +1,12 @@
-class Solution {
-    public int minFlips(int a, int b, int c) {
-        int ans = 0;
-        for (int i = 0; i < 32; ++i) {
-            int x = a >> i & 1, y = b >> i & 1, z = c >> i & 1;
-            ans += z == 0 ? x + y : (x == 0 && y == 0 ? 1 : 0);
-        }
-        return ans;
+internal class Solution {
+  fun minFlips(a: Int, b: Int, c: Int): Int {
+    var ans = 0
+    for (i in 0..31) {
+      val x = a shr i and 1
+      val y = b shr i and 1
+      val z = c shr i and 1
+      ans += if (z == 0) x + y else (if (x == 0 && y == 0) 1 else 0)
     }
+    return ans
+  }
 }

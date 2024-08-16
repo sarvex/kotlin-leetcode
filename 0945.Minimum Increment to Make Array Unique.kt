@@ -1,11 +1,12 @@
-class Solution {
-    public int minIncrementForUnique(int[] nums) {
-        Arrays.sort(nums);
-        int ans = 0, y = -1;
-        for (int x : nums) {
-            y = Math.max(y + 1, x);
-            ans += y - x;
-        }
-        return ans;
+internal class Solution {
+  fun minIncrementForUnique(nums: IntArray): Int {
+    Arrays.sort(nums)
+    var ans = 0
+    var y = -1
+    for (x in nums) {
+      y = max(y + 1, x)
+      ans += y - x
     }
+    return ans
+  }
 }

@@ -1,30 +1,30 @@
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
+ * int val;
+ * TreeNode left;
+ * TreeNode right;
+ * TreeNode(int x) { val = x; }
  * }
  */
+internal class Solution {
+  private var target: TreeNode? = null
 
-class Solution {
-    private TreeNode target;
+  fun getTargetCopy(
+    original: TreeNode?, cloned: TreeNode, target: TreeNode?
+  ): TreeNode? {
+    this.target = target
+    return dfs(original, cloned)
+  }
 
-    public final TreeNode getTargetCopy(
-        final TreeNode original, final TreeNode cloned, final TreeNode target) {
-        this.target = target;
-        return dfs(original, cloned);
+  private fun dfs(root1: TreeNode?, root2: TreeNode): TreeNode? {
+    if (root1 == null) {
+      return null
     }
-
-    private TreeNode dfs(TreeNode root1, TreeNode root2) {
-        if (root1 == null) {
-            return null;
-        }
-        if (root1 == target) {
-            return root2;
-        }
-        TreeNode res = dfs(root1.left, root2.left);
-        return res == null ? dfs(root1.right, root2.right) : res;
+    if (root1 === target) {
+      return root2
     }
+    val res: TreeNode? = dfs(root1.left, root2.left)
+    return if (res == null) dfs(root1.right, root2.right) else res
+  }
 }

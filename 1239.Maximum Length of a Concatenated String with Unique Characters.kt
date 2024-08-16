@@ -1,30 +1,30 @@
-class Solution {
-    public int maxLength(List<String> arr) {
-        int ans = 0;
-        List<Integer> masks = new ArrayList<>();
-        masks.add(0);
-        for (var s : arr) {
-            int mask = 0;
-            for (int i = 0; i < s.length(); ++i) {
-                int j = s.charAt(i) - 'a';
-                if (((mask >> j) & 1) == 1) {
-                    mask = 0;
-                    break;
-                }
-                mask |= 1 << j;
-            }
-            if (mask == 0) {
-                continue;
-            }
-            int n = masks.size();
-            for (int i = 0; i < n; ++i) {
-                int m = masks.get(i);
-                if ((m & mask) == 0) {
-                    masks.add(m | mask);
-                    ans = Math.max(ans, Integer.bitCount(m | mask));
-                }
-            }
+internal class Solution {
+  fun maxLength(arr: List<String>): Int {
+    var ans = 0
+    val masks: List<Int> = ArrayList()
+    masks.add(0)
+    for (s in arr) {
+      var mask = 0
+      for (i in 0 until s.length()) {
+        val j: Int = s.charAt(i) - 'a'
+        if (((mask shr j) and 1) == 1) {
+          mask = 0
+          break
         }
-        return ans;
+        mask = mask or (1 shl j)
+      }
+      if (mask == 0) {
+        continue
+      }
+      val n: Int = masks.size()
+      for (i in 0 until n) {
+        val m = masks[i]
+        if ((m and mask) == 0) {
+          masks.add(m or mask)
+          ans = max(ans, Integer.bitCount(m or mask))
+        }
+      }
     }
+    return ans
+  }
 }

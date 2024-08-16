@@ -1,23 +1,25 @@
-class Solution {
-    public int countNicePairs(int[] nums) {
-        Map<Integer, Integer> cnt = new HashMap<>();
-        for (int x : nums) {
-            int y = x - rev(x);
-            cnt.merge(y, 1, Integer::sum);
-        }
-        final int mod = (int) 1e9 + 7;
-        long ans = 0;
-        for (int v : cnt.values()) {
-            ans = (ans + (long) v * (v - 1) / 2) % mod;
-        }
-        return (int) ans;
+internal class Solution {
+  fun countNicePairs(nums: IntArray): Int {
+    val cnt: Map<Int, Int> = HashMap()
+    for (x in nums) {
+      val y = x - rev(x)
+      cnt.merge(y, 1) { a: Int, b: Int -> Integer.sum(a, b) }
     }
+    val mod = 1e9.toInt() + 7
+    var ans: Long = 0
+    for (v in cnt.values()) {
+      ans = (ans + v.toLong() * (v - 1) / 2) % mod
+    }
+    return ans.toInt()
+  }
 
-    private int rev(int x) {
-        int y = 0;
-        for (; x > 0; x /= 10) {
-            y = y * 10 + x % 10;
-        }
-        return y;
+  private fun rev(x: Int): Int {
+    var x = x
+    var y = 0
+    while (x > 0) {
+      y = y * 10 + x % 10
+      x /= 10
     }
+    return y
+  }
 }

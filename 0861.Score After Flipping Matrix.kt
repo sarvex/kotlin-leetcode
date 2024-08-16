@@ -1,21 +1,22 @@
-class Solution {
-    public int matrixScore(int[][] grid) {
-        int m = grid.length, n = grid[0].length;
-        for (int i = 0; i < m; ++i) {
-            if (grid[i][0] == 0) {
-                for (int j = 0; j < n; ++j) {
-                    grid[i][j] ^= 1;
-                }
-            }
+internal class Solution {
+  fun matrixScore(grid: Array<IntArray>): Int {
+    val m = grid.size
+    val n = grid[0].size
+    for (i in 0 until m) {
+      if (grid[i][0] == 0) {
+        for (j in 0 until n) {
+          grid[i][j] = grid[i][j] xor 1
         }
-        int ans = 0;
-        for (int j = 0; j < n; ++j) {
-            int cnt = 0;
-            for (int i = 0; i < m; ++i) {
-                cnt += grid[i][j];
-            }
-            ans += Math.max(cnt, m - cnt) * (1 << (n - j - 1));
-        }
-        return ans;
+      }
     }
+    var ans = 0
+    for (j in 0 until n) {
+      var cnt = 0
+      for (i in 0 until m) {
+        cnt += grid[i][j]
+      }
+      ans += max(cnt, m - cnt) * (1 shl (n - j - 1))
+    }
+    return ans
+  }
 }

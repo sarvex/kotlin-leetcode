@@ -1,11 +1,11 @@
-class Solution {
-    public int minOperations(int[] nums, int k) {
-        int ans = 0;
-        for (int x : nums) {
-            if (x < k) {
-                ++ans;
-            }
-        }
-        return ans;
+internal class Solution {
+  fun minOperations(nums: IntArray, k: Int): Int {
+    var ans = 0
+    for (x in nums) {
+      if (x < k) {
+        ++ans
+      }
     }
+    return ans
+  }
 }

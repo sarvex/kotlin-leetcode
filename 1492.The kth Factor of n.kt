@@ -1,10 +1,11 @@
-class Solution {
-    public int kthFactor(int n, int k) {
-        for (int i = 1; i <= n; ++i) {
-            if (n % i == 0 && (--k == 0)) {
-                return i;
-            }
-        }
-        return -1;
+internal class Solution {
+  fun kthFactor(n: Int, k: Int): Int {
+    var k = k
+    for (i in 1..n) {
+      if (n % i == 0 && (--k == 0)) {
+        return i
+      }
     }
+    return -1
+  }
 }

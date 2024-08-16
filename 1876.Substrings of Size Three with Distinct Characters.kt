@@ -1,12 +1,15 @@
-class Solution {
-    public int countGoodSubstrings(String s) {
-        int count = 0, n = s.length();
-        for (int i = 0; i < n - 2; ++i) {
-            char a = s.charAt(i), b = s.charAt(i + 1), c = s.charAt(i + 2);
-            if (a != b && a != c && b != c) {
-                ++count;
-            }
-        }
-        return count;
+internal class Solution {
+  fun countGoodSubstrings(s: String): Int {
+    var count = 0
+    val n = s.length
+    for (i in 0 until n - 2) {
+      val a = s[i]
+      val b = s[i + 1]
+      val c = s[i + 2]
+      if (a != b && a != c && b != c) {
+        ++count
+      }
     }
+    return count
+  }
 }

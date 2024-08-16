@@ -1,29 +1,29 @@
-class Solution {
-    private List<List<Integer>> ans = new ArrayList<>();
-    private List<Integer> t = new ArrayList<>();
-    private boolean[] vis;
-    private int[] nums;
+internal class Solution {
+  private val ans: List<List<Int>> = ArrayList()
+  private val t: List<Int> = ArrayList()
+  private var vis: BooleanArray
+  private var nums: IntArray
 
-    public List<List<Integer>> permute(int[] nums) {
-        this.nums = nums;
-        vis = new boolean[nums.length];
-        dfs(0);
-        return ans;
-    }
+  fun permute(nums: IntArray): List<List<Int>> {
+    this.nums = nums
+    vis = BooleanArray(nums.size)
+    dfs(0)
+    return ans
+  }
 
-    private void dfs(int i) {
-        if (i == nums.length) {
-            ans.add(new ArrayList<>(t));
-            return;
-        }
-        for (int j = 0; j < nums.length; ++j) {
-            if (!vis[j]) {
-                vis[j] = true;
-                t.add(nums[j]);
-                dfs(i + 1);
-                t.remove(t.size() - 1);
-                vis[j] = false;
-            }
-        }
+  private fun dfs(i: Int) {
+    if (i == nums.size) {
+      ans.add(ArrayList(t))
+      return
     }
+    for (j in nums.indices) {
+      if (!vis[j]) {
+        vis[j] = true
+        t.add(nums[j])
+        dfs(i + 1)
+        t.remove(t.size() - 1)
+        vis[j] = false
+      }
+    }
+  }
 }

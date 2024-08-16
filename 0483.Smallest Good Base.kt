@@ -1,41 +1,40 @@
-class Solution {
-    public String smallestGoodBase(String n) {
-        long num = Long.parseLong(n);
-        for (int len = 63; len >= 2; --len) {
-            long radix = getRadix(len, num);
-            if (radix != -1) {
-                return String.valueOf(radix);
-            }
-        }
-        return String.valueOf(num - 1);
+internal class Solution {
+  fun smallestGoodBase(n: String): String {
+    val num: Long = n.toLong()
+    for (len in 63 downTo 2) {
+      val radix = getRadix(len, num)
+      if (radix != -1L) {
+        return radix.toString()
+      }
     }
+    return (num - 1).toString()
+  }
 
-    private long getRadix(int len, long num) {
-        long l = 2, r = num - 1;
-        while (l < r) {
-            long mid = l + r >>> 1;
-            if (calc(mid, len) >= num)
-                r = mid;
-            else
-                l = mid + 1;
-        }
-        return calc(r, len) == num ? r : -1;
+  private fun getRadix(len: Int, num: Long): Long {
+    var l: Long = 2
+    var r = num - 1
+    while (l < r) {
+      val mid = l + r ushr 1
+      if (calc(mid, len) >= num) r = mid
+      else l = mid + 1
     }
+    return if (calc(r, len) == num) r else -1
+  }
 
-    private long calc(long radix, int len) {
-        long p = 1;
-        long sum = 0;
-        for (int i = 0; i < len; ++i) {
-            if (Long.MAX_VALUE - sum < p) {
-                return Long.MAX_VALUE;
-            }
-            sum += p;
-            if (Long.MAX_VALUE / p < radix) {
-                p = Long.MAX_VALUE;
-            } else {
-                p *= radix;
-            }
-        }
-        return sum;
+  private fun calc(radix: Long, len: Int): Long {
+    var p: Long = 1
+    var sum: Long = 0
+    for (i in 0 until len) {
+      if (MAX_VALUE - sum < p) {
+        return MAX_VALUE
+      }
+      sum += p
+      if (MAX_VALUE / p < radix) {
+        p = MAX_VALUE
+      } else {
+        p *= radix
+      }
     }
+    return sum
+  }
 }

@@ -1,12 +1,12 @@
-class Solution {
-    public List<Integer> targetIndices(int[] nums, int target) {
-        Arrays.sort(nums);
-        List<Integer> ans = new ArrayList<>();
-        for (int i = 0; i < nums.length; ++i) {
-            if (nums[i] == target) {
-                ans.add(i);
-            }
-        }
-        return ans;
+internal class Solution {
+  fun targetIndices(nums: IntArray, target: Int): List<Int> {
+    Arrays.sort(nums)
+    val ans: List<Int> = ArrayList()
+    for (i in nums.indices) {
+      if (nums[i] == target) {
+        ans.add(i)
+      }
     }
+    return ans
+  }
 }

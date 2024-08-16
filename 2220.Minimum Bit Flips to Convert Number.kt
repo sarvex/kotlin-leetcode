@@ -1,11 +1,11 @@
-class Solution {
-    public int minBitFlips(int start, int goal) {
-        int t = start ^ goal;
-        int ans = 0;
-        while (t != 0) {
-            ans += t & 1;
-            t >>= 1;
-        }
-        return ans;
+internal class Solution {
+  fun minBitFlips(start: Int, goal: Int): Int {
+    var t = start xor goal
+    var ans = 0
+    while (t != 0) {
+      ans += t and 1
+      t = t shr 1
     }
+    return ans
+  }
 }

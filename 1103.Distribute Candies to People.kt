@@ -1,10 +1,13 @@
-class Solution {
-    public int[] distributeCandies(int candies, int num_people) {
-        int[] ans = new int[num_people];
-        for (int i = 0; candies > 0; ++i) {
-            ans[i % num_people] += Math.min(candies, i + 1);
-            candies -= Math.min(candies, i + 1);
-        }
-        return ans;
+internal class Solution {
+  fun distributeCandies(candies: Int, num_people: Int): IntArray {
+    var candies = candies
+    val ans = IntArray(num_people)
+    var i = 0
+    while (candies > 0) {
+      ans[i % num_people] += min(candies, i + 1)
+      candies -= min(candies, i + 1)
+      ++i
     }
+    return ans
+  }
 }

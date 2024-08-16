@@ -1,14 +1,14 @@
-class Solution {
-    public long maximumSumScore(int[] nums) {
-        int n = nums.length;
-        long[] s = new long[n + 1];
-        for (int i = 0; i < n; ++i) {
-            s[i + 1] = s[i] + nums[i];
-        }
-        long ans = Long.MIN_VALUE;
-        for (int i = 0; i < n; ++i) {
-            ans = Math.max(ans, Math.max(s[i + 1], s[n] - s[i]));
-        }
-        return ans;
+internal class Solution {
+  fun maximumSumScore(nums: IntArray): Long {
+    val n = nums.size
+    val s = LongArray(n + 1)
+    for (i in 0 until n) {
+      s[i + 1] = s[i] + nums[i]
     }
+    var ans: Long = MIN_VALUE
+    for (i in 0 until n) {
+      ans = max(ans, max(s[i + 1], s[n] - s[i]))
+    }
+    return ans
+  }
 }

@@ -1,16 +1,17 @@
-class Solution {
-    public int findMin(int[] nums) {
-        int left = 0, right = nums.length - 1;
-        while (left < right) {
-            int mid = (left + right) >> 1;
-            if (nums[mid] > nums[right]) {
-                left = mid + 1;
-            } else if (nums[mid] < nums[right]) {
-                right = mid;
-            } else {
-                --right;
-            }
-        }
-        return nums[left];
+internal class Solution {
+  fun findMin(nums: IntArray): Int {
+    var left = 0
+    var right = nums.size - 1
+    while (left < right) {
+      val mid = (left + right) shr 1
+      if (nums[mid] > nums[right]) {
+        left = mid + 1
+      } else if (nums[mid] < nums[right]) {
+        right = mid
+      } else {
+        --right
+      }
     }
+    return nums[left]
+  }
 }

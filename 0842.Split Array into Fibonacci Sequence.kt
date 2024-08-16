@@ -1,35 +1,36 @@
-class Solution {
-    private List<Integer> ans = new ArrayList<>();
-    private String num;
+internal class Solution {
+  private val ans: List<Int> = ArrayList()
+  private var num: String? = null
 
-    public List<Integer> splitIntoFibonacci(String num) {
-        this.num = num;
-        dfs(0);
-        return ans;
-    }
+  fun splitIntoFibonacci(num: String?): List<Int> {
+    this.num = num
+    dfs(0)
+    return ans
+  }
 
-    private boolean dfs(int i) {
-        if (i == num.length()) {
-            return ans.size() >= 3;
-        }
-        long x = 0;
-        for (int j = i; j < num.length(); ++j) {
-            if (j > i && num.charAt(i) == '0') {
-                break;
-            }
-            x = x * 10 + num.charAt(j) - '0';
-            if (x > Integer.MAX_VALUE
-                || (ans.size() >= 2 && x > ans.get(ans.size() - 1) + ans.get(ans.size() - 2))) {
-                break;
-            }
-            if (ans.size() < 2 || x == ans.get(ans.size() - 1) + ans.get(ans.size() - 2)) {
-                ans.add((int) x);
-                if (dfs(j + 1)) {
-                    return true;
-                }
-                ans.remove(ans.size() - 1);
-            }
-        }
-        return false;
+  private fun dfs(i: Int): Boolean {
+    if (i == num!!.length) {
+      return ans.size() >= 3
     }
+    var x: Long = 0
+    for (j in i until num!!.length) {
+      if (j > i && num!![i] == '0') {
+        break
+      }
+      x = x * 10 + num!![j].code.toLong() - '0'.code.toLong()
+      if (x > MAX_VALUE
+        || (ans.size() >= 2 && x > ans[ans.size() - 1] + ans[ans.size() - 2])
+      ) {
+        break
+      }
+      if (ans.size() < 2 || x == ans[ans.size() - 1] + ans[ans.size() - 2]) {
+        ans.add(x.toInt())
+        if (dfs(j + 1)) {
+          return true
+        }
+        ans.remove(ans.size() - 1)
+      }
+    }
+    return false
+  }
 }

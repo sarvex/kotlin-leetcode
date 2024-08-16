@@ -1,38 +1,38 @@
-class Solution {
-    private int m;
-    private int n;
-    private String target;
-    private Integer[][] f;
-    private int[][] cnt;
-    private final int mod = (int) 1e9 + 7;
+internal class Solution {
+  private var m = 0
+  private var n = 0
+  private var target: String? = null
+  private var f: Array<Array<Int>>
+  private var cnt: Array<IntArray>
+  private val mod = 1e9.toInt() + 7
 
-    public int numWays(String[] words, String target) {
-        m = target.length();
-        n = words[0].length();
-        f = new Integer[m][n];
-        this.target = target;
-        cnt = new int[n][26];
-        for (var w : words) {
-            for (int j = 0; j < n; ++j) {
-                cnt[j][w.charAt(j) - 'a']++;
-            }
-        }
-        return dfs(0, 0);
+  fun numWays(words: Array<String>, target: String): Int {
+    m = target.length
+    n = words[0].length
+    f = Array(m) { arrayOfNulls(n) }
+    this.target = target
+    cnt = Array(n) { IntArray(26) }
+    for (w in words) {
+      for (j in 0 until n) {
+        cnt[j][w[j].code - 'a'.code]++
+      }
     }
+    return dfs(0, 0)
+  }
 
-    private int dfs(int i, int j) {
-        if (i >= m) {
-            return 1;
-        }
-        if (j >= n) {
-            return 0;
-        }
-        if (f[i][j] != null) {
-            return f[i][j];
-        }
-        long ans = dfs(i, j + 1);
-        ans += 1L * dfs(i + 1, j + 1) * cnt[j][target.charAt(i) - 'a'];
-        ans %= mod;
-        return f[i][j] = (int) ans;
+  private fun dfs(i: Int, j: Int): Int {
+    if (i >= m) {
+      return 1
     }
+    if (j >= n) {
+      return 0
+    }
+    if (f[i][j] != null) {
+      return f[i][j]
+    }
+    var ans = dfs(i, j + 1).toLong()
+    ans += 1L * dfs(i + 1, j + 1) * cnt[j][target!![i].code - 'a'.code]
+    ans %= mod.toLong()
+    return ans.toInt().also { f[i][j] = it }
+  }
 }

@@ -1,13 +1,13 @@
-class Solution {
-    public int smallestCommonElement(int[][] mat) {
-        int[] cnt = new int[10001];
-        for (var row : mat) {
-            for (int x : row) {
-                if (++cnt[x] == mat.length) {
-                    return x;
-                }
-            }
+internal class Solution {
+  fun smallestCommonElement(mat: Array<IntArray>): Int {
+    val cnt = IntArray(10001)
+    for (row in mat) {
+      for (x in row) {
+        if (++cnt[x] == mat.size) {
+          return x
         }
-        return -1;
+      }
     }
+    return -1
+  }
 }

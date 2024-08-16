@@ -1,23 +1,26 @@
 /**
  * Definition for singly-linked list.
  * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * int val;
+ * ListNode next;
+ * ListNode() {}
+ * ListNode(int val) { this.val = val; }
+ * ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  * }
  */
-class Solution {
-    public int pairSum(ListNode head) {
-        List<Integer> s = new ArrayList<>();
-        for (; head != null; head = head.next) {
-            s.add(head.val);
-        }
-        int ans = 0, n = s.size();
-        for (int i = 0; i < (n >> 1); ++i) {
-            ans = Math.max(ans, s.get(i) + s.get(n - 1 - i));
-        }
-        return ans;
+internal class Solution {
+  fun pairSum(head: ListNode?): Int {
+    var head: ListNode? = head
+    val s: List<Int> = ArrayList()
+    while (head != null) {
+      s.add(head.`val`)
+      head = head.next
     }
+    var ans = 0
+    val n: Int = s.size()
+    for (i in 0 until (n shr 1)) {
+      ans = Math.max(ans, s[i] + s[n - 1 - i])
+    }
+    return ans
+  }
 }

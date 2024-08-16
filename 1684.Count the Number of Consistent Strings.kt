@@ -1,24 +1,24 @@
-class Solution {
-    public int countConsistentStrings(String allowed, String[] words) {
-        boolean[] s = new boolean[26];
-        for (char c : allowed.toCharArray()) {
-            s[c - 'a'] = true;
-        }
-        int ans = 0;
-        for (String w : words) {
-            if (check(w, s)) {
-                ++ans;
-            }
-        }
-        return ans;
+internal class Solution {
+  fun countConsistentStrings(allowed: String, words: Array<String>): Int {
+    val s = BooleanArray(26)
+    for (c in allowed.toCharArray()) {
+      s[c.code - 'a'.code] = true
     }
+    var ans = 0
+    for (w in words) {
+      if (check(w, s)) {
+        ++ans
+      }
+    }
+    return ans
+  }
 
-    private boolean check(String w, boolean[] s) {
-        for (int i = 0; i < w.length(); ++i) {
-            if (!s[w.charAt(i) - 'a']) {
-                return false;
-            }
-        }
-        return true;
+  private fun check(w: String, s: BooleanArray): Boolean {
+    for (i in 0 until w.length) {
+      if (!s[w[i].code - 'a'.code]) {
+        return false
+      }
     }
+    return true
+  }
 }

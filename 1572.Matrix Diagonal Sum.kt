@@ -1,11 +1,11 @@
-class Solution {
-    public int diagonalSum(int[][] mat) {
-        int ans = 0;
-        int n = mat.length;
-        for (int i = 0; i < n; ++i) {
-            int j = n - i - 1;
-            ans += mat[i][i] + (i == j ? 0 : mat[i][j]);
-        }
-        return ans;
+internal class Solution {
+  fun diagonalSum(mat: Array<IntArray>): Int {
+    var ans = 0
+    val n = mat.size
+    for (i in 0 until n) {
+      val j: Int = n - i - 1
+      ans += mat[i][i] + (if (i == j) 0 else mat[i][j])
     }
+    return ans
+  }
 }

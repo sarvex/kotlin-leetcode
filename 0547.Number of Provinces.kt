@@ -1,27 +1,27 @@
-class Solution {
-    private int[][] g;
-    private boolean[] vis;
+internal class Solution {
+  private var g: Array<IntArray>
+  private var vis: BooleanArray
 
-    public int findCircleNum(int[][] isConnected) {
-        g = isConnected;
-        int n = g.length;
-        vis = new boolean[n];
-        int ans = 0;
-        for (int i = 0; i < n; ++i) {
-            if (!vis[i]) {
-                dfs(i);
-                ++ans;
-            }
-        }
-        return ans;
+  fun findCircleNum(isConnected: Array<IntArray>): Int {
+    g = isConnected
+    val n = g.size
+    vis = BooleanArray(n)
+    var ans = 0
+    for (i in 0 until n) {
+      if (!vis[i]) {
+        dfs(i)
+        ++ans
+      }
     }
+    return ans
+  }
 
-    private void dfs(int i) {
-        vis[i] = true;
-        for (int j = 0; j < g.length; ++j) {
-            if (!vis[j] && g[i][j] == 1) {
-                dfs(j);
-            }
-        }
+  private fun dfs(i: Int) {
+    vis[i] = true
+    for (j in g.indices) {
+      if (!vis[j] && g[i][j] == 1) {
+        dfs(j)
+      }
     }
+  }
 }

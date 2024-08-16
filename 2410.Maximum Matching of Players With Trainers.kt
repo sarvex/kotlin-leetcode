@@ -1,18 +1,20 @@
-class Solution {
-    public int matchPlayersAndTrainers(int[] players, int[] trainers) {
-        Arrays.sort(players);
-        Arrays.sort(trainers);
-        int ans = 0;
-        int j = 0;
-        for (int p : players) {
-            while (j < trainers.length && trainers[j] < p) {
-                ++j;
-            }
-            if (j < trainers.length) {
-                ++ans;
-                ++j;
-            }
-        }
-        return ans;
+import java.util.*
+
+internal class Solution {
+  fun matchPlayersAndTrainers(players: IntArray, trainers: IntArray): Int {
+    Arrays.sort(players)
+    Arrays.sort(trainers)
+    var ans = 0
+    var j = 0
+    for (p in players) {
+      while (j < trainers.size && trainers[j] < p) {
+        ++j
+      }
+      if (j < trainers.size) {
+        ++ans
+        ++j
+      }
     }
+    return ans
+  }
 }

@@ -1,51 +1,50 @@
-class Trie {
-    Trie[] children = new Trie[26];
-    boolean isEnd = false;
+internal class Trie {
+  var children: Array<Trie> = arrayOfNulls(26)
+  var isEnd: Boolean = false
 
-    public void insert(String w) {
-        Trie node = this;
-        for (int i = w.length() - 1; i >= 0; --i) {
-            int idx = w.charAt(i) - 'a';
-            if (node.children[idx] == null) {
-                node.children[idx] = new Trie();
-            }
-            node = node.children[idx];
-        }
-        node.isEnd = true;
+  fun insert(w: String) {
+    var node = this
+    for (i in w.length - 1 downTo 0) {
+      val idx: Int = w[i].code - 'a'.code
+      if (node.children[idx] == null) {
+        node.children[idx] = Trie()
+      }
+      node = node.children[idx]
     }
+    node.isEnd = true
+  }
 
-    public boolean query(StringBuilder s) {
-        Trie node = this;
-        for (int i = s.length() - 1; i >= 0; --i) {
-            int idx = s.charAt(i) - 'a';
-            if (node.children[idx] == null) {
-                return false;
-            }
-            node = node.children[idx];
-            if (node.isEnd) {
-                return true;
-            }
-        }
-        return false;
+  fun query(s: StringBuilder): Boolean {
+    var node = this
+    for (i in s.length - 1 downTo 0) {
+      val idx: Int = s[i].code - 'a'.code
+      if (node.children[idx] == null) {
+        return false
+      }
+      node = node.children[idx]
+      if (node.isEnd) {
+        return true
+      }
     }
+    return false
+  }
 }
 
-class StreamChecker {
-    private StringBuilder sb = new StringBuilder();
-    private Trie trie = new Trie();
+internal class StreamChecker(words: Array<String>) {
+  private val sb = StringBuilder()
+  private val trie = Trie()
 
-    public StreamChecker(String[] words) {
-        for (String w : words) {
-            trie.insert(w);
-        }
+  init {
+    for (w in words) {
+      trie.insert(w)
     }
+  }
 
-    public boolean query(char letter) {
-        sb.append(letter);
-        return trie.query(sb);
-    }
+  fun query(letter: Char): Boolean {
+    sb.append(letter)
+    return trie.query(sb)
+  }
 }
-
 /**
  * Your StreamChecker object will be instantiated and called as such:
  * StreamChecker obj = new StreamChecker(words);

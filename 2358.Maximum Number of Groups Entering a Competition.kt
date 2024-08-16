@@ -1,15 +1,16 @@
-class Solution {
-    public int maximumGroups(int[] grades) {
-        int n = grades.length;
-        int l = 0, r = n;
-        while (l < r) {
-            int mid = (l + r + 1) >> 1;
-            if (1L * mid * mid + mid > n * 2L) {
-                r = mid - 1;
-            } else {
-                l = mid;
-            }
-        }
-        return l;
+internal class Solution {
+  fun maximumGroups(grades: IntArray): Int {
+    val n = grades.size
+    var l = 0
+    var r = n
+    while (l < r) {
+      val mid = (l + r + 1) shr 1
+      if (1L * mid * mid + mid > n * 2L) {
+        r = mid - 1
+      } else {
+        l = mid
+      }
     }
+    return l
+  }
 }

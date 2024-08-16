@@ -1,18 +1,18 @@
-class Solution {
-    public List<Integer> lastVisitedIntegers(List<String> words) {
-        List<Integer> nums = new ArrayList<>();
-        List<Integer> ans = new ArrayList<>();
-        int k = 0;
-        for (var w : words) {
-            if ("prev".equals(w)) {
-                ++k;
-                int i = nums.size() - k;
-                ans.add(i < 0 ? -1 : nums.get(i));
-            } else {
-                k = 0;
-                nums.add(Integer.valueOf(w));
-            }
-        }
-        return ans;
+internal class Solution {
+  fun lastVisitedIntegers(words: List<String>): List<Int> {
+    val nums: List<Int> = ArrayList()
+    val ans: List<Int> = ArrayList()
+    var k = 0
+    for (w in words) {
+      if ("prev" == w) {
+        ++k
+        val i: Int = nums.size() - k
+        ans.add(if (i < 0) -1 else nums[i])
+      } else {
+        k = 0
+        nums.add(w)
+      }
     }
+    return ans
+  }
 }

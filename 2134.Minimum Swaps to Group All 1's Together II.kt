@@ -1,16 +1,16 @@
-class Solution {
-    public int minSwaps(int[] nums) {
-        int k = Arrays.stream(nums).sum();
-        int n = nums.length;
-        int cnt = 0;
-        for (int i = 0; i < k; ++i) {
-            cnt += nums[i];
-        }
-        int mx = cnt;
-        for (int i = k; i < n + k; ++i) {
-            cnt += nums[i % n] - nums[(i - k + n) % n];
-            mx = Math.max(mx, cnt);
-        }
-        return k - mx;
+internal class Solution {
+  fun minSwaps(nums: IntArray): Int {
+    val k: Int = Arrays.stream(nums).sum()
+    val n = nums.size
+    var cnt = 0
+    for (i in 0 until k) {
+      cnt += nums[i]
     }
+    var mx = cnt
+    for (i in k until n + k) {
+      cnt += nums[i % n] - nums[(i - k + n) % n]
+      mx = max(mx, cnt)
+    }
+    return k - mx
+  }
 }

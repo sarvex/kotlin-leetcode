@@ -1,18 +1,18 @@
-class Solution {
-    public long minimumOperations(int[] nums, int[] target) {
-        long f = Math.abs(target[0] - nums[0]);
-        for (int i = 1; i < nums.length; ++i) {
-            long x = target[i] - nums[i];
-            long y = target[i - 1] - nums[i - 1];
-            if (x * y > 0) {
-                long d = Math.abs(x) - Math.abs(y);
-                if (d > 0) {
-                    f += d;
-                }
-            } else {
-                f += Math.abs(x);
-            }
+internal class Solution {
+  fun minimumOperations(nums: IntArray, target: IntArray): Long {
+    var f: Long = abs(target[0] - nums[0])
+    for (i in 1 until nums.size) {
+      val x = (target[i] - nums[i]).toLong()
+      val y = (target[i - 1] - nums[i - 1]).toLong()
+      if (x * y > 0) {
+        val d: Long = abs(x) - abs(y)
+        if (d > 0) {
+          f += d
         }
-        return f;
+      } else {
+        f += abs(x)
+      }
     }
+    return f
+  }
 }

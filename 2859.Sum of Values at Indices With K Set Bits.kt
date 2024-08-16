@@ -1,11 +1,11 @@
-class Solution {
-    public int sumIndicesWithKSetBits(List<Integer> nums, int k) {
-        int ans = 0;
-        for (int i = 0; i < nums.size(); i++) {
-            if (Integer.bitCount(i) == k) {
-                ans += nums.get(i);
-            }
-        }
-        return ans;
+internal class Solution {
+  fun sumIndicesWithKSetBits(nums: List<Int>, k: Int): Int {
+    var ans = 0
+    for (i in 0 until nums.size()) {
+      if (Integer.bitCount(i) == k) {
+        ans += nums[i]
+      }
     }
+    return ans
+  }
 }

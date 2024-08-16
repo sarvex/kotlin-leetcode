@@ -1,20 +1,20 @@
-class Solution {
-    public long[] kthPalindrome(int[] queries, int intLength) {
-        int n = queries.length;
-        long[] ans = new long[n];
-        int l = (intLength + 1) >> 1;
-        long start = (long) Math.pow(10, l - 1);
-        long end = (long) Math.pow(10, l) - 1;
-        for (int i = 0; i < n; ++i) {
-            long v = start + queries[i] - 1;
-            if (v > end) {
-                ans[i] = -1;
-                continue;
-            }
-            String s = "" + v;
-            s += new StringBuilder(s).reverse().substring(intLength % 2);
-            ans[i] = Long.parseLong(s);
-        }
-        return ans;
+internal class Solution {
+  fun kthPalindrome(queries: IntArray, intLength: Int): LongArray {
+    val n = queries.size
+    val ans = LongArray(n)
+    val l = (intLength + 1) shr 1
+    val start = 10.pow(l - 1) as Long
+    val end = 10.pow(l) as Long - 1
+    for (i in 0 until n) {
+      val v = start + queries[i] - 1
+      if (v > end) {
+        ans[i] = -1
+        continue
+      }
+      var s = "" + v
+      s += StringBuilder(s).reverse().substring(intLength % 2)
+      ans[i] = s.toLong()
     }
+    return ans
+  }
 }

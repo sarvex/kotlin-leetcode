@@ -1,18 +1,21 @@
-class Solution {
-    private static final int MOD = (int) 1e9 + 7;
-
-    public int maximumProduct(int[] nums, int k) {
-        PriorityQueue<Integer> q = new PriorityQueue<>();
-        for (int v : nums) {
-            q.offer(v);
-        }
-        while (k-- > 0) {
-            q.offer(q.poll() + 1);
-        }
-        long ans = 1;
-        while (!q.isEmpty()) {
-            ans = (ans * q.poll()) % MOD;
-        }
-        return (int) ans;
+internal class Solution {
+  fun maximumProduct(nums: IntArray, k: Int): Int {
+    var k = k
+    val q: PriorityQueue<Int> = PriorityQueue()
+    for (v in nums) {
+      q.offer(v)
     }
+    while (k-- > 0) {
+      q.offer(q.poll() + 1)
+    }
+    var ans: Long = 1
+    while (!q.isEmpty()) {
+      ans = (ans * q.poll()) % Solution.Companion.MOD
+    }
+    return ans.toInt()
+  }
+
+  companion object {
+    private const val MOD = 1e9.toInt() + 7
+  }
 }

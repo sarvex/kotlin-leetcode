@@ -1,25 +1,25 @@
-class Solution {
-    private int[] prices;
-    private int[] f;
-    private int n;
+internal class Solution {
+  private var prices: IntArray
+  private var f: IntArray
+  private var n = 0
 
-    public int minimumCoins(int[] prices) {
-        n = prices.length;
-        f = new int[n + 1];
-        this.prices = prices;
-        return dfs(1);
-    }
+  fun minimumCoins(prices: IntArray): Int {
+    n = prices.size
+    f = IntArray(n + 1)
+    this.prices = prices
+    return dfs(1)
+  }
 
-    private int dfs(int i) {
-        if (i * 2 >= n) {
-            return prices[i - 1];
-        }
-        if (f[i] == 0) {
-            f[i] = 1 << 30;
-            for (int j = i + 1; j <= i * 2 + 1; ++j) {
-                f[i] = Math.min(f[i], prices[i - 1] + dfs(j));
-            }
-        }
-        return f[i];
+  private fun dfs(i: Int): Int {
+    if (i * 2 >= n) {
+      return prices[i - 1]
     }
+    if (f[i] == 0) {
+      f[i] = 1 shl 30
+      for (j in i + 1..(i * 2 + 1)) {
+        f[i] = min(f[i], prices[i - 1] + dfs(j))
+      }
+    }
+    return f[i]
+  }
 }

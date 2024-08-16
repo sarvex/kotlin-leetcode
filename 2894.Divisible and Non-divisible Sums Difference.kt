@@ -1,9 +1,9 @@
-class Solution {
-    public int differenceOfSums(int n, int m) {
-        int ans = 0;
-        for (int i = 1; i <= n; ++i) {
-            ans += i % m == 0 ? -i : i;
-        }
-        return ans;
+internal class Solution {
+  fun differenceOfSums(n: Int, m: Int): Int {
+    var ans = 0
+    for (i in 1..n) {
+      ans += if (i % m == 0) -i else i
     }
+    return ans
+  }
 }

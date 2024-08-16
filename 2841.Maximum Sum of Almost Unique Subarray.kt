@@ -1,23 +1,23 @@
-class Solution {
-    public long maxSum(List<Integer> nums, int m, int k) {
-        Map<Integer, Integer> cnt = new HashMap<>();
-        int n = nums.size();
-        long s = 0;
-        for (int i = 0; i < k; ++i) {
-            cnt.merge(nums.get(i), 1, Integer::sum);
-            s += nums.get(i);
-        }
-        long ans = cnt.size() >= m ? s : 0;
-        for (int i = k; i < n; ++i) {
-            cnt.merge(nums.get(i), 1, Integer::sum);
-            if (cnt.merge(nums.get(i - k), -1, Integer::sum) == 0) {
-                cnt.remove(nums.get(i - k));
-            }
-            s += nums.get(i) - nums.get(i - k);
-            if (cnt.size() >= m) {
-                ans = Math.max(ans, s);
-            }
-        }
-        return ans;
+internal class Solution {
+  fun maxSum(nums: List<Int>, m: Int, k: Int): Long {
+    val cnt: Map<Int, Int> = HashMap()
+    val n: Int = nums.size()
+    var s: Long = 0
+    for (i in 0 until k) {
+      cnt.merge(nums[i], 1) { a: Int, b: Int -> Integer.sum(a, b) }
+      s += nums[i]
     }
+    var ans = if (cnt.size() >= m) s else 0
+    for (i in k until n) {
+      cnt.merge(nums[i], 1) { a: Int, b: Int -> Integer.sum(a, b) }
+      if (cnt.merge(nums[i - k], -1) { a: Int, b: Int -> Integer.sum(a, b) } === 0) {
+        cnt.remove(nums[i - k])
+      }
+      s += nums[i] - nums[i - k]
+      if (cnt.size() >= m) {
+        ans = max(ans, s)
+      }
+    }
+    return ans
+  }
 }

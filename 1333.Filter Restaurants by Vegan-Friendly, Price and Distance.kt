@@ -1,13 +1,14 @@
-class Solution {
-    public List<Integer> filterRestaurants(
-        int[][] restaurants, int veganFriendly, int maxPrice, int maxDistance) {
-        Arrays.sort(restaurants, (a, b) -> a[1] == b[1] ? b[0] - a[0] : b[1] - a[1]);
-        List<Integer> ans = new ArrayList<>();
-        for (int[] r : restaurants) {
-            if (r[2] >= veganFriendly && r[3] <= maxPrice && r[4] <= maxDistance) {
-                ans.add(r[0]);
-            }
-        }
-        return ans;
+internal class Solution {
+  fun filterRestaurants(
+    restaurants: Array<IntArray>, veganFriendly: Int, maxPrice: Int, maxDistance: Int
+  ): List<Int> {
+    Arrays.sort(restaurants) { a, b -> if (a.get(1) === b.get(1)) b.get(0) - a.get(0) else b.get(1) - a.get(1) }
+    val ans: List<Int> = ArrayList()
+    for (r in restaurants) {
+      if (r[2] >= veganFriendly && r[3] <= maxPrice && r[4] <= maxDistance) {
+        ans.add(r[0])
+      }
     }
+    return ans
+  }
 }

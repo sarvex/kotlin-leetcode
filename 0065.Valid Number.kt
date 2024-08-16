@@ -1,38 +1,42 @@
-class Solution {
-    public boolean isNumber(String s) {
-        int n = s.length();
-        int i = 0;
-        if (s.charAt(i) == '+' || s.charAt(i) == '-') {
-            ++i;
-        }
-        if (i == n) {
-            return false;
-        }
-        if (s.charAt(i) == '.'
-            && (i + 1 == n || s.charAt(i + 1) == 'e' || s.charAt(i + 1) == 'E')) {
-            return false;
-        }
-        int dot = 0, e = 0;
-        for (int j = i; j < n; ++j) {
-            if (s.charAt(j) == '.') {
-                if (e > 0 || dot > 0) {
-                    return false;
-                }
-                ++dot;
-            } else if (s.charAt(j) == 'e' || s.charAt(j) == 'E') {
-                if (e > 0 || j == i || j == n - 1) {
-                    return false;
-                }
-                ++e;
-                if (s.charAt(j + 1) == '+' || s.charAt(j + 1) == '-') {
-                    if (++j == n - 1) {
-                        return false;
-                    }
-                }
-            } else if (s.charAt(j) < '0' || s.charAt(j) > '9') {
-                return false;
-            }
-        }
-        return true;
+internal class Solution {
+  fun isNumber(s: String): Boolean {
+    val n = s.length
+    var i = 0
+    if (s[i] == '+' || s[i] == '-') {
+      ++i
     }
+    if (i == n) {
+      return false
+    }
+    if (s[i] == '.'
+      && (i + 1 == n || s[i + 1] == 'e' || s[i + 1] == 'E')
+    ) {
+      return false
+    }
+    var dot = 0
+    var e = 0
+    var j = i
+    while (j < n) {
+      if (s[j] == '.') {
+        if (e > 0 || dot > 0) {
+          return false
+        }
+        ++dot
+      } else if (s[j] == 'e' || s[j] == 'E') {
+        if (e > 0 || j == i || j == n - 1) {
+          return false
+        }
+        ++e
+        if (s[j + 1] == '+' || s[j + 1] == '-') {
+          if (++j == n - 1) {
+            return false
+          }
+        }
+      } else if (s[j] < '0' || s[j] > '9') {
+        return false
+      }
+      ++j
+    }
+    return true
+  }
 }

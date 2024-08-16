@@ -1,5 +1,5 @@
-class Solution {
-    public int hammingDistance(int x, int y) {
-        return Integer.bitCount(x ^ y);
-    }
+internal class Solution {
+  fun hammingDistance(x: Int, y: Int): Int {
+    return Integer.bitCount(x xor y)
+  }
 }

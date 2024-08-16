@@ -1,38 +1,44 @@
-class Solution {
-    private int signalSpeed;
-    private List<int[]>[] g;
+import java.util.*
 
-    public int[] countPairsOfConnectableServers(int[][] edges, int signalSpeed) {
-        int n = edges.length + 1;
-        g = new List[n];
-        this.signalSpeed = signalSpeed;
-        Arrays.setAll(g, k -> new ArrayList<>());
-        for (var e : edges) {
-            int a = e[0], b = e[1], w = e[2];
-            g[a].add(new int[] {b, w});
-            g[b].add(new int[] {a, w});
-        }
-        int[] ans = new int[n];
-        for (int a = 0; a < n; ++a) {
-            int s = 0;
-            for (var e : g[a]) {
-                int b = e[0], w = e[1];
-                int t = dfs(b, a, w);
-                ans[a] += s * t;
-                s += t;
-            }
-        }
-        return ans;
-    }
+internal class Solution {
+  private var signalSpeed = 0
+  private var g: Array<List<IntArray>>
 
-    private int dfs(int a, int fa, int ws) {
-        int cnt = ws % signalSpeed == 0 ? 1 : 0;
-        for (var e : g[a]) {
-            int b = e[0], w = e[1];
-            if (b != fa) {
-                cnt += dfs(b, a, ws + w);
-            }
-        }
-        return cnt;
+  fun countPairsOfConnectableServers(edges: Array<IntArray>, signalSpeed: Int): IntArray {
+    val n = edges.size + 1
+    g = arrayOfNulls(n)
+    this.signalSpeed = signalSpeed
+    Arrays.setAll(g) { k -> ArrayList() }
+    for (e in edges) {
+      val a = e[0]
+      val b = e[1]
+      val w = e[2]
+      g[a].add(intArrayOf(b, w))
+      g[b].add(intArrayOf(a, w))
     }
+    val ans = IntArray(n)
+    for (a in 0 until n) {
+      var s = 0
+      for (e in g[a]) {
+        val b = e[0]
+        val w = e[1]
+        val t = dfs(b, a, w)
+        ans[a] += s * t
+        s += t
+      }
+    }
+    return ans
+  }
+
+  private fun dfs(a: Int, fa: Int, ws: Int): Int {
+    var cnt = if (ws % signalSpeed == 0) 1 else 0
+    for (e in g[a]) {
+      val b = e[0]
+      val w = e[1]
+      if (b != fa) {
+        cnt += dfs(b, a, ws + w)
+      }
+    }
+    return cnt
+  }
 }

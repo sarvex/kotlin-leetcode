@@ -1,15 +1,16 @@
-class Solution {
-    public int wateringPlants(int[] plants, int capacity) {
-        int ans = 0, water = capacity;
-        for (int i = 0; i < plants.length; ++i) {
-            if (water >= plants[i]) {
-                water -= plants[i];
-                ans += 1;
-            } else {
-                water = capacity - plants[i];
-                ans += i * 2 + 1;
-            }
-        }
-        return ans;
+internal class Solution {
+  fun wateringPlants(plants: IntArray, capacity: Int): Int {
+    var ans = 0
+    var water = capacity
+    for (i in plants.indices) {
+      if (water >= plants[i]) {
+        water -= plants[i]
+        ans += 1
+      } else {
+        water = capacity - plants[i]
+        ans += i * 2 + 1
+      }
     }
+    return ans
+  }
 }

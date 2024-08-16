@@ -1,19 +1,22 @@
-class Solution {
-    public int compress(char[] chars) {
-        int k = 0, n = chars.length;
-        for (int i = 0, j = i + 1; i < n;) {
-            while (j < n && chars[j] == chars[i]) {
-                ++j;
-            }
-            chars[k++] = chars[i];
-            if (j - i > 1) {
-                String cnt = String.valueOf(j - i);
-                for (char c : cnt.toCharArray()) {
-                    chars[k++] = c;
-                }
-            }
-            i = j;
+internal class Solution {
+  fun compress(chars: CharArray): Int {
+    var k = 0
+    val n = chars.size
+    var i = 0
+    var j = i + 1
+    while (i < n) {
+      while (j < n && chars[j] == chars[i]) {
+        ++j
+      }
+      chars[k++] = chars[i]
+      if (j - i > 1) {
+        val cnt = (j - i).toString()
+        for (c in cnt.toCharArray()) {
+          chars[k++] = c
         }
-        return k;
+      }
+      i = j
     }
+    return k
+  }
 }

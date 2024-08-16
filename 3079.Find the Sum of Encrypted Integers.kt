@@ -1,18 +1,21 @@
-class Solution {
-    public int sumOfEncryptedInt(int[] nums) {
-        int ans = 0;
-        for (int x : nums) {
-            ans += encrypt(x);
-        }
-        return ans;
+internal class Solution {
+  fun sumOfEncryptedInt(nums: IntArray): Int {
+    var ans = 0
+    for (x in nums) {
+      ans += encrypt(x)
     }
+    return ans
+  }
 
-    private int encrypt(int x) {
-        int mx = 0, p = 0;
-        for (; x > 0; x /= 10) {
-            mx = Math.max(mx, x % 10);
-            p = p * 10 + 1;
-        }
-        return mx * p;
+  private fun encrypt(x: Int): Int {
+    var x = x
+    var mx = 0
+    var p = 0
+    while (x > 0) {
+      mx = max(mx, x % 10)
+      p = p * 10 + 1
+      x /= 10
     }
+    return mx * p
+  }
 }

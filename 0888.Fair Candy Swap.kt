@@ -1,21 +1,22 @@
-class Solution {
-    public int[] fairCandySwap(int[] aliceSizes, int[] bobSizes) {
-        int s1 = 0, s2 = 0;
-        Set<Integer> s = new HashSet<>();
-        for (int a : aliceSizes) {
-            s1 += a;
-        }
-        for (int b : bobSizes) {
-            s.add(b);
-            s2 += b;
-        }
-        int diff = (s1 - s2) >> 1;
-        for (int a : aliceSizes) {
-            int target = a - diff;
-            if (s.contains(target)) {
-                return new int[] {a, target};
-            }
-        }
-        return null;
+internal class Solution {
+  fun fairCandySwap(aliceSizes: IntArray, bobSizes: IntArray): IntArray? {
+    var s1 = 0
+    var s2 = 0
+    val s: Set<Int> = HashSet()
+    for (a in aliceSizes) {
+      s1 += a
     }
+    for (b in bobSizes) {
+      s.add(b)
+      s2 += b
+    }
+    val diff = (s1 - s2) shr 1
+    for (a in aliceSizes) {
+      val target = a - diff
+      if (s.contains(target)) {
+        return intArrayOf(a, target)
+      }
+    }
+    return null
+  }
 }

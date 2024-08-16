@@ -1,22 +1,21 @@
-class SQL {
-    private Map<String, List<List<String>>> tables;
+internal class SQL(names: List<String?>, columns: List<Int?>?) {
+  private val tables: Map<String, List<List<String>>>
 
-    public SQL(List<String> names, List<Integer> columns) {
-        tables = new HashMap<>(names.size());
-    }
+  init {
+    tables = HashMap(names.size())
+  }
 
-    public void insertRow(String name, List<String> row) {
-        tables.computeIfAbsent(name, k -> new ArrayList<>()).add(row);
-    }
+  fun insertRow(name: String?, row: List<String?>?) {
+    tables.computeIfAbsent(name) { k -> ArrayList() }.add(row)
+  }
 
-    public void deleteRow(String name, int rowId) {
-    }
+  fun deleteRow(name: String?, rowId: Int) {
+  }
 
-    public String selectCell(String name, int rowId, int columnId) {
-        return tables.get(name).get(rowId - 1).get(columnId - 1);
-    }
+  fun selectCell(name: String, rowId: Int, columnId: Int): String {
+    return tables[name]!![rowId - 1][columnId - 1]
+  }
 }
-
 /**
  * Your SQL object will be instantiated and called as such:
  * SQL obj = new SQL(names, columns);

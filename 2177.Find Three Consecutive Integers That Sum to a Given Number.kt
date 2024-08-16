@@ -1,9 +1,9 @@
-class Solution {
-    public long[] sumOfThree(long num) {
-        if (num % 3 != 0) {
-            return new long[] {};
-        }
-        long x = num / 3;
-        return new long[] {x - 1, x, x + 1};
+internal class Solution {
+  fun sumOfThree(num: Long): LongArray {
+    if (num % 3 != 0L) {
+      return longArrayOf()
     }
+    val x = num / 3
+    return longArrayOf(x - 1, x, x + 1)
+  }
 }

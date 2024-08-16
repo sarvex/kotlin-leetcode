@@ -1,5 +1,5 @@
-class Solution {
-    public boolean isSameAfterReversals(int num) {
-        return num == 0 || num % 10 != 0;
-    }
+internal class Solution {
+  fun isSameAfterReversals(num: Int): Boolean {
+    return num == 0 || num % 10 != 0
+  }
 }

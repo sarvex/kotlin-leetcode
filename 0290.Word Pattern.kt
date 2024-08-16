@@ -1,20 +1,20 @@
-class Solution {
-    public boolean wordPattern(String pattern, String s) {
-        String[] ws = s.split(" ");
-        if (pattern.length() != ws.length) {
-            return false;
-        }
-        Map<Character, String> d1 = new HashMap<>();
-        Map<String, Character> d2 = new HashMap<>();
-        for (int i = 0; i < ws.length; ++i) {
-            char a = pattern.charAt(i);
-            String b = ws[i];
-            if (!d1.getOrDefault(a, b).equals(b) || d2.getOrDefault(b, a) != a) {
-                return false;
-            }
-            d1.put(a, b);
-            d2.put(b, a);
-        }
-        return true;
+internal class Solution {
+  fun wordPattern(pattern: String, s: String): Boolean {
+    val ws: Array<String> = s.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+    if (pattern.length != ws.size) {
+      return false
     }
+    val d1: Map<Char, String> = HashMap()
+    val d2: Map<String, Char> = HashMap()
+    for (i in ws.indices) {
+      val a = pattern[i]
+      val b = ws[i]
+      if (!d1.getOrDefault(a, b).equals(b) || d2.getOrDefault(b, a) !== a) {
+        return false
+      }
+      d1.put(a, b)
+      d2.put(b, a)
+    }
+    return true
+  }
 }

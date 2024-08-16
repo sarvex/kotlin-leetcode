@@ -1,9 +1,9 @@
-class Solution {
-    public int findTheWinner(int n, int k) {
-        if (n == 1) {
-            return 1;
-        }
-        int ans = (findTheWinner(n - 1, k) + k) % n;
-        return ans == 0 ? n : ans;
+internal class Solution {
+  fun findTheWinner(n: Int, k: Int): Int {
+    if (n == 1) {
+      return 1
     }
+    val ans = (findTheWinner(n - 1, k) + k) % n
+    return if (ans == 0) n else ans
+  }
 }

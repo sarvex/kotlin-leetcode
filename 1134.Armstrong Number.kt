@@ -1,10 +1,12 @@
-class Solution {
-    public boolean isArmstrong(int n) {
-        int k = (n + "").length();
-        int s = 0;
-        for (int x = n; x > 0; x /= 10) {
-            s += Math.pow(x % 10, k);
-        }
-        return s == n;
+internal class Solution {
+  fun isArmstrong(n: Int): Boolean {
+    val k = (n.toString() + "").length
+    var s = 0
+    var x = n
+    while (x > 0) {
+      s += (x % 10).pow(k)
+      x /= 10
     }
+    return s == n
+  }
 }

@@ -1,29 +1,31 @@
-class Solution {
-    public int nearestExit(char[][] maze, int[] entrance) {
-        int m = maze.length;
-        int n = maze[0].length;
-        Deque<int[]> q = new ArrayDeque<>();
-        q.offer(entrance);
-        maze[entrance[0]][entrance[1]] = '+';
-        int ans = 0;
-        int[] dirs = {-1, 0, 1, 0, -1};
-        while (!q.isEmpty()) {
-            ++ans;
-            for (int k = q.size(); k > 0; --k) {
-                int[] p = q.poll();
-                int i = p[0], j = p[1];
-                for (int l = 0; l < 4; ++l) {
-                    int x = i + dirs[l], y = j + dirs[l + 1];
-                    if (x >= 0 && x < m && y >= 0 && y < n && maze[x][y] == '.') {
-                        if (x == 0 || x == m - 1 || y == 0 || y == n - 1) {
-                            return ans;
-                        }
-                        q.offer(new int[] {x, y});
-                        maze[x][y] = '+';
-                    }
-                }
+internal class Solution {
+  fun nearestExit(maze: Array<CharArray>, entrance: IntArray): Int {
+    val m = maze.size
+    val n = maze[0].size
+    val q: Deque<IntArray> = ArrayDeque()
+    q.offer(entrance)
+    maze[entrance[0]][entrance[1]] = '+'
+    var ans = 0
+    val dirs = intArrayOf(-1, 0, 1, 0, -1)
+    while (!q.isEmpty()) {
+      ++ans
+      for (k in q.size() downTo 1) {
+        val p: IntArray = q.poll()
+        val i = p[0]
+        val j = p[1]
+        for (l in 0..3) {
+          val x = i + dirs[l]
+          val y = j + dirs[l + 1]
+          if (x >= 0 && x < m && y >= 0 && y < n && maze[x][y] == '.') {
+            if (x == 0 || x == m - 1 || y == 0 || y == n - 1) {
+              return ans
             }
+            q.offer(intArrayOf(x, y))
+            maze[x][y] = '+'
+          }
         }
-        return -1;
+      }
     }
+    return -1
+  }
 }

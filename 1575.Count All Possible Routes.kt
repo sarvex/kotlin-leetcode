@@ -1,31 +1,31 @@
-class Solution {
-    private int[] locations;
-    private int finish;
-    private int n;
-    private Integer[][] f;
-    private final int mod = (int) 1e9 + 7;
+internal class Solution {
+  private var locations: IntArray
+  private var finish = 0
+  private var n = 0
+  private var f: Array<Array<Int>>
+  private val mod = 1e9.toInt() + 7
 
-    public int countRoutes(int[] locations, int start, int finish, int fuel) {
-        n = locations.length;
-        this.locations = locations;
-        this.finish = finish;
-        f = new Integer[n][fuel + 1];
-        return dfs(start, fuel);
-    }
+  fun countRoutes(locations: IntArray, start: Int, finish: Int, fuel: Int): Int {
+    n = locations.size
+    this.locations = locations
+    this.finish = finish
+    f = Array(n) { arrayOfNulls(fuel + 1) }
+    return dfs(start, fuel)
+  }
 
-    private int dfs(int i, int k) {
-        if (k < Math.abs(locations[i] - locations[finish])) {
-            return 0;
-        }
-        if (f[i][k] != null) {
-            return f[i][k];
-        }
-        int ans = i == finish ? 1 : 0;
-        for (int j = 0; j < n; ++j) {
-            if (j != i) {
-                ans = (ans + dfs(j, k - Math.abs(locations[i] - locations[j]))) % mod;
-            }
-        }
-        return f[i][k] = ans;
+  private fun dfs(i: Int, k: Int): Int {
+    if (k < abs(locations[i] - locations[finish])) {
+      return 0
     }
+    if (f[i][k] != null) {
+      return f[i][k]
+    }
+    var ans = if (i == finish) 1 else 0
+    for (j in 0 until n) {
+      if (j != i) {
+        ans = (ans + dfs(j, k - abs(locations[i] - locations[j]))) % mod
+      }
+    }
+    return ans.also { f[i][k] = it }
+  }
 }

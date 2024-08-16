@@ -1,32 +1,34 @@
-class Solution {
-    public int[] minDifference(int[] nums, int[][] queries) {
-        int m = nums.length, n = queries.length;
-        int[][] preSum = new int[m + 1][101];
-        for (int i = 1; i <= m; ++i) {
-            for (int j = 1; j <= 100; ++j) {
-                int t = nums[i - 1] == j ? 1 : 0;
-                preSum[i][j] = preSum[i - 1][j] + t;
-            }
-        }
-
-        int[] ans = new int[n];
-        for (int i = 0; i < n; ++i) {
-            int left = queries[i][0], right = queries[i][1] + 1;
-            int t = Integer.MAX_VALUE;
-            int last = -1;
-            for (int j = 1; j <= 100; ++j) {
-                if (preSum[right][j] > preSum[left][j]) {
-                    if (last != -1) {
-                        t = Math.min(t, j - last);
-                    }
-                    last = j;
-                }
-            }
-            if (t == Integer.MAX_VALUE) {
-                t = -1;
-            }
-            ans[i] = t;
-        }
-        return ans;
+internal class Solution {
+  fun minDifference(nums: IntArray, queries: Array<IntArray>): IntArray {
+    val m = nums.size
+    val n = queries.size
+    val preSum = Array(m + 1) { IntArray(101) }
+    for (i in 1..m) {
+      for (j in 1..100) {
+        val t = if (nums[i - 1] == j) 1 else 0
+        preSum[i][j] = preSum[i - 1][j] + t
+      }
     }
+
+    val ans = IntArray(n)
+    for (i in 0 until n) {
+      val left = queries[i][0]
+      val right = queries[i][1] + 1
+      var t: Int = MAX_VALUE
+      var last = -1
+      for (j in 1..100) {
+        if (preSum[right][j] > preSum[left][j]) {
+          if (last != -1) {
+            t = min(t, j - last)
+          }
+          last = j
+        }
+      }
+      if (t == MAX_VALUE) {
+        t = -1
+      }
+      ans[i] = t
+    }
+    return ans
+  }
 }

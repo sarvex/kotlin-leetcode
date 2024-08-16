@@ -1,5 +1,5 @@
-class Solution {
-    public int minChanges(int n, int k) {
-        return (n & k) != k ? -1 : Integer.bitCount(n ^ k);
-    }
+internal class Solution {
+  fun minChanges(n: Int, k: Int): Int {
+    return if ((n and k) != k) -1 else Integer.bitCount(n xor k)
+  }
 }

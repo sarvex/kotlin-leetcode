@@ -1,17 +1,18 @@
-class Solution {
-    public boolean checkZeroOnes(String s) {
-        return f(s, '1') > f(s, '0');
-    }
+internal class Solution {
+  fun checkZeroOnes(s: String): Boolean {
+    return f(s, '1') > f(s, '0')
+  }
 
-    private int f(String s, char x) {
-        int cnt = 0, mx = 0;
-        for (int i = 0; i < s.length(); ++i) {
-            if (s.charAt(i) == x) {
-                mx = Math.max(mx, ++cnt);
-            } else {
-                cnt = 0;
-            }
-        }
-        return mx;
+  private fun f(s: String, x: Char): Int {
+    var cnt = 0
+    var mx = 0
+    for (i in 0 until s.length) {
+      if (s[i] == x) {
+        mx = max(mx, ++cnt)
+      } else {
+        cnt = 0
+      }
     }
+    return mx
+  }
 }

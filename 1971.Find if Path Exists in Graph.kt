@@ -1,31 +1,32 @@
-class Solution {
-    private int destination;
-    private boolean[] vis;
-    private List<Integer>[] g;
+internal class Solution {
+  private var destination = 0
+  private var vis: BooleanArray
+  private var g: Array<List<Int>>
 
-    public boolean validPath(int n, int[][] edges, int source, int destination) {
-        g = new List[n];
-        Arrays.setAll(g, k -> new ArrayList<>());
-        for (var e : edges) {
-            int a = e[0], b = e[1];
-            g[a].add(b);
-            g[b].add(a);
-        }
-        vis = new boolean[n];
-        this.destination = destination;
-        return dfs(source);
+  fun validPath(n: Int, edges: Array<IntArray>, source: Int, destination: Int): Boolean {
+    g = arrayOfNulls(n)
+    Arrays.setAll(g) { k -> ArrayList() }
+    for (e in edges) {
+      val a = e[0]
+      val b = e[1]
+      g[a].add(b)
+      g[b].add(a)
     }
+    vis = BooleanArray(n)
+    this.destination = destination
+    return dfs(source)
+  }
 
-    private boolean dfs(int i) {
-        if (i == destination) {
-            return true;
-        }
-        vis[i] = true;
-        for (int j : g[i]) {
-            if (!vis[j] && dfs(j)) {
-                return true;
-            }
-        }
-        return false;
+  private fun dfs(i: Int): Boolean {
+    if (i == destination) {
+      return true
     }
+    vis[i] = true
+    for (j in g[i]) {
+      if (!vis[j] && dfs(j)) {
+        return true
+      }
+    }
+    return false
+  }
 }

@@ -1,9 +1,11 @@
-class Solution {
-    public String replaceDigits(String s) {
-        char[] cs = s.toCharArray();
-        for (int i = 1; i < cs.length; i += 2) {
-            cs[i] = (char) (cs[i - 1] + (cs[i] - '0'));
-        }
-        return String.valueOf(cs);
+internal class Solution {
+  fun replaceDigits(s: String): String {
+    val cs: CharArray = s.toCharArray()
+    var i = 1
+    while (i < cs.size) {
+      cs[i] = (cs[i - 1].code + (cs[i].code - '0'.code)).toChar()
+      i += 2
     }
+    return String(cs)
+  }
 }

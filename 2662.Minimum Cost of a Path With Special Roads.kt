@@ -1,29 +1,34 @@
-class Solution {
-    public int minimumCost(int[] start, int[] target, int[][] specialRoads) {
-        int ans = 1 << 30;
-        int n = 1000000;
-        PriorityQueue<int[]> q = new PriorityQueue<>((a, b) -> a[0] - b[0]);
-        Set<Long> vis = new HashSet<>();
-        q.offer(new int[] {0, start[0], start[1]});
-        while (!q.isEmpty()) {
-            var p = q.poll();
-            int x = p[1], y = p[2];
-            long k = 1L * x * n + y;
-            if (vis.contains(k)) {
-                continue;
-            }
-            vis.add(k);
-            int d = p[0];
-            ans = Math.min(ans, d + dist(x, y, target[0], target[1]));
-            for (var r : specialRoads) {
-                int x1 = r[0], y1 = r[1], x2 = r[2], y2 = r[3], cost = r[4];
-                q.offer(new int[] {d + dist(x, y, x1, y1) + cost, x2, y2});
-            }
-        }
-        return ans;
+internal class Solution {
+  fun minimumCost(start: IntArray, target: IntArray, specialRoads: Array<IntArray>): Int {
+    var ans = 1 shl 30
+    val n = 1000000
+    val q: PriorityQueue<IntArray> = PriorityQueue { a, b -> a.get(0) - b.get(0) }
+    val vis: Set<Long> = HashSet()
+    q.offer(intArrayOf(0, start[0], start[1]))
+    while (!q.isEmpty()) {
+      val p: Unit = q.poll()
+      val x: Int = p.get(1)
+      val y: Int = p.get(2)
+      val k = 1L * x * n + y
+      if (vis.contains(k)) {
+        continue
+      }
+      vis.add(k)
+      val d: Int = p.get(0)
+      ans = min(ans, d + dist(x, y, target[0], target[1]))
+      for (r in specialRoads) {
+        val x1 = r[0]
+        val y1 = r[1]
+        val x2 = r[2]
+        val y2 = r[3]
+        val cost = r[4]
+        q.offer(intArrayOf(d + dist(x, y, x1, y1) + cost, x2, y2))
+      }
     }
+    return ans
+  }
 
-    private int dist(int x1, int y1, int x2, int y2) {
-        return Math.abs(x1 - x2) + Math.abs(y1 - y2);
-    }
+  private fun dist(x1: Int, y1: Int, x2: Int, y2: Int): Int {
+    return abs(x1 - x2) + abs(y1 - y2)
+  }
 }

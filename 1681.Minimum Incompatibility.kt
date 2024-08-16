@@ -1,53 +1,56 @@
-class Solution {
-    public int minimumIncompatibility(int[] nums, int k) {
-        int n = nums.length;
-        int m = n / k;
-        int[] g = new int[1 << n];
-        Arrays.fill(g, -1);
-        for (int i = 1; i < 1 << n; ++i) {
-            if (Integer.bitCount(i) != m) {
-                continue;
-            }
-            Set<Integer> s = new HashSet<>();
-            int mi = 20, mx = 0;
-            for (int j = 0; j < n; ++j) {
-                if ((i >> j & 1) == 1) {
-                    if (!s.add(nums[j])) {
-                        break;
-                    }
-                    mi = Math.min(mi, nums[j]);
-                    mx = Math.max(mx, nums[j]);
-                }
-            }
-            if (s.size() == m) {
-                g[i] = mx - mi;
-            }
+internal class Solution {
+  fun minimumIncompatibility(nums: IntArray, k: Int): Int {
+    val n = nums.size
+    val m = n / k
+    val g = IntArray(1 shl n)
+    Arrays.fill(g, -1)
+    for (i in 1 until (1 shl n)) {
+      if (Integer.bitCount(i) != m) {
+        continue
+      }
+      val s: Set<Int> = HashSet()
+      var mi = 20
+      var mx = 0
+      for (j in 0 until n) {
+        if ((i shr j and 1) == 1) {
+          if (!s.add(nums[j])) {
+            break
+          }
+          mi = min(mi, nums[j])
+          mx = max(mx, nums[j])
         }
-        int[] f = new int[1 << n];
-        final int inf = 1 << 30;
-        Arrays.fill(f, inf);
-        f[0] = 0;
-        for (int i = 0; i < 1 << n; ++i) {
-            if (f[i] == inf) {
-                continue;
-            }
-            Set<Integer> s = new HashSet<>();
-            int mask = 0;
-            for (int j = 0; j < n; ++j) {
-                if ((i >> j & 1) == 0 && !s.contains(nums[j])) {
-                    s.add(nums[j]);
-                    mask |= 1 << j;
-                }
-            }
-            if (s.size() < m) {
-                continue;
-            }
-            for (int j = mask; j > 0; j = (j - 1) & mask) {
-                if (g[j] != -1) {
-                    f[i | j] = Math.min(f[i | j], f[i] + g[j]);
-                }
-            }
-        }
-        return f[(1 << n) - 1] == inf ? -1 : f[(1 << n) - 1];
+      }
+      if (s.size() === m) {
+        g[i] = mx - mi
+      }
     }
+    val f = IntArray(1 shl n)
+    val inf = 1 shl 30
+    Arrays.fill(f, inf)
+    f[0] = 0
+    for (i in 0 until (1 shl n)) {
+      if (f[i] == inf) {
+        continue
+      }
+      val s: Set<Int> = HashSet()
+      var mask = 0
+      for (j in 0 until n) {
+        if ((i shr j and 1) == 0 && !s.contains(nums[j])) {
+          s.add(nums[j])
+          mask = mask or (1 shl j)
+        }
+      }
+      if (s.size() < m) {
+        continue
+      }
+      var j = mask
+      while (j > 0) {
+        if (g[j] != -1) {
+          f[i or j] = min(f[i or j], f[i] + g[j])
+        }
+        j = (j - 1) and mask
+      }
+    }
+    return if (f[(1 shl n) - 1] == inf) -1 else f[(1 shl n) - 1]
+  }
 }

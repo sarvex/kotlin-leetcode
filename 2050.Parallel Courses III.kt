@@ -1,34 +1,36 @@
-class Solution {
-    public int minimumTime(int n, int[][] relations, int[] time) {
-        List<Integer>[] g = new List[n];
-        Arrays.setAll(g, k -> new ArrayList<>());
-        int[] indeg = new int[n];
-        for (int[] e : relations) {
-            int a = e[0] - 1, b = e[1] - 1;
-            g[a].add(b);
-            ++indeg[b];
-        }
-        Deque<Integer> q = new ArrayDeque<>();
-        int[] f = new int[n];
-        int ans = 0;
-        for (int i = 0; i < n; ++i) {
-            int v = indeg[i], t = time[i];
-            if (v == 0) {
-                q.offer(i);
-                f[i] = t;
-                ans = Math.max(ans, t);
-            }
-        }
-        while (!q.isEmpty()) {
-            int i = q.pollFirst();
-            for (int j : g[i]) {
-                f[j] = Math.max(f[j], f[i] + time[j]);
-                ans = Math.max(ans, f[j]);
-                if (--indeg[j] == 0) {
-                    q.offer(j);
-                }
-            }
-        }
-        return ans;
+internal class Solution {
+  fun minimumTime(n: Int, relations: Array<IntArray>, time: IntArray): Int {
+    val g: Array<List<Int>> = arrayOfNulls(n)
+    Arrays.setAll(g) { k -> ArrayList() }
+    val indeg = IntArray(n)
+    for (e in relations) {
+      val a = e[0] - 1
+      val b = e[1] - 1
+      g[a].add(b)
+      ++indeg[b]
     }
+    val q: Deque<Int> = ArrayDeque()
+    val f = IntArray(n)
+    var ans = 0
+    for (i in 0 until n) {
+      val v = indeg[i]
+      val t = time[i]
+      if (v == 0) {
+        q.offer(i)
+        f[i] = t
+        ans = max(ans, t)
+      }
+    }
+    while (!q.isEmpty()) {
+      val i: Int = q.pollFirst()
+      for (j in g[i]) {
+        f[j] = max(f[j], f[i] + time[j])
+        ans = max(ans, f[j])
+        if (--indeg[j] == 0) {
+          q.offer(j)
+        }
+      }
+    }
+    return ans
+  }
 }

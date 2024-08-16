@@ -1,32 +1,37 @@
-class Solution {
-    private List<Integer>[] g;
-    private long ans;
-    private int[] price;
+import java.util.*
 
-    public long maxOutput(int n, int[][] edges, int[] price) {
-        g = new List[n];
-        Arrays.setAll(g, k -> new ArrayList<>());
-        for (var e : edges) {
-            int a = e[0], b = e[1];
-            g[a].add(b);
-            g[b].add(a);
-        }
-        this.price = price;
-        dfs(0, -1);
-        return ans;
-    }
+internal class Solution {
+  private var g: Array<List<Int>>
+  private var ans: Long = 0
+  private var price: IntArray
 
-    private long[] dfs(int i, int fa) {
-        long a = price[i], b = 0;
-        for (int j : g[i]) {
-            if (j != fa) {
-                var e = dfs(j, i);
-                long c = e[0], d = e[1];
-                ans = Math.max(ans, Math.max(a + d, b + c));
-                a = Math.max(a, price[i] + c);
-                b = Math.max(b, price[i] + d);
-            }
-        }
-        return new long[] {a, b};
+  fun maxOutput(n: Int, edges: Array<IntArray>, price: IntArray): Long {
+    g = arrayOfNulls(n)
+    Arrays.setAll(g) { k -> ArrayList() }
+    for (e in edges) {
+      val a = e[0]
+      val b = e[1]
+      g[a].add(b)
+      g[b].add(a)
     }
+    this.price = price
+    dfs(0, -1)
+    return ans
+  }
+
+  private fun dfs(i: Int, fa: Int): LongArray {
+    var a = price[i].toLong()
+    var b: Long = 0
+    for (j in g[i]) {
+      if (j != fa) {
+        val e = dfs(j, i)
+        val c = e[0]
+        val d = e[1]
+        ans = max(ans, max(a + d, b + c))
+        a = max(a, price[i] + c)
+        b = max(b, price[i] + d)
+      }
+    }
+    return longArrayOf(a, b)
+  }
 }

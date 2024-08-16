@@ -1,28 +1,28 @@
-class Solution {
-    public String minimizeError(String[] prices, int target) {
-        int mi = 0;
-        List<Double> arr = new ArrayList<>();
-        for (String p : prices) {
-            double price = Double.valueOf(p);
-            mi += (int) price;
-            double d = price - (int) price;
-            if (d > 0) {
-                arr.add(d);
-            }
-        }
-        if (target < mi || target > mi + arr.size()) {
-            return "-1";
-        }
-        int d = target - mi;
-        arr.sort(Collections.reverseOrder());
-        double ans = d;
-        for (int i = 0; i < d; ++i) {
-            ans -= arr.get(i);
-        }
-        for (int i = d; i < arr.size(); ++i) {
-            ans += arr.get(i);
-        }
-        DecimalFormat df = new DecimalFormat("#0.000");
-        return df.format(ans);
+internal class Solution {
+  fun minimizeError(prices: Array<String>, target: Int): String {
+    var mi = 0
+    val arr: List<Double> = ArrayList()
+    for (p in prices) {
+      val price: Double = p.toDouble()
+      mi += price.toInt()
+      val d = price - price.toInt()
+      if (d > 0) {
+        arr.add(d)
+      }
     }
+    if (target < mi || target > mi + arr.size()) {
+      return "-1"
+    }
+    val d = target - mi
+    arr.sort(Collections.reverseOrder())
+    var ans = d.toDouble()
+    for (i in 0 until d) {
+      ans -= arr[i]
+    }
+    for (i in d until arr.size()) {
+      ans += arr[i]
+    }
+    val df: DecimalFormat = DecimalFormat("#0.000")
+    return df.format(ans)
+  }
 }

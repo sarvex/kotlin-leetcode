@@ -1,47 +1,51 @@
-class Solution {
-    public int kSimilarity(String s1, String s2) {
-        Deque<String> q = new ArrayDeque<>();
-        Set<String> vis = new HashSet<>();
-        q.offer(s1);
-        vis.add(s1);
-        int ans = 0;
-        while (true) {
-            for (int i = q.size(); i > 0; --i) {
-                String s = q.pollFirst();
-                if (s.equals(s2)) {
-                    return ans;
-                }
-                for (String nxt : next(s, s2)) {
-                    if (!vis.contains(nxt)) {
-                        vis.add(nxt);
-                        q.offer(nxt);
-                    }
-                }
-            }
-            ++ans;
+import java.util.*
+
+internal class Solution {
+  fun kSimilarity(s1: String, s2: String): Int {
+    val q: Deque<String> = ArrayDeque()
+    val vis: Set<String> = HashSet()
+    q.offer(s1)
+    vis.add(s1)
+    var ans = 0
+    while (true) {
+      for (i in q.size() downTo 1) {
+        val s = q.pollFirst()
+        if (s == s2) {
+          return ans
         }
+        for (nxt in next(s, s2)) {
+          if (!vis.contains(nxt)) {
+            vis.add(nxt)
+            q.offer(nxt)
+          }
+        }
+      }
+      ++ans
+    }
+  }
+
+  private fun next(s: String, s2: String): List<String> {
+    var i = 0
+    val n = s.length
+    val cs: CharArray = s.toCharArray()
+    while (cs[i] == s2[i]) {
+      ++i
     }
 
-    private List<String> next(String s, String s2) {
-        int i = 0, n = s.length();
-        char[] cs = s.toCharArray();
-        for (; cs[i] == s2.charAt(i); ++i) {
-        }
-
-        List<String> res = new ArrayList<>();
-        for (int j = i + 1; j < n; ++j) {
-            if (cs[j] == s2.charAt(i) && cs[j] != s2.charAt(j)) {
-                swap(cs, i, j);
-                res.add(new String(cs));
-                swap(cs, i, j);
-            }
-        }
-        return res;
+    val res: List<String> = ArrayList()
+    for (j in i + 1 until n) {
+      if (cs[j] == s2[i] && cs[j] != s2[j]) {
+        swap(cs, i, j)
+        res.add(String(cs))
+        swap(cs, i, j)
+      }
     }
+    return res
+  }
 
-    private void swap(char[] cs, int i, int j) {
-        char t = cs[i];
-        cs[i] = cs[j];
-        cs[j] = t;
-    }
+  private fun swap(cs: CharArray, i: Int, j: Int) {
+    val t = cs[i]
+    cs[i] = cs[j]
+    cs[j] = t
+  }
 }

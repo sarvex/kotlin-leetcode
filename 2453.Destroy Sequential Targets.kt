@@ -1,18 +1,20 @@
-class Solution {
-    public int destroyTargets(int[] nums, int space) {
-        Map<Integer, Integer> cnt = new HashMap<>();
-        for (int v : nums) {
-            v %= space;
-            cnt.put(v, cnt.getOrDefault(v, 0) + 1);
-        }
-        int ans = 0, mx = 0;
-        for (int v : nums) {
-            int t = cnt.get(v % space);
-            if (t > mx || (t == mx && v < ans)) {
-                ans = v;
-                mx = t;
-            }
-        }
-        return ans;
+internal class Solution {
+  fun destroyTargets(nums: IntArray, space: Int): Int {
+    val cnt: Map<Int, Int> = HashMap()
+    for (v in nums) {
+      var v = v
+      v %= space
+      cnt.put(v, cnt.getOrDefault(v, 0) + 1)
     }
+    var ans = 0
+    var mx = 0
+    for (v in nums) {
+      val t = cnt[v % space]!!
+      if (t > mx || (t == mx && v < ans)) {
+        ans = v
+        mx = t
+      }
+    }
+    return ans
+  }
 }

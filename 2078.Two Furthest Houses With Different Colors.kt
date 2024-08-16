@@ -1,13 +1,14 @@
-class Solution {
-    public int maxDistance(int[] colors) {
-        int ans = 0, n = colors.length;
-        for (int i = 0; i < n; ++i) {
-            for (int j = i + 1; j < n; ++j) {
-                if (colors[i] != colors[j]) {
-                    ans = Math.max(ans, Math.abs(i - j));
-                }
-            }
+internal class Solution {
+  fun maxDistance(colors: IntArray): Int {
+    var ans = 0
+    val n = colors.size
+    for (i in 0 until n) {
+      for (j in i + 1 until n) {
+        if (colors[i] != colors[j]) {
+          ans = max(ans, abs(i - j))
         }
-        return ans;
+      }
     }
+    return ans
+  }
 }

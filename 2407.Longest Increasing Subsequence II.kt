@@ -1,78 +1,78 @@
-class Solution {
-    public int lengthOfLIS(int[] nums, int k) {
-        int mx = nums[0];
-        for (int v : nums) {
-            mx = Math.max(mx, v);
-        }
-        SegmentTree tree = new SegmentTree(mx);
-        int ans = 0;
-        for (int v : nums) {
-            int t = tree.query(1, v - k, v - 1) + 1;
-            ans = Math.max(ans, t);
-            tree.modify(1, v, t);
-        }
-        return ans;
+internal class Solution {
+  fun lengthOfLIS(nums: IntArray, k: Int): Int {
+    var mx = nums[0]
+    for (v in nums) {
+      mx = max(mx, v)
     }
+    val tree = SegmentTree(mx)
+    var ans = 0
+    for (v in nums) {
+      val t = tree.query(1, v - k, v - 1) + 1
+      ans = max(ans, t)
+      tree.modify(1, v, t)
+    }
+    return ans
+  }
 }
 
-class Node {
-    int l;
-    int r;
-    int v;
+internal open class Node {
+  var l: Int = 0
+  var r: Int = 0
+  var v: Int = 0
 }
 
-class SegmentTree {
-    private Node[] tr;
+internal class SegmentTree(n: Int) {
+  private val tr: Array<Node>
 
-    public SegmentTree(int n) {
-        tr = new Node[4 * n];
-        for (int i = 0; i < tr.length; ++i) {
-            tr[i] = new Node();
-        }
-        build(1, 1, n);
+  init {
+    tr = arrayOfNulls(4 * n)
+    for (i in tr.indices) {
+      tr[i] = Node()
     }
+    build(1, 1, n)
+  }
 
-    public void build(int u, int l, int r) {
-        tr[u].l = l;
-        tr[u].r = r;
-        if (l == r) {
-            return;
-        }
-        int mid = (l + r) >> 1;
-        build(u << 1, l, mid);
-        build(u << 1 | 1, mid + 1, r);
+  fun build(u: Int, l: Int, r: Int) {
+    tr[u].l = l
+    tr[u].r = r
+    if (l == r) {
+      return
     }
+    val mid = (l + r) shr 1
+    build(u shl 1, l, mid)
+    build(u shl 1 or 1, mid + 1, r)
+  }
 
-    public void modify(int u, int x, int v) {
-        if (tr[u].l == x && tr[u].r == x) {
-            tr[u].v = v;
-            return;
-        }
-        int mid = (tr[u].l + tr[u].r) >> 1;
-        if (x <= mid) {
-            modify(u << 1, x, v);
-        } else {
-            modify(u << 1 | 1, x, v);
-        }
-        pushup(u);
+  fun modify(u: Int, x: Int, v: Int) {
+    if (tr[u].l == x && tr[u].r == x) {
+      tr[u].v = v
+      return
     }
+    val mid: Int = (tr[u].l + tr[u].r) shr 1
+    if (x <= mid) {
+      modify(u shl 1, x, v)
+    } else {
+      modify(u shl 1 or 1, x, v)
+    }
+    pushup(u)
+  }
 
-    public void pushup(int u) {
-        tr[u].v = Math.max(tr[u << 1].v, tr[u << 1 | 1].v);
-    }
+  fun pushup(u: Int) {
+    tr[u].v = max(tr[u shl 1].v, tr[u shl 1 or 1].v)
+  }
 
-    public int query(int u, int l, int r) {
-        if (tr[u].l >= l && tr[u].r <= r) {
-            return tr[u].v;
-        }
-        int mid = (tr[u].l + tr[u].r) >> 1;
-        int v = 0;
-        if (l <= mid) {
-            v = query(u << 1, l, r);
-        }
-        if (r > mid) {
-            v = Math.max(v, query(u << 1 | 1, l, r));
-        }
-        return v;
+  fun query(u: Int, l: Int, r: Int): Int {
+    if (tr[u].l >= l && tr[u].r <= r) {
+      return tr[u].v
     }
+    val mid: Int = (tr[u].l + tr[u].r) shr 1
+    var v = 0
+    if (l <= mid) {
+      v = query(u shl 1, l, r)
+    }
+    if (r > mid) {
+      v = max(v, query(u shl 1 or 1, l, r))
+    }
+    return v
+  }
 }

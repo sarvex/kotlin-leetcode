@@ -1,17 +1,20 @@
-class Solution {
-    public int[][] flipAndInvertImage(int[][] image) {
-        for (var row : image) {
-            int i = 0, j = row.length - 1;
-            for (; i < j; ++i, --j) {
-                if (row[i] == row[j]) {
-                    row[i] ^= 1;
-                    row[j] ^= 1;
-                }
-            }
-            if (i == j) {
-                row[i] ^= 1;
-            }
+internal class Solution {
+  fun flipAndInvertImage(image: Array<IntArray>): Array<IntArray> {
+    for (row in image) {
+      var i = 0
+      var j = row.size - 1
+      while (i < j) {
+        if (row[i] == row[j]) {
+          row[i] = row[i] xor 1
+          row[j] = row[j] xor 1
         }
-        return image;
+        ++i
+        --j
+      }
+      if (i == j) {
+        row[i] = row[i] xor 1
+      }
     }
+    return image
+  }
 }

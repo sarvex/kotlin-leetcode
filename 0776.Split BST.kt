@@ -1,40 +1,40 @@
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
+ * int val;
+ * TreeNode left;
+ * TreeNode right;
+ * TreeNode() {}
+ * TreeNode(int val) { this.val = val; }
+ * TreeNode(int val, TreeNode left, TreeNode right) {
+ * this.val = val;
+ * this.left = left;
+ * this.right = right;
+ * }
  * }
  */
-class Solution {
-    private int t;
+internal class Solution {
+  private var t = 0
 
-    public TreeNode[] splitBST(TreeNode root, int target) {
-        t = target;
-        return dfs(root);
-    }
+  fun splitBST(root: TreeNode?, target: Int): Array<TreeNode?> {
+    t = target
+    return dfs(root)
+  }
 
-    private TreeNode[] dfs(TreeNode root) {
-        if (root == null) {
-            return new TreeNode[] {null, null};
-        }
-        if (root.val <= t) {
-            TreeNode[] ans = dfs(root.right);
-            root.right = ans[0];
-            ans[0] = root;
-            return ans;
-        } else {
-            TreeNode[] ans = dfs(root.left);
-            root.left = ans[1];
-            ans[1] = root;
-            return ans;
-        }
+  private fun dfs(root: TreeNode?): Array<TreeNode?> {
+    if (root == null) {
+      return arrayOf(null, null)
     }
+    if (root.`val` <= t) {
+      val ans: Array<TreeNode?> = dfs(root.right)
+      root.right = ans[0]
+      ans[0] = root
+      return ans
+    } else {
+      val ans: Array<TreeNode?> = dfs(root.left)
+      root.left = ans[1]
+      ans[1] = root
+      return ans
+    }
+  }
 }

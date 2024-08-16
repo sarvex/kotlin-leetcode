@@ -1,20 +1,20 @@
-class Solution {
-    private Integer[] f;
-    private int[] nums;
+internal class Solution {
+  private var f: Array<Int>
+  private var nums: IntArray
 
-    public int rob(int[] nums) {
-        this.nums = nums;
-        f = new Integer[nums.length];
-        return dfs(0);
-    }
+  fun rob(nums: IntArray): Int {
+    this.nums = nums
+    f = arrayOfNulls(nums.size)
+    return dfs(0)
+  }
 
-    private int dfs(int i) {
-        if (i >= nums.length) {
-            return 0;
-        }
-        if (f[i] == null) {
-            f[i] = Math.max(nums[i] + dfs(i + 2), dfs(i + 1));
-        }
-        return f[i];
+  private fun dfs(i: Int): Int {
+    if (i >= nums.size) {
+      return 0
     }
+    if (f[i] == null) {
+      f[i] = max(nums[i] + dfs(i + 2), dfs(i + 1))
+    }
+    return f[i]
+  }
 }

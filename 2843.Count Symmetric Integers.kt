@@ -1,25 +1,26 @@
-class Solution {
-    public int countSymmetricIntegers(int low, int high) {
-        int ans = 0;
-        for (int x = low; x <= high; ++x) {
-            ans += f(x);
-        }
-        return ans;
+internal class Solution {
+  fun countSymmetricIntegers(low: Int, high: Int): Int {
+    var ans = 0
+    for (x in low..high) {
+      ans += f(x)
     }
+    return ans
+  }
 
-    private int f(int x) {
-        String s = "" + x;
-        int n = s.length();
-        if (n % 2 == 1) {
-            return 0;
-        }
-        int a = 0, b = 0;
-        for (int i = 0; i < n / 2; ++i) {
-            a += s.charAt(i) - '0';
-        }
-        for (int i = n / 2; i < n; ++i) {
-            b += s.charAt(i) - '0';
-        }
-        return a == b ? 1 : 0;
+  private fun f(x: Int): Int {
+    val s = "" + x
+    val n = s.length
+    if (n % 2 == 1) {
+      return 0
     }
+    var a = 0
+    var b = 0
+    for (i in 0 until n / 2) {
+      a += s[i].code - '0'.code
+    }
+    for (i in n / 2 until n) {
+      b += s[i].code - '0'.code
+    }
+    return if (a == b) 1 else 0
+  }
 }

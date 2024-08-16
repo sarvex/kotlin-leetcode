@@ -1,35 +1,33 @@
-class SummaryRanges {
-    private TreeMap<Integer, int[]> mp;
+import java.util.*
 
-    public SummaryRanges() {
-        mp = new TreeMap<>();
+internal class SummaryRanges {
+  private val mp: TreeMap<Int, IntArray> = TreeMap()
+
+  fun addNum(`val`: Int) {
+    val l = mp.floorKey(`val`)
+    val r = mp.ceilingKey(`val`)
+    if (l != null && r != null && mp[l]!![1] + 1 === `val` && mp[r]!![0] - 1 === `val`) {
+      mp[l]!![1] = mp[r]!![1]
+      mp.remove(r)
+    } else if (l != null && `val` <= mp[l]!![1] + 1) {
+      mp[l]!![1] = Math.max(`val`, mp[l]!![1])
+    } else if (r != null && `val` >= mp[r]!![0] - 1) {
+      mp[r]!![0] = Math.min(`val`, mp[r]!![0])
+    } else {
+      mp.put(`val`, intArrayOf(`val`, `val`))
     }
+  }
 
-    public void addNum(int val) {
-        Integer l = mp.floorKey(val);
-        Integer r = mp.ceilingKey(val);
-        if (l != null && r != null && mp.get(l)[1] + 1 == val && mp.get(r)[0] - 1 == val) {
-            mp.get(l)[1] = mp.get(r)[1];
-            mp.remove(r);
-        } else if (l != null && val <= mp.get(l)[1] + 1) {
-            mp.get(l)[1] = Math.max(val, mp.get(l)[1]);
-        } else if (r != null && val >= mp.get(r)[0] - 1) {
-            mp.get(r)[0] = Math.min(val, mp.get(r)[0]);
-        } else {
-            mp.put(val, new int[] {val, val});
-        }
-    }
-
-    public int[][] getIntervals() {
-        int[][] res = new int[mp.size()][2];
-        int i = 0;
-        for (int[] range : mp.values()) {
-            res[i++] = range;
-        }
-        return res;
+  val intervals: Array<IntArray>
+    get() {
+      val res = Array(mp.size()) { IntArray(2) }
+      var i = 0
+      for (range in mp.values()) {
+        res[i++] = range
+      }
+      return res
     }
 }
-
 /**
  * Your SummaryRanges object will be instantiated and called as such:
  * SummaryRanges obj = new SummaryRanges();

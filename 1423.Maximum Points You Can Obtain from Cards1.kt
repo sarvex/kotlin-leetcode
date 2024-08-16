@@ -1,14 +1,15 @@
-class Solution {
-    public int maxScore(int[] cardPoints, int k) {
-        int s = 0, n = cardPoints.length;
-        for (int i = n - k; i < n; ++i) {
-            s += cardPoints[i];
-        }
-        int ans = s;
-        for (int i = 0; i < k; ++i) {
-            s += cardPoints[i] - cardPoints[n - k + i];
-            ans = Math.max(ans, s);
-        }
-        return ans;
+internal class Solution {
+  fun maxScore(cardPoints: IntArray, k: Int): Int {
+    var s = 0
+    val n = cardPoints.size
+    for (i in n - k until n) {
+      s += cardPoints[i]
     }
+    var ans = s
+    for (i in 0 until k) {
+      s += cardPoints[i] - cardPoints[n - k + i]
+      ans = max(ans, s)
+    }
+    return ans
+  }
 }

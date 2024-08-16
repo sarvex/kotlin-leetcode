@@ -1,31 +1,34 @@
-class Solution {
-    private List<int[]>[] g;
-    private Map<Integer, Integer> cnt = new HashMap<>();
-    private long ans;
+import java.util.*
 
-    public long countPalindromePaths(List<Integer> parent, String s) {
-        int n = parent.size();
-        g = new List[n];
-        cnt.put(0, 1);
-        Arrays.setAll(g, k -> new ArrayList<>());
-        for (int i = 1; i < n; ++i) {
-            int p = parent.get(i);
-            g[p].add(new int[] {i, 1 << (s.charAt(i) - 'a')});
-        }
-        dfs(0, 0);
-        return ans;
-    }
+internal class Solution {
+  private var g: Array<List<IntArray>>
+  private val cnt: Map<Int, Int> = HashMap()
+  private var ans: Long = 0
 
-    private void dfs(int i, int xor) {
-        for (int[] e : g[i]) {
-            int j = e[0], v = e[1];
-            int x = xor ^ v;
-            ans += cnt.getOrDefault(x, 0);
-            for (int k = 0; k < 26; ++k) {
-                ans += cnt.getOrDefault(x ^ (1 << k), 0);
-            }
-            cnt.merge(x, 1, Integer::sum);
-            dfs(j, x);
-        }
+  fun countPalindromePaths(parent: List<Int>, s: String): Long {
+    val n: Int = parent.size()
+    g = arrayOfNulls(n)
+    cnt.put(0, 1)
+    Arrays.setAll(g) { k -> ArrayList() }
+    for (i in 1 until n) {
+      val p = parent[i]
+      g[p].add(intArrayOf(i, 1 shl (s[i].code - 'a'.code)))
     }
+    dfs(0, 0)
+    return ans
+  }
+
+  private fun dfs(i: Int, xor: Int) {
+    for (e in g[i]) {
+      val j = e[0]
+      val v = e[1]
+      val x = xor xor v
+      ans += cnt.getOrDefault(x, 0)
+      for (k in 0..25) {
+        ans += cnt.getOrDefault(x xor (1 shl k), 0)
+      }
+      cnt.merge(x, 1) { a: Int, b: Int -> Integer.sum(a, b) }
+      dfs(j, x)
+    }
+  }
 }

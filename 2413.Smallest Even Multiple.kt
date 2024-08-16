@@ -1,5 +1,5 @@
-class Solution {
-    public int smallestEvenMultiple(int n) {
-        return n % 2 == 0 ? n : n * 2;
-    }
+internal class Solution {
+  fun smallestEvenMultiple(n: Int): Int {
+    return if (n % 2 == 0) n else n * 2
+  }
 }

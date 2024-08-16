@@ -1,53 +1,55 @@
-class Solution {
-    private List<Integer> arr = new ArrayList<>();
-    private int[] ts;
-    private int inf = 1 << 30;
+internal class Solution {
+  private val arr: List<Int> = ArrayList()
+  private var ts: IntArray
+  private val inf = 1 shl 30
 
-    public int closestCost(int[] baseCosts, int[] toppingCosts, int target) {
-        ts = toppingCosts;
-        dfs(0, 0);
-        Collections.sort(arr);
-        int d = inf, ans = inf;
+  fun closestCost(baseCosts: IntArray, toppingCosts: IntArray, target: Int): Int {
+    ts = toppingCosts
+    dfs(0, 0)
+    Collections.sort(arr)
+    var d = inf
+    var ans = inf
 
-        // 选择一种冰激淋基料
-        for (int x : baseCosts) {
-            // 枚举子集和
-            for (int y : arr) {
-                // 二分查找
-                int i = search(target - x - y);
-                for (int j : new int[] {i, i - 1}) {
-                    if (j >= 0 && j < arr.size()) {
-                        int t = Math.abs(x + y + arr.get(j) - target);
-                        if (d > t || (d == t && ans > x + y + arr.get(j))) {
-                            d = t;
-                            ans = x + y + arr.get(j);
-                        }
-                    }
-                }
+    // 选择一种冰激淋基料
+    for (x in baseCosts) {
+      // 枚举子集和
+      for (y in arr) {
+        // 二分查找
+        val i = search(target - x - y)
+        for (j in intArrayOf(i, i - 1)) {
+          if (j >= 0 && j < arr.size()) {
+            val t = Math.abs(x + y + arr[j] - target)
+            if (d > t || (d == t && ans > x + y + arr[j])) {
+              d = t
+              ans = x + y + arr[j]
             }
+          }
         }
-        return ans;
+      }
     }
+    return ans
+  }
 
-    private int search(int x) {
-        int left = 0, right = arr.size();
-        while (left < right) {
-            int mid = (left + right) >> 1;
-            if (arr.get(mid) >= x) {
-                right = mid;
-            } else {
-                left = mid + 1;
-            }
-        }
-        return left;
+  private fun search(x: Int): Int {
+    var left = 0
+    var right: Int = arr.size()
+    while (left < right) {
+      val mid = (left + right) shr 1
+      if (arr[mid] >= x) {
+        right = mid
+      } else {
+        left = mid + 1
+      }
     }
+    return left
+  }
 
-    private void dfs(int i, int t) {
-        if (i >= ts.length) {
-            arr.add(t);
-            return;
-        }
-        dfs(i + 1, t);
-        dfs(i + 1, t + ts[i]);
+  private fun dfs(i: Int, t: Int) {
+    if (i >= ts.size) {
+      arr.add(t)
+      return
     }
+    dfs(i + 1, t)
+    dfs(i + 1, t + ts[i])
+  }
 }

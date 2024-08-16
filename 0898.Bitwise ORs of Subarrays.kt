@@ -1,16 +1,16 @@
-class Solution {
-    public int subarrayBitwiseORs(int[] arr) {
-        Set<Integer> ans = new HashSet<>();
-        Set<Integer> s = new HashSet<>();
-        for (int x : arr) {
-            Set<Integer> t = new HashSet<>();
-            for (int y : s) {
-                t.add(x | y);
-            }
-            t.add(x);
-            ans.addAll(t);
-            s = t;
-        }
-        return ans.size();
+internal class Solution {
+  fun subarrayBitwiseORs(arr: IntArray): Int {
+    val ans: Set<Int> = HashSet()
+    var s: Set<Int> = HashSet()
+    for (x in arr) {
+      val t: Set<Int> = HashSet()
+      for (y in s) {
+        t.add(x or y)
+      }
+      t.add(x)
+      ans.addAll(t)
+      s = t
     }
+    return ans.size()
+  }
 }

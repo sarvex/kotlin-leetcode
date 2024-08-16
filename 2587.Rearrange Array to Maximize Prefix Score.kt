@@ -1,14 +1,16 @@
-class Solution {
-    public int maxScore(int[] nums) {
-        Arrays.sort(nums);
-        int n = nums.length;
-        long s = 0;
-        for (int i = 0; i < n; ++i) {
-            s += nums[n - i - 1];
-            if (s <= 0) {
-                return i;
-            }
-        }
-        return n;
+import java.util.*
+
+internal class Solution {
+  fun maxScore(nums: IntArray): Int {
+    Arrays.sort(nums)
+    val n = nums.size
+    var s: Long = 0
+    for (i in 0 until n) {
+      s += nums[n - i - 1].toLong()
+      if (s <= 0) {
+        return i
+      }
     }
+    return n
+  }
 }

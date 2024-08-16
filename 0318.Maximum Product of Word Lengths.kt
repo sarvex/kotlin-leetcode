@@ -1,18 +1,18 @@
-class Solution {
-    public int maxProduct(String[] words) {
-        int n = words.length;
-        int[] mask = new int[n];
-        int ans = 0;
-        for (int i = 0; i < n; ++i) {
-            for (char c : words[i].toCharArray()) {
-                mask[i] |= 1 << (c - 'a');
-            }
-            for (int j = 0; j < i; ++j) {
-                if ((mask[i] & mask[j]) == 0) {
-                    ans = Math.max(ans, words[i].length() * words[j].length());
-                }
-            }
+internal class Solution {
+  fun maxProduct(words: Array<String>): Int {
+    val n = words.size
+    val mask = IntArray(n)
+    var ans = 0
+    for (i in 0 until n) {
+      for (c in words[i].toCharArray()) {
+        mask[i] = mask[i] or (1 shl (c.code - 'a'.code))
+      }
+      for (j in 0 until i) {
+        if ((mask[i] and mask[j]) == 0) {
+          ans = max(ans, words[i].length * words[j].length)
         }
-        return ans;
+      }
     }
+    return ans
+  }
 }

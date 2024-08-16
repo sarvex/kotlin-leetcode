@@ -1,74 +1,77 @@
-class Trie {
-    Trie[] children = new Trie[128];
-    boolean isEnd;
+internal class Trie {
+  var children: Array<Trie> = arrayOfNulls(128)
+  var isEnd: Boolean = false
 
-    public void insert(String word) {
-        Trie node = this;
-        for (char c : word.toCharArray()) {
-            if (node.children[c] == null) {
-                node.children[c] = new Trie();
-            }
-            node = node.children[c];
-        }
-        node.isEnd = true;
+  fun insert(word: String) {
+    var node = this
+    for (c in word.toCharArray()) {
+      if (node.children[c.code] == null) {
+        node.children[c.code] = Trie()
+      }
+      node = node.children[c.code]
     }
+    node.isEnd = true
+  }
 }
 
-class Solution {
-    public String addBoldTag(String s, String[] words) {
-        Trie trie = new Trie();
-        for (String w : words) {
-            trie.insert(w);
-        }
-        List<int[]> pairs = new ArrayList<>();
-        int n = s.length();
-        for (int i = 0; i < n; ++i) {
-            Trie node = trie;
-            for (int j = i; j < n; ++j) {
-                int idx = s.charAt(j);
-                if (node.children[idx] == null) {
-                    break;
-                }
-                node = node.children[idx];
-                if (node.isEnd) {
-                    pairs.add(new int[] {i, j});
-                }
-            }
-        }
-        if (pairs.isEmpty()) {
-            return s;
-        }
-        List<int[]> t = new ArrayList<>();
-        int st = pairs.get(0)[0], ed = pairs.get(0)[1];
-        for (int j = 1; j < pairs.size(); ++j) {
-            int a = pairs.get(j)[0], b = pairs.get(j)[1];
-            if (ed + 1 < a) {
-                t.add(new int[] {st, ed});
-                st = a;
-                ed = b;
-            } else {
-                ed = Math.max(ed, b);
-            }
-        }
-        t.add(new int[] {st, ed});
-        int i = 0, j = 0;
-        StringBuilder ans = new StringBuilder();
-        while (i < n) {
-            if (j == t.size()) {
-                ans.append(s.substring(i));
-                break;
-            }
-            st = t.get(j)[0];
-            ed = t.get(j)[1];
-            if (i < st) {
-                ans.append(s.substring(i, st));
-            }
-            ++j;
-            ans.append("<b>");
-            ans.append(s.substring(st, ed + 1));
-            ans.append("</b>");
-            i = ed + 1;
-        }
-        return ans.toString();
+internal class Solution {
+  fun addBoldTag(s: String, words: Array<String>): String {
+    val trie = Trie()
+    for (w in words) {
+      trie.insert(w)
     }
+    val pairs: List<IntArray> = ArrayList()
+    val n = s.length
+    for (i in 0 until n) {
+      var node = trie
+      for (j in i until n) {
+        val idx: Int = s[j].code
+        if (node.children[idx] == null) {
+          break
+        }
+        node = node.children[idx]
+        if (node.isEnd) {
+          pairs.add(intArrayOf(i, j))
+        }
+      }
+    }
+    if (pairs.isEmpty()) {
+      return s
+    }
+    val t: List<IntArray> = ArrayList()
+    var st = pairs[0][0]
+    var ed = pairs[0][1]
+    for (j in 1 until pairs.size()) {
+      val a = pairs[j][0]
+      val b = pairs[j][1]
+      if (ed + 1 < a) {
+        t.add(intArrayOf(st, ed))
+        st = a
+        ed = b
+      } else {
+        ed = max(ed, b)
+      }
+    }
+    t.add(intArrayOf(st, ed))
+    var i = 0
+    var j = 0
+    val ans = StringBuilder()
+    while (i < n) {
+      if (j == t.size()) {
+        ans.append(s.substring(i))
+        break
+      }
+      st = t[j][0]
+      ed = t[j][1]
+      if (i < st) {
+        ans.append(s.substring(i, st))
+      }
+      ++j
+      ans.append("<b>")
+      ans.append(s.substring(st, ed + 1))
+      ans.append("</b>")
+      i = ed + 1
+    }
+    return ans.toString()
+  }
 }

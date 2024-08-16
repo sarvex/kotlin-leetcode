@@ -1,41 +1,43 @@
-class Solution {
-    public int minimumChanges(String s, int k) {
-        int n = s.length();
-        int[][] g = new int[n + 1][n + 1];
-        int[][] f = new int[n + 1][k + 1];
-        final int inf = 1 << 30;
-        for (int i = 0; i <= n; ++i) {
-            Arrays.fill(g[i], inf);
-            Arrays.fill(f[i], inf);
-        }
-        for (int i = 1; i <= n; ++i) {
-            for (int j = i; j <= n; ++j) {
-                int m = j - i + 1;
-                for (int d = 1; d < m; ++d) {
-                    if (m % d == 0) {
-                        int cnt = 0;
-                        for (int l = 0; l < m; ++l) {
-                            int r = (m / d - 1 - l / d) * d + l % d;
-                            if (l >= r) {
-                                break;
-                            }
-                            if (s.charAt(i - 1 + l) != s.charAt(i - 1 + r)) {
-                                ++cnt;
-                            }
-                        }
-                        g[i][j] = Math.min(g[i][j], cnt);
-                    }
-                }
-            }
-        }
-        f[0][0] = 0;
-        for (int i = 1; i <= n; ++i) {
-            for (int j = 1; j <= k; ++j) {
-                for (int h = 0; h < i - 1; ++h) {
-                    f[i][j] = Math.min(f[i][j], f[h][j - 1] + g[h + 1][i]);
-                }
-            }
-        }
-        return f[n][k];
+import java.util.*
+
+internal class Solution {
+  fun minimumChanges(s: String, k: Int): Int {
+    val n = s.length
+    val g = Array(n + 1) { IntArray(n + 1) }
+    val f = Array(n + 1) { IntArray(k + 1) }
+    val inf = 1 shl 30
+    for (i in 0..n) {
+      Arrays.fill(g[i], inf)
+      Arrays.fill(f[i], inf)
     }
+    for (i in 1..n) {
+      for (j in i..n) {
+        val m = j - i + 1
+        for (d in 1 until m) {
+          if (m % d == 0) {
+            var cnt = 0
+            for (l in 0 until m) {
+              val r: Int = (m / d - 1 - l / d) * d + l % d
+              if (l >= r) {
+                break
+              }
+              if (s[i - 1 + l] != s[i - 1 + r]) {
+                ++cnt
+              }
+            }
+            g[i][j] = min(g[i][j], cnt)
+          }
+        }
+      }
+    }
+    f[0][0] = 0
+    for (i in 1..n) {
+      for (j in 1..k) {
+        for (h in 0 until i - 1) {
+          f[i][j] = min(f[i][j], f[h][j - 1] + g[h + 1][i])
+        }
+      }
+    }
+    return f[n][k]
+  }
 }

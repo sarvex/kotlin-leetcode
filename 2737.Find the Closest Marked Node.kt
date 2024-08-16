@@ -1,34 +1,38 @@
-class Solution {
-    public int minimumDistance(int n, List<List<Integer>> edges, int s, int[] marked) {
-        final int inf = 1 << 29;
-        int[][] g = new int[n][n];
-        for (var e : g) {
-            Arrays.fill(e, inf);
-        }
-        for (var e : edges) {
-            int u = e.get(0), v = e.get(1), w = e.get(2);
-            g[u][v] = Math.min(g[u][v], w);
-        }
-        int[] dist = new int[n];
-        Arrays.fill(dist, inf);
-        dist[s] = 0;
-        boolean[] vis = new boolean[n];
-        for (int i = 0; i < n; ++i) {
-            int t = -1;
-            for (int j = 0; j < n; ++j) {
-                if (!vis[j] && (t == -1 || dist[t] > dist[j])) {
-                    t = j;
-                }
-            }
-            vis[t] = true;
-            for (int j = 0; j < n; ++j) {
-                dist[j] = Math.min(dist[j], dist[t] + g[t][j]);
-            }
-        }
-        int ans = inf;
-        for (int i : marked) {
-            ans = Math.min(ans, dist[i]);
-        }
-        return ans >= inf ? -1 : ans;
+import java.util.*
+
+internal class Solution {
+  fun minimumDistance(n: Int, edges: List<List<Int?>>, s: Int, marked: IntArray): Int {
+    val inf = 1 shl 29
+    val g = Array(n) { IntArray(n) }
+    for (e in g) {
+      Arrays.fill(e, inf)
     }
+    for (e in edges) {
+      val u: Int = e[0]
+      val v: Int = e[1]
+      val w: Int = e[2]
+      g[u][v] = min(g[u][v], w)
+    }
+    val dist = IntArray(n)
+    Arrays.fill(dist, inf)
+    dist[s] = 0
+    val vis = BooleanArray(n)
+    for (i in 0 until n) {
+      var t = -1
+      for (j in 0 until n) {
+        if (!vis[j] && (t == -1 || dist[t] > dist[j])) {
+          t = j
+        }
+      }
+      vis[t] = true
+      for (j in 0 until n) {
+        dist[j] = min(dist[j], dist[t] + g[t][j])
+      }
+    }
+    var ans = inf
+    for (i in marked) {
+      ans = min(ans, dist[i])
+    }
+    return if (ans >= inf) -1 else ans
+  }
 }

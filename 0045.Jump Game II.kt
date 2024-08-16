@@ -1,13 +1,15 @@
-class Solution {
-    public int jump(int[] nums) {
-        int ans = 0, mx = 0, last = 0;
-        for (int i = 0; i < nums.length - 1; ++i) {
-            mx = Math.max(mx, i + nums[i]);
-            if (last == i) {
-                ++ans;
-                last = mx;
-            }
-        }
-        return ans;
+internal class Solution {
+  fun jump(nums: IntArray): Int {
+    var ans = 0
+    var mx = 0
+    var last = 0
+    for (i in 0 until nums.size - 1) {
+      mx = max(mx, i + nums[i])
+      if (last == i) {
+        ++ans
+        last = mx
+      }
     }
+    return ans
+  }
 }

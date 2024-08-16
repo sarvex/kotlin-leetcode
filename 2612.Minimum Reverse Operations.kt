@@ -1,30 +1,32 @@
-class Solution {
-    public int[] minReverseOperations(int n, int p, int[] banned, int k) {
-        int[] ans = new int[n];
-        TreeSet<Integer>[] ts = new TreeSet[] {new TreeSet<>(), new TreeSet<>()};
-        for (int i = 0; i < n; ++i) {
-            ts[i % 2].add(i);
-            ans[i] = i == p ? 0 : -1;
-        }
-        ts[p % 2].remove(p);
-        for (int i : banned) {
-            ts[i % 2].remove(i);
-        }
-        ts[0].add(n);
-        ts[1].add(n);
-        Deque<Integer> q = new ArrayDeque<>();
-        q.offer(p);
-        while (!q.isEmpty()) {
-            int i = q.poll();
-            int mi = Math.max(i - k + 1, k - i - 1);
-            int mx = Math.min(i + k - 1, n * 2 - k - i - 1);
-            var s = ts[mi % 2];
-            for (int j = s.ceiling(mi); j <= mx; j = s.ceiling(mi)) {
-                q.offer(j);
-                ans[j] = ans[i] + 1;
-                s.remove(j);
-            }
-        }
-        return ans;
+internal class Solution {
+  fun minReverseOperations(n: Int, p: Int, banned: IntArray, k: Int): IntArray {
+    val ans = IntArray(n)
+    val ts: Array<TreeSet<Int>> = arrayOf<TreeSet>(TreeSet(), TreeSet())
+    for (i in 0 until n) {
+      ts[i % 2].add(i)
+      ans[i] = if (i == p) 0 else -1
     }
+    ts[p % 2].remove(p)
+    for (i in banned) {
+      ts[i % 2].remove(i)
+    }
+    ts[0].add(n)
+    ts[1].add(n)
+    val q: Deque<Int> = ArrayDeque()
+    q.offer(p)
+    while (!q.isEmpty()) {
+      val i: Int = q.poll()
+      val mi: Int = max(i - k + 1, k - i - 1)
+      val mx: Int = min(i + k - 1, n * 2 - k - i - 1)
+      val s: TreeSet<Int> = ts[mi % 2]
+      var j: Int = s.ceiling(mi)
+      while (j <= mx) {
+        q.offer(j)
+        ans[j] = ans[i] + 1
+        s.remove(j)
+        j = s.ceiling(mi)
+      }
+    }
+    return ans
+  }
 }

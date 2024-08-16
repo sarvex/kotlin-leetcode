@@ -1,36 +1,34 @@
-class DetectSquares {
-    private Map<Integer, Map<Integer, Integer>> cnt = new HashMap<>();
+internal class DetectSquares {
+  private val cnt: Map<Int, Map<Int, Int>> = HashMap()
 
-    public DetectSquares() {
-    }
+  fun add(point: IntArray) {
+    val x = point[0]
+    val y = point[1]
+    cnt.computeIfAbsent(x) { k -> HashMap() }.merge(y, 1) { a: Int, b: Int -> Integer.sum(a, b) }
+  }
 
-    public void add(int[] point) {
-        int x = point[0], y = point[1];
-        cnt.computeIfAbsent(x, k -> new HashMap<>()).merge(y, 1, Integer::sum);
+  fun count(point: IntArray): Int {
+    val x1 = point[0]
+    val y1 = point[1]
+    if (!cnt.containsKey(x1)) {
+      return 0
     }
-
-    public int count(int[] point) {
-        int x1 = point[0], y1 = point[1];
-        if (!cnt.containsKey(x1)) {
-            return 0;
-        }
-        int ans = 0;
-        for (var e : cnt.entrySet()) {
-            int x2 = e.getKey();
-            if (x2 != x1) {
-                int d = x2 - x1;
-                var cnt1 = cnt.get(x1);
-                var cnt2 = e.getValue();
-                ans += cnt2.getOrDefault(y1, 0) * cnt1.getOrDefault(y1 + d, 0)
-                    * cnt2.getOrDefault(y1 + d, 0);
-                ans += cnt2.getOrDefault(y1, 0) * cnt1.getOrDefault(y1 - d, 0)
-                    * cnt2.getOrDefault(y1 - d, 0);
-            }
-        }
-        return ans;
+    var ans = 0
+    for (e in cnt.entrySet()) {
+      val x2: Int = e.getKey()
+      if (x2 != x1) {
+        val d = x2 - x1
+        val cnt1: Unit = cnt[x1]
+        val cnt2 = e.getValue()
+        ans += (cnt2.getOrDefault(y1, 0) * cnt1.getOrDefault(y1 + d, 0)
+            * cnt2.getOrDefault(y1 + d, 0))
+        ans += (cnt2.getOrDefault(y1, 0) * cnt1.getOrDefault(y1 - d, 0)
+            * cnt2.getOrDefault(y1 - d, 0))
+      }
     }
+    return ans
+  }
 }
-
 /**
  * Your DetectSquares object will be instantiated and called as such:
  * DetectSquares obj = new DetectSquares();

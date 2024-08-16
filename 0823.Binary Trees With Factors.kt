@@ -1,31 +1,31 @@
-class Solution {
-    public int numFactoredBinaryTrees(int[] arr) {
-        final int mod = (int) 1e9 + 7;
-        Arrays.sort(arr);
-        int n = arr.length;
-        long[] f = new long[n];
-        Arrays.fill(f, 1);
-        Map<Integer, Integer> idx = new HashMap<>(n);
-        for (int i = 0; i < n; ++i) {
-            idx.put(arr[i], i);
-        }
-        for (int i = 0; i < n; ++i) {
-            int a = arr[i];
-            for (int j = 0; j < i; ++j) {
-                int b = arr[j];
-                if (a % b == 0) {
-                    int c = a / b;
-                    if (idx.containsKey(c)) {
-                        int k = idx.get(c);
-                        f[i] = (f[i] + f[j] * f[k]) % mod;
-                    }
-                }
-            }
-        }
-        long ans = 0;
-        for (long v : f) {
-            ans = (ans + v) % mod;
-        }
-        return (int) ans;
+internal class Solution {
+  fun numFactoredBinaryTrees(arr: IntArray): Int {
+    val mod = 1e9.toInt() + 7
+    Arrays.sort(arr)
+    val n = arr.size
+    val f = LongArray(n)
+    Arrays.fill(f, 1)
+    val idx: Map<Int, Int> = HashMap(n)
+    for (i in 0 until n) {
+      idx.put(arr[i], i)
     }
+    for (i in 0 until n) {
+      val a = arr[i]
+      for (j in 0 until i) {
+        val b = arr[j]
+        if (a % b == 0) {
+          val c = a / b
+          if (idx.containsKey(c)) {
+            val k = idx[c]!!
+            f[i] = (f[i] + f[j] * f[k]) % mod
+          }
+        }
+      }
+    }
+    var ans: Long = 0
+    for (v in f) {
+      ans = (ans + v) % mod
+    }
+    return ans.toInt()
+  }
 }

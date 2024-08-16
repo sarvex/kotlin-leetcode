@@ -1,34 +1,37 @@
-class Solution {
-    private int[] count;
+internal class Solution {
+  private var count: IntArray
 
-    public double[] sampleStats(int[] count) {
-        this.count = count;
-        int mi = 1 << 30, mx = -1;
-        long s = 0;
-        int cnt = 0;
-        int mode = 0;
-        for (int k = 0; k < count.length; ++k) {
-            if (count[k] > 0) {
-                mi = Math.min(mi, k);
-                mx = Math.max(mx, k);
-                s += 1L * k * count[k];
-                cnt += count[k];
-                if (count[k] > count[mode]) {
-                    mode = k;
-                }
-            }
+  fun sampleStats(count: IntArray): DoubleArray {
+    this.count = count
+    var mi = 1 shl 30
+    var mx = -1
+    var s: Long = 0
+    var cnt = 0
+    var mode = 0
+    for (k in count.indices) {
+      if (count[k] > 0) {
+        mi = min(mi, k)
+        mx = max(mx, k)
+        s += 1L * k * count[k]
+        cnt += count[k]
+        if (count[k] > count[mode]) {
+          mode = k
         }
-        double median
-            = cnt % 2 == 1 ? find(cnt / 2 + 1) : (find(cnt / 2) + find(cnt / 2 + 1)) / 2.0;
-        return new double[] {mi, mx, s * 1.0 / cnt, median, mode};
+      }
     }
+    val median = if (cnt % 2 == 1) find(cnt / 2 + 1).toDouble() else (find(cnt / 2) + find(cnt / 2 + 1)) / 2.0
+    return doubleArrayOf(mi.toDouble(), mx.toDouble(), s * 1.0 / cnt, median, mode.toDouble())
+  }
 
-    private int find(int i) {
-        for (int k = 0, t = 0;; ++k) {
-            t += count[k];
-            if (t >= i) {
-                return k;
-            }
-        }
+  private fun find(i: Int): Int {
+    var k = 0
+    var t = 0
+    while (true) {
+      t += count[k]
+      if (t >= i) {
+        return k
+      }
+      ++k
     }
+  }
 }

@@ -1,45 +1,50 @@
-class Solution {
-    private Map<String, String> p;
-    private Map<String, Double> w;
+internal class Solution {
+  private var p: Map<String?, String>? = null
+  private var w: Map<String?, Double>? = null
 
-    public double[] calcEquation(
-        List<List<String>> equations, double[] values, List<List<String>> queries) {
-        int n = equations.size();
-        p = new HashMap<>();
-        w = new HashMap<>();
-        for (List<String> e : equations) {
-            p.put(e.get(0), e.get(0));
-            p.put(e.get(1), e.get(1));
-            w.put(e.get(0), 1.0);
-            w.put(e.get(1), 1.0);
-        }
-        for (int i = 0; i < n; ++i) {
-            List<String> e = equations.get(i);
-            String a = e.get(0), b = e.get(1);
-            String pa = find(a), pb = find(b);
-            if (Objects.equals(pa, pb)) {
-                continue;
-            }
-            p.put(pa, pb);
-            w.put(pa, w.get(b) * values[i] / w.get(a));
-        }
-        int m = queries.size();
-        double[] ans = new double[m];
-        for (int i = 0; i < m; ++i) {
-            String c = queries.get(i).get(0), d = queries.get(i).get(1);
-            ans[i] = !p.containsKey(c) || !p.containsKey(d) || !Objects.equals(find(c), find(d))
-                ? -1.0
-                : w.get(c) / w.get(d);
-        }
-        return ans;
+  fun calcEquation(
+    equations: List<List<String?>>, values: DoubleArray, queries: List<List<String?>>
+  ): DoubleArray {
+    val n: Int = equations.size()
+    p = HashMap()
+    w = HashMap()
+    for (e in equations) {
+      p.put(e[0], e[0])
+      p.put(e[1], e[1])
+      w.put(e[0], 1.0)
+      w.put(e[1], 1.0)
     }
+    for (i in 0 until n) {
+      val e = equations[i]
+      val a = e[0]
+      val b = e[1]
+      val pa = find(a)
+      val pb = find(b)
+      if (Objects.equals(pa, pb)) {
+        continue
+      }
+      p.put(pa, pb)
+      w.put(pa, w!![b]!! * values[i] / w!![a]!!)
+    }
+    val m: Int = queries.size()
+    val ans = DoubleArray(m)
+    for (i in 0 until m) {
+      val c = queries[i][0]
+      val d = queries[i][1]
+      ans[i] = if (!p!!.containsKey(c) || !p!!.containsKey(d) || !Objects.equals(find(c), find(d)))
+        -1.0
+      else
+        w!![c]!! / w!![d]!!
+    }
+    return ans
+  }
 
-    private String find(String x) {
-        if (!Objects.equals(p.get(x), x)) {
-            String origin = p.get(x);
-            p.put(x, find(p.get(x)));
-            w.put(x, w.get(x) * w.get(origin));
-        }
-        return p.get(x);
+  private fun find(x: String?): String {
+    if (!Objects.equals(p!![x], x)) {
+      val origin = p!![x]!!
+      p.put(x, find(p!![x]))
+      w.put(x, w!![x]!! * w!![origin]!!)
     }
+    return p!![x]!!
+  }
 }

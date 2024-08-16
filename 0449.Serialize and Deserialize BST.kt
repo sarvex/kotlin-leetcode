@@ -1,60 +1,58 @@
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
+ * int val;
+ * TreeNode left;
+ * TreeNode right;
+ * TreeNode(int x) { val = x; }
  * }
  */
-public class Codec {
-    private int i;
-    private List<String> nums;
-    private final int inf = 1 << 30;
+class Codec {
+  private var i = 0
+  private var nums: List<String>? = null
+  private val inf = 1 shl 30
 
-    // Encodes a tree to a single string.
-    public String serialize(TreeNode root) {
-        nums = new ArrayList<>();
-        dfs(root);
-        return String.join(" ", nums);
+  // Encodes a tree to a single string.
+  fun serialize(root: TreeNode?): String {
+    nums = ArrayList()
+    dfs(root)
+    return java.lang.String.join(" ", nums)
+  }
+
+  // Decodes your encoded data to tree.
+  fun deserialize(data: String?): TreeNode? {
+    if (data == null || "" == data) {
+      return null
     }
+    i = 0
+    nums = Arrays.asList(data.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray())
+    return dfs(-inf, inf)
+  }
 
-    // Decodes your encoded data to tree.
-    public TreeNode deserialize(String data) {
-        if (data == null || "".equals(data)) {
-            return null;
-        }
-        i = 0;
-        nums = Arrays.asList(data.split(" "));
-        return dfs(-inf, inf);
+  private fun dfs(root: TreeNode?) {
+    if (root == null) {
+      return
     }
+    nums.add(java.lang.String.valueOf(root.`val`))
+    dfs(root.left)
+    dfs(root.right)
+  }
 
-    private void dfs(TreeNode root) {
-        if (root == null) {
-            return;
-        }
-        nums.add(String.valueOf(root.val));
-        dfs(root.left);
-        dfs(root.right);
+  private fun dfs(mi: Int, mx: Int): TreeNode? {
+    if (i == nums!!.size()) {
+      return null
     }
-
-    private TreeNode dfs(int mi, int mx) {
-        if (i == nums.size()) {
-            return null;
-        }
-        int x = Integer.parseInt(nums.get(i));
-        if (x < mi || x > mx) {
-            return null;
-        }
-        TreeNode root = new TreeNode(x);
-        ++i;
-        root.left = dfs(mi, x);
-        root.right = dfs(x, mx);
-        return root;
+    val x: Int = nums!![i].toInt()
+    if (x < mi || x > mx) {
+      return null
     }
-}
-
-// Your Codec object will be instantiated and called as such:
+    val root: TreeNode = TreeNode(x)
+    ++i
+    root.left = dfs(mi, x)
+    root.right = dfs(x, mx)
+    return root
+  }
+} // Your Codec object will be instantiated and called as such:
 // Codec ser = new Codec();
 // Codec deser = new Codec();
 // String tree = ser.serialize(root);

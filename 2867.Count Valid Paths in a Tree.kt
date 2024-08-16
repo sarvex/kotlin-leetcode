@@ -1,94 +1,99 @@
-class PrimeTable {
-    private final boolean[] prime;
+import java.util.*
 
-    public PrimeTable(int n) {
-        prime = new boolean[n + 1];
-        Arrays.fill(prime, true);
-        prime[0] = false;
-        prime[1] = false;
-        for (int i = 2; i <= n; ++i) {
-            if (prime[i]) {
-                for (int j = i + i; j <= n; j += i) {
-                    prime[j] = false;
-                }
-            }
+internal class PrimeTable(n: Int) {
+  private val prime = BooleanArray(n + 1)
+
+  init {
+    Arrays.fill(prime, true)
+    prime[0] = false
+    prime[1] = false
+    for (i in 2..n) {
+      if (prime[i]) {
+        var j = i + i
+        while (j <= n) {
+          prime[j] = false
+          j += i
         }
+      }
     }
+  }
 
-    public boolean isPrime(int x) {
-        return prime[x];
-    }
+  fun isPrime(x: Int): Boolean {
+    return prime[x]
+  }
 }
 
-class UnionFind {
-    private final int[] p;
-    private final int[] size;
+internal class UnionFind(n: Int) {
+  private val p = IntArray(n)
+  private val size = IntArray(n)
 
-    public UnionFind(int n) {
-        p = new int[n];
-        size = new int[n];
-        for (int i = 0; i < n; ++i) {
-            p[i] = i;
-            size[i] = 1;
-        }
+  init {
+    for (i in 0 until n) {
+      p[i] = i
+      size[i] = 1
     }
+  }
 
-    public int find(int x) {
-        if (p[x] != x) {
-            p[x] = find(p[x]);
-        }
-        return p[x];
+  fun find(x: Int): Int {
+    if (p[x] != x) {
+      p[x] = find(p[x])
     }
+    return p[x]
+  }
 
-    public boolean union(int a, int b) {
-        int pa = find(a), pb = find(b);
-        if (pa == pb) {
-            return false;
-        }
-        if (size[pa] > size[pb]) {
-            p[pb] = pa;
-            size[pa] += size[pb];
-        } else {
-            p[pa] = pb;
-            size[pb] += size[pa];
-        }
-        return true;
+  fun union(a: Int, b: Int): Boolean {
+    val pa = find(a)
+    val pb = find(b)
+    if (pa == pb) {
+      return false
     }
+    if (size[pa] > size[pb]) {
+      p[pb] = pa
+      size[pa] += size[pb]
+    } else {
+      p[pa] = pb
+      size[pb] += size[pa]
+    }
+    return true
+  }
 
-    public int size(int x) {
-        return size[find(x)];
-    }
+  fun size(x: Int): Int {
+    return size[find(x)]
+  }
 }
 
-class Solution {
-    private static final PrimeTable PT = new PrimeTable(100010);
-
-    public long countPaths(int n, int[][] edges) {
-        List<Integer>[] g = new List[n + 1];
-        Arrays.setAll(g, i -> new ArrayList<>());
-        UnionFind uf = new UnionFind(n + 1);
-        for (int[] e : edges) {
-            int u = e[0], v = e[1];
-            g[u].add(v);
-            g[v].add(u);
-            if (!PT.isPrime(u) && !PT.isPrime(v)) {
-                uf.union(u, v);
-            }
-        }
-        long ans = 0;
-        for (int i = 1; i <= n; ++i) {
-            if (PT.isPrime(i)) {
-                long t = 0;
-                for (int j : g[i]) {
-                    if (!PT.isPrime(j)) {
-                        long cnt = uf.size(j);
-                        ans += cnt;
-                        ans += cnt * t;
-                        t += cnt;
-                    }
-                }
-            }
-        }
-        return ans;
+internal class Solution {
+  fun countPaths(n: Int, edges: Array<IntArray>): Long {
+    val g: Array<List<Int>> = arrayOfNulls(n + 1)
+    Arrays.setAll(g) { i -> ArrayList() }
+    val uf = UnionFind(n + 1)
+    for (e in edges) {
+      val u = e[0]
+      val v = e[1]
+      g[u].add(v)
+      g[v].add(u)
+      if (!Solution.Companion.PT.isPrime(u) && !Solution.Companion.PT.isPrime(v)) {
+        uf.union(u, v)
+      }
     }
+    var ans: Long = 0
+    for (i in 1..n) {
+      if (Solution.Companion.PT.isPrime(i)) {
+        var t: Long = 0
+        for (j in g[i]) {
+          if (!Solution.Companion.PT.isPrime(j)) {
+            val cnt: Long = uf.size(j).toLong()
+            ans += cnt
+            ans += cnt * t
+            t += cnt
+          }
+        }
+      }
+    }
+    return ans
+  }
+
+  companion object {
+    private val PT = PrimeTable(100010)
+  }
 }

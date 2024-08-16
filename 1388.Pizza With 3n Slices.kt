@@ -1,24 +1,24 @@
-class Solution {
-    private int n;
+internal class Solution {
+  private var n = 0
 
-    public int maxSizeSlices(int[] slices) {
-        n = slices.length / 3;
-        int[] nums = new int[slices.length - 1];
-        System.arraycopy(slices, 1, nums, 0, nums.length);
-        int a = g(nums);
-        System.arraycopy(slices, 0, nums, 0, nums.length);
-        int b = g(nums);
-        return Math.max(a, b);
-    }
+  fun maxSizeSlices(slices: IntArray): Int {
+    n = slices.size / 3
+    val nums = IntArray(slices.size - 1)
+    System.arraycopy(slices, 1, nums, 0, nums.size)
+    val a = g(nums)
+    System.arraycopy(slices, 0, nums, 0, nums.size)
+    val b = g(nums)
+    return max(a, b)
+  }
 
-    private int g(int[] nums) {
-        int m = nums.length;
-        int[][] f = new int[m + 1][n + 1];
-        for (int i = 1; i <= m; ++i) {
-            for (int j = 1; j <= n; ++j) {
-                f[i][j] = Math.max(f[i - 1][j], (i >= 2 ? f[i - 2][j - 1] : 0) + nums[i - 1]);
-            }
-        }
-        return f[m][n];
+  private fun g(nums: IntArray): Int {
+    val m = nums.size
+    val f = Array(m + 1) { IntArray(n + 1) }
+    for (i in 1..m) {
+      for (j in 1..n) {
+        f[i][j] = max(f[i - 1][j], (if (i >= 2) f[i - 2][j - 1] else 0) + nums[i - 1])
+      }
     }
+    return f[m][n]
+  }
 }

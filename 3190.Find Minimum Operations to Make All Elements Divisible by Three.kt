@@ -1,12 +1,12 @@
-class Solution {
-    public int minimumOperations(int[] nums) {
-        int ans = 0;
-        for (int x : nums) {
-            int mod = x % 3;
-            if (mod != 0) {
-                ans += Math.min(mod, 3 - mod);
-            }
-        }
-        return ans;
+internal class Solution {
+  fun minimumOperations(nums: IntArray): Int {
+    var ans = 0
+    for (x in nums) {
+      val mod = x % 3
+      if (mod != 0) {
+        ans += min(mod, 3 - mod)
+      }
     }
+    return ans
+  }
 }

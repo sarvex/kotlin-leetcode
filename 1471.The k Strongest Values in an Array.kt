@@ -1,20 +1,20 @@
-class Solution {
-    public int[] getStrongest(int[] arr, int k) {
-        Arrays.sort(arr);
-        int m = arr[(arr.length - 1) >> 1];
-        List<Integer> nums = new ArrayList<>();
-        for (int v : arr) {
-            nums.add(v);
-        }
-        nums.sort((a, b) -> {
-            int x = Math.abs(a - m);
-            int y = Math.abs(b - m);
-            return x == y ? b - a : y - x;
-        });
-        int[] ans = new int[k];
-        for (int i = 0; i < k; ++i) {
-            ans[i] = nums.get(i);
-        }
-        return ans;
+internal class Solution {
+  fun getStrongest(arr: IntArray, k: Int): IntArray {
+    Arrays.sort(arr)
+    val m = arr[(arr.size - 1) shr 1]
+    val nums: List<Int> = ArrayList()
+    for (v in arr) {
+      nums.add(v)
     }
+    nums.sort { a, b ->
+      val x: Int = abs(a - m)
+      val y: Int = abs(b - m)
+      if (x == y) b - a else y - x
+    }
+    val ans = IntArray(k)
+    for (i in 0 until k) {
+      ans[i] = nums[i]
+    }
+    return ans
+  }
 }

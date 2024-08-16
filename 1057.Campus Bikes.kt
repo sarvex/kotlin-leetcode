@@ -1,34 +1,39 @@
-class Solution {
-    public int[] assignBikes(int[][] workers, int[][] bikes) {
-        int n = workers.length, m = bikes.length;
-        int[][] arr = new int[m * n][3];
-        for (int i = 0, k = 0; i < n; ++i) {
-            for (int j = 0; j < m; ++j) {
-                int dist
-                    = Math.abs(workers[i][0] - bikes[j][0]) + Math.abs(workers[i][1] - bikes[j][1]);
-                arr[k++] = new int[] {dist, i, j};
-            }
-        }
-        Arrays.sort(arr, (a, b) -> {
-            if (a[0] != b[0]) {
-                return a[0] - b[0];
-            }
-            if (a[1] != b[1]) {
-                return a[1] - b[1];
-            }
-            return a[2] - b[2];
-        });
-        boolean[] vis1 = new boolean[n];
-        boolean[] vis2 = new boolean[m];
-        int[] ans = new int[n];
-        for (var e : arr) {
-            int i = e[1], j = e[2];
-            if (!vis1[i] && !vis2[j]) {
-                vis1[i] = true;
-                vis2[j] = true;
-                ans[i] = j;
-            }
-        }
-        return ans;
+internal class Solution {
+  fun assignBikes(workers: Array<IntArray>, bikes: Array<IntArray>): IntArray {
+    val n = workers.size
+    val m = bikes.size
+    val arr = Array(m * n) { IntArray(3) }
+    var i = 0
+    var k = 0
+    while (i < n) {
+      for (j in 0 until m) {
+        val dist
+            : Int = abs(workers[i][0] - bikes[j][0]) + abs(workers[i][1] - bikes[j][1])
+        arr[k++] = intArrayOf(dist, i, j)
+      }
+      ++i
     }
+    Arrays.sort(arr) { a, b ->
+      if (a.get(0) !== b.get(0)) {
+        return@sort a.get(0) - b.get(0)
+      }
+      if (a.get(1) !== b.get(1)) {
+        return@sort a.get(1) - b.get(1)
+      }
+      a.get(2) - b.get(2)
+    }
+    val vis1 = BooleanArray(n)
+    val vis2 = BooleanArray(m)
+    val ans = IntArray(n)
+    for (e in arr) {
+      val i = e[1]
+      val j = e[2]
+      if (!vis1[i] && !vis2[j]) {
+        vis1[i] = true
+        vis2[j] = true
+        ans[i] = j
+      }
+    }
+    return ans
+  }
 }

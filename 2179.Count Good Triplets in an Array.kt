@@ -1,49 +1,47 @@
-class Solution {
-    public long goodTriplets(int[] nums1, int[] nums2) {
-        int n = nums1.length;
-        int[] pos = new int[n];
-        BinaryIndexedTree tree = new BinaryIndexedTree(n);
-        for (int i = 0; i < n; ++i) {
-            pos[nums2[i]] = i + 1;
-        }
-        long ans = 0;
-        for (int num : nums1) {
-            int p = pos[num];
-            long left = tree.query(p);
-            long right = n - p - (tree.query(n) - tree.query(p));
-            ans += left * right;
-            tree.update(p, 1);
-        }
-        return ans;
+internal class Solution {
+  fun goodTriplets(nums1: IntArray, nums2: IntArray): Long {
+    val n = nums1.size
+    val pos = IntArray(n)
+    val tree = BinaryIndexedTree(n)
+    for (i in 0 until n) {
+      pos[nums2[i]] = i + 1
     }
+    var ans: Long = 0
+    for (num in nums1) {
+      val p = pos[num]
+      val left = tree.query(p).toLong()
+      val right = (n - p - (tree.query(n) - tree.query(p))).toLong()
+      ans += left * right
+      tree.update(p, 1)
+    }
+    return ans
+  }
 }
 
-class BinaryIndexedTree {
-    private int n;
-    private int[] c;
+internal class BinaryIndexedTree(private val n: Int) {
+  private val c = IntArray(n + 1)
 
-    public BinaryIndexedTree(int n) {
-        this.n = n;
-        c = new int[n + 1];
+  fun update(x: Int, delta: Int) {
+    var x = x
+    while (x <= n) {
+      c[x] += delta
+      x += BinaryIndexedTree.Companion.lowbit(x)
     }
+  }
 
-    public void update(int x, int delta) {
-        while (x <= n) {
-            c[x] += delta;
-            x += lowbit(x);
-        }
+  fun query(x: Int): Int {
+    var x = x
+    var s = 0
+    while (x > 0) {
+      s += c[x]
+      x -= BinaryIndexedTree.Companion.lowbit(x)
     }
+    return s
+  }
 
-    public int query(int x) {
-        int s = 0;
-        while (x > 0) {
-            s += c[x];
-            x -= lowbit(x);
-        }
-        return s;
+  companion object {
+    fun lowbit(x: Int): Int {
+      return x and -x
     }
-
-    public static int lowbit(int x) {
-        return x & -x;
-    }
+  }
 }

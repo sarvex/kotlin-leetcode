@@ -1,42 +1,47 @@
-class Solution {
-    private List<Integer>[] g;
-    private int n;
+import java.util.*
 
-    public int[] shortestDistanceAfterQueries(int n, int[][] queries) {
-        this.n = n;
-        g = new List[n];
-        Arrays.setAll(g, i -> new ArrayList<>());
-        for (int i = 0; i < n - 1; ++i) {
-            g[i].add(i + 1);
-        }
-        int m = queries.length;
-        int[] ans = new int[m];
-        for (int i = 0; i < m; ++i) {
-            int u = queries[i][0], v = queries[i][1];
-            g[u].add(v);
-            ans[i] = bfs(0);
-        }
-        return ans;
-    }
+internal class Solution {
+  private var g: Array<List<Int>>
+  private var n = 0
 
-    private int bfs(int i) {
-        Deque<Integer> q = new ArrayDeque<>();
-        q.offer(i);
-        boolean[] vis = new boolean[n];
-        vis[i] = true;
-        for (int d = 0;; ++d) {
-            for (int k = q.size(); k > 0; --k) {
-                int u = q.poll();
-                if (u == n - 1) {
-                    return d;
-                }
-                for (int v : g[u]) {
-                    if (!vis[v]) {
-                        vis[v] = true;
-                        q.offer(v);
-                    }
-                }
-            }
-        }
+  fun shortestDistanceAfterQueries(n: Int, queries: Array<IntArray>): IntArray {
+    this.n = n
+    g = arrayOfNulls(n)
+    Arrays.setAll(g) { i -> ArrayList() }
+    for (i in 0 until n - 1) {
+      g[i].add(i + 1)
     }
+    val m = queries.size
+    val ans = IntArray(m)
+    for (i in 0 until m) {
+      val u = queries[i][0]
+      val v = queries[i][1]
+      g[u].add(v)
+      ans[i] = bfs(0)
+    }
+    return ans
+  }
+
+  private fun bfs(i: Int): Int {
+    val q: Deque<Int> = ArrayDeque()
+    q.offer(i)
+    val vis = BooleanArray(n)
+    vis[i] = true
+    var d = 0
+    while (true) {
+      for (k in q.size() downTo 1) {
+        val u: Int = q.poll()
+        if (u == n - 1) {
+          return d
+        }
+        for (v in g[u]) {
+          if (!vis[v]) {
+            vis[v] = true
+            q.offer(v)
+          }
+        }
+      }
+      ++d
+    }
+  }
 }

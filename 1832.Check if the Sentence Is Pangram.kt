@@ -1,14 +1,14 @@
-class Solution {
-    public boolean checkIfPangram(String sentence) {
-        boolean[] vis = new boolean[26];
-        for (int i = 0; i < sentence.length(); ++i) {
-            vis[sentence.charAt(i) - 'a'] = true;
-        }
-        for (boolean v : vis) {
-            if (!v) {
-                return false;
-            }
-        }
-        return true;
+internal class Solution {
+  fun checkIfPangram(sentence: String): Boolean {
+    val vis = BooleanArray(26)
+    for (i in 0 until sentence.length) {
+      vis[sentence[i].code - 'a'.code] = true
     }
+    for (v in vis) {
+      if (!v) {
+        return false
+      }
+    }
+    return true
+  }
 }

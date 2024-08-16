@@ -1,11 +1,11 @@
-class Solution {
-    public int minElements(int[] nums, int limit, int goal) {
-        // long s = Arrays.stream(nums).asLongStream().sum();
-        long s = 0;
-        for (int v : nums) {
-            s += v;
-        }
-        long d = Math.abs(s - goal);
-        return (int) ((d + limit - 1) / limit);
+internal class Solution {
+  fun minElements(nums: IntArray, limit: Int, goal: Int): Int {
+    // long s = Arrays.stream(nums).asLongStream().sum();
+    var s: Long = 0
+    for (v in nums) {
+      s += v.toLong()
     }
+    val d: Long = abs(s - goal)
+    return ((d + limit - 1) / limit).toInt()
+  }
 }

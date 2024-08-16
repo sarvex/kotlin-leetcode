@@ -1,23 +1,23 @@
-class Node {
-    Map<Integer, Node> children = new HashMap<>();
-    int cnt;
+internal open class Node {
+  var children: Map<Int, Node> = HashMap()
+  var cnt: Int = 0
 }
 
-class Solution {
-    public long countPrefixSuffixPairs(String[] words) {
-        long ans = 0;
-        Node trie = new Node();
-        for (String s : words) {
-            Node node = trie;
-            int m = s.length();
-            for (int i = 0; i < m; ++i) {
-                int p = s.charAt(i) * 32 + s.charAt(m - i - 1);
-                node.children.putIfAbsent(p, new Node());
-                node = node.children.get(p);
-                ans += node.cnt;
-            }
-            ++node.cnt;
-        }
-        return ans;
+internal class Solution {
+  fun countPrefixSuffixPairs(words: Array<String>): Long {
+    var ans: Long = 0
+    val trie = Node()
+    for (s in words) {
+      var node = trie
+      val m = s.length
+      for (i in 0 until m) {
+        val p: Int = s[i].code * 32 + s[m - i - 1].code
+        node.children.putIfAbsent(p, Node())
+        node = node.children.get(p)
+        ans += node.cnt.toLong()
+      }
+      ++node.cnt
     }
+    return ans
+  }
 }

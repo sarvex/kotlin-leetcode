@@ -1,22 +1,22 @@
-class Solution {
-    public int maxIntersectionCount(int[] y) {
-        final int n = y.length;
-        int ans = 0;
-        int intersectionCount = 0;
-        TreeMap<Integer, Integer> line = new TreeMap<>();
+internal class Solution {
+  fun maxIntersectionCount(y: IntArray): Int {
+    val n = y.size
+    var ans = 0
+    var intersectionCount = 0
+    val line: TreeMap<Int, Int> = TreeMap()
 
-        for (int i = 1; i < n; ++i) {
-            final int start = 2 * y[i - 1];
-            final int end = 2 * y[i] + (i == n - 1 ? 0 : y[i] > y[i - 1] ? -1 : 1);
-            line.merge(Math.min(start, end), 1, Integer::sum);
-            line.merge(Math.max(start, end) + 1, -1, Integer::sum);
-        }
-
-        for (final int count : line.values()) {
-            intersectionCount += count;
-            ans = Math.max(ans, intersectionCount);
-        }
-
-        return ans;
+    for (i in 1 until n) {
+      val start = 2 * y[i - 1]
+      val end = 2 * y[i] + (if (i == n - 1) 0 else if (y[i] > y[i - 1]) -1 else 1)
+      line.merge(min(start, end), 1) { a: Int, b: Int -> Integer.sum(a, b) }
+      line.merge(max(start, end) + 1, -1) { a: Int, b: Int -> Integer.sum(a, b) }
     }
+
+    for (count in line.values()) {
+      intersectionCount += count
+      ans = max(ans, intersectionCount)
+    }
+
+    return ans
+  }
 }

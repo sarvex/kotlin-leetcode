@@ -1,18 +1,19 @@
-class Solution {
-    public int numDistinct(String s, String t) {
-        int m = s.length(), n = t.length();
-        int[][] f = new int[m + 1][n + 1];
-        for (int i = 0; i < m + 1; ++i) {
-            f[i][0] = 1;
-        }
-        for (int i = 1; i < m + 1; ++i) {
-            for (int j = 1; j < n + 1; ++j) {
-                f[i][j] = f[i - 1][j];
-                if (s.charAt(i - 1) == t.charAt(j - 1)) {
-                    f[i][j] += f[i - 1][j - 1];
-                }
-            }
-        }
-        return f[m][n];
+internal class Solution {
+  fun numDistinct(s: String, t: String): Int {
+    val m = s.length
+    val n = t.length
+    val f = Array(m + 1) { IntArray(n + 1) }
+    for (i in 0 until m + 1) {
+      f[i][0] = 1
     }
+    for (i in 1 until m + 1) {
+      for (j in 1 until n + 1) {
+        f[i][j] = f[i - 1][j]
+        if (s[i - 1] == t[j - 1]) {
+          f[i][j] += f[i - 1][j - 1]
+        }
+      }
+    }
+    return f[m][n]
+  }
 }

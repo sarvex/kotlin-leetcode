@@ -1,15 +1,15 @@
-class Solution {
-    public boolean differByOne(String[] dict) {
-        Set<String> s = new HashSet<>();
-        for (String word : dict) {
-            for (int i = 0; i < word.length(); ++i) {
-                String t = word.substring(0, i) + "*" + word.substring(i + 1);
-                if (s.contains(t)) {
-                    return true;
-                }
-                s.add(t);
-            }
+internal class Solution {
+  fun differByOne(dict: Array<String>): Boolean {
+    val s: Set<String> = HashSet()
+    for (word in dict) {
+      for (i in 0 until word.length) {
+        val t: String = word.substring(0, i) + "*" + word.substring(i + 1)
+        if (s.contains(t)) {
+          return true
         }
-        return false;
+        s.add(t)
+      }
     }
+    return false
+  }
 }

@@ -1,17 +1,20 @@
-class Solution {
-    public int findContentChildren(int[] g, int[] s) {
-        Arrays.sort(g);
-        Arrays.sort(s);
-        int m = g.length;
-        int n = s.length;
-        for (int i = 0, j = 0; i < m; ++i) {
-            while (j < n && s[j] < g[i]) {
-                ++j;
-            }
-            if (j++ >= n) {
-                return i;
-            }
-        }
-        return m;
+internal class Solution {
+  fun findContentChildren(g: IntArray, s: IntArray): Int {
+    Arrays.sort(g)
+    Arrays.sort(s)
+    val m = g.size
+    val n = s.size
+    var i = 0
+    var j = 0
+    while (i < m) {
+      while (j < n && s[j] < g[i]) {
+        ++j
+      }
+      if (j++ >= n) {
+        return i
+      }
+      ++i
     }
+    return m
+  }
 }

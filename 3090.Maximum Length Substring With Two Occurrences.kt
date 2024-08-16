@@ -1,15 +1,18 @@
-class Solution {
-    public int maximumLengthSubstring(String s) {
-        int[] cnt = new int[26];
-        int ans = 0;
-        for (int i = 0, j = 0; j < s.length(); ++j) {
-            int idx = s.charAt(j) - 'a';
-            ++cnt[idx];
-            while (cnt[idx] > 2) {
-                --cnt[s.charAt(i++) - 'a'];
-            }
-            ans = Math.max(ans, j - i + 1);
-        }
-        return ans;
+internal class Solution {
+  fun maximumLengthSubstring(s: String): Int {
+    val cnt = IntArray(26)
+    var ans = 0
+    var i = 0
+    var j = 0
+    while (j < s.length) {
+      val idx: Int = s[j].code - 'a'.code
+      ++cnt[idx]
+      while (cnt[idx] > 2) {
+        --cnt[s[i++].code - 'a'.code]
+      }
+      ans = max(ans, j - i + 1)
+      ++j
     }
+    return ans
+  }
 }

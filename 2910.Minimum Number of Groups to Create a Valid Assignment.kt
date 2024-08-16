@@ -1,25 +1,26 @@
-class Solution {
-    public int minGroupsForValidAssignment(int[] nums) {
-        Map<Integer, Integer> cnt = new HashMap<>();
-        for (int x : nums) {
-            cnt.merge(x, 1, Integer::sum);
-        }
-        int k = nums.length;
-        for (int v : cnt.values()) {
-            k = Math.min(k, v);
-        }
-        for (;; --k) {
-            int ans = 0;
-            for (int v : cnt.values()) {
-                if (v / k < v % k) {
-                    ans = 0;
-                    break;
-                }
-                ans += (v + k) / (k + 1);
-            }
-            if (ans > 0) {
-                return ans;
-            }
-        }
+internal class Solution {
+  fun minGroupsForValidAssignment(nums: IntArray): Int {
+    val cnt: Map<Int, Int> = HashMap()
+    for (x in nums) {
+      cnt.merge(x, 1) { a: Int, b: Int -> Integer.sum(a, b) }
     }
+    var k = nums.size
+    for (v in cnt.values()) {
+      k = min(k, v)
+    }
+    while (true) {
+      var ans = 0
+      for (v in cnt.values()) {
+        if (v / k < v % k) {
+          ans = 0
+          break
+        }
+        ans += (v + k) / (k + 1)
+      }
+      if (ans > 0) {
+        return ans
+      }
+      --k
+    }
+  }
 }

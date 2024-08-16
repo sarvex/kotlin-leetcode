@@ -1,23 +1,25 @@
-class Solution {
-    public int minCost(int n, int[] cuts) {
-        List<Integer> nums = new ArrayList<>();
-        for (int x : cuts) {
-            nums.add(x);
-        }
-        nums.add(0);
-        nums.add(n);
-        Collections.sort(nums);
-        int m = nums.size();
-        int[][] f = new int[m][m];
-        for (int l = 2; l < m; ++l) {
-            for (int i = 0; i + l < m; ++i) {
-                int j = i + l;
-                f[i][j] = 1 << 30;
-                for (int k = i + 1; k < j; ++k) {
-                    f[i][j] = Math.min(f[i][j], f[i][k] + f[k][j] + nums.get(j) - nums.get(i));
-                }
-            }
-        }
-        return f[0][m - 1];
+internal class Solution {
+  fun minCost(n: Int, cuts: IntArray): Int {
+    val nums: List<Int> = ArrayList()
+    for (x in cuts) {
+      nums.add(x)
     }
+    nums.add(0)
+    nums.add(n)
+    Collections.sort(nums)
+    val m: Int = nums.size()
+    val f = Array(m) { IntArray(m) }
+    for (l in 2 until m) {
+      var i = 0
+      while (i + l < m) {
+        val j: Int = i + l
+        f[i][j] = 1 shl 30
+        for (k in i + 1 until j) {
+          f[i][j] = Math.min(f[i][j], f[i][k] + f[k][j] + nums[j] - nums[i])
+        }
+        ++i
+      }
+    }
+    return f[0][m - 1]
+  }
 }

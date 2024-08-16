@@ -1,16 +1,16 @@
-class Solution {
-    public int longestRepeatingSubstring(String s) {
-        int n = s.length();
-        int ans = 0;
-        int[][] dp = new int[n][n];
-        for (int i = 0; i < n; ++i) {
-            for (int j = i + 1; j < n; ++j) {
-                if (s.charAt(i) == s.charAt(j)) {
-                    dp[i][j] = i > 0 ? dp[i - 1][j - 1] + 1 : 1;
-                    ans = Math.max(ans, dp[i][j]);
-                }
-            }
+internal class Solution {
+  fun longestRepeatingSubstring(s: String): Int {
+    val n = s.length
+    var ans = 0
+    val dp = Array(n) { IntArray(n) }
+    for (i in 0 until n) {
+      for (j in i + 1 until n) {
+        if (s[i] == s[j]) {
+          dp[i][j] = if (i > 0) dp[i - 1][j - 1] + 1 else 1
+          ans = max(ans, dp[i][j])
         }
-        return ans;
+      }
     }
+    return ans
+  }
 }

@@ -1,60 +1,64 @@
-class FizzBuzz {
-    private int n;
+internal class FizzBuzz(private val n: Int) {
+  private val fSema: Semaphore = Semaphore(0)
+  private val bSema: Semaphore = Semaphore(0)
+  private val fbSema: Semaphore = Semaphore(0)
+  private val nSema: Semaphore = Semaphore(1)
 
-    public FizzBuzz(int n) {
-        this.n = n;
+  // printFizz.run() outputs "fizz".
+  @kotlin.Throws(InterruptedException::class)
+  fun fizz(printFizz: Runnable) {
+    var i = 3
+    while (i <= n) {
+      if (i % 5 != 0) {
+        fSema.acquire()
+        printFizz.run()
+        nSema.release()
+      }
+      i = i + 3
     }
+  }
 
-    private Semaphore fSema = new Semaphore(0);
-    private Semaphore bSema = new Semaphore(0);
-    private Semaphore fbSema = new Semaphore(0);
-    private Semaphore nSema = new Semaphore(1);
-
-    // printFizz.run() outputs "fizz".
-    public void fizz(Runnable printFizz) throws InterruptedException {
-        for (int i = 3; i <= n; i = i + 3) {
-            if (i % 5 != 0) {
-                fSema.acquire();
-                printFizz.run();
-                nSema.release();
-            }
-        }
+  // printBuzz.run() outputs "buzz".
+  @kotlin.Throws(InterruptedException::class)
+  fun buzz(printBuzz: Runnable) {
+    var i = 5
+    while (i <= n) {
+      if (i % 3 != 0) {
+        bSema.acquire()
+        printBuzz.run()
+        nSema.release()
+      }
+      i = i + 5
     }
+  }
 
-    // printBuzz.run() outputs "buzz".
-    public void buzz(Runnable printBuzz) throws InterruptedException {
-        for (int i = 5; i <= n; i = i + 5) {
-            if (i % 3 != 0) {
-                bSema.acquire();
-                printBuzz.run();
-                nSema.release();
-            }
-        }
+  // printFizzBuzz.run() outputs "fizzbuzz".
+  @kotlin.Throws(InterruptedException::class)
+  fun fizzbuzz(printFizzBuzz: Runnable) {
+    var i = 15
+    while (i <= n) {
+      fbSema.acquire()
+      printFizzBuzz.run()
+      nSema.release()
+      i = i + 15
     }
+  }
 
-    // printFizzBuzz.run() outputs "fizzbuzz".
-    public void fizzbuzz(Runnable printFizzBuzz) throws InterruptedException {
-        for (int i = 15; i <= n; i = i + 15) {
-            fbSema.acquire();
-            printFizzBuzz.run();
-            nSema.release();
-        }
+  // printNumber.accept(x) outputs "x", where x is an integer.
+  @kotlin.Throws(InterruptedException::class)
+  fun number(printNumber: IntConsumer) {
+    for (i in 1..n) {
+      nSema.acquire()
+      if (i % 3 == 0 && i % 5 == 0) {
+        fbSema.release()
+      } else if (i % 3 == 0) {
+        fSema.release()
+      } else if (i % 5 == 0) {
+        bSema.release()
+      } else {
+        printNumber.accept(i)
+        nSema.release()
+      }
     }
-
-    // printNumber.accept(x) outputs "x", where x is an integer.
-    public void number(IntConsumer printNumber) throws InterruptedException {
-        for (int i = 1; i <= n; i++) {
-            nSema.acquire();
-            if (i % 3 == 0 && i % 5 == 0) {
-                fbSema.release();
-            } else if (i % 3 == 0) {
-                fSema.release();
-            } else if (i % 5 == 0) {
-                bSema.release();
-            } else {
-                printNumber.accept(i);
-                nSema.release();
-            }
-        }
-    }
+  }
 }

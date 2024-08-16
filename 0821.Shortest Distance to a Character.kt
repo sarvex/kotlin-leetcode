@@ -1,21 +1,29 @@
-class Solution {
-    public int[] shortestToChar(String s, char c) {
-        int n = s.length();
-        int[] ans = new int[n];
-        final int inf = 1 << 30;
-        Arrays.fill(ans, inf);
-        for (int i = 0, pre = -inf; i < n; ++i) {
-            if (s.charAt(i) == c) {
-                pre = i;
-            }
-            ans[i] = Math.min(ans[i], i - pre);
+internal class Solution {
+  fun shortestToChar(s: String, c: Char): IntArray {
+    val n = s.length
+    val ans = IntArray(n)
+    val inf = 1 shl 30
+    Arrays.fill(ans, inf)
+    run {
+      var i = 0
+      var pre = -inf
+      while (i < n) {
+        if (s[i] == c) {
+          pre = i
         }
-        for (int i = n - 1, suf = inf; i >= 0; --i) {
-            if (s.charAt(i) == c) {
-                suf = i;
-            }
-            ans[i] = Math.min(ans[i], suf - i);
-        }
-        return ans;
+        ans[i] = min(ans[i], i - pre)
+        ++i
+      }
     }
+    var i = n - 1
+    var suf = inf
+    while (i >= 0) {
+      if (s[i] == c) {
+        suf = i
+      }
+      ans[i] = min(ans[i], suf - i)
+      --i
+    }
+    return ans
+  }
 }

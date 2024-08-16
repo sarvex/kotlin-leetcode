@@ -1,12 +1,12 @@
-class Solution {
-    public int getLastMoment(int n, int[] left, int[] right) {
-        int ans = 0;
-        for (int x : left) {
-            ans = Math.max(ans, x);
-        }
-        for (int x : right) {
-            ans = Math.max(ans, n - x);
-        }
-        return ans;
+internal class Solution {
+  fun getLastMoment(n: Int, left: IntArray, right: IntArray): Int {
+    var ans = 0
+    for (x in left) {
+      ans = max(ans, x)
     }
+    for (x in right) {
+      ans = max(ans, n - x)
+    }
+    return ans
+  }
 }

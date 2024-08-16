@@ -1,16 +1,16 @@
-class Solution {
-    public long maximumSubsequenceCount(String text, String pattern) {
-        int[] cnt = new int[26];
-        char a = pattern.charAt(0);
-        char b = pattern.charAt(1);
-        long ans = 0;
-        for (char c : text.toCharArray()) {
-            if (c == b) {
-                ans += cnt[a - 'a'];
-            }
-            cnt[c - 'a']++;
-        }
-        ans += Math.max(cnt[a - 'a'], cnt[b - 'a']);
-        return ans;
+internal class Solution {
+  fun maximumSubsequenceCount(text: String, pattern: String): Long {
+    val cnt = IntArray(26)
+    val a = pattern[0]
+    val b = pattern[1]
+    var ans: Long = 0
+    for (c in text.toCharArray()) {
+      if (c == b) {
+        ans += cnt[a.code - 'a'.code].toLong()
+      }
+      cnt[c.code - 'a'.code]++
     }
+    ans += max(cnt[a.code - 'a'.code], cnt[b.code - 'a'.code])
+    return ans
+  }
 }

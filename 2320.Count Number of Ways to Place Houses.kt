@@ -1,15 +1,15 @@
-class Solution {
-    public int countHousePlacements(int n) {
-        final int mod = (int) 1e9 + 7;
-        int[] f = new int[n];
-        int[] g = new int[n];
-        f[0] = 1;
-        g[0] = 1;
-        for (int i = 1; i < n; ++i) {
-            f[i] = g[i - 1];
-            g[i] = (f[i - 1] + g[i - 1]) % mod;
-        }
-        long v = (f[n - 1] + g[n - 1]) % mod;
-        return (int) (v * v % mod);
+internal class Solution {
+  fun countHousePlacements(n: Int): Int {
+    val mod = 1e9.toInt() + 7
+    val f = IntArray(n)
+    val g = IntArray(n)
+    f[0] = 1
+    g[0] = 1
+    for (i in 1 until n) {
+      f[i] = g[i - 1]
+      g[i] = (f[i - 1] + g[i - 1]) % mod
     }
+    val v = ((f[n - 1] + g[n - 1]) % mod).toLong()
+    return (v * v % mod).toInt()
+  }
 }

@@ -1,19 +1,21 @@
-class Solution {
-    private int mod = 1000000007;
+internal class Solution {
+  private val mod = 1000000007
 
-    public int countGoodNumbers(long n) {
-        return (int) (myPow(5, (n + 1) >> 1) * myPow(4, n >> 1) % mod);
-    }
+  fun countGoodNumbers(n: Long): Int {
+    return (myPow(5, (n + 1) shr 1) * myPow(4, n shr 1) % mod).toInt()
+  }
 
-    private long myPow(long x, long n) {
-        long res = 1;
-        while (n != 0) {
-            if ((n & 1) == 1) {
-                res = res * x % mod;
-            }
-            x = x * x % mod;
-            n >>= 1;
-        }
-        return res;
+  private fun myPow(x: Long, n: Long): Long {
+    var x = x
+    var n = n
+    var res: Long = 1
+    while (n != 0L) {
+      if ((n and 1L) == 1L) {
+        res = res * x % mod
+      }
+      x = x * x % mod
+      n = n shr 1
     }
+    return res
+  }
 }

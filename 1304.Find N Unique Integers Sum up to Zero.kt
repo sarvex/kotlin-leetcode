@@ -1,10 +1,13 @@
-class Solution {
-    public int[] sumZero(int n) {
-        int[] ans = new int[n];
-        for (int i = 1, j = 0; i <= n / 2; ++i) {
-            ans[j++] = i;
-            ans[j++] = -i;
-        }
-        return ans;
+internal class Solution {
+  fun sumZero(n: Int): IntArray {
+    val ans = IntArray(n)
+    var i = 1
+    var j = 0
+    while (i <= n / 2) {
+      ans[j++] = i
+      ans[j++] = -i
+      ++i
     }
+    return ans
+  }
 }

@@ -1,21 +1,23 @@
-class Solution {
-    public List<List<Integer>> shiftGrid(int[][] grid, int k) {
-        int m = grid.length, n = grid[0].length;
-        List<List<Integer>> ans = new ArrayList<>();
-        for (int i = 0; i < m; ++i) {
-            List<Integer> row = new ArrayList<>();
-            for (int j = 0; j < n; ++j) {
-                row.add(0);
-            }
-            ans.add(row);
-        }
-        for (int i = 0; i < m; ++i) {
-            for (int j = 0; j < n; ++j) {
-                int idx = (i * n + j + k) % (m * n);
-                int x = idx / n, y = idx % n;
-                ans.get(x).set(y, grid[i][j]);
-            }
-        }
-        return ans;
+internal class Solution {
+  fun shiftGrid(grid: Array<IntArray>, k: Int): List<List<Int>> {
+    val m = grid.size
+    val n = grid[0].size
+    val ans: List<List<Int>> = ArrayList()
+    for (i in 0 until m) {
+      val row: List<Int> = ArrayList()
+      for (j in 0 until n) {
+        row.add(0)
+      }
+      ans.add(row)
     }
+    for (i in 0 until m) {
+      for (j in 0 until n) {
+        val idx: Int = (i * n + j + k) % (m * n)
+        val x = idx / n
+        val y = idx % n
+        ans[x].set(y, grid[i][j])
+      }
+    }
+    return ans
+  }
 }

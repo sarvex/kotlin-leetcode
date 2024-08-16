@@ -1,20 +1,21 @@
-class Solution {
-    public int minCostII(int[][] costs) {
-        int n = costs.length, k = costs[0].length;
-        int[] f = costs[0].clone();
-        for (int i = 1; i < n; ++i) {
-            int[] g = costs[i].clone();
-            for (int j = 0; j < k; ++j) {
-                int t = Integer.MAX_VALUE;
-                for (int h = 0; h < k; ++h) {
-                    if (h != j) {
-                        t = Math.min(t, f[h]);
-                    }
-                }
-                g[j] += t;
-            }
-            f = g;
+internal class Solution {
+  fun minCostII(costs: Array<IntArray>): Int {
+    val n = costs.size
+    val k = costs[0].size
+    var f = costs[0].clone()
+    for (i in 1 until n) {
+      val g = costs[i].clone()
+      for (j in 0 until k) {
+        var t: Int = MAX_VALUE
+        for (h in 0 until k) {
+          if (h != j) {
+            t = min(t, f[h])
+          }
         }
-        return Arrays.stream(f).min().getAsInt();
+        g[j] += t
+      }
+      f = g
     }
+    return Arrays.stream(f).min().getAsInt()
+  }
 }

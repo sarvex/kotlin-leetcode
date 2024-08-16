@@ -1,17 +1,20 @@
-class Solution {
-    public int sumDistance(int[] nums, String s, int d) {
-        int n = nums.length;
-        long[] arr = new long[n];
-        for (int i = 0; i < n; ++i) {
-            arr[i] = (long) nums[i] + (s.charAt(i) == 'L' ? -d : d);
-        }
-        Arrays.sort(arr);
-        long ans = 0, sum = 0;
-        final int mod = (int) 1e9 + 7;
-        for (int i = 0; i < n; ++i) {
-            ans = (ans + i * arr[i] - sum) % mod;
-            sum += arr[i];
-        }
-        return (int) ans;
+import java.util.*
+
+internal class Solution {
+  fun sumDistance(nums: IntArray, s: String, d: Int): Int {
+    val n = nums.size
+    val arr = LongArray(n)
+    for (i in 0 until n) {
+      arr[i] = nums[i].toLong() + (if (s[i] == 'L') -d else d)
     }
+    Arrays.sort(arr)
+    var ans: Long = 0
+    var sum: Long = 0
+    val mod = 1e9.toInt() + 7
+    for (i in 0 until n) {
+      ans = (ans + i * arr[i] - sum) % mod
+      sum += arr[i]
+    }
+    return ans.toInt()
+  }
 }

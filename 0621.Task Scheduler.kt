@@ -1,18 +1,19 @@
-class Solution {
-    public int leastInterval(char[] tasks, int n) {
-        int[] cnt = new int[26];
-        int x = 0;
-        for (char c : tasks) {
-            c -= 'A';
-            ++cnt[c];
-            x = Math.max(x, cnt[c]);
-        }
-        int s = 0;
-        for (int v : cnt) {
-            if (v == x) {
-                ++s;
-            }
-        }
-        return Math.max(tasks.length, (x - 1) * (n + 1) + s);
+internal class Solution {
+  fun leastInterval(tasks: CharArray, n: Int): Int {
+    val cnt = IntArray(26)
+    var x = 0
+    for (c in tasks) {
+      var c = c
+      (c -= 'A').toChar()
+      ++cnt[c.code]
+      x = max(x, cnt[c.code])
     }
+    var s = 0
+    for (v in cnt) {
+      if (v == x) {
+        ++s
+      }
+    }
+    return max(tasks.size, (x - 1) * (n + 1) + s)
+  }
 }

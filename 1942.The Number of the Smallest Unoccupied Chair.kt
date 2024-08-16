@@ -1,25 +1,27 @@
-class Solution {
-    public int smallestChair(int[][] times, int targetFriend) {
-        int n = times.length;
-        int[][] ts = new int[n][3];
-        PriorityQueue<Integer> q = new PriorityQueue<>();
-        PriorityQueue<int[]> busy = new PriorityQueue<>((a, b) -> a[0] - b[0]);
-        for (int i = 0; i < n; ++i) {
-            ts[i] = new int[] {times[i][0], times[i][1], i};
-            q.offer(i);
-        }
-        Arrays.sort(ts, (a, b) -> a[0] - b[0]);
-        for (int[] t : ts) {
-            int a = t[0], b = t[1], i = t[2];
-            while (!busy.isEmpty() && busy.peek()[0] <= a) {
-                q.offer(busy.poll()[1]);
-            }
-            int c = q.poll();
-            if (i == targetFriend) {
-                return c;
-            }
-            busy.offer(new int[] {b, c});
-        }
-        return -1;
+internal class Solution {
+  fun smallestChair(times: Array<IntArray>, targetFriend: Int): Int {
+    val n = times.size
+    val ts = Array(n) { IntArray(3) }
+    val q: PriorityQueue<Int> = PriorityQueue()
+    val busy: PriorityQueue<IntArray> = PriorityQueue { a, b -> a.get(0) - b.get(0) }
+    for (i in 0 until n) {
+      ts[i] = intArrayOf(times[i][0], times[i][1], i)
+      q.offer(i)
     }
+    Arrays.sort(ts) { a, b -> a.get(0) - b.get(0) }
+    for (t in ts) {
+      val a = t[0]
+      val b = t[1]
+      val i = t[2]
+      while (!busy.isEmpty() && busy.peek().get(0) <= a) {
+        q.offer(busy.poll().get(1))
+      }
+      val c: Int = q.poll()
+      if (i == targetFriend) {
+        return c
+      }
+      busy.offer(intArrayOf(b, c))
+    }
+    return -1
+  }
 }

@@ -1,5 +1,5 @@
-class Solution {
-    public boolean checkString(String s) {
-        return !s.contains("ba");
-    }
+internal class Solution {
+  fun checkString(s: String): Boolean {
+    return !s.contains("ba")
+  }
 }

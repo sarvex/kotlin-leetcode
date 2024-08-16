@@ -1,38 +1,32 @@
-class CustomStack {
-    private int[] stk;
-    private int[] add;
-    private int i;
+internal class CustomStack(maxSize: Int) {
+  private val stk = IntArray(maxSize)
+  private val add = IntArray(maxSize)
+  private var i = 0
 
-    public CustomStack(int maxSize) {
-        stk = new int[maxSize];
-        add = new int[maxSize];
+  fun push(x: Int) {
+    if (i < stk.size) {
+      stk[i++] = x
     }
+  }
 
-    public void push(int x) {
-        if (i < stk.length) {
-            stk[i++] = x;
-        }
+  fun pop(): Int {
+    if (i <= 0) {
+      return -1
     }
+    val ans = stk[--i] + add[i]
+    if (i > 0) {
+      add[i - 1] += add[i]
+    }
+    add[i] = 0
+    return ans
+  }
 
-    public int pop() {
-        if (i <= 0) {
-            return -1;
-        }
-        int ans = stk[--i] + add[i];
-        if (i > 0) {
-            add[i - 1] += add[i];
-        }
-        add[i] = 0;
-        return ans;
+  fun increment(k: Int, `val`: Int) {
+    if (i > 0) {
+      add[min(i, k) - 1] += `val`
     }
-
-    public void increment(int k, int val) {
-        if (i > 0) {
-            add[Math.min(i, k) - 1] += val;
-        }
-    }
+  }
 }
-
 /**
  * Your CustomStack object will be instantiated and called as such:
  * CustomStack obj = new CustomStack(maxSize);

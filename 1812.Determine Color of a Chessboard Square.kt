@@ -1,5 +1,5 @@
-class Solution {
-    public boolean squareIsWhite(String coordinates) {
-        return (coordinates.charAt(0) + coordinates.charAt(1)) % 2 == 1;
-    }
+internal class Solution {
+  fun squareIsWhite(coordinates: String): Boolean {
+    return (coordinates[0].code + coordinates[1].code) % 2 == 1
+  }
 }

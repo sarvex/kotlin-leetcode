@@ -1,14 +1,14 @@
-class Solution {
-    public boolean canConstruct(String ransomNote, String magazine) {
-        int[] cnt = new int[26];
-        for (int i = 0; i < magazine.length(); ++i) {
-            ++cnt[magazine.charAt(i) - 'a'];
-        }
-        for (int i = 0; i < ransomNote.length(); ++i) {
-            if (--cnt[ransomNote.charAt(i) - 'a'] < 0) {
-                return false;
-            }
-        }
-        return true;
+internal class Solution {
+  fun canConstruct(ransomNote: String, magazine: String): Boolean {
+    val cnt = IntArray(26)
+    for (i in 0 until magazine.length) {
+      ++cnt[magazine[i].code - 'a'.code]
     }
+    for (i in 0 until ransomNote.length) {
+      if (--cnt[ransomNote[i].code - 'a'.code] < 0) {
+        return false
+      }
+    }
+    return true
+  }
 }

@@ -1,27 +1,27 @@
-class Solution {
-    private List<Integer>[] g;
-    private int[] value;
+internal class Solution {
+  private var g: Array<List<Int>>
+  private var value: IntArray
 
-    public int deleteTreeNodes(int nodes, int[] parent, int[] value) {
-        g = new List[nodes];
-        Arrays.setAll(g, k -> new ArrayList<>());
-        for (int i = 1; i < nodes; ++i) {
-            g[parent[i]].add(i);
-        }
-        this.value = value;
-        return dfs(0)[1];
+  fun deleteTreeNodes(nodes: Int, parent: IntArray, value: IntArray): Int {
+    g = arrayOfNulls(nodes)
+    Arrays.setAll(g) { k -> ArrayList() }
+    for (i in 1 until nodes) {
+      g[parent[i]].add(i)
     }
+    this.value = value
+    return dfs(0)[1]
+  }
 
-    private int[] dfs(int i) {
-        int[] res = new int[] {value[i], 1};
-        for (int j : g[i]) {
-            int[] t = dfs(j);
-            res[0] += t[0];
-            res[1] += t[1];
-        }
-        if (res[0] == 0) {
-            res[1] = 0;
-        }
-        return res;
+  private fun dfs(i: Int): IntArray {
+    val res = intArrayOf(value[i], 1)
+    for (j in g[i]) {
+      val t = dfs(j)
+      res[0] += t[0]
+      res[1] += t[1]
     }
+    if (res[0] == 0) {
+      res[1] = 0
+    }
+    return res
+  }
 }

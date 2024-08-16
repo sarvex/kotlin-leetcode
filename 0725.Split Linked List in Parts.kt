@@ -1,32 +1,39 @@
 /**
  * Definition for singly-linked list.
  * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * int val;
+ * ListNode next;
+ * ListNode() {}
+ * ListNode(int val) { this.val = val; }
+ * ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  * }
  */
-class Solution {
-    public ListNode[] splitListToParts(ListNode head, int k) {
-        int n = 0;
-        for (ListNode cur = head; cur != null; cur = cur.next) {
-            ++n;
-        }
-        int cnt = n / k, mod = n % k;
-        ListNode[] ans = new ListNode[k];
-        ListNode cur = head;
-        for (int i = 0; i < k && cur != null; ++i) {
-            ans[i] = cur;
-            int m = cnt + (i < mod ? 1 : 0);
-            for (int j = 1; j < m; ++j) {
-                cur = cur.next;
-            }
-            ListNode nxt = cur.next;
-            cur.next = null;
-            cur = nxt;
-        }
-        return ans;
+internal class Solution {
+  fun splitListToParts(head: ListNode?, k: Int): Array<ListNode> {
+    var n = 0
+    run {
+      var cur: ListNode? = head
+      while (cur != null) {
+        ++n
+        cur = cur.next
+      }
     }
+    val cnt = n / k
+    val mod = n % k
+    val ans: Array<ListNode> = arrayOfNulls<ListNode>(k)
+    var cur: ListNode? = head
+    var i = 0
+    while (i < k && cur != null) {
+      ans[i] = cur
+      val m = cnt + (if (i < mod) 1 else 0)
+      for (j in 1 until m) {
+        cur = cur.next
+      }
+      val nxt: ListNode = cur.next
+      cur.next = null
+      cur = nxt
+      ++i
+    }
+    return ans
+  }
 }

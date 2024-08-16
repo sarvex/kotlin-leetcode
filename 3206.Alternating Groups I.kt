@@ -1,16 +1,17 @@
-class Solution {
-    public int numberOfAlternatingGroups(int[] colors) {
-        int k = 3;
-        int n = colors.length;
-        int ans = 0, cnt = 0;
-        for (int i = 0; i < n << 1; ++i) {
-            if (i > 0 && colors[i % n] == colors[(i - 1) % n]) {
-                cnt = 1;
-            } else {
-                ++cnt;
-            }
-            ans += i >= n && cnt >= k ? 1 : 0;
-        }
-        return ans;
+internal class Solution {
+  fun numberOfAlternatingGroups(colors: IntArray): Int {
+    val k = 3
+    val n = colors.size
+    var ans = 0
+    var cnt = 0
+    for (i in 0 until (n shl 1)) {
+      if (i > 0 && colors[i % n] == colors[(i - 1) % n]) {
+        cnt = 1
+      } else {
+        ++cnt
+      }
+      ans += if (i >= n && cnt >= k) 1 else 0
     }
+    return ans
+  }
 }

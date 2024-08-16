@@ -1,17 +1,17 @@
-class Solution {
-    public int longestStrChain(String[] words) {
-        Arrays.sort(words, Comparator.comparingInt(String::length));
-        int res = 0;
-        Map<String, Integer> map = new HashMap<>();
-        for (String word : words) {
-            int x = 1;
-            for (int i = 0; i < word.length(); ++i) {
-                String pre = word.substring(0, i) + word.substring(i + 1);
-                x = Math.max(x, map.getOrDefault(pre, 0) + 1);
-            }
-            map.put(word, x);
-            res = Math.max(res, x);
-        }
-        return res;
+internal class Solution {
+  fun longestStrChain(words: Array<String>): Int {
+    Arrays.sort(words, Comparator.comparingInt(java.lang.String::length))
+    var res = 0
+    val map: Map<String, Int> = HashMap()
+    for (word in words) {
+      var x = 1
+      for (i in 0 until word.length) {
+        val pre: String = word.substring(0, i) + word.substring(i + 1)
+        x = Math.max(x, map.getOrDefault(pre, 0) + 1)
+      }
+      map.put(word, x)
+      res = max(res, x)
     }
+    return res
+  }
 }

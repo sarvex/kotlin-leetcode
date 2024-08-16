@@ -1,41 +1,40 @@
-class BinaryIndexedTree {
-    private int n;
-    private int[] c;
+internal class BinaryIndexedTree(private val n: Int) {
+  private val c = IntArray(n + 1)
 
-    public BinaryIndexedTree(int n) {
-        this.n = n;
-        c = new int[n + 1];
+  fun update(x: Int, v: Int) {
+    var x = x
+    while (x <= n) {
+      c[x] += v
+      x += x and -x
     }
+  }
 
-    public void update(int x, int v) {
-        for (; x <= n; x += x & -x) {
-            c[x] += v;
-        }
+  fun query(x: Int): Int {
+    var x = x
+    var s = 0
+    while (x > 0) {
+      s += c[x]
+      x -= x and -x
     }
-
-    public int query(int x) {
-        int s = 0;
-        for (; x > 0; x -= x & -x) {
-            s += c[x];
-        }
-        return s;
-    }
+    return s
+  }
 }
 
-class Solution {
-    public int subarraysWithMoreZerosThanOnes(int[] nums) {
-        int n = nums.length;
-        int base = n + 1;
-        BinaryIndexedTree tree = new BinaryIndexedTree(n + base);
-        tree.update(base, 1);
-        final int mod = (int) 1e9 + 7;
-        int ans = 0, s = 0;
-        for (int x : nums) {
-            s += x == 0 ? -1 : 1;
-            ans += tree.query(s - 1 + base);
-            ans %= mod;
-            tree.update(s + base, 1);
-        }
-        return ans;
+internal class Solution {
+  fun subarraysWithMoreZerosThanOnes(nums: IntArray): Int {
+    val n = nums.size
+    val base = n + 1
+    val tree = BinaryIndexedTree(n + base)
+    tree.update(base, 1)
+    val mod = 1e9.toInt() + 7
+    var ans = 0
+    var s = 0
+    for (x in nums) {
+      s += if (x == 0) -1 else 1
+      ans += tree.query(s - 1 + base)
+      ans %= mod
+      tree.update(s + base, 1)
     }
+    return ans
+  }
 }

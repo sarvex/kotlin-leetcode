@@ -1,34 +1,42 @@
-class Solution {
-    public int minimumTime(List<Integer> nums1, List<Integer> nums2, int x) {
-        int n = nums1.size();
-        int[][] f = new int[n + 1][n + 1];
-        int[][] nums = new int[n][0];
-        for (int i = 0; i < n; ++i) {
-            nums[i] = new int[] {nums1.get(i), nums2.get(i)};
-        }
-        Arrays.sort(nums, Comparator.comparingInt(a -> a[1]));
-        for (int i = 1; i <= n; ++i) {
-            for (int j = 0; j <= n; ++j) {
-                f[i][j] = f[i - 1][j];
-                if (j > 0) {
-                    int a = nums[i - 1][0], b = nums[i - 1][1];
-                    f[i][j] = Math.max(f[i][j], f[i - 1][j - 1] + a + b * j);
-                }
-            }
-        }
-        int s1 = 0, s2 = 0;
-        for (int v : nums1) {
-            s1 += v;
-        }
-        for (int v : nums2) {
-            s2 += v;
-        }
+import java.util.*
+import kotlin.Array
+import kotlin.Int
+import kotlin.IntArray
+import kotlin.intArrayOf
 
-        for (int j = 0; j <= n; ++j) {
-            if (s1 + s2 * j - f[n][j] <= x) {
-                return j;
-            }
-        }
-        return -1;
+internal class Solution {
+  fun minimumTime(nums1: List<Int>, nums2: List<Int>, x: Int): Int {
+    val n: Int = nums1.size()
+    val f = Array(n + 1) { IntArray(n + 1) }
+    val nums = Array(n) { IntArray(0) }
+    for (i in 0 until n) {
+      nums[i] = intArrayOf(nums1[i], nums2[i])
     }
+    Arrays.sort(nums, Comparator.comparingInt { a -> a.get(1) })
+    for (i in 1..n) {
+      for (j in 0..n) {
+        f[i][j] = f[i - 1][j]
+        if (j > 0) {
+          val a = nums[i - 1][0]
+          val b = nums[i - 1][1]
+          f[i][j] = max(f[i][j], f[i - 1][j - 1] + a + b * j)
+        }
+      }
+    }
+    var s1 = 0
+    var s2 = 0
+    for (v in nums1) {
+      s1 += v
+    }
+    for (v in nums2) {
+      s2 += v
+    }
+
+    for (j in 0..n) {
+      if (s1 + s2 * j - f[n][j] <= x) {
+        return j
+      }
+    }
+    return -1
+  }
 }

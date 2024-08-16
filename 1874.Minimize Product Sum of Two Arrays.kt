@@ -1,11 +1,12 @@
-class Solution {
-    public int minProductSum(int[] nums1, int[] nums2) {
-        Arrays.sort(nums1);
-        Arrays.sort(nums2);
-        int n = nums1.length, res = 0;
-        for (int i = 0; i < n; ++i) {
-            res += nums1[i] * nums2[n - i - 1];
-        }
-        return res;
+internal class Solution {
+  fun minProductSum(nums1: IntArray, nums2: IntArray): Int {
+    Arrays.sort(nums1)
+    Arrays.sort(nums2)
+    val n = nums1.size
+    var res = 0
+    for (i in 0 until n) {
+      res += nums1[i] * nums2[n - i - 1]
     }
+    return res
+  }
 }

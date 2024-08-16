@@ -1,9 +1,9 @@
-class Solution {
-    public int singleNumber(int[] nums) {
-        int ans = 0;
-        for (int v : nums) {
-            ans ^= v;
-        }
-        return ans;
+internal class Solution {
+  fun singleNumber(nums: IntArray): Int {
+    var ans = 0
+    for (v in nums) {
+      ans = ans xor v
     }
+    return ans
+  }
 }

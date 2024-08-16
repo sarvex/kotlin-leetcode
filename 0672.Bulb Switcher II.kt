@@ -1,22 +1,23 @@
-class Solution {
-    public int flipLights(int n, int presses) {
-        int[] ops = new int[] {0b111111, 0b010101, 0b101010, 0b100100};
-        Set<Integer> vis = new HashSet<>();
-        n = Math.min(n, 6);
-        for (int mask = 0; mask < 1 << 4; ++mask) {
-            int cnt = Integer.bitCount(mask);
-            if (cnt <= presses && cnt % 2 == presses % 2) {
-                int t = 0;
-                for (int i = 0; i < 4; ++i) {
-                    if (((mask >> i) & 1) == 1) {
-                        t ^= ops[i];
-                    }
-                }
-                t &= ((1 << 6) - 1);
-                t >>= (6 - n);
-                vis.add(t);
-            }
+internal class Solution {
+  fun flipLights(n: Int, presses: Int): Int {
+    var n = n
+    val ops = intArrayOf(63, 21, 42, 36)
+    val vis: Set<Int> = HashSet()
+    n = min(n, 6)
+    for (mask in 0 until (1 shl 4)) {
+      val cnt = Integer.bitCount(mask)
+      if (cnt <= presses && cnt % 2 == presses % 2) {
+        var t = 0
+        for (i in 0..3) {
+          if (((mask shr i) and 1) == 1) {
+            t = t xor ops[i]
+          }
         }
-        return vis.size();
+        t = t and ((1 shl 6) - 1)
+        t = t shr (6 - n)
+        vis.add(t)
+      }
     }
+    return vis.size()
+  }
 }

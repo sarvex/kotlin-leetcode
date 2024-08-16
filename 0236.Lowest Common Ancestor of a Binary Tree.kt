@@ -1,22 +1,22 @@
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
+ * int val;
+ * TreeNode left;
+ * TreeNode right;
+ * TreeNode(int x) { val = x; }
  * }
  */
-class Solution {
-    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        if (root == null || root == p || root == q) {
-            return root;
-        }
-        var left = lowestCommonAncestor(root.left, p, q);
-        var right = lowestCommonAncestor(root.right, p, q);
-        if (left != null && right != null) {
-            return root;
-        }
-        return left == null ? right : left;
+internal class Solution {
+  fun lowestCommonAncestor(root: TreeNode?, p: TreeNode, q: TreeNode): TreeNode? {
+    if (root == null || root === p || root === q) {
+      return root
     }
+    val left: TreeNode? = lowestCommonAncestor(root.left, p, q)
+    val right: TreeNode? = lowestCommonAncestor(root.right, p, q)
+    if (left != null && right != null) {
+      return root
+    }
+    return if (left == null) right else left
+  }
 }

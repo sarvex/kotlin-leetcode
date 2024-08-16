@@ -1,67 +1,69 @@
-class Trie {
-    Trie[] children = new Trie[26];
-    List<Integer> v = new ArrayList<>();
+internal class Trie {
+  var children: Array<Trie> = arrayOfNulls(26)
+  var v: List<Int> = ArrayList()
 
-    void insert(String word, int i) {
-        Trie node = this;
-        for (char c : word.toCharArray()) {
-            c -= 'a';
-            if (node.children[c] == null) {
-                node.children[c] = new Trie();
-            }
-            node = node.children[c];
-            node.v.add(i);
-        }
+  fun insert(word: String, i: Int) {
+    var node = this
+    for (c in word.toCharArray()) {
+      var c = c
+      (c -= 'a').toChar()
+      if (node.children[c.code] == null) {
+        node.children[c.code] = Trie()
+      }
+      node = node.children[c.code]
+      node.v.add(i)
     }
+  }
 
-    List<Integer> search(String pref) {
-        Trie node = this;
-        for (char c : pref.toCharArray()) {
-            c -= 'a';
-            if (node.children[c] == null) {
-                return Collections.emptyList();
-            }
-            node = node.children[c];
-        }
-        return node.v;
+  fun search(pref: String): List<Int> {
+    var node = this
+    for (c in pref.toCharArray()) {
+      var c = c
+      (c -= 'a').toChar()
+      if (node.children[c.code] == null) {
+        return Collections.emptyList()
+      }
+      node = node.children[c.code]
     }
+    return node.v
+  }
 }
 
-class Solution {
-    private Trie trie = new Trie();
-    private String[] words;
-    private List<List<String>> ans = new ArrayList<>();
+internal class Solution {
+  private val trie = Trie()
+  private var words: Array<String>
+  private val ans: List<List<String>> = ArrayList()
 
-    public List<List<String>> wordSquares(String[] words) {
-        this.words = words;
-        for (int i = 0; i < words.length; ++i) {
-            trie.insert(words[i], i);
-        }
-
-        List<String> t = new ArrayList<>();
-        for (String w : words) {
-            t.add(w);
-            dfs(t);
-            t.remove(t.size() - 1);
-        }
-        return ans;
+  fun wordSquares(words: Array<String>): List<List<String>> {
+    this.words = words
+    for (i in words.indices) {
+      trie.insert(words[i], i)
     }
 
-    private void dfs(List<String> t) {
-        if (t.size() == words[0].length()) {
-            ans.add(new ArrayList<>(t));
-            return;
-        }
-        int idx = t.size();
-        StringBuilder pref = new StringBuilder();
-        for (String x : t) {
-            pref.append(x.charAt(idx));
-        }
-        List<Integer> indexes = trie.search(pref.toString());
-        for (int i : indexes) {
-            t.add(words[i]);
-            dfs(t);
-            t.remove(t.size() - 1);
-        }
+    val t: List<String> = ArrayList()
+    for (w in words) {
+      t.add(w)
+      dfs(t)
+      t.remove(t.size() - 1)
     }
+    return ans
+  }
+
+  private fun dfs(t: List<String>) {
+    if (t.size() === words[0].length) {
+      ans.add(ArrayList(t))
+      return
+    }
+    val idx: Int = t.size()
+    val pref = StringBuilder()
+    for (x in t) {
+      pref.append(x[idx])
+    }
+    val indexes = trie.search(pref.toString())
+    for (i in indexes) {
+      t.add(words[i])
+      dfs(t)
+      t.remove(t.size() - 1)
+    }
+  }
 }

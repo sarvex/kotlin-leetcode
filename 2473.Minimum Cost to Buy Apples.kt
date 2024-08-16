@@ -1,49 +1,57 @@
-class Solution {
-    private int k;
-    private int[] cost;
-    private int[] dist;
-    private List<int[]>[] g;
-    private static final int INF = 0x3f3f3f3f;
+import java.util.*
 
-    public long[] minCost(int n, int[][] roads, int[] appleCost, int k) {
-        cost = appleCost;
-        g = new List[n];
-        dist = new int[n];
-        this.k = k;
-        for (int i = 0; i < n; ++i) {
-            g[i] = new ArrayList<>();
-        }
-        for (var e : roads) {
-            int a = e[0] - 1, b = e[1] - 1, c = e[2];
-            g[a].add(new int[] {b, c});
-            g[b].add(new int[] {a, c});
-        }
-        long[] ans = new long[n];
-        for (int i = 0; i < n; ++i) {
-            ans[i] = dijkstra(i);
-        }
-        return ans;
+internal class Solution {
+  private var k = 0
+  private var cost: IntArray
+  private var dist: IntArray
+  private var g: Array<List<IntArray>>
+  fun minCost(n: Int, roads: Array<IntArray>, appleCost: IntArray, k: Int): LongArray {
+    cost = appleCost
+    g = arrayOfNulls(n)
+    dist = IntArray(n)
+    this.k = k
+    for (i in 0 until n) {
+      g[i] = ArrayList()
     }
+    for (e in roads) {
+      val a = e[0] - 1
+      val b = e[1] - 1
+      val c = e[2]
+      g[a].add(intArrayOf(b, c))
+      g[b].add(intArrayOf(a, c))
+    }
+    val ans = LongArray(n)
+    for (i in 0 until n) {
+      ans[i] = dijkstra(i)
+    }
+    return ans
+  }
 
-    private long dijkstra(int u) {
-        PriorityQueue<int[]> q = new PriorityQueue<>((a, b) -> a[0] - b[0]);
-        q.offer(new int[] {0, u});
-        Arrays.fill(dist, INF);
-        dist[u] = 0;
-        long ans = Long.MAX_VALUE;
-        while (!q.isEmpty()) {
-            var p = q.poll();
-            int d = p[0];
-            u = p[1];
-            ans = Math.min(ans, cost[u] + (long) (k + 1) * d);
-            for (var ne : g[u]) {
-                int v = ne[0], w = ne[1];
-                if (dist[v] > dist[u] + w) {
-                    dist[v] = dist[u] + w;
-                    q.offer(new int[] {dist[v], v});
-                }
-            }
+  private fun dijkstra(u: Int): Long {
+    var u = u
+    val q: PriorityQueue<IntArray> = PriorityQueue { a, b -> a.get(0) - b.get(0) }
+    q.offer(intArrayOf(0, u))
+    Arrays.fill(dist, Solution.Companion.INF)
+    dist[u] = 0
+    var ans: Long = MAX_VALUE
+    while (!q.isEmpty()) {
+      val p: Unit = q.poll()
+      val d: Int = p.get(0)
+      u = p.get(1)
+      ans = min(ans, cost[u] + (k + 1).toLong() * d)
+      for (ne in g[u]) {
+        val v = ne[0]
+        val w = ne[1]
+        if (dist[v] > dist[u] + w) {
+          dist[v] = dist[u] + w
+          q.offer(intArrayOf(dist[v], v))
         }
-        return ans;
+      }
     }
+    return ans
+  }
+
+  companion object {
+    private const val INF = 0x3f3f3f3f
+  }
 }

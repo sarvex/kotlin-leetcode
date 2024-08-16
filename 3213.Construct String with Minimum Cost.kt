@@ -1,62 +1,64 @@
-class Hashing {
-    private final long[] p;
-    private final long[] h;
-    private final long mod;
+import java.util.*
 
-    public Hashing(String word, long base, int mod) {
-        int n = word.length();
-        p = new long[n + 1];
-        h = new long[n + 1];
-        p[0] = 1;
-        this.mod = mod;
-        for (int i = 1; i <= n; i++) {
-            p[i] = p[i - 1] * base % mod;
-            h[i] = (h[i - 1] * base + word.charAt(i - 1)) % mod;
-        }
-    }
+internal class Hashing(word: String, base: Long, mod: Int) {
+  private val p: LongArray
+  private val h: LongArray
+  private val mod: Long
 
-    public long query(int l, int r) {
-        return (h[r] - h[l - 1] * p[r - l + 1] % mod + mod) % mod;
+  init {
+    val n = word.length
+    p = LongArray(n + 1)
+    h = LongArray(n + 1)
+    p[0] = 1
+    this.mod = mod.toLong()
+    for (i in 1..n) {
+      p[i] = p[i - 1] * base % mod
+      h[i] = (h[i - 1] * base + word[i - 1].code.toLong()) % mod
     }
+  }
+
+  fun query(l: Int, r: Int): Long {
+    return (h[r] - h[l - 1] * p[r - l + 1] % mod + mod) % mod
+  }
 }
 
-class Solution {
-    public int minimumCost(String target, String[] words, int[] costs) {
-        final int base = 13331;
-        final int mod = 998244353;
-        final int inf = Integer.MAX_VALUE / 2;
+internal class Solution {
+  fun minimumCost(target: String, words: Array<String>, costs: IntArray): Int {
+    val base = 13331
+    val mod = 998244353
+    val inf: Int = MAX_VALUE / 2
 
-        int n = target.length();
-        Hashing hashing = new Hashing(target, base, mod);
+    val n = target.length
+    val hashing = Hashing(target, base.toLong(), mod)
 
-        int[] f = new int[n + 1];
-        Arrays.fill(f, inf);
-        f[0] = 0;
+    val f = IntArray(n + 1)
+    Arrays.fill(f, inf)
+    f[0] = 0
 
-        TreeSet<Integer> ss = new TreeSet<>();
-        for (String w : words) {
-            ss.add(w.length());
-        }
-
-        Map<Long, Integer> d = new HashMap<>();
-        for (int i = 0; i < words.length; i++) {
-            long x = 0;
-            for (char c : words[i].toCharArray()) {
-                x = (x * base + c) % mod;
-            }
-            d.merge(x, costs[i], Integer::min);
-        }
-
-        for (int i = 1; i <= n; i++) {
-            for (int j : ss) {
-                if (j > i) {
-                    break;
-                }
-                long x = hashing.query(i - j + 1, i);
-                f[i] = Math.min(f[i], f[i - j] + d.getOrDefault(x, inf));
-            }
-        }
-
-        return f[n] >= inf ? -1 : f[n];
+    val ss: TreeSet<Int> = TreeSet()
+    for (w in words) {
+      ss.add(w.length)
     }
+
+    val d: Map<Long, Int> = HashMap()
+    for (i in words.indices) {
+      var x: Long = 0
+      for (c in words[i].toCharArray()) {
+        x = (x * base + c.code.toLong()) % mod
+      }
+      d.merge(x, costs[i]) { a: Int, b: Int -> Integer.min(a, b) }
+    }
+
+    for (i in 1..n) {
+      for (j in ss) {
+        if (j > i) {
+          break
+        }
+        val x = hashing.query(i - j + 1, i)
+        f[i] = Math.min(f[i], f[i - j] + d.getOrDefault(x, inf))
+      }
+    }
+
+    return if (f[n] >= inf) -1 else f[n]
+  }
 }

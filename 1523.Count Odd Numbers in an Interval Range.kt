@@ -1,5 +1,5 @@
-class Solution {
-    public int countOdds(int low, int high) {
-        return ((high + 1) >> 1) - (low >> 1);
-    }
+internal class Solution {
+  fun countOdds(low: Int, high: Int): Int {
+    return ((high + 1) shr 1) - (low shr 1)
+  }
 }

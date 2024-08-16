@@ -1,31 +1,34 @@
-class Solution {
-    private int ans;
-    private List<Integer>[] g;
-    private int[] values;
-    private int k;
+import java.util.*
 
-    public int maxKDivisibleComponents(int n, int[][] edges, int[] values, int k) {
-        g = new List[n];
-        Arrays.setAll(g, i -> new ArrayList<>());
-        for (int[] e : edges) {
-            int a = e[0], b = e[1];
-            g[a].add(b);
-            g[b].add(a);
-        }
-        this.values = values;
-        this.k = k;
-        dfs(0, -1);
-        return ans;
-    }
+internal class Solution {
+  private var ans = 0
+  private var g: Array<List<Int>>
+  private var values: IntArray
+  private var k = 0
 
-    private long dfs(int i, int fa) {
-        long s = values[i];
-        for (int j : g[i]) {
-            if (j != fa) {
-                s += dfs(j, i);
-            }
-        }
-        ans += s % k == 0 ? 1 : 0;
-        return s;
+  fun maxKDivisibleComponents(n: Int, edges: Array<IntArray>, values: IntArray, k: Int): Int {
+    g = arrayOfNulls(n)
+    Arrays.setAll(g) { i -> ArrayList() }
+    for (e in edges) {
+      val a = e[0]
+      val b = e[1]
+      g[a].add(b)
+      g[b].add(a)
     }
+    this.values = values
+    this.k = k
+    dfs(0, -1)
+    return ans
+  }
+
+  private fun dfs(i: Int, fa: Int): Long {
+    var s = values[i].toLong()
+    for (j in g[i]) {
+      if (j != fa) {
+        s += dfs(j, i)
+      }
+    }
+    ans += if (s % k == 0L) 1 else 0
+    return s
+  }
 }

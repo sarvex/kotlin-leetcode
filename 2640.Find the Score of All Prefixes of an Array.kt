@@ -1,12 +1,12 @@
-class Solution {
-    public long[] findPrefixScore(int[] nums) {
-        int n = nums.length;
-        long[] ans = new long[n];
-        int mx = 0;
-        for (int i = 0; i < n; ++i) {
-            mx = Math.max(mx, nums[i]);
-            ans[i] = nums[i] + mx + (i == 0 ? 0 : ans[i - 1]);
-        }
-        return ans;
+internal class Solution {
+  fun findPrefixScore(nums: IntArray): LongArray {
+    val n = nums.size
+    val ans = LongArray(n)
+    var mx = 0
+    for (i in 0 until n) {
+      mx = max(mx, nums[i])
+      ans[i] = nums[i] + mx + (if (i == 0) 0 else ans[i - 1])
     }
+    return ans
+  }
 }

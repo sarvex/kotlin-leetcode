@@ -1,40 +1,48 @@
-class Solution {
-    public int numberOfSets(int n, int maxDistance, int[][] roads) {
-        int ans = 0;
-        for (int mask = 0; mask < 1 << n; ++mask) {
-            int[][] g = new int[n][n];
-            for (var e : g) {
-                Arrays.fill(e, 1 << 29);
-            }
-            for (var e : roads) {
-                int u = e[0], v = e[1], w = e[2];
-                if ((mask >> u & 1) == 1 && (mask >> v & 1) == 1) {
-                    g[u][v] = Math.min(g[u][v], w);
-                    g[v][u] = Math.min(g[v][u], w);
-                }
-            }
-            for (int k = 0; k < n; ++k) {
-                if ((mask >> k & 1) == 1) {
-                    g[k][k] = 0;
-                    for (int i = 0; i < n; ++i) {
-                        for (int j = 0; j < n; ++j) {
-                            g[i][j] = Math.min(g[i][j], g[i][k] + g[k][j]);
-                        }
-                    }
-                }
-            }
-            int ok = 1;
-            for (int i = 0; i < n && ok == 1; ++i) {
-                for (int j = 0; j < n && ok == 1; ++j) {
-                    if ((mask >> i & 1) == 1 && (mask >> j & 1) == 1) {
-                        if (g[i][j] > maxDistance) {
-                            ok = 0;
-                        }
-                    }
-                }
-            }
-            ans += ok;
+import java.util.*
+
+internal class Solution {
+  fun numberOfSets(n: Int, maxDistance: Int, roads: Array<IntArray>): Int {
+    var ans = 0
+    for (mask in 0 until (1 shl n)) {
+      val g = Array(n) { IntArray(n) }
+      for (e in g) {
+        Arrays.fill(e, 1 shl 29)
+      }
+      for (e in roads) {
+        val u = e[0]
+        val v = e[1]
+        val w = e[2]
+        if ((mask shr u and 1) == 1 && (mask shr v and 1) == 1) {
+          g[u][v] = min(g[u][v], w)
+          g[v][u] = min(g[v][u], w)
         }
-        return ans;
+      }
+      for (k in 0 until n) {
+        if ((mask shr k and 1) == 1) {
+          g[k][k] = 0
+          for (i in 0 until n) {
+            for (j in 0 until n) {
+              g[i][j] = min(g[i][j], g[i][k] + g[k][j])
+            }
+          }
+        }
+      }
+      var ok = 1
+      var i = 0
+      while (i < n && ok == 1) {
+        var j = 0
+        while (j < n && ok == 1) {
+          if ((mask shr i and 1) == 1 && (mask shr j and 1) == 1) {
+            if (g[i][j] > maxDistance) {
+              ok = 0
+            }
+          }
+          ++j
+        }
+        ++i
+      }
+      ans += ok
     }
+    return ans
+  }
 }

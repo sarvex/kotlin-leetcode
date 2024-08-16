@@ -1,22 +1,24 @@
-class Solution {
-    public int shortestWay(String source, String target) {
-        int m = source.length(), n = target.length();
-        int ans = 0, j = 0;
-        while (j < n) {
-            int i = 0;
-            boolean ok = false;
-            while (i < m && j < n) {
-                if (source.charAt(i) == target.charAt(j)) {
-                    ok = true;
-                    ++j;
-                }
-                ++i;
-            }
-            if (!ok) {
-                return -1;
-            }
-            ++ans;
+internal class Solution {
+  fun shortestWay(source: String, target: String): Int {
+    val m = source.length
+    val n = target.length
+    var ans = 0
+    var j = 0
+    while (j < n) {
+      var i = 0
+      var ok = false
+      while (i < m && j < n) {
+        if (source[i] == target[j]) {
+          ok = true
+          ++j
         }
-        return ans;
+        ++i
+      }
+      if (!ok) {
+        return -1
+      }
+      ++ans
     }
+    return ans
+  }
 }

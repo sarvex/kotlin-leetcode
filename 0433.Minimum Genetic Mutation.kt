@@ -1,31 +1,35 @@
-class Solution {
-    public int minMutation(String startGene, String endGene, String[] bank) {
-        Deque<String> q = new ArrayDeque<>();
-        q.offer(startGene);
-        Set<String> vis = new HashSet<>();
-        vis.add(startGene);
-        int depth = 0;
-        while (!q.isEmpty()) {
-            for (int m = q.size(); m > 0; --m) {
-                String gene = q.poll();
-                if (gene.equals(endGene)) {
-                    return depth;
-                }
-                for (String next : bank) {
-                    int c = 2;
-                    for (int k = 0; k < 8 && c > 0; ++k) {
-                        if (gene.charAt(k) != next.charAt(k)) {
-                            --c;
-                        }
-                    }
-                    if (c > 0 && !vis.contains(next)) {
-                        q.offer(next);
-                        vis.add(next);
-                    }
-                }
-            }
-            ++depth;
+import java.util.*
+
+internal class Solution {
+  fun minMutation(startGene: String, endGene: String, bank: Array<String>): Int {
+    val q: Deque<String> = ArrayDeque()
+    q.offer(startGene)
+    val vis: Set<String> = HashSet()
+    vis.add(startGene)
+    var depth = 0
+    while (!q.isEmpty()) {
+      for (m in q.size() downTo 1) {
+        val gene = q.poll()
+        if (gene == endGene) {
+          return depth
         }
-        return -1;
+        for (next in bank) {
+          var c = 2
+          var k = 0
+          while (k < 8 && c > 0) {
+            if (gene[k] != next[k]) {
+              --c
+            }
+            ++k
+          }
+          if (c > 0 && !vis.contains(next)) {
+            q.offer(next)
+            vis.add(next)
+          }
+        }
+      }
+      ++depth
     }
+    return -1
+  }
 }

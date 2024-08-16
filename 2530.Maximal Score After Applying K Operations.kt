@@ -1,15 +1,16 @@
-class Solution {
-    public long maxKelements(int[] nums, int k) {
-        PriorityQueue<Integer> pq = new PriorityQueue<>((a, b) -> b - a);
-        for (int v : nums) {
-            pq.offer(v);
-        }
-        long ans = 0;
-        while (k-- > 0) {
-            int v = pq.poll();
-            ans += v;
-            pq.offer((v + 2) / 3);
-        }
-        return ans;
+internal class Solution {
+  fun maxKelements(nums: IntArray, k: Int): Long {
+    var k = k
+    val pq: PriorityQueue<Int> = PriorityQueue { a, b -> b - a }
+    for (v in nums) {
+      pq.offer(v)
     }
+    var ans: Long = 0
+    while (k-- > 0) {
+      val v: Int = pq.poll()
+      ans += v.toLong()
+      pq.offer((v + 2) / 3)
+    }
+    return ans
+  }
 }

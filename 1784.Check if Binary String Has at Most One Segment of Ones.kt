@@ -1,5 +1,5 @@
-class Solution {
-    public boolean checkOnesSegment(String s) {
-        return !s.contains("01");
-    }
+internal class Solution {
+  fun checkOnesSegment(s: String): Boolean {
+    return !s.contains("01")
+  }
 }

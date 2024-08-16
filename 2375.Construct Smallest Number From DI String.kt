@@ -1,37 +1,37 @@
-class Solution {
-    private boolean[] vis = new boolean[10];
-    private StringBuilder t = new StringBuilder();
-    private String p;
-    private String ans;
+internal class Solution {
+  private val vis = BooleanArray(10)
+  private val t = StringBuilder()
+  private var p: String? = null
+  private var ans: String? = null
 
-    public String smallestNumber(String pattern) {
-        p = pattern;
-        dfs(0);
-        return ans;
-    }
+  fun smallestNumber(pattern: String?): String? {
+    p = pattern
+    dfs(0)
+    return ans
+  }
 
-    private void dfs(int u) {
-        if (ans != null) {
-            return;
-        }
-        if (u == p.length() + 1) {
-            ans = t.toString();
-            return;
-        }
-        for (int i = 1; i < 10; ++i) {
-            if (!vis[i]) {
-                if (u > 0 && p.charAt(u - 1) == 'I' && t.charAt(u - 1) - '0' >= i) {
-                    continue;
-                }
-                if (u > 0 && p.charAt(u - 1) == 'D' && t.charAt(u - 1) - '0' <= i) {
-                    continue;
-                }
-                vis[i] = true;
-                t.append(i);
-                dfs(u + 1);
-                t.deleteCharAt(t.length() - 1);
-                vis[i] = false;
-            }
-        }
+  private fun dfs(u: Int) {
+    if (ans != null) {
+      return
     }
+    if (u == p!!.length + 1) {
+      ans = t.toString()
+      return
+    }
+    for (i in 1..9) {
+      if (!vis[i]) {
+        if (u > 0 && p!![u - 1] == 'I' && t[u - 1].code - '0'.code >= i) {
+          continue
+        }
+        if (u > 0 && p!![u - 1] == 'D' && t[u - 1].code - '0'.code <= i) {
+          continue
+        }
+        vis[i] = true
+        t.append(i)
+        dfs(u + 1)
+        t.deleteCharAt(t.length - 1)
+        vis[i] = false
+      }
+    }
+  }
 }

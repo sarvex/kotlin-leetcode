@@ -1,13 +1,15 @@
-class Solution {
-    public int minImpossibleOR(int[] nums) {
-        Set<Integer> s = new HashSet<>();
-        for (int x : nums) {
-            s.add(x);
-        }
-        for (int i = 0;; ++i) {
-            if (!s.contains(1 << i)) {
-                return 1 << i;
-            }
-        }
+internal class Solution {
+  fun minImpossibleOR(nums: IntArray): Int {
+    val s: Set<Int> = HashSet()
+    for (x in nums) {
+      s.add(x)
     }
+    var i = 0
+    while (true) {
+      if (!s.contains(1 shl i)) {
+        return 1 shl i
+      }
+      ++i
+    }
+  }
 }

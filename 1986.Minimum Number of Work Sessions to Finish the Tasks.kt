@@ -1,26 +1,28 @@
-class Solution {
-    public int minSessions(int[] tasks, int sessionTime) {
-        int n = tasks.length;
-        boolean[] ok = new boolean[1 << n];
-        for (int i = 1; i < 1 << n; ++i) {
-            int t = 0;
-            for (int j = 0; j < n; ++j) {
-                if ((i >> j & 1) == 1) {
-                    t += tasks[j];
-                }
-            }
-            ok[i] = t <= sessionTime;
+internal class Solution {
+  fun minSessions(tasks: IntArray, sessionTime: Int): Int {
+    val n = tasks.size
+    val ok = BooleanArray(1 shl n)
+    for (i in 1 until (1 shl n)) {
+      var t = 0
+      for (j in 0 until n) {
+        if ((i shr j and 1) == 1) {
+          t += tasks[j]
         }
-        int[] f = new int[1 << n];
-        Arrays.fill(f, 1 << 30);
-        f[0] = 0;
-        for (int i = 1; i < 1 << n; ++i) {
-            for (int j = i; j > 0; j = (j - 1) & i) {
-                if (ok[j]) {
-                    f[i] = Math.min(f[i], f[i ^ j] + 1);
-                }
-            }
-        }
-        return f[(1 << n) - 1];
+      }
+      ok[i] = t <= sessionTime
     }
+    val f = IntArray(1 shl n)
+    Arrays.fill(f, 1 shl 30)
+    f[0] = 0
+    for (i in 1 until (1 shl n)) {
+      var j: Int = i
+      while (j > 0) {
+        if (ok[j]) {
+          f[i] = min(f[i], f[i xor j] + 1)
+        }
+        j = (j - 1) and i
+      }
+    }
+    return f[(1 shl n) - 1]
+  }
 }

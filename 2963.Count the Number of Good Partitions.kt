@@ -1,28 +1,31 @@
-class Solution {
-    public int numberOfGoodPartitions(int[] nums) {
-        Map<Integer, Integer> last = new HashMap<>();
-        int n = nums.length;
-        for (int i = 0; i < n; ++i) {
-            last.put(nums[i], i);
-        }
-        final int mod = (int) 1e9 + 7;
-        int j = -1;
-        int k = 0;
-        for (int i = 0; i < n; ++i) {
-            j = Math.max(j, last.get(nums[i]));
-            k += i == j ? 1 : 0;
-        }
-        return qpow(2, k - 1, mod);
+internal class Solution {
+  fun numberOfGoodPartitions(nums: IntArray): Int {
+    val last: Map<Int, Int> = HashMap()
+    val n = nums.size
+    for (i in 0 until n) {
+      last.put(nums[i], i)
     }
+    val mod = 1e9.toInt() + 7
+    var j = -1
+    var k = 0
+    for (i in 0 until n) {
+      j = Math.max(j, last[nums[i]]!!)
+      k += if (i == j) 1 else 0
+    }
+    return qpow(2, k - 1, mod)
+  }
 
-    private int qpow(long a, int n, int mod) {
-        long ans = 1;
-        for (; n > 0; n >>= 1) {
-            if ((n & 1) == 1) {
-                ans = ans * a % mod;
-            }
-            a = a * a % mod;
-        }
-        return (int) ans;
+  private fun qpow(a: Long, n: Int, mod: Int): Int {
+    var a = a
+    var n = n
+    var ans: Long = 1
+    while (n > 0) {
+      if ((n and 1) == 1) {
+        ans = ans * a % mod
+      }
+      a = a * a % mod
+      n = n shr 1
     }
+    return ans.toInt()
+  }
 }

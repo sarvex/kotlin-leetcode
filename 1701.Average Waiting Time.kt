@@ -1,12 +1,13 @@
-class Solution {
-    public double averageWaitingTime(int[][] customers) {
-        double tot = 0;
-        int t = 0;
-        for (var e : customers) {
-            int a = e[0], b = e[1];
-            t = Math.max(t, a) + b;
-            tot += t - a;
-        }
-        return tot / customers.length;
+internal class Solution {
+  fun averageWaitingTime(customers: Array<IntArray>): Double {
+    var tot = 0.0
+    var t = 0
+    for (e in customers) {
+      val a = e[0]
+      val b = e[1]
+      t = max(t, a) + b
+      tot += (t - a).toDouble()
     }
+    return tot / customers.size
+  }
 }

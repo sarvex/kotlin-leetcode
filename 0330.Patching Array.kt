@@ -1,15 +1,16 @@
-class Solution {
-    public int minPatches(int[] nums, int n) {
-        long x = 1;
-        int ans = 0;
-        for (int i = 0; x <= n;) {
-            if (i < nums.length && nums[i] <= x) {
-                x += nums[i++];
-            } else {
-                ++ans;
-                x <<= 1;
-            }
-        }
-        return ans;
+internal class Solution {
+  fun minPatches(nums: IntArray, n: Int): Int {
+    var x: Long = 1
+    var ans = 0
+    var i = 0
+    while (x <= n) {
+      if (i < nums.size && nums[i] <= x) {
+        x += nums[i++].toLong()
+      } else {
+        ++ans
+        x = x shl 1
+      }
     }
+    return ans
+  }
 }

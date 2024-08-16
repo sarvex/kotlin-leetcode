@@ -1,19 +1,19 @@
-class Solution {
-    public int closestToTarget(int[] arr, int target) {
-        int ans = Math.abs(arr[0] - target);
-        Set<Integer> pre = new HashSet<>();
-        pre.add(arr[0]);
-        for (int x : arr) {
-            Set<Integer> cur = new HashSet<>();
-            for (int y : pre) {
-                cur.add(x & y);
-            }
-            cur.add(x);
-            for (int y : cur) {
-                ans = Math.min(ans, Math.abs(y - target));
-            }
-            pre = cur;
-        }
-        return ans;
+internal class Solution {
+  fun closestToTarget(arr: IntArray, target: Int): Int {
+    var ans: Int = abs(arr[0] - target)
+    var pre: Set<Int> = HashSet()
+    pre.add(arr[0])
+    for (x in arr) {
+      val cur: Set<Int> = HashSet()
+      for (y in pre) {
+        cur.add(x and y)
+      }
+      cur.add(x)
+      for (y in cur) {
+        ans = min(ans, abs(y - target))
+      }
+      pre = cur
     }
+    return ans
+  }
 }

@@ -1,25 +1,21 @@
-class NumberContainers {
-    private Map<Integer, Integer> d = new HashMap<>();
-    private Map<Integer, TreeSet<Integer>> g = new HashMap<>();
+internal class NumberContainers {
+  private val d: Map<Int, Int> = HashMap()
+  private val g: Map<Int, TreeSet<Int>> = HashMap()
 
-    public NumberContainers() {
+  fun change(index: Int, number: Int) {
+    if (d.containsKey(index)) {
+      val oldNumber = d[index]!!
+      g[oldNumber].remove(index)
     }
+    d.put(index, number)
+    g.computeIfAbsent(number) { k -> TreeSet() }.add(index)
+  }
 
-    public void change(int index, int number) {
-        if (d.containsKey(index)) {
-            int oldNumber = d.get(index);
-            g.get(oldNumber).remove(index);
-        }
-        d.put(index, number);
-        g.computeIfAbsent(number, k -> new TreeSet<>()).add(index);
-    }
-
-    public int find(int number) {
-        var ids = g.get(number);
-        return ids == null || ids.isEmpty() ? -1 : ids.first();
-    }
+  fun find(number: Int): Int {
+    val ids: Unit = g[number]
+    return if (ids == null || ids.isEmpty()) -1 else ids.first()
+  }
 }
-
 /**
  * Your NumberContainers object will be instantiated and called as such:
  * NumberContainers obj = new NumberContainers();

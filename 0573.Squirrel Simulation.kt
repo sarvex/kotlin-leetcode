@@ -1,20 +1,20 @@
-class Solution {
-    public int minDistance(int height, int width, int[] tree, int[] squirrel, int[][] nuts) {
-        int ans = Integer.MAX_VALUE;
-        int s = 0;
-        for (int[] a : nuts) {
-            s += f(a, tree);
-        }
-        s *= 2;
-        for (int[] a : nuts) {
-            int c = f(a, tree);
-            int d = f(a, squirrel) + c;
-            ans = Math.min(ans, s + d - c * 2);
-        }
-        return ans;
+internal class Solution {
+  fun minDistance(height: Int, width: Int, tree: IntArray, squirrel: IntArray, nuts: Array<IntArray>): Int {
+    var ans: Int = MAX_VALUE
+    var s = 0
+    for (a in nuts) {
+      s += f(a, tree)
     }
+    s *= 2
+    for (a in nuts) {
+      val c = f(a, tree)
+      val d = f(a, squirrel) + c
+      ans = min(ans, s + d - c * 2)
+    }
+    return ans
+  }
 
-    private int f(int[] a, int[] b) {
-        return Math.abs(a[0] - b[0]) + Math.abs(a[1] - b[1]);
-    }
+  private fun f(a: IntArray, b: IntArray): Int {
+    return abs(a[0] - b[0]) + abs(a[1] - b[1])
+  }
 }

@@ -1,39 +1,39 @@
-class Solution {
-    private List<Integer>[] g;
-    private int ans;
-    private long mx;
-    private int n;
+internal class Solution {
+  private var g: Array<List<Int>>
+  private var ans = 0
+  private var mx: Long = 0
+  private var n = 0
 
-    public int countHighestScoreNodes(int[] parents) {
-        n = parents.length;
-        g = new List[n];
-        Arrays.setAll(g, i -> new ArrayList<>());
-        for (int i = 1; i < n; ++i) {
-            g[parents[i]].add(i);
-        }
-        dfs(0, -1);
-        return ans;
+  fun countHighestScoreNodes(parents: IntArray): Int {
+    n = parents.size
+    g = arrayOfNulls(n)
+    Arrays.setAll(g) { i -> ArrayList() }
+    for (i in 1 until n) {
+      g[parents[i]].add(i)
     }
+    dfs(0, -1)
+    return ans
+  }
 
-    private int dfs(int i, int fa) {
-        int cnt = 1;
-        long score = 1;
-        for (int j : g[i]) {
-            if (j != fa) {
-                int t = dfs(j, i);
-                cnt += t;
-                score *= t;
-            }
-        }
-        if (n - cnt > 0) {
-            score *= n - cnt;
-        }
-        if (mx < score) {
-            mx = score;
-            ans = 1;
-        } else if (mx == score) {
-            ++ans;
-        }
-        return cnt;
+  private fun dfs(i: Int, fa: Int): Int {
+    var cnt = 1
+    var score: Long = 1
+    for (j in g[i]) {
+      if (j != fa) {
+        val t = dfs(j, i)
+        cnt += t
+        score *= t.toLong()
+      }
     }
+    if (n - cnt > 0) {
+      score *= (n - cnt).toLong()
+    }
+    if (mx < score) {
+      mx = score
+      ans = 1
+    } else if (mx == score) {
+      ++ans
+    }
+    return cnt
+  }
 }

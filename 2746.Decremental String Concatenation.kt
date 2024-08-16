@@ -1,27 +1,27 @@
-class Solution {
-    private Integer[][][] f;
-    private String[] words;
-    private int n;
+internal class Solution {
+  private var f: Array<Array<Array<Int>>>
+  private var words: Array<String>
+  private var n = 0
 
-    public int minimizeConcatenatedLength(String[] words) {
-        n = words.length;
-        this.words = words;
-        f = new Integer[n][26][26];
-        return words[0].length()
-            + dfs(1, words[0].charAt(0) - 'a', words[0].charAt(words[0].length() - 1) - 'a');
-    }
+  fun minimizeConcatenatedLength(words: Array<String>): Int {
+    n = words.size
+    this.words = words
+    f = Array(n) { Array(26) { arrayOfNulls(26) } }
+    return (words[0].length
+        + dfs(1, words[0][0].code - 'a'.code, words[0][words[0].length - 1].code - 'a'.code))
+  }
 
-    private int dfs(int i, int a, int b) {
-        if (i >= n) {
-            return 0;
-        }
-        if (f[i][a][b] != null) {
-            return f[i][a][b];
-        }
-        String s = words[i];
-        int m = s.length();
-        int x = dfs(i + 1, a, s.charAt(m - 1) - 'a') - (s.charAt(0) - 'a' == b ? 1 : 0);
-        int y = dfs(i + 1, s.charAt(0) - 'a', b) - (s.charAt(m - 1) - 'a' == a ? 1 : 0);
-        return f[i][a][b] = m + Math.min(x, y);
+  private fun dfs(i: Int, a: Int, b: Int): Int {
+    if (i >= n) {
+      return 0
     }
+    if (f[i][a][b] != null) {
+      return f[i][a][b]
+    }
+    val s = words[i]
+    val m = s.length
+    val x = dfs(i + 1, a, s[m - 1].code - 'a'.code) - (if (s[0].code - 'a'.code == b) 1 else 0)
+    val y = dfs(i + 1, s[0].code - 'a'.code, b) - (if (s[m - 1].code - 'a'.code == a) 1 else 0)
+    return (m + min(x, y)).also { f[i][a][b] = it }
+  }
 }

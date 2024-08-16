@@ -1,27 +1,27 @@
-class Solution {
-    public List<String> ambiguousCoordinates(String s) {
-        int n = s.length();
-        List<String> ans = new ArrayList<>();
-        for (int i = 2; i < n - 1; ++i) {
-            for (String x : f(s, 1, i)) {
-                for (String y : f(s, i, n - 1)) {
-                    ans.add(String.format("(%s, %s)", x, y));
-                }
-            }
+internal class Solution {
+  fun ambiguousCoordinates(s: String): List<String> {
+    val n = s.length
+    val ans: List<String> = ArrayList()
+    for (i in 2 until n - 1) {
+      for (x in f(s, 1, i)) {
+        for (y in f(s, i, n - 1)) {
+          ans.add(String.format("(%s, %s)", x, y))
         }
-        return ans;
+      }
     }
+    return ans
+  }
 
-    private List<String> f(String s, int i, int j) {
-        List<String> res = new ArrayList<>();
-        for (int k = 1; k <= j - i; ++k) {
-            String l = s.substring(i, i + k);
-            String r = s.substring(i + k, j);
-            boolean ok = ("0".equals(l) || !l.startsWith("0")) && !r.endsWith("0");
-            if (ok) {
-                res.add(l + (k < j - i ? "." : "") + r);
-            }
-        }
-        return res;
+  private fun f(s: String, i: Int, j: Int): List<String> {
+    val res: List<String> = ArrayList()
+    for (k in 1..(j - i)) {
+      val l: String = s.substring(i, i + k)
+      val r: String = s.substring(i + k, j)
+      val ok = ("0" == l || !l.startsWith("0")) && !r.endsWith("0")
+      if (ok) {
+        res.add(l + (if (k < j - i) "." else "") + r)
+      }
     }
+    return res
+  }
 }

@@ -1,26 +1,26 @@
-class Solution {
-    public List<String> findAndReplacePattern(String[] words, String pattern) {
-        List<String> ans = new ArrayList<>();
-        for (String word : words) {
-            if (match(word, pattern)) {
-                ans.add(word);
-            }
-        }
-        return ans;
+internal class Solution {
+  fun findAndReplacePattern(words: Array<String>, pattern: String): List<String> {
+    val ans: List<String> = ArrayList()
+    for (word in words) {
+      if (match(word, pattern)) {
+        ans.add(word)
+      }
     }
+    return ans
+  }
 
-    private boolean match(String s, String t) {
-        int[] m1 = new int[128];
-        int[] m2 = new int[128];
-        for (int i = 0; i < s.length(); ++i) {
-            char c1 = s.charAt(i);
-            char c2 = t.charAt(i);
-            if (m1[c1] != m2[c2]) {
-                return false;
-            }
-            m1[c1] = i + 1;
-            m2[c2] = i + 1;
-        }
-        return true;
+  private fun match(s: String, t: String): Boolean {
+    val m1 = IntArray(128)
+    val m2 = IntArray(128)
+    for (i in 0 until s.length) {
+      val c1 = s[i]
+      val c2 = t[i]
+      if (m1[c1.code] != m2[c2.code]) {
+        return false
+      }
+      m1[c1.code] = i + 1
+      m2[c2.code] = i + 1
     }
+    return true
+  }
 }

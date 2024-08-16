@@ -1,27 +1,31 @@
-class Solution {
-    public int[] findPermutation(String s) {
-        int n = s.length();
-        int[] ans = new int[n + 1];
-        for (int i = 0; i < n + 1; ++i) {
-            ans[i] = i + 1;
-        }
-        int i = 0;
-        while (i < n) {
-            int j = i;
-            while (j < n && s.charAt(j) == 'D') {
-                ++j;
-            }
-            reverse(ans, i, j);
-            i = Math.max(i + 1, j);
-        }
-        return ans;
+internal class Solution {
+  fun findPermutation(s: String): IntArray {
+    val n = s.length
+    val ans = IntArray(n + 1)
+    for (i in 0 until n + 1) {
+      ans[i] = i + 1
     }
+    var i = 0
+    while (i < n) {
+      var j = i
+      while (j < n && s[j] == 'D') {
+        ++j
+      }
+      reverse(ans, i, j)
+      i = max(i + 1, j)
+    }
+    return ans
+  }
 
-    private void reverse(int[] arr, int i, int j) {
-        for (; i < j; ++i, --j) {
-            int t = arr[i];
-            arr[i] = arr[j];
-            arr[j] = t;
-        }
+  private fun reverse(arr: IntArray, i: Int, j: Int) {
+    var i = i
+    var j = j
+    while (i < j) {
+      val t = arr[i]
+      arr[i] = arr[j]
+      arr[j] = t
+      ++i
+      --j
     }
+  }
 }

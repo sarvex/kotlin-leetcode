@@ -1,67 +1,74 @@
-class Solution {
-    public int[] minOperationsQueries(int n, int[][] edges, int[][] queries) {
-        int m = 32 - Integer.numberOfLeadingZeros(n);
-        List<int[]>[] g = new List[n];
-        Arrays.setAll(g, i -> new ArrayList<>());
-        int[][] f = new int[n][m];
-        int[] p = new int[n];
-        int[][] cnt = new int[n][0];
-        int[] depth = new int[n];
-        for (var e : edges) {
-            int u = e[0], v = e[1], w = e[2] - 1;
-            g[u].add(new int[] {v, w});
-            g[v].add(new int[] {u, w});
-        }
-        cnt[0] = new int[26];
-        Deque<Integer> q = new ArrayDeque<>();
-        q.offer(0);
-        while (!q.isEmpty()) {
-            int i = q.poll();
-            f[i][0] = p[i];
-            for (int j = 1; j < m; ++j) {
-                f[i][j] = f[f[i][j - 1]][j - 1];
-            }
-            for (var nxt : g[i]) {
-                int j = nxt[0], w = nxt[1];
-                if (j != p[i]) {
-                    p[j] = i;
-                    cnt[j] = cnt[i].clone();
-                    cnt[j][w]++;
-                    depth[j] = depth[i] + 1;
-                    q.offer(j);
-                }
-            }
-        }
-        int k = queries.length;
-        int[] ans = new int[k];
-        for (int i = 0; i < k; ++i) {
-            int u = queries[i][0], v = queries[i][1];
-            int x = u, y = v;
-            if (depth[x] < depth[y]) {
-                int t = x;
-                x = y;
-                y = t;
-            }
-            for (int j = m - 1; j >= 0; --j) {
-                if (depth[x] - depth[y] >= (1 << j)) {
-                    x = f[x][j];
-                }
-            }
-            for (int j = m - 1; j >= 0; --j) {
-                if (f[x][j] != f[y][j]) {
-                    x = f[x][j];
-                    y = f[y][j];
-                }
-            }
-            if (x != y) {
-                x = p[x];
-            }
-            int mx = 0;
-            for (int j = 0; j < 26; ++j) {
-                mx = Math.max(mx, cnt[u][j] + cnt[v][j] - 2 * cnt[x][j]);
-            }
-            ans[i] = depth[u] + depth[v] - 2 * depth[x] - mx;
-        }
-        return ans;
+import java.util.*
+
+internal class Solution {
+  fun minOperationsQueries(n: Int, edges: Array<IntArray>, queries: Array<IntArray>): IntArray {
+    val m = 32 - Integer.numberOfLeadingZeros(n)
+    val g: Array<List<IntArray>> = arrayOfNulls(n)
+    Arrays.setAll(g) { i -> ArrayList() }
+    val f = Array(n) { IntArray(m) }
+    val p = IntArray(n)
+    val cnt = Array(n) { IntArray(0) }
+    val depth = IntArray(n)
+    for (e in edges) {
+      val u = e[0]
+      val v = e[1]
+      val w = e[2] - 1
+      g[u].add(intArrayOf(v, w))
+      g[v].add(intArrayOf(u, w))
     }
+    cnt[0] = IntArray(26)
+    val q: Deque<Int> = ArrayDeque()
+    q.offer(0)
+    while (!q.isEmpty()) {
+      val i: Int = q.poll()
+      f[i][0] = p[i]
+      for (j in 1 until m) {
+        f[i][j] = f[f[i][j - 1]][j - 1]
+      }
+      for (nxt in g[i]) {
+        val j = nxt[0]
+        val w = nxt[1]
+        if (j != p[i]) {
+          p[j] = i
+          cnt[j] = cnt[i].clone()
+          cnt[j][w]++
+          depth[j] = depth[i] + 1
+          q.offer(j)
+        }
+      }
+    }
+    val k = queries.size
+    val ans = IntArray(k)
+    for (i in 0 until k) {
+      val u = queries[i][0]
+      val v = queries[i][1]
+      var x = u
+      var y = v
+      if (depth[x] < depth[y]) {
+        val t = x
+        x = y
+        y = t
+      }
+      for (j in m - 1 downTo 0) {
+        if (depth[x] - depth[y] >= (1 shl j)) {
+          x = f[x][j]
+        }
+      }
+      for (j in m - 1 downTo 0) {
+        if (f[x][j] != f[y][j]) {
+          x = f[x][j]
+          y = f[y][j]
+        }
+      }
+      if (x != y) {
+        x = p[x]
+      }
+      var mx = 0
+      for (j in 0..25) {
+        mx = max(mx, cnt[u][j] + cnt[v][j] - 2 * cnt[x][j])
+      }
+      ans[i] = depth[u] + depth[v] - 2 * depth[x] - mx
+    }
+    return ans
+  }
 }

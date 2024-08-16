@@ -1,20 +1,23 @@
-class Solution {
-    public int countMatchingSubarrays(int[] nums, int[] pattern) {
-        int n = nums.length, m = pattern.length;
-        int ans = 0;
-        for (int i = 0; i < n - m; ++i) {
-            int ok = 1;
-            for (int k = 0; k < m && ok == 1; ++k) {
-                if (f(nums[i + k], nums[i + k + 1]) != pattern[k]) {
-                    ok = 0;
-                }
-            }
-            ans += ok;
+internal class Solution {
+  fun countMatchingSubarrays(nums: IntArray, pattern: IntArray): Int {
+    val n = nums.size
+    val m = pattern.size
+    var ans = 0
+    for (i in 0 until n - m) {
+      var ok = 1
+      var k = 0
+      while (k < m && ok == 1) {
+        if (f(nums[i + k], nums[i + k + 1]) != pattern[k]) {
+          ok = 0
         }
-        return ans;
+        ++k
+      }
+      ans += ok
     }
+    return ans
+  }
 
-    private int f(int a, int b) {
-        return a == b ? 0 : (a < b ? 1 : -1);
-    }
+  private fun f(a: Int, b: Int): Int {
+    return if (a == b) 0 else (if (a < b) 1 else -1)
+  }
 }

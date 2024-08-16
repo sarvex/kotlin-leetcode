@@ -1,32 +1,34 @@
-class Solution {
-    private int n;
-    private long[] f;
-    private int[] power;
+import java.util.*
 
-    public long minimumTime(int[] power) {
-        n = power.length;
-        f = new long[1 << n];
-        Arrays.fill(f, -1);
-        this.power = power;
-        return dfs(0);
-    }
+internal class Solution {
+  private var n = 0
+  private var f: LongArray
+  private var power: IntArray
 
-    private long dfs(int mask) {
-        if (f[mask] != -1) {
-            return f[mask];
-        }
-        int cnt = Integer.bitCount(mask);
-        if (cnt == n) {
-            return 0;
-        }
-        long ans = Long.MAX_VALUE;
-        for (int i = 0; i < n; ++i) {
-            if (((mask >> i) & 1) == 1) {
-                continue;
-            }
-            ans = Math.min(ans, dfs(mask | 1 << i) + (power[i] + cnt) / (cnt + 1));
-        }
-        f[mask] = ans;
-        return ans;
+  fun minimumTime(power: IntArray): Long {
+    n = power.size
+    f = LongArray(1 shl n)
+    Arrays.fill(f, -1)
+    this.power = power
+    return dfs(0)
+  }
+
+  private fun dfs(mask: Int): Long {
+    if (f[mask] != -1L) {
+      return f[mask]
     }
+    val cnt = Integer.bitCount(mask)
+    if (cnt == n) {
+      return 0
+    }
+    var ans: Long = MAX_VALUE
+    for (i in 0 until n) {
+      if (((mask shr i) and 1) == 1) {
+        continue
+      }
+      ans = min(ans, dfs(mask or (1 shl i)) + (power[i] + cnt) / (cnt + 1))
+    }
+    f[mask] = ans
+    return ans
+  }
 }

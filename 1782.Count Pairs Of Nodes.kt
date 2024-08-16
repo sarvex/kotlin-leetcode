@@ -1,45 +1,48 @@
-class Solution {
-    public int[] countPairs(int n, int[][] edges, int[] queries) {
-        int[] cnt = new int[n];
-        Map<Integer, Integer> g = new HashMap<>();
-        for (var e : edges) {
-            int a = e[0] - 1, b = e[1] - 1;
-            ++cnt[a];
-            ++cnt[b];
-            int k = Math.min(a, b) * n + Math.max(a, b);
-            g.merge(k, 1, Integer::sum);
-        }
-        int[] s = cnt.clone();
-        Arrays.sort(s);
-        int[] ans = new int[queries.length];
-        for (int i = 0; i < queries.length; ++i) {
-            int t = queries[i];
-            for (int j = 0; j < n; ++j) {
-                int x = s[j];
-                int k = search(s, t - x, j + 1);
-                ans[i] += n - k;
-            }
-            for (var e : g.entrySet()) {
-                int a = e.getKey() / n, b = e.getKey() % n;
-                int v = e.getValue();
-                if (cnt[a] + cnt[b] > t && cnt[a] + cnt[b] - v <= t) {
-                    --ans[i];
-                }
-            }
-        }
-        return ans;
+internal class Solution {
+  fun countPairs(n: Int, edges: Array<IntArray>, queries: IntArray): IntArray {
+    val cnt = IntArray(n)
+    val g: Map<Int, Int> = HashMap()
+    for (e in edges) {
+      val a = e[0] - 1
+      val b = e[1] - 1
+      ++cnt[a]
+      ++cnt[b]
+      val k: Int = min(a, b) * n + max(a, b)
+      g.merge(k, 1) { a: Int, b: Int -> Integer.sum(a, b) }
     }
+    val s = cnt.clone()
+    Arrays.sort(s)
+    val ans = IntArray(queries.size)
+    for (i in queries.indices) {
+      val t = queries[i]
+      for (j in 0 until n) {
+        val x = s[j]
+        val k = search(s, t - x, j + 1)
+        ans[i] += n - k
+      }
+      for (e in g.entrySet()) {
+        val a: Int = e.getKey() / n
+        val b: Int = e.getKey() % n
+        val v: Int = e.getValue()
+        if (cnt[a] + cnt[b] > t && cnt[a] + cnt[b] - v <= t) {
+          --ans[i]
+        }
+      }
+    }
+    return ans
+  }
 
-    private int search(int[] arr, int x, int i) {
-        int left = i, right = arr.length;
-        while (left < right) {
-            int mid = (left + right) >> 1;
-            if (arr[mid] > x) {
-                right = mid;
-            } else {
-                left = mid + 1;
-            }
-        }
-        return left;
+  private fun search(arr: IntArray, x: Int, i: Int): Int {
+    var left = i
+    var right = arr.size
+    while (left < right) {
+      val mid = (left + right) shr 1
+      if (arr[mid] > x) {
+        right = mid
+      } else {
+        left = mid + 1
+      }
     }
+    return left
+  }
 }

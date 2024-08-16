@@ -1,14 +1,15 @@
-class Solution {
-    public int maxDepth(String s) {
-        int ans = 0, d = 0;
-        for (int i = 0; i < s.length(); ++i) {
-            char c = s.charAt(i);
-            if (c == '(') {
-                ans = Math.max(ans, ++d);
-            } else if (c == ')') {
-                --d;
-            }
-        }
-        return ans;
+internal class Solution {
+  fun maxDepth(s: String): Int {
+    var ans = 0
+    var d = 0
+    for (i in 0 until s.length) {
+      val c = s[i]
+      if (c == '(') {
+        ans = max(ans, ++d)
+      } else if (c == ')') {
+        --d
+      }
     }
+    return ans
+  }
 }

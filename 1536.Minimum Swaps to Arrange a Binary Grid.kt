@@ -1,35 +1,36 @@
-class Solution {
-    public int minSwaps(int[][] grid) {
-        int n = grid.length;
-        int[] pos = new int[n];
-        Arrays.fill(pos, -1);
-        for (int i = 0; i < n; ++i) {
-            for (int j = n - 1; j >= 0; --j) {
-                if (grid[i][j] == 1) {
-                    pos[i] = j;
-                    break;
-                }
-            }
+internal class Solution {
+  fun minSwaps(grid: Array<IntArray>): Int {
+    val n = grid.size
+    val pos = IntArray(n)
+    Arrays.fill(pos, -1)
+    for (i in 0 until n) {
+      for (j in n - 1 downTo 0) {
+        if (grid[i][j] == 1) {
+          pos[i] = j
+          break
         }
-        int ans = 0;
-        for (int i = 0; i < n; ++i) {
-            int k = -1;
-            for (int j = i; j < n; ++j) {
-                if (pos[j] <= i) {
-                    ans += j - i;
-                    k = j;
-                    break;
-                }
-            }
-            if (k == -1) {
-                return -1;
-            }
-            for (; k > i; --k) {
-                int t = pos[k];
-                pos[k] = pos[k - 1];
-                pos[k - 1] = t;
-            }
-        }
-        return ans;
+      }
     }
+    var ans = 0
+    for (i in 0 until n) {
+      var k = -1
+      for (j in i until n) {
+        if (pos[j] <= i) {
+          ans += j - i
+          k = j
+          break
+        }
+      }
+      if (k == -1) {
+        return -1
+      }
+      while (k > i) {
+        val t = pos[k]
+        pos[k] = pos[k - 1]
+        pos[k - 1] = t
+        --k
+      }
+    }
+    return ans
+  }
 }

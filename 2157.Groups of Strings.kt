@@ -1,59 +1,60 @@
-class Solution {
-    private Map<Integer, Integer> p;
-    private Map<Integer, Integer> size;
-    private int mx;
-    private int n;
+internal class Solution {
+  private var p: Map<Int, Int>? = null
+  private var size: Map<Int, Int>? = null
+  private var mx = 0
+  private var n = 0
 
-    public int[] groupStrings(String[] words) {
-        p = new HashMap<>();
-        size = new HashMap<>();
-        n = words.length;
-        mx = 0;
-        for (String word : words) {
-            int x = 0;
-            for (char c : word.toCharArray()) {
-                x |= 1 << (c - 'a');
-            }
-            p.put(x, x);
-            size.put(x, size.getOrDefault(x, 0) + 1);
-            mx = Math.max(mx, size.get(x));
-            if (size.get(x) > 1) {
-                --n;
-            }
-        }
-        for (int x : p.keySet()) {
-            for (int i = 0; i < 26; ++i) {
-                union(x, x ^ (1 << i));
-                if (((x >> i) & 1) != 0) {
-                    for (int j = 0; j < 26; ++j) {
-                        if (((x >> j) & 1) == 0) {
-                            union(x, x ^ (1 << i) | (1 << j));
-                        }
-                    }
-                }
-            }
-        }
-        return new int[] {n, mx};
+  fun groupStrings(words: Array<String>): IntArray {
+    p = HashMap()
+    size = HashMap()
+    n = words.size
+    mx = 0
+    for (word in words) {
+      var x = 0
+      for (c in word.toCharArray()) {
+        x = x or (1 shl (c.code - 'a'.code))
+      }
+      p.put(x, x)
+      size.put(x, size!!.getOrDefault(x, 0) + 1)
+      mx = Math.max(mx, size!![x]!!)
+      if (size!![x]!! > 1) {
+        --n
+      }
     }
+    for (x in p.keySet()) {
+      for (i in 0..25) {
+        union(x, x xor (1 shl i))
+        if (((x shr i) and 1) != 0) {
+          for (j in 0..25) {
+            if (((x shr j) and 1) == 0) {
+              union(x, x xor (1 shl i) or (1 shl j))
+            }
+          }
+        }
+      }
+    }
+    return intArrayOf(n, mx)
+  }
 
-    private int find(int x) {
-        if (p.get(x) != x) {
-            p.put(x, find(p.get(x)));
-        }
-        return p.get(x);
+  private fun find(x: Int): Int {
+    if (p!![x] !== x) {
+      p.put(x, find(p!![x]!!))
     }
+    return p!![x]!!
+  }
 
-    private void union(int a, int b) {
-        if (!p.containsKey(b)) {
-            return;
-        }
-        int pa = find(a), pb = find(b);
-        if (pa == pb) {
-            return;
-        }
-        p.put(pa, pb);
-        size.put(pb, size.get(pb) + size.get(pa));
-        mx = Math.max(mx, size.get(pb));
-        --n;
+  private fun union(a: Int, b: Int) {
+    if (!p!!.containsKey(b)) {
+      return
     }
+    val pa = find(a)
+    val pb = find(b)
+    if (pa == pb) {
+      return
+    }
+    p.put(pa, pb)
+    size.put(pb, size!![pb]!! + size!![pa]!!)
+    mx = Math.max(mx, size!![pb]!!)
+    --n
+  }
 }

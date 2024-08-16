@@ -1,29 +1,31 @@
-class Solution {
-    public int minSpaceWastedKResizing(int[] nums, int k) {
-        ++k;
-        int n = nums.length;
-        int[][] g = new int[n][n];
-        for (int i = 0; i < n; ++i) {
-            int s = 0, mx = 0;
-            for (int j = i; j < n; ++j) {
-                s += nums[j];
-                mx = Math.max(mx, nums[j]);
-                g[i][j] = mx * (j - i + 1) - s;
-            }
-        }
-        int[][] f = new int[n + 1][k + 1];
-        int inf = 0x3f3f3f3f;
-        for (int i = 0; i < f.length; ++i) {
-            Arrays.fill(f[i], inf);
-        }
-        f[0][0] = 0;
-        for (int i = 1; i <= n; ++i) {
-            for (int j = 1; j <= k; ++j) {
-                for (int h = 0; h < i; ++h) {
-                    f[i][j] = Math.min(f[i][j], f[h][j - 1] + g[h][i - 1]);
-                }
-            }
-        }
-        return f[n][k];
+internal class Solution {
+  fun minSpaceWastedKResizing(nums: IntArray, k: Int): Int {
+    var k = k
+    ++k
+    val n = nums.size
+    val g = Array(n) { IntArray(n) }
+    for (i in 0 until n) {
+      var s = 0
+      var mx = 0
+      for (j in i until n) {
+        s += nums[j]
+        mx = max(mx, nums[j])
+        g[i][j] = mx * (j - i + 1) - s
+      }
     }
+    val f = Array(n + 1) { IntArray(k + 1) }
+    val inf = 0x3f3f3f3f
+    for (i in f.indices) {
+      Arrays.fill(f[i], inf)
+    }
+    f[0][0] = 0
+    for (i in 1..n) {
+      for (j in 1..k) {
+        for (h in 0 until i) {
+          f[i][j] = min(f[i][j], f[h][j - 1] + g[h][i - 1])
+        }
+      }
+    }
+    return f[n][k]
+  }
 }

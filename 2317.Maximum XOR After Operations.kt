@@ -1,9 +1,9 @@
-class Solution {
-    public int maximumXOR(int[] nums) {
-        int ans = 0;
-        for (int x : nums) {
-            ans |= x;
-        }
-        return ans;
+internal class Solution {
+  fun maximumXOR(nums: IntArray): Int {
+    var ans = 0
+    for (x in nums) {
+      ans = ans or x
     }
+    return ans
+  }
 }

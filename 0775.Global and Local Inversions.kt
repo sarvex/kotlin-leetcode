@@ -1,12 +1,12 @@
-class Solution {
-    public boolean isIdealPermutation(int[] nums) {
-        int mx = 0;
-        for (int i = 2; i < nums.length; ++i) {
-            mx = Math.max(mx, nums[i - 2]);
-            if (mx > nums[i]) {
-                return false;
-            }
-        }
-        return true;
+internal class Solution {
+  fun isIdealPermutation(nums: IntArray): Boolean {
+    var mx = 0
+    for (i in 2 until nums.size) {
+      mx = max(mx, nums[i - 2])
+      if (mx > nums[i]) {
+        return false
+      }
     }
+    return true
+  }
 }

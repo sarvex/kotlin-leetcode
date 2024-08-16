@@ -1,32 +1,34 @@
-class Solution {
-    private int[] stoneValue;
-    private Integer[] f;
-    private int n;
+internal class Solution {
+  private var stoneValue: IntArray
+  private var f: Array<Int>
+  private var n = 0
 
-    public String stoneGameIII(int[] stoneValue) {
-        n = stoneValue.length;
-        f = new Integer[n];
-        this.stoneValue = stoneValue;
-        int ans = dfs(0);
-        if (ans == 0) {
-            return "Tie";
-        }
-        return ans > 0 ? "Alice" : "Bob";
+  fun stoneGameIII(stoneValue: IntArray): String {
+    n = stoneValue.size
+    f = arrayOfNulls(n)
+    this.stoneValue = stoneValue
+    val ans = dfs(0)
+    if (ans == 0) {
+      return "Tie"
     }
+    return if (ans > 0) "Alice" else "Bob"
+  }
 
-    private int dfs(int i) {
-        if (i >= n) {
-            return 0;
-        }
-        if (f[i] != null) {
-            return f[i];
-        }
-        int ans = -(1 << 30);
-        int s = 0;
-        for (int j = 0; j < 3 && i + j < n; ++j) {
-            s += stoneValue[i + j];
-            ans = Math.max(ans, s - dfs(i + j + 1));
-        }
-        return f[i] = ans;
+  private fun dfs(i: Int): Int {
+    if (i >= n) {
+      return 0
     }
+    if (f[i] != null) {
+      return f[i]
+    }
+    var ans = -(1 shl 30)
+    var s = 0
+    var j = 0
+    while (j < 3 && i + j < n) {
+      s += stoneValue[i + j]
+      ans = max(ans, s - dfs(i + j + 1))
+      ++j
+    }
+    return ans.also { f[i] = it }
+  }
 }

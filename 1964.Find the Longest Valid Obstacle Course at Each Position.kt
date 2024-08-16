@@ -1,42 +1,38 @@
-class BinaryIndexedTree {
-    private int n;
-    private int[] c;
+internal class BinaryIndexedTree(private val n: Int) {
+  private val c = IntArray(n + 1)
 
-    public BinaryIndexedTree(int n) {
-        this.n = n;
-        c = new int[n + 1];
+  fun update(x: Int, v: Int) {
+    var x = x
+    while (x <= n) {
+      c[x] = max(c[x], v)
+      x += x and -x
     }
+  }
 
-    public void update(int x, int v) {
-        while (x <= n) {
-            c[x] = Math.max(c[x], v);
-            x += x & -x;
-        }
+  fun query(x: Int): Int {
+    var x = x
+    var s = 0
+    while (x > 0) {
+      s = max(s, c[x])
+      x -= x and -x
     }
-
-    public int query(int x) {
-        int s = 0;
-        while (x > 0) {
-            s = Math.max(s, c[x]);
-            x -= x & -x;
-        }
-        return s;
-    }
+    return s
+  }
 }
 
-class Solution {
-    public int[] longestObstacleCourseAtEachPosition(int[] obstacles) {
-        int[] nums = obstacles.clone();
-        Arrays.sort(nums);
-        int n = nums.length;
-        int[] ans = new int[n];
-        BinaryIndexedTree tree = new BinaryIndexedTree(n);
-        for (int k = 0; k < n; ++k) {
-            int x = obstacles[k];
-            int i = Arrays.binarySearch(nums, x) + 1;
-            ans[k] = tree.query(i) + 1;
-            tree.update(i, ans[k]);
-        }
-        return ans;
+internal class Solution {
+  fun longestObstacleCourseAtEachPosition(obstacles: IntArray): IntArray {
+    val nums = obstacles.clone()
+    Arrays.sort(nums)
+    val n = nums.size
+    val ans = IntArray(n)
+    val tree = BinaryIndexedTree(n)
+    for (k in 0 until n) {
+      val x = obstacles[k]
+      val i: Int = Arrays.binarySearch(nums, x) + 1
+      ans[k] = tree.query(i) + 1
+      tree.update(i, ans[k])
     }
+    return ans
+  }
 }

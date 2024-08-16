@@ -1,44 +1,40 @@
-class BinaryIndexedTree {
-    private int n;
-    private int[] c;
+internal class BinaryIndexedTree(private val n: Int) {
+  private val c = IntArray(n + 1)
 
-    public BinaryIndexedTree(int n) {
-        this.n = n;
-        this.c = new int[n + 1];
+  fun update(x: Int, v: Int) {
+    var x = x
+    while (x <= n) {
+      c[x] += v
+      x += x and -x
     }
+  }
 
-    public void update(int x, int v) {
-        while (x <= n) {
-            c[x] += v;
-            x += x & -x;
-        }
+  fun query(x: Int): Int {
+    var x = x
+    var s = 0
+    while (x > 0) {
+      s += c[x]
+      x -= x and -x
     }
-
-    public int query(int x) {
-        int s = 0;
-        while (x > 0) {
-            s += c[x];
-            x -= x & -x;
-        }
-        return s;
-    }
+    return s
+  }
 }
 
-class Solution {
-    public int createSortedArray(int[] instructions) {
-        int m = 0;
-        for (int x : instructions) {
-            m = Math.max(m, x);
-        }
-        BinaryIndexedTree tree = new BinaryIndexedTree(m);
-        int ans = 0;
-        final int mod = (int) 1e9 + 7;
-        for (int i = 0; i < instructions.length; ++i) {
-            int x = instructions[i];
-            int cost = Math.min(tree.query(x - 1), i - tree.query(x));
-            ans = (ans + cost) % mod;
-            tree.update(x, 1);
-        }
-        return ans;
+internal class Solution {
+  fun createSortedArray(instructions: IntArray): Int {
+    var m = 0
+    for (x in instructions) {
+      m = max(m, x)
     }
+    val tree = BinaryIndexedTree(m)
+    var ans = 0
+    val mod = 1e9.toInt() + 7
+    for (i in instructions.indices) {
+      val x = instructions[i]
+      val cost: Int = min(tree.query(x - 1), i - tree.query(x))
+      ans = (ans + cost) % mod
+      tree.update(x, 1)
+    }
+    return ans
+  }
 }

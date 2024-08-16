@@ -1,15 +1,16 @@
-class Solution {
-    public int[] numberOfLines(int[] widths, String s) {
-        int lines = 1, last = 0;
-        for (int i = 0; i < s.length(); ++i) {
-            int w = widths[s.charAt(i) - 'a'];
-            if (last + w <= 100) {
-                last += w;
-            } else {
-                ++lines;
-                last = w;
-            }
-        }
-        return new int[] {lines, last};
+internal class Solution {
+  fun numberOfLines(widths: IntArray, s: String): IntArray {
+    var lines = 1
+    var last = 0
+    for (i in 0 until s.length) {
+      val w = widths[s[i].code - 'a'.code]
+      if (last + w <= 100) {
+        last += w
+      } else {
+        ++lines
+        last = w
+      }
     }
+    return intArrayOf(lines, last)
+  }
 }

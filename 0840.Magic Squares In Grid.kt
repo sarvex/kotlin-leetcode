@@ -1,53 +1,54 @@
-class Solution {
-    private int m;
-    private int n;
-    private int[][] grid;
+internal class Solution {
+  private var m = 0
+  private var n = 0
+  private var grid: Array<IntArray>
 
-    public int numMagicSquaresInside(int[][] grid) {
-        m = grid.length;
-        n = grid[0].length;
-        this.grid = grid;
-        int ans = 0;
-        for (int i = 0; i < m; ++i) {
-            for (int j = 0; j < n; ++j) {
-                ans += check(i, j);
-            }
-        }
-        return ans;
+  fun numMagicSquaresInside(grid: Array<IntArray>): Int {
+    m = grid.size
+    n = grid[0].size
+    this.grid = grid
+    var ans = 0
+    for (i in 0 until m) {
+      for (j in 0 until n) {
+        ans += check(i, j)
+      }
     }
+    return ans
+  }
 
-    private int check(int i, int j) {
-        if (i + 3 > m || j + 3 > n) {
-            return 0;
-        }
-        int[] cnt = new int[16];
-        int[] row = new int[3];
-        int[] col = new int[3];
-        int a = 0, b = 0;
-        for (int x = i; x < i + 3; ++x) {
-            for (int y = j; y < j + 3; ++y) {
-                int v = grid[x][y];
-                if (v < 1 || v > 9 || ++cnt[v] > 1) {
-                    return 0;
-                }
-                row[x - i] += v;
-                col[y - j] += v;
-                if (x - i == y - j) {
-                    a += v;
-                }
-                if (x - i + y - j == 2) {
-                    b += v;
-                }
-            }
-        }
-        if (a != b) {
-            return 0;
-        }
-        for (int k = 0; k < 3; ++k) {
-            if (row[k] != a || col[k] != a) {
-                return 0;
-            }
-        }
-        return 1;
+  private fun check(i: Int, j: Int): Int {
+    if (i + 3 > m || j + 3 > n) {
+      return 0
     }
+    val cnt = IntArray(16)
+    val row = IntArray(3)
+    val col = IntArray(3)
+    var a = 0
+    var b = 0
+    for (x in i until i + 3) {
+      for (y in j until j + 3) {
+        val v = grid[x][y]
+        if (v < 1 || v > 9 || ++cnt[v] > 1) {
+          return 0
+        }
+        row[x - i] += v
+        col[y - j] += v
+        if (x - i == y - j) {
+          a += v
+        }
+        if (x - i + y - j == 2) {
+          b += v
+        }
+      }
+    }
+    if (a != b) {
+      return 0
+    }
+    for (k in 0..2) {
+      if (row[k] != a || col[k] != a) {
+        return 0
+      }
+    }
+    return 1
+  }
 }

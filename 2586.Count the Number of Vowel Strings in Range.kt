@@ -1,16 +1,16 @@
-class Solution {
-    public int vowelStrings(String[] words, int left, int right) {
-        int ans = 0;
-        for (int i = left; i <= right; ++i) {
-            var w = words[i];
-            if (check(w.charAt(0)) && check(w.charAt(w.length() - 1))) {
-                ++ans;
-            }
-        }
-        return ans;
+internal class Solution {
+  fun vowelStrings(words: Array<String>, left: Int, right: Int): Int {
+    var ans = 0
+    for (i in left..right) {
+      val w = words[i]
+      if (check(w[0]) && check(w[w.length - 1])) {
+        ++ans
+      }
     }
+    return ans
+  }
 
-    private boolean check(char c) {
-        return c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u';
-    }
+  private fun check(c: Char): Boolean {
+    return c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u'
+  }
 }

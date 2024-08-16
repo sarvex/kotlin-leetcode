@@ -1,29 +1,30 @@
-class Solution {
-    public long minCost(int[] basket1, int[] basket2) {
-        int n = basket1.length;
-        Map<Integer, Integer> cnt = new HashMap<>();
-        for (int i = 0; i < n; ++i) {
-            cnt.merge(basket1[i], 1, Integer::sum);
-            cnt.merge(basket2[i], -1, Integer::sum);
-        }
-        int mi = 1 << 30;
-        List<Integer> nums = new ArrayList<>();
-        for (var e : cnt.entrySet()) {
-            int x = e.getKey(), v = e.getValue();
-            if (v % 2 != 0) {
-                return -1;
-            }
-            for (int i = Math.abs(v) / 2; i > 0; --i) {
-                nums.add(x);
-            }
-            mi = Math.min(mi, x);
-        }
-        Collections.sort(nums);
-        int m = nums.size();
-        long ans = 0;
-        for (int i = 0; i < m / 2; ++i) {
-            ans += Math.min(nums.get(i), mi * 2);
-        }
-        return ans;
+internal class Solution {
+  fun minCost(basket1: IntArray, basket2: IntArray): Long {
+    val n = basket1.size
+    val cnt: Map<Int, Int> = HashMap()
+    for (i in 0 until n) {
+      cnt.merge(basket1[i], 1) { a: Int, b: Int -> Integer.sum(a, b) }
+      cnt.merge(basket2[i], -1) { a: Int, b: Int -> Integer.sum(a, b) }
     }
+    var mi = 1 shl 30
+    val nums: List<Int> = ArrayList()
+    for (e in cnt.entrySet()) {
+      val x: Int = e.getKey()
+      val v: Int = e.getValue()
+      if (v % 2 != 0) {
+        return -1
+      }
+      for (i in abs(v) / 2 downTo 1) {
+        nums.add(x)
+      }
+      mi = min(mi, x)
+    }
+    Collections.sort(nums)
+    val m: Int = nums.size()
+    var ans: Long = 0
+    for (i in 0 until m / 2) {
+      ans += Math.min(nums[i], mi * 2)
+    }
+    return ans
+  }
 }

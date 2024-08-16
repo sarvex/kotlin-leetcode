@@ -1,43 +1,44 @@
-class Solution {
-    public int maximumDetonation(int[][] bombs) {
-        int n = bombs.length;
-        List<Integer>[] g = new List[n];
-        Arrays.setAll(g, k -> new ArrayList<>());
-        for (int i = 0; i < n - 1; ++i) {
-            for (int j = i + 1; j < n; ++j) {
-                int[] p1 = bombs[i], p2 = bombs[j];
-                double dist = Math.hypot(p1[0] - p2[0], p1[1] - p2[1]);
-                if (dist <= p1[2]) {
-                    g[i].add(j);
-                }
-                if (dist <= p2[2]) {
-                    g[j].add(i);
-                }
-            }
+internal class Solution {
+  fun maximumDetonation(bombs: Array<IntArray>): Int {
+    val n = bombs.size
+    val g: Array<List<Int>> = arrayOfNulls(n)
+    Arrays.setAll(g) { k -> ArrayList() }
+    for (i in 0 until n - 1) {
+      for (j in i + 1 until n) {
+        val p1 = bombs[i]
+        val p2 = bombs[j]
+        val dist: Double = hypot(p1[0] - p2[0], p1[1] - p2[1])
+        if (dist <= p1[2]) {
+          g[i].add(j)
         }
-        int ans = 0;
-        boolean[] vis = new boolean[n];
-        for (int k = 0; k < n; ++k) {
-            Arrays.fill(vis, false);
-            vis[k] = true;
-            int cnt = 0;
-            Deque<Integer> q = new ArrayDeque<>();
-            q.offer(k);
-            while (!q.isEmpty()) {
-                int i = q.poll();
-                ++cnt;
-                for (int j : g[i]) {
-                    if (!vis[j]) {
-                        vis[j] = true;
-                        q.offer(j);
-                    }
-                }
-            }
-            if (cnt == n) {
-                return n;
-            }
-            ans = Math.max(ans, cnt);
+        if (dist <= p2[2]) {
+          g[j].add(i)
         }
-        return ans;
+      }
     }
+    var ans = 0
+    val vis = BooleanArray(n)
+    for (k in 0 until n) {
+      Arrays.fill(vis, false)
+      vis[k] = true
+      var cnt = 0
+      val q: Deque<Int> = ArrayDeque()
+      q.offer(k)
+      while (!q.isEmpty()) {
+        val i: Int = q.poll()
+        ++cnt
+        for (j in g[i]) {
+          if (!vis[j]) {
+            vis[j] = true
+            q.offer(j)
+          }
+        }
+      }
+      if (cnt == n) {
+        return n
+      }
+      ans = max(ans, cnt)
+    }
+    return ans
+  }
 }

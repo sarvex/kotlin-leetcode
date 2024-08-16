@@ -1,34 +1,32 @@
 /**
  * Definition for singly-linked list.
  * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * int val;
+ * ListNode next;
+ * ListNode() {}
+ * ListNode(int val) { this.val = val; }
+ * ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  * }
  */
-class Solution {
-    private ListNode head;
-    private Random random = new Random();
+internal class Solution(head: ListNode) {
+  private val head: ListNode = head
+  private val random: Random = Random()
 
-    public Solution(ListNode head) {
-        this.head = head;
+  fun getRandom(): Int {
+    var ans = 0
+    var n = 0
+    var node: ListNode = head
+    while (node != null) {
+      ++n
+      val x: Int = 1 + random.nextInt(n)
+      if (n == x) {
+        ans = node.`val`
+      }
+      node = node.next
     }
-
-    public int getRandom() {
-        int ans = 0, n = 0;
-        for (ListNode node = head; node != null; node = node.next) {
-            ++n;
-            int x = 1 + random.nextInt(n);
-            if (n == x) {
-                ans = node.val;
-            }
-        }
-        return ans;
-    }
+    return ans
+  }
 }
-
 /**
  * Your Solution object will be instantiated and called as such:
  * Solution obj = new Solution(head);

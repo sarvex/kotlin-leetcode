@@ -1,14 +1,14 @@
-class Solution {
-    public String destCity(List<List<String>> paths) {
-        Set<String> s = new HashSet<>();
-        for (var p : paths) {
-            s.add(p.get(0));
-        }
-        for (var p : paths) {
-            if (!s.contains(p.get(1))) {
-                return p.get(1);
-            }
-        }
-        return "";
+internal class Solution {
+  fun destCity(paths: List<List<String?>>): String {
+    val s: Set<String> = HashSet()
+    for (p in paths) {
+      s.add(p[0])
     }
+    for (p in paths) {
+      if (!s.contains(p[1])) {
+        return p[1]
+      }
+    }
+    return ""
+  }
 }

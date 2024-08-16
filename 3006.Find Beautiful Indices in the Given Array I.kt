@@ -1,99 +1,101 @@
-public class Solution {
-    public void computeLPS(String pattern, int[] lps) {
-        int M = pattern.length();
-        int len = 0;
+class Solution {
+  fun computeLPS(pattern: String, lps: IntArray) {
+    val M = pattern.length
+    var len = 0
 
-        lps[0] = 0;
+    lps[0] = 0
 
-        int i = 1;
-        while (i < M) {
-            if (pattern.charAt(i) == pattern.charAt(len)) {
-                len++;
-                lps[i] = len;
-                i++;
-            } else {
-                if (len != 0) {
-                    len = lps[len - 1];
-                } else {
-                    lps[i] = 0;
-                    i++;
-                }
-            }
+    var i = 1
+    while (i < M) {
+      if (pattern[i] == pattern[len]) {
+        len++
+        lps[i] = len
+        i++
+      } else {
+        if (len != 0) {
+          len = lps[len - 1]
+        } else {
+          lps[i] = 0
+          i++
         }
+      }
+    }
+  }
+
+  fun KMP_codestorywithMIK(pat: String, txt: String): List<Int> {
+    val N = txt.length
+    val M = pat.length
+    val result: List<Int> = ArrayList()
+
+    val lps = IntArray(M)
+    computeLPS(pat, lps)
+
+    var i = 0 // Index for text
+    var j = 0 // Index for pattern
+
+    while (i < N) {
+      if (pat[j] == txt[i]) {
+        i++
+        j++
+      }
+
+      if (j == M) {
+        result.add(i - j) // Pattern found at index i-j+1 (If you have to return 1 Based
+        // indexing, that's why added + 1)
+        j = lps[j - 1]
+      } else if (i < N && pat[j] != txt[i]) {
+        if (j != 0) {
+          j = lps[j - 1]
+        } else {
+          i++
+        }
+      }
     }
 
-    public List<Integer> KMP_codestorywithMIK(String pat, String txt) {
-        int N = txt.length();
-        int M = pat.length();
-        List<Integer> result = new ArrayList<>();
+    return result
+  }
 
-        int[] lps = new int[M];
-        computeLPS(pat, lps);
+  private fun lowerBound(list: List<Int>, target: Int): Int {
+    var left = 0
+    var right: Int = list.size() - 1
+    var result: Int = list.size()
 
-        int i = 0; // Index for text
-        int j = 0; // Index for pattern
+    while (left <= right) {
+      val mid = left + (right - left) / 2
 
-        while (i < N) {
-            if (pat.charAt(j) == txt.charAt(i)) {
-                i++;
-                j++;
-            }
-
-            if (j == M) {
-                result.add(i - j); // Pattern found at index i-j+1 (If you have to return 1 Based
-                                   // indexing, that's why added + 1)
-                j = lps[j - 1];
-            } else if (i < N && pat.charAt(j) != txt.charAt(i)) {
-                if (j != 0) {
-                    j = lps[j - 1];
-                } else {
-                    i++;
-                }
-            }
-        }
-
-        return result;
+      if (list[mid] >= target) {
+        result = mid
+        right = mid - 1
+      } else {
+        left = mid + 1
+      }
     }
 
-    private int lowerBound(List<Integer> list, int target) {
-        int left = 0, right = list.size() - 1, result = list.size();
+    return result
+  }
 
-        while (left <= right) {
-            int mid = left + (right - left) / 2;
+  fun beautifulIndices(s: String, a: String, b: String, k: Int): List<Int> {
+    val n = s.length
 
-            if (list.get(mid) >= target) {
-                result = mid;
-                right = mid - 1;
-            } else {
-                left = mid + 1;
-            }
-        }
+    val i_indices = KMP_codestorywithMIK(a, s)
+    val j_indices = KMP_codestorywithMIK(b, s)
 
-        return result;
+    val result: List<Int> = ArrayList()
+
+    for (i in i_indices) {
+      val left_limit: Int = max(0, i - k) // To avoid out of bound -> I used max(0, i-k)
+      val right_limit
+          : Int = min(n - 1, i + k) // To avoid out of bound -> I used min(n-1, i+k)
+
+      val lowerBoundIndex = lowerBound(j_indices, left_limit)
+
+      if (lowerBoundIndex < j_indices.size()
+        && j_indices[lowerBoundIndex] <= right_limit
+      ) {
+        result.add(i)
+      }
     }
 
-    public List<Integer> beautifulIndices(String s, String a, String b, int k) {
-        int n = s.length();
-
-        List<Integer> i_indices = KMP_codestorywithMIK(a, s);
-        List<Integer> j_indices = KMP_codestorywithMIK(b, s);
-
-        List<Integer> result = new ArrayList<>();
-
-        for (int i : i_indices) {
-
-            int left_limit = Math.max(0, i - k); // To avoid out of bound -> I used max(0, i-k)
-            int right_limit
-                = Math.min(n - 1, i + k); // To avoid out of bound -> I used min(n-1, i+k)
-
-            int lowerBoundIndex = lowerBound(j_indices, left_limit);
-
-            if (lowerBoundIndex < j_indices.size()
-                && j_indices.get(lowerBoundIndex) <= right_limit) {
-                result.add(i);
-            }
-        }
-
-        return result;
-    }
+    return result
+  }
 }

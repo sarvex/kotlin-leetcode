@@ -1,48 +1,57 @@
-class Solution {
-    public List<List<Integer>> highestRankedKItems(
-        int[][] grid, int[] pricing, int[] start, int k) {
-        int m = grid.length, n = grid[0].length;
-        int row = start[0], col = start[1];
-        int low = pricing[0], high = pricing[1];
-        List<int[]> items = new ArrayList<>();
-        if (low <= grid[row][col] && grid[row][col] <= high) {
-            items.add(new int[] {0, grid[row][col], row, col});
-        }
-        grid[row][col] = 0;
-        Deque<int[]> q = new ArrayDeque<>();
-        q.offer(new int[] {row, col, 0});
-        int[] dirs = {-1, 0, 1, 0, -1};
-        while (!q.isEmpty()) {
-            int[] p = q.poll();
-            int i = p[0], j = p[1], d = p[2];
-            for (int l = 0; l < 4; ++l) {
-                int x = i + dirs[l], y = j + dirs[l + 1];
-                if (x >= 0 && x < m && y >= 0 && y < n && grid[x][y] > 0) {
-                    if (low <= grid[x][y] && grid[x][y] <= high) {
-                        items.add(new int[] {d + 1, grid[x][y], x, y});
-                    }
-                    grid[x][y] = 0;
-                    q.offer(new int[] {x, y, d + 1});
-                }
-            }
-        }
-        items.sort((a, b) -> {
-            if (a[0] != b[0]) {
-                return a[0] - b[0];
-            }
-            if (a[1] != b[1]) {
-                return a[1] - b[1];
-            }
-            if (a[2] != b[2]) {
-                return a[2] - b[2];
-            }
-            return a[3] - b[3];
-        });
-        List<List<Integer>> ans = new ArrayList<>();
-        for (int i = 0; i < items.size() && i < k; ++i) {
-            int[] p = items.get(i);
-            ans.add(Arrays.asList(p[2], p[3]));
-        }
-        return ans;
+internal class Solution {
+  fun highestRankedKItems(
+    grid: Array<IntArray>, pricing: IntArray, start: IntArray, k: Int
+  ): List<List<Int>> {
+    val m = grid.size
+    val n = grid[0].size
+    val row = start[0]
+    val col = start[1]
+    val low = pricing[0]
+    val high = pricing[1]
+    val items: List<IntArray> = ArrayList()
+    if (low <= grid[row][col] && grid[row][col] <= high) {
+      items.add(intArrayOf(0, grid[row][col], row, col))
     }
+    grid[row][col] = 0
+    val q: Deque<IntArray> = ArrayDeque()
+    q.offer(intArrayOf(row, col, 0))
+    val dirs = intArrayOf(-1, 0, 1, 0, -1)
+    while (!q.isEmpty()) {
+      val p: IntArray = q.poll()
+      val i = p[0]
+      val j = p[1]
+      val d = p[2]
+      for (l in 0..3) {
+        val x = i + dirs[l]
+        val y = j + dirs[l + 1]
+        if (x >= 0 && x < m && y >= 0 && y < n && grid[x][y] > 0) {
+          if (low <= grid[x][y] && grid[x][y] <= high) {
+            items.add(intArrayOf(d + 1, grid[x][y], x, y))
+          }
+          grid[x][y] = 0
+          q.offer(intArrayOf(x, y, d + 1))
+        }
+      }
+    }
+    items.sort { a, b ->
+      if (a.get(0) !== b.get(0)) {
+        return@sort a.get(0) - b.get(0)
+      }
+      if (a.get(1) !== b.get(1)) {
+        return@sort a.get(1) - b.get(1)
+      }
+      if (a.get(2) !== b.get(2)) {
+        return@sort a.get(2) - b.get(2)
+      }
+      a.get(3) - b.get(3)
+    }
+    val ans: List<List<Int>> = ArrayList()
+    var i = 0
+    while (i < items.size() && i < k) {
+      val p = items[i]
+      ans.add(Arrays.asList(p[2], p[3]))
+      ++i
+    }
+    return ans
+  }
 }

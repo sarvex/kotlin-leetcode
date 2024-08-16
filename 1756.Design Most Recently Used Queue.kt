@@ -1,60 +1,53 @@
-class BinaryIndexedTree {
-    private int n;
-    private int[] c;
+internal class BinaryIndexedTree(private val n: Int) {
+  private val c = IntArray(n + 1)
 
-    public BinaryIndexedTree(int n) {
-        this.n = n;
-        this.c = new int[n + 1];
+  fun update(x: Int, v: Int) {
+    var x = x
+    while (x <= n) {
+      c[x] += v
+      x += x and -x
     }
+  }
 
-    public void update(int x, int v) {
-        while (x <= n) {
-            c[x] += v;
-            x += x & -x;
-        }
+  fun query(x: Int): Int {
+    var x = x
+    var s = 0
+    while (x > 0) {
+      s += c[x]
+      x -= x and -x
     }
-
-    public int query(int x) {
-        int s = 0;
-        while (x > 0) {
-            s += c[x];
-            x -= x & -x;
-        }
-        return s;
-    }
+    return s
+  }
 }
 
-class MRUQueue {
-    private int n;
-    private int[] q;
-    private BinaryIndexedTree tree;
+internal class MRUQueue(private var n: Int) {
+  private val q = IntArray(n + 2010)
+  private val tree: BinaryIndexedTree
 
-    public MRUQueue(int n) {
-        this.n = n;
-        q = new int[n + 2010];
-        for (int i = 1; i <= n; ++i) {
-            q[i] = i;
-        }
-        tree = new BinaryIndexedTree(n + 2010);
+  init {
+    for (i in 1..n) {
+      q[i] = i
     }
+    tree = BinaryIndexedTree(n + 2010)
+  }
 
-    public int fetch(int k) {
-        int l = 1, r = n;
-        while (l < r) {
-            int mid = (l + r) >> 1;
-            if (mid - tree.query(mid) >= k) {
-                r = mid;
-            } else {
-                l = mid + 1;
-            }
-        }
-        int x = q[l];
-        q[++n] = x;
-        tree.update(l, 1);
-        return x;
+  fun fetch(k: Int): Int {
+    var l = 1
+    var r = n
+    while (l < r) {
+      val mid = (l + r) shr 1
+      if (mid - tree.query(mid) >= k) {
+        r = mid
+      } else {
+        l = mid + 1
+      }
     }
+    val x = q[l]
+    q[++n] = x
+    tree.update(l, 1)
+    return x
+  }
 }
-
 /**
  * Your MRUQueue object will be instantiated and called as such:
  * MRUQueue obj = new MRUQueue(n);

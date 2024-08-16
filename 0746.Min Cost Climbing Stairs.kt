@@ -1,20 +1,20 @@
-class Solution {
-    private Integer[] f;
-    private int[] cost;
+internal class Solution {
+  private var f: Array<Int>
+  private var cost: IntArray
 
-    public int minCostClimbingStairs(int[] cost) {
-        this.cost = cost;
-        f = new Integer[cost.length];
-        return Math.min(dfs(0), dfs(1));
-    }
+  fun minCostClimbingStairs(cost: IntArray): Int {
+    this.cost = cost
+    f = arrayOfNulls(cost.size)
+    return min(dfs(0), dfs(1))
+  }
 
-    private int dfs(int i) {
-        if (i >= cost.length) {
-            return 0;
-        }
-        if (f[i] == null) {
-            f[i] = cost[i] + Math.min(dfs(i + 1), dfs(i + 2));
-        }
-        return f[i];
+  private fun dfs(i: Int): Int {
+    if (i >= cost.size) {
+      return 0
     }
+    if (f[i] == null) {
+      f[i] = cost[i] + min(dfs(i + 1), dfs(i + 2))
+    }
+    return f[i]
+  }
 }

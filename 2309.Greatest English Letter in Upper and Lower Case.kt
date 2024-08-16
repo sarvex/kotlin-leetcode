@@ -1,14 +1,16 @@
-class Solution {
-    public String greatestLetter(String s) {
-        Set<Character> ss = new HashSet<>();
-        for (char c : s.toCharArray()) {
-            ss.add(c);
-        }
-        for (char a = 'Z'; a >= 'A'; --a) {
-            if (ss.contains(a) && ss.contains((char) (a + 32))) {
-                return String.valueOf(a);
-            }
-        }
-        return "";
+internal class Solution {
+  fun greatestLetter(s: String): String {
+    val ss: Set<Char> = HashSet()
+    for (c in s.toCharArray()) {
+      ss.add(c)
     }
+    var a = 'Z'
+    while (a >= 'A') {
+      if (ss.contains(a) && ss.contains((a.code + 32).toChar())) {
+        return a.toString()
+      }
+      --a
+    }
+    return ""
+  }
 }

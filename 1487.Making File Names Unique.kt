@@ -1,17 +1,17 @@
-class Solution {
-    public String[] getFolderNames(String[] names) {
-        Map<String, Integer> d = new HashMap<>();
-        for (int i = 0; i < names.length; ++i) {
-            if (d.containsKey(names[i])) {
-                int k = d.get(names[i]);
-                while (d.containsKey(names[i] + "(" + k + ")")) {
-                    ++k;
-                }
-                d.put(names[i], k);
-                names[i] += "(" + k + ")";
-            }
-            d.put(names[i], 1);
+internal class Solution {
+  fun getFolderNames(names: Array<String>): Array<String> {
+    val d: Map<String, Int> = HashMap()
+    for (i in names.indices) {
+      if (d.containsKey(names[i])) {
+        var k = d[names[i]]!!
+        while (d.containsKey(names[i] + "(" + k + ")")) {
+          ++k
         }
-        return names;
+        d.put(names[i], k)
+        names[i] += "($k)"
+      }
+      d.put(names[i], 1)
     }
+    return names
+  }
 }

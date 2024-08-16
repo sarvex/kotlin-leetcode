@@ -1,12 +1,13 @@
-class Solution {
-    public void moveZeroes(int[] nums) {
-        int i = -1, n = nums.length;
-        for (int j = 0; j < n; ++j) {
-            if (nums[j] != 0) {
-                int t = nums[++i];
-                nums[i] = nums[j];
-                nums[j] = t;
-            }
-        }
+internal class Solution {
+  fun moveZeroes(nums: IntArray) {
+    var i = -1
+    val n = nums.size
+    for (j in 0 until n) {
+      if (nums[j] != 0) {
+        val t = nums[++i]
+        nums[i] = nums[j]
+        nums[j] = t
+      }
     }
+  }
 }

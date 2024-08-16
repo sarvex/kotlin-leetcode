@@ -1,16 +1,19 @@
-class Solution {
-    public int minOperations(int n) {
-        int ans = 0, cnt = 0;
-        for (; n > 0; n >>= 1) {
-            if ((n & 1) == 1) {
-                ++cnt;
-            } else if (cnt > 0) {
-                ++ans;
-                cnt = cnt == 1 ? 0 : 1;
-            }
-        }
-        ans += cnt == 1 ? 1 : 0;
-        ans += cnt > 1 ? 2 : 0;
-        return ans;
+internal class Solution {
+  fun minOperations(n: Int): Int {
+    var n = n
+    var ans = 0
+    var cnt = 0
+    while (n > 0) {
+      if ((n and 1) == 1) {
+        ++cnt
+      } else if (cnt > 0) {
+        ++ans
+        cnt = if (cnt == 1) 0 else 1
+      }
+      n = n shr 1
     }
+    ans += if (cnt == 1) 1 else 0
+    ans += if (cnt > 1) 2 else 0
+    return ans
+  }
 }

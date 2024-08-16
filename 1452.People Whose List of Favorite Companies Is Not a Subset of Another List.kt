@@ -1,31 +1,33 @@
-class Solution {
-    public List<Integer> peopleIndexes(List<List<String>> favoriteCompanies) {
-        int n = favoriteCompanies.size();
-        Map<String, Integer> d = new HashMap<>();
-        int idx = 0;
-        Set<Integer>[] nums = new Set[n];
-        Arrays.setAll(nums, i -> new HashSet<>());
-        for (int i = 0; i < n; ++i) {
-            var ss = favoriteCompanies.get(i);
-            for (var s : ss) {
-                if (!d.containsKey(s)) {
-                    d.put(s, idx++);
-                }
-                nums[i].add(d.get(s));
-            }
+internal class Solution {
+  fun peopleIndexes(favoriteCompanies: List<List<String?>>): List<Int> {
+    val n: Int = favoriteCompanies.size()
+    val d: Map<String, Int> = HashMap()
+    var idx = 0
+    val nums: Array<Set<Int>> = arrayOfNulls(n)
+    Arrays.setAll(nums) { i -> HashSet() }
+    for (i in 0 until n) {
+      val ss: Unit = favoriteCompanies[i]
+      for (s in ss) {
+        if (!d.containsKey(s)) {
+          d.put(s, idx++)
         }
-        List<Integer> ans = new ArrayList<>();
-        for (int i = 0; i < n; ++i) {
-            boolean ok = true;
-            for (int j = 0; j < n && ok; ++j) {
-                if (i != j && nums[j].containsAll(nums[i])) {
-                    ok = false;
-                }
-            }
-            if (ok) {
-                ans.add(i);
-            }
-        }
-        return ans;
+        nums[i].add(d[s])
+      }
     }
+    val ans: List<Int> = ArrayList()
+    for (i in 0 until n) {
+      var ok = true
+      var j = 0
+      while (j < n && ok) {
+        if (i != j && nums[j].containsAll(nums[i])) {
+          ok = false
+        }
+        ++j
+      }
+      if (ok) {
+        ans.add(i)
+      }
+    }
+    return ans
+  }
 }

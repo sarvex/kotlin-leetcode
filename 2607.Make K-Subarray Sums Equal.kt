@@ -1,23 +1,25 @@
-class Solution {
-    public long makeSubKSumEqual(int[] arr, int k) {
-        int n = arr.length;
-        int g = gcd(n, k);
-        long ans = 0;
-        for (int i = 0; i < g; ++i) {
-            List<Integer> t = new ArrayList<>();
-            for (int j = i; j < n; j += g) {
-                t.add(arr[j]);
-            }
-            t.sort((a, b) -> a - b);
-            int mid = t.get(t.size() >> 1);
-            for (int x : t) {
-                ans += Math.abs(x - mid);
-            }
-        }
-        return ans;
+internal class Solution {
+  fun makeSubKSumEqual(arr: IntArray, k: Int): Long {
+    val n = arr.size
+    val g = gcd(n, k)
+    var ans: Long = 0
+    for (i in 0 until g) {
+      val t: List<Int> = ArrayList()
+      var j: Int = i
+      while (j < n) {
+        t.add(arr[j])
+        j += g
+      }
+      t.sort { a, b -> a - b }
+      val mid = t[t.size() shr 1]
+      for (x in t) {
+        ans += abs(x - mid)
+      }
     }
+    return ans
+  }
 
-    private int gcd(int a, int b) {
-        return b == 0 ? a : gcd(b, a % b);
-    }
+  private fun gcd(a: Int, b: Int): Int {
+    return if (b == 0) a else gcd(b, a % b)
+  }
 }

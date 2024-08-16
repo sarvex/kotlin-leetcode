@@ -1,27 +1,21 @@
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*
 
-class MyCalendar {
+internal class MyCalendar {
+  private val tm = TreeMap<Int, Int>()
 
-    private final TreeMap<Integer, Integer> tm = new TreeMap<>();
-
-    public MyCalendar() {
+  fun book(start: Int, end: Int): Boolean {
+    var ent = tm.floorEntry(start)
+    if (ent != null && ent.value > start) {
+      return false
     }
-
-    public boolean book(int start, int end) {
-        Map.Entry<Integer, Integer> ent = tm.floorEntry(start);
-        if (ent != null && ent.getValue() > start) {
-            return false;
-        }
-        ent = tm.ceilingEntry(start);
-        if (ent != null && ent.getKey() < end) {
-            return false;
-        }
-        tm.put(start, end);
-        return true;
+    ent = tm.ceilingEntry(start)
+    if (ent != null && ent.key < end) {
+      return false
     }
+    tm.put(start, end)
+    return true
+  }
 }
-
 /**
  * Your MyCalendar object will be instantiated and called as such: MyCalendar
  * obj = new MyCalendar(); boolean param_1 = obj.book(start,end);

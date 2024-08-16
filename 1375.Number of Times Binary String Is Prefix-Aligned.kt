@@ -1,12 +1,13 @@
-class Solution {
-    public int numTimesAllBlue(int[] flips) {
-        int ans = 0, mx = 0;
-        for (int i = 1; i <= flips.length; ++i) {
-            mx = Math.max(mx, flips[i - 1]);
-            if (mx == i) {
-                ++ans;
-            }
-        }
-        return ans;
+internal class Solution {
+  fun numTimesAllBlue(flips: IntArray): Int {
+    var ans = 0
+    var mx = 0
+    for (i in 1..flips.size) {
+      mx = max(mx, flips[i - 1])
+      if (mx == i) {
+        ++ans
+      }
     }
+    return ans
+  }
 }

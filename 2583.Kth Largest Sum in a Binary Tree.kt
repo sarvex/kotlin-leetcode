@@ -1,41 +1,42 @@
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
+ * int val;
+ * TreeNode left;
+ * TreeNode right;
+ * TreeNode() {}
+ * TreeNode(int val) { this.val = val; }
+ * TreeNode(int val, TreeNode left, TreeNode right) {
+ * this.val = val;
+ * this.left = left;
+ * this.right = right;
+ * }
  * }
  */
-class Solution {
-    public long kthLargestLevelSum(TreeNode root, int k) {
-        List<Long> arr = new ArrayList<>();
-        Deque<TreeNode> q = new ArrayDeque<>();
-        q.offer(root);
-        while (!q.isEmpty()) {
-            long t = 0;
-            for (int n = q.size(); n > 0; --n) {
-                root = q.pollFirst();
-                t += root.val;
-                if (root.left != null) {
-                    q.offer(root.left);
-                }
-                if (root.right != null) {
-                    q.offer(root.right);
-                }
-            }
-            arr.add(t);
+internal class Solution {
+  fun kthLargestLevelSum(root: TreeNode, k: Int): Long {
+    var root: TreeNode = root
+    val arr: List<Long> = ArrayList()
+    val q: Deque<TreeNode> = ArrayDeque()
+    q.offer(root)
+    while (!q.isEmpty()) {
+      var t: Long = 0
+      for (n in q.size() downTo 1) {
+        root = q.pollFirst()
+        t += root.`val`
+        if (root.left != null) {
+          q.offer(root.left)
         }
-        if (arr.size() < k) {
-            return -1;
+        if (root.right != null) {
+          q.offer(root.right)
         }
-        Collections.sort(arr, Collections.reverseOrder());
-        return arr.get(k - 1);
+      }
+      arr.add(t)
     }
+    if (arr.size() < k) {
+      return -1
+    }
+    Collections.sort(arr, Collections.reverseOrder())
+    return arr[k - 1]
+  }
 }

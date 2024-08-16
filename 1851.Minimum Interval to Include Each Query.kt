@@ -1,29 +1,31 @@
-class Solution {
-    public int[] minInterval(int[][] intervals, int[] queries) {
-        int n = intervals.length, m = queries.length;
-        Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
-        int[][] qs = new int[m][0];
-        for (int i = 0; i < m; ++i) {
-            qs[i] = new int[] {queries[i], i};
-        }
-        Arrays.sort(qs, (a, b) -> a[0] - b[0]);
-        int[] ans = new int[m];
-        Arrays.fill(ans, -1);
-        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[0] - b[0]);
-        int i = 0;
-        for (int[] q : qs) {
-            while (i < n && intervals[i][0] <= q[0]) {
-                int a = intervals[i][0], b = intervals[i][1];
-                pq.offer(new int[] {b - a + 1, b});
-                ++i;
-            }
-            while (!pq.isEmpty() && pq.peek()[1] < q[0]) {
-                pq.poll();
-            }
-            if (!pq.isEmpty()) {
-                ans[q[1]] = pq.peek()[0];
-            }
-        }
-        return ans;
+internal class Solution {
+  fun minInterval(intervals: Array<IntArray>, queries: IntArray): IntArray {
+    val n = intervals.size
+    val m = queries.size
+    Arrays.sort(intervals) { a, b -> a.get(0) - b.get(0) }
+    val qs = Array(m) { IntArray(0) }
+    for (i in 0 until m) {
+      qs[i] = intArrayOf(queries[i], i)
     }
+    Arrays.sort(qs) { a, b -> a.get(0) - b.get(0) }
+    val ans = IntArray(m)
+    Arrays.fill(ans, -1)
+    val pq: PriorityQueue<IntArray> = PriorityQueue { a, b -> a.get(0) - b.get(0) }
+    var i = 0
+    for (q in qs) {
+      while (i < n && intervals[i][0] <= q[0]) {
+        val a = intervals[i][0]
+        val b = intervals[i][1]
+        pq.offer(intArrayOf(b - a + 1, b))
+        ++i
+      }
+      while (!pq.isEmpty() && pq.peek().get(1) < q[0]) {
+        pq.poll()
+      }
+      if (!pq.isEmpty()) {
+        ans[q[1]] = pq.peek().get(0)
+      }
+    }
+    return ans
+  }
 }

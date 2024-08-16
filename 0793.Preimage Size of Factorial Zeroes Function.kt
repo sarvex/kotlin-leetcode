@@ -1,25 +1,26 @@
-class Solution {
-    public int preimageSizeFZF(int k) {
-        return g(k + 1) - g(k);
-    }
+internal class Solution {
+  fun preimageSizeFZF(k: Int): Int {
+    return g(k + 1) - g(k)
+  }
 
-    private int g(int k) {
-        long left = 0, right = 5 * k;
-        while (left < right) {
-            long mid = (left + right) >> 1;
-            if (f(mid) >= k) {
-                right = mid;
-            } else {
-                left = mid + 1;
-            }
-        }
-        return (int) left;
+  private fun g(k: Int): Int {
+    var left: Long = 0
+    var right = (5 * k).toLong()
+    while (left < right) {
+      val mid = (left + right) shr 1
+      if (f(mid) >= k) {
+        right = mid
+      } else {
+        left = mid + 1
+      }
     }
+    return left.toInt()
+  }
 
-    private int f(long x) {
-        if (x == 0) {
-            return 0;
-        }
-        return (int) (x / 5) + f(x / 5);
+  private fun f(x: Long): Int {
+    if (x == 0L) {
+      return 0
     }
+    return (x / 5).toInt() + f(x / 5)
+  }
 }

@@ -1,11 +1,11 @@
-class Solution {
-    public long zeroFilledSubarray(int[] nums) {
-        long ans = 0;
-        int cnt = 0;
-        for (int v : nums) {
-            cnt = v != 0 ? 0 : cnt + 1;
-            ans += cnt;
-        }
-        return ans;
+internal class Solution {
+  fun zeroFilledSubarray(nums: IntArray): Long {
+    var ans: Long = 0
+    var cnt = 0
+    for (v in nums) {
+      cnt = if (v != 0) 0 else cnt + 1
+      ans += cnt.toLong()
     }
+    return ans
+  }
 }

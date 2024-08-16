@@ -1,56 +1,72 @@
-class Solution {
-    private int[][] rowsum;
-    private int[][] colsum;
+internal class Solution {
+  private var rowsum: Array<IntArray>
+  private var colsum: Array<IntArray>
 
-    public int largestMagicSquare(int[][] grid) {
-        int m = grid.length, n = grid[0].length;
-        rowsum = new int[m + 1][n + 1];
-        colsum = new int[m + 1][n + 1];
-        for (int i = 1; i <= m; ++i) {
-            for (int j = 1; j <= n; ++j) {
-                rowsum[i][j] = rowsum[i][j - 1] + grid[i - 1][j - 1];
-                colsum[i][j] = colsum[i - 1][j] + grid[i - 1][j - 1];
-            }
-        }
-        for (int k = Math.min(m, n); k > 1; --k) {
-            for (int i = 0; i + k - 1 < m; ++i) {
-                for (int j = 0; j + k - 1 < n; ++j) {
-                    int i2 = i + k - 1, j2 = j + k - 1;
-                    if (check(grid, i, j, i2, j2)) {
-                        return k;
-                    }
-                }
-            }
-        }
-        return 1;
+  fun largestMagicSquare(grid: Array<IntArray>): Int {
+    val m = grid.size
+    val n = grid[0].size
+    rowsum = Array(m + 1) { IntArray(n + 1) }
+    colsum = Array(m + 1) { IntArray(n + 1) }
+    for (i in 1..m) {
+      for (j in 1..n) {
+        rowsum[i][j] = rowsum[i][j - 1] + grid[i - 1][j - 1]
+        colsum[i][j] = colsum[i - 1][j] + grid[i - 1][j - 1]
+      }
     }
+    for (k in min(m, n) downTo 2) {
+      var i = 0
+      while (i + k - 1 < m) {
+        var j = 0
+        while (j + k - 1 < n) {
+          val i2: Int = i + k - 1
+          val j2: Int = j + k - 1
+          if (check(grid, i, j, i2, j2)) {
+            return k
+          }
+          ++j
+        }
+        ++i
+      }
+    }
+    return 1
+  }
 
-    private boolean check(int[][] grid, int x1, int y1, int x2, int y2) {
-        int val = rowsum[x1 + 1][y2 + 1] - rowsum[x1 + 1][y1];
-        for (int i = x1 + 1; i <= x2; ++i) {
-            if (rowsum[i + 1][y2 + 1] - rowsum[i + 1][y1] != val) {
-                return false;
-            }
-        }
-        for (int j = y1; j <= y2; ++j) {
-            if (colsum[x2 + 1][j + 1] - colsum[x1][j + 1] != val) {
-                return false;
-            }
-        }
-        int s = 0;
-        for (int i = x1, j = y1; i <= x2; ++i, ++j) {
-            s += grid[i][j];
-        }
-        if (s != val) {
-            return false;
-        }
-        s = 0;
-        for (int i = x1, j = y2; i <= x2; ++i, --j) {
-            s += grid[i][j];
-        }
-        if (s != val) {
-            return false;
-        }
-        return true;
+  private fun check(grid: Array<IntArray>, x1: Int, y1: Int, x2: Int, y2: Int): Boolean {
+    val `val` = rowsum[x1 + 1][y2 + 1] - rowsum[x1 + 1][y1]
+    for (i in x1 + 1..x2) {
+      if (rowsum[i + 1][y2 + 1] - rowsum[i + 1][y1] != `val`) {
+        return false
+      }
     }
+    for (j in y1..y2) {
+      if (colsum[x2 + 1][j + 1] - colsum[x1][j + 1] != `val`) {
+        return false
+      }
+    }
+    var s = 0
+    run {
+      var i = x1
+      var j = y1
+      while (i <= x2) {
+        s += grid[i][j]
+        ++i
+        ++j
+      }
+    }
+    if (s != `val`) {
+      return false
+    }
+    s = 0
+    var i = x1
+    var j = y2
+    while (i <= x2) {
+      s += grid[i][j]
+      ++i
+      --j
+    }
+    if (s != `val`) {
+      return false
+    }
+    return true
+  }
 }

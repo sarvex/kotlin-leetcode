@@ -1,10 +1,11 @@
-class Solution {
-    public int addRungs(int[] rungs, int dist) {
-        int ans = 0, prev = 0;
-        for (int x : rungs) {
-            ans += (x - prev - 1) / dist;
-            prev = x;
-        }
-        return ans;
+internal class Solution {
+  fun addRungs(rungs: IntArray, dist: Int): Int {
+    var ans = 0
+    var prev = 0
+    for (x in rungs) {
+      ans += (x - prev - 1) / dist
+      prev = x
     }
+    return ans
+  }
 }

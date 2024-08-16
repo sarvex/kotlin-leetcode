@@ -1,5 +1,5 @@
-class Solution {
-    public long coloredCells(int n) {
-        return 2L * n * (n - 1) + 1;
-    }
+internal class Solution {
+  fun coloredCells(n: Int): Long {
+    return 2L * n * (n - 1) + 1
+  }
 }

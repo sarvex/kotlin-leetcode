@@ -1,21 +1,24 @@
-class Solution {
-    public int countPoints(String rings) {
-        int[] d = new int['Z'];
-        d['R'] = 1;
-        d['G'] = 2;
-        d['B'] = 4;
-        int[] mask = new int[10];
-        for (int i = 0, n = rings.length(); i < n; i += 2) {
-            int c = rings.charAt(i);
-            int j = rings.charAt(i + 1) - '0';
-            mask[j] |= d[c];
-        }
-        int ans = 0;
-        for (int x : mask) {
-            if (x == 7) {
-                ++ans;
-            }
-        }
-        return ans;
+internal class Solution {
+  fun countPoints(rings: String): Int {
+    val d = IntArray('Z')
+    d.get('R') = 1
+    d.get('G') = 2
+    d.get('B') = 4
+    val mask = IntArray(10)
+    var i = 0
+    val n = rings.length
+    while (i < n) {
+      val c: Int = rings[i].code
+      val j: Int = rings[i + 1].code - '0'.code
+      mask[j] = mask[j] or d[c]
+      i += 2
     }
+    var ans = 0
+    for (x in mask) {
+      if (x == 7) {
+        ++ans
+      }
+    }
+    return ans
+  }
 }

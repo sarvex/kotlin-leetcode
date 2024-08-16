@@ -1,5 +1,5 @@
-class Solution {
-    public boolean divisorGame(int n) {
-        return n % 2 == 0;
-    }
+internal class Solution {
+  fun divisorGame(n: Int): Boolean {
+    return n % 2 == 0
+  }
 }

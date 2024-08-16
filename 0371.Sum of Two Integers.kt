@@ -1,5 +1,5 @@
-class Solution {
-    public int getSum(int a, int b) {
-        return b == 0 ? a : getSum(a ^ b, (a & b) << 1);
-    }
+internal class Solution {
+  fun getSum(a: Int, b: Int): Int {
+    return if (b == 0) a else getSum(a xor b, (a and b) shl 1)
+  }
 }

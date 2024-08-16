@@ -1,16 +1,17 @@
-class Solution {
-    public long gridGame(int[][] grid) {
-        long ans = Long.MAX_VALUE;
-        long s1 = 0, s2 = 0;
-        for (int v : grid[0]) {
-            s1 += v;
-        }
-        int n = grid[0].length;
-        for (int j = 0; j < n; ++j) {
-            s1 -= grid[0][j];
-            ans = Math.min(ans, Math.max(s1, s2));
-            s2 += grid[1][j];
-        }
-        return ans;
+internal class Solution {
+  fun gridGame(grid: Array<IntArray>): Long {
+    var ans: Long = MAX_VALUE
+    var s1: Long = 0
+    var s2: Long = 0
+    for (v in grid[0]) {
+      s1 += v.toLong()
     }
+    val n = grid[0].size
+    for (j in 0 until n) {
+      s1 -= grid[0][j].toLong()
+      ans = min(ans, max(s1, s2))
+      s2 += grid[1][j].toLong()
+    }
+    return ans
+  }
 }

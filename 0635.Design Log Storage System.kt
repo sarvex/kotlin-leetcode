@@ -1,48 +1,39 @@
-class LogSystem {
-    private List<Log> logs = new ArrayList<>();
-    private Map<String, Integer> d = new HashMap<>();
+internal class LogSystem {
+  private val logs: List<Log> = ArrayList()
+  private val d: Map<String, Int> = HashMap()
 
-    public LogSystem() {
-        d.put("Year", 4);
-        d.put("Month", 7);
-        d.put("Day", 10);
-        d.put("Hour", 13);
-        d.put("Minute", 16);
-        d.put("Second", 19);
-    }
+  init {
+    d.put("Year", 4)
+    d.put("Month", 7)
+    d.put("Day", 10)
+    d.put("Hour", 13)
+    d.put("Minute", 16)
+    d.put("Second", 19)
+  }
 
-    public void put(int id, String timestamp) {
-        logs.add(new Log(id, timestamp));
-    }
+  fun put(id: Int, timestamp: String?) {
+    logs.add(Log(id, timestamp))
+  }
 
-    public List<Integer> retrieve(String start, String end, String granularity) {
-        List<Integer> ans = new ArrayList<>();
-        int i = d.get(granularity);
-        String s = start.substring(0, i);
-        String e = end.substring(0, i);
-        for (var log : logs) {
-            String t = log.ts.substring(0, i);
-            if (s.compareTo(t) <= 0 && t.compareTo(e) <= 0) {
-                ans.add(log.id);
-            }
-        }
-        return ans;
+  fun retrieve(start: String, end: String, granularity: String): List<Int> {
+    val ans: List<Int> = ArrayList()
+    val i = d[granularity]!!
+    val s: String = start.substring(0, i)
+    val e: String = end.substring(0, i)
+    for (log in logs) {
+      val t: String = log.ts.substring(0, i)
+      if (s.compareTo(t) <= 0 && t.compareTo(e) <= 0) {
+        ans.add(log.id)
+      }
     }
+    return ans
+  }
 }
 
-class Log {
-    int id;
-    String ts;
-
-    Log(int id, String ts) {
-        this.id = id;
-        this.ts = ts;
-    }
-}
-
+internal class Log(var id: Int, var ts: String?)
 /**
  * Your LogSystem object will be instantiated and called as such:
  * LogSystem obj = new LogSystem();
  * obj.put(id,timestamp);
  * List<Integer> param_2 = obj.retrieve(start,end,granularity);
- */
+</Integer> */

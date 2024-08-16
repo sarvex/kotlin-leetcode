@@ -1,37 +1,38 @@
-class Solution {
-    public int[][] highFive(int[][] items) {
-        int size = 0;
-        PriorityQueue[] s = new PriorityQueue[101];
-        int n = 5;
-        for (int[] item : items) {
-            int i = item[0], score = item[1];
-            if (s[i] == null) {
-                ++size;
-                s[i] = new PriorityQueue<>(n);
-            }
-            s[i].offer(score);
-            if (s[i].size() > n) {
-                s[i].poll();
-            }
-        }
-        int[][] res = new int[size][2];
-        int j = 0;
-        for (int i = 0; i < 101; ++i) {
-            if (s[i] == null) {
-                continue;
-            }
-            int avg = sum(s[i]) / n;
-            res[j][0] = i;
-            res[j++][1] = avg;
-        }
-        return res;
+internal class Solution {
+  fun highFive(items: Array<IntArray>): Array<IntArray> {
+    var size = 0
+    val s: Array<PriorityQueue> = arrayOfNulls<PriorityQueue>(101)
+    val n = 5
+    for (item in items) {
+      val i = item[0]
+      val score = item[1]
+      if (s[i] == null) {
+        ++size
+        s[i] = PriorityQueue(n)
+      }
+      s[i].offer(score)
+      if (s[i].size() > n) {
+        s[i].poll()
+      }
     }
+    val res = Array(size) { IntArray(2) }
+    var j = 0
+    for (i in 0..100) {
+      if (s[i] == null) {
+        continue
+      }
+      val avg = sum(s[i]) / n
+      res[j][0] = i
+      res[j++][1] = avg
+    }
+    return res
+  }
 
-    private int sum(PriorityQueue<Integer> q) {
-        int s = 0;
-        while (!q.isEmpty()) {
-            s += q.poll();
-        }
-        return s;
+  private fun sum(q: PriorityQueue<Int>): Int {
+    var s = 0
+    while (!q.isEmpty()) {
+      s += q.poll()
     }
+    return s
+  }
 }

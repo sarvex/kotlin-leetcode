@@ -1,49 +1,49 @@
-class Trie {
-    private final Trie[] children = new Trie[26];
-    private int cnt;
+internal class Trie {
+  private val children: Array<Trie> = arrayOfNulls(26)
+  private var cnt = 0
 
-    public void insert(String w) {
-        Trie node = this;
-        for (char c : w.toCharArray()) {
-            int idx = c - 'a';
-            if (node.children[idx] == null) {
-                node.children[idx] = new Trie();
-            }
-            node = node.children[idx];
-            ++node.cnt;
-        }
+  fun insert(w: String) {
+    var node = this
+    for (c in w.toCharArray()) {
+      val idx: Int = c.code - 'a'.code
+      if (node.children[idx] == null) {
+        node.children[idx] = Trie()
+      }
+      node = node.children[idx]
+      ++node.cnt
     }
+  }
 
-    public int search(String w) {
-        Trie node = this;
-        int ans = 0;
-        for (char c : w.toCharArray()) {
-            ++ans;
-            int idx = c - 'a';
-            node = node.children[idx];
-            if (node.cnt == 1) {
-                return ans;
-            }
-        }
-        return w.length();
+  fun search(w: String): Int {
+    var node = this
+    var ans = 0
+    for (c in w.toCharArray()) {
+      ++ans
+      val idx: Int = c.code - 'a'.code
+      node = node.children[idx]
+      if (node.cnt == 1) {
+        return ans
+      }
     }
+    return w.length
+  }
 }
 
-class Solution {
-    public List<String> wordsAbbreviation(List<String> words) {
-        Map<List<Integer>, Trie> tries = new HashMap<>();
-        for (var w : words) {
-            var key = List.of(w.length(), w.charAt(w.length() - 1) - 'a');
-            tries.putIfAbsent(key, new Trie());
-            tries.get(key).insert(w);
-        }
-        List<String> ans = new ArrayList<>();
-        for (var w : words) {
-            int m = w.length();
-            var key = List.of(m, w.charAt(m - 1) - 'a');
-            int cnt = tries.get(key).search(w);
-            ans.add(cnt + 2 >= m ? w : w.substring(0, cnt) + (m - cnt - 1) + w.substring(m - 1));
-        }
-        return ans;
+internal class Solution {
+  fun wordsAbbreviation(words: List<String>): List<String> {
+    val tries: Map<List<Int>, Trie> = HashMap()
+    for (w in words) {
+      val key = List.of(w.length(), w.charAt(w.length() - 1) - 'a')
+      tries.putIfAbsent(key, Trie())
+      tries[key]!!.insert(w)
     }
+    val ans: List<String> = ArrayList()
+    for (w in words) {
+      val m: Int = w.length()
+      val key = List.of(m, w.charAt(m - 1) - 'a')
+      val cnt = tries[key]!!.search(w)
+      ans.add(if (cnt + 2 >= m) w else w.substring(0, cnt) + (m - cnt - 1) + w.substring(m - 1))
+    }
+    return ans
+  }
 }

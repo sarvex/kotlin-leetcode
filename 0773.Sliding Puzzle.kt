@@ -1,86 +1,89 @@
-class Solution {
-    private String[] t = new String[6];
-    private int[][] board;
+import java.util.*
 
-    public int slidingPuzzle(int[][] board) {
-        this.board = board;
-        String start = gets();
-        String end = "123450";
-        if (end.equals(start)) {
-            return 0;
-        }
-        Set<String> vis = new HashSet<>();
-        Deque<String> q = new ArrayDeque<>();
-        q.offer(start);
-        vis.add(start);
-        int ans = 0;
-        while (!q.isEmpty()) {
-            ++ans;
-            for (int n = q.size(); n > 0; --n) {
-                String x = q.poll();
-                setb(x);
-                for (String y : next()) {
-                    if (y.equals(end)) {
-                        return ans;
-                    }
-                    if (!vis.contains(y)) {
-                        vis.add(y);
-                        q.offer(y);
-                    }
-                }
-            }
-        }
-        return -1;
-    }
+internal class Solution {
+  private val t: Array<String> = arrayOfNulls(6)
+  private var board: Array<IntArray>
 
-    private String gets() {
-        for (int i = 0; i < 2; ++i) {
-            for (int j = 0; j < 3; ++j) {
-                t[i * 3 + j] = String.valueOf(board[i][j]);
-            }
+  fun slidingPuzzle(board: Array<IntArray>): Int {
+    this.board = board
+    val start = gets()
+    val end = "123450"
+    if (end == start) {
+      return 0
+    }
+    val vis: Set<String> = HashSet()
+    val q: Deque<String> = ArrayDeque()
+    q.offer(start)
+    vis.add(start)
+    var ans = 0
+    while (!q.isEmpty()) {
+      ++ans
+      for (n in q.size() downTo 1) {
+        val x = q.poll()
+        setb(x)
+        for (y in next()) {
+          if (y == end) {
+            return ans
+          }
+          if (!vis.contains(y)) {
+            vis.add(y)
+            q.offer(y)
+          }
         }
-        return String.join("", t);
+      }
     }
+    return -1
+  }
 
-    private void setb(String s) {
-        for (int i = 0; i < 2; ++i) {
-            for (int j = 0; j < 3; ++j) {
-                board[i][j] = s.charAt(i * 3 + j) - '0';
-            }
+  private fun gets(): String {
+    for (i in 0..1) {
+      for (j in 0..2) {
+        t[i * 3 + j] = board[i][j].toString()
+      }
+    }
+    return java.lang.String.join("", *t)
+  }
+
+  private fun setb(s: String) {
+    for (i in 0..1) {
+      for (j in 0..2) {
+        board[i][j] = s[i * 3 + j].code - '0'.code
+      }
+    }
+  }
+
+  private fun find0(): IntArray {
+    for (i in 0..1) {
+      for (j in 0..2) {
+        if (board[i][j] == 0) {
+          return intArrayOf(i, j)
         }
+      }
     }
+    return intArrayOf(0, 0)
+  }
 
-    private int[] find0() {
-        for (int i = 0; i < 2; ++i) {
-            for (int j = 0; j < 3; ++j) {
-                if (board[i][j] == 0) {
-                    return new int[] {i, j};
-                }
-            }
-        }
-        return new int[] {0, 0};
+  private fun next(): List<String> {
+    val p = find0()
+    val i = p[0]
+    val j = p[1]
+    val dirs = intArrayOf(-1, 0, 1, 0, -1)
+    val res: List<String> = ArrayList()
+    for (k in 0..3) {
+      val x = i + dirs[k]
+      val y = j + dirs[k + 1]
+      if (x >= 0 && x < 2 && y >= 0 && y < 3) {
+        swap(i, j, x, y)
+        res.add(gets())
+        swap(i, j, x, y)
+      }
     }
+    return res
+  }
 
-    private List<String> next() {
-        int[] p = find0();
-        int i = p[0], j = p[1];
-        int[] dirs = {-1, 0, 1, 0, -1};
-        List<String> res = new ArrayList<>();
-        for (int k = 0; k < 4; ++k) {
-            int x = i + dirs[k];
-            int y = j + dirs[k + 1];
-            if (x >= 0 && x < 2 && y >= 0 && y < 3) {
-                swap(i, j, x, y);
-                res.add(gets());
-                swap(i, j, x, y);
-            }
-        }
-        return res;
-    }
-
-    private void swap(int i, int j, int x, int y) {
-        int t = board[i][j];
-        board[i][j] = board[x][y];
-        board[x][y] = t;
-    }
+  private fun swap(i: Int, j: Int, x: Int, y: Int) {
+    val t = board[i][j]
+    board[i][j] = board[x][y]
+    board[x][y] = t
+  }
 }

@@ -1,25 +1,25 @@
-class Solution {
-    public int maxValueOfCoins(List<List<Integer>> piles, int k) {
-        int n = piles.size();
-        List<int[]> presum = new ArrayList<>();
-        for (List<Integer> p : piles) {
-            int m = p.size();
-            int[] s = new int[m + 1];
-            for (int i = 0; i < m; ++i) {
-                s[i + 1] = s[i] + p.get(i);
-            }
-            presum.add(s);
-        }
-        int[] dp = new int[k + 1];
-        for (int[] s : presum) {
-            for (int j = k; j >= 0; --j) {
-                for (int idx = 0; idx < s.length; ++idx) {
-                    if (j >= idx) {
-                        dp[j] = Math.max(dp[j], dp[j - idx] + s[idx]);
-                    }
-                }
-            }
-        }
-        return dp[k];
+internal class Solution {
+  fun maxValueOfCoins(piles: List<List<Int>>, k: Int): Int {
+    val n: Int = piles.size()
+    val presum: List<IntArray> = ArrayList()
+    for (p in piles) {
+      val m: Int = p.size()
+      val s = IntArray(m + 1)
+      for (i in 0 until m) {
+        s[i + 1] = s[i] + p[i]
+      }
+      presum.add(s)
     }
+    val dp = IntArray(k + 1)
+    for (s in presum) {
+      for (j in k downTo 0) {
+        for (idx in s.indices) {
+          if (j >= idx) {
+            dp[j] = max(dp[j], dp[j - idx] + s[idx])
+          }
+        }
+      }
+    }
+    return dp[k]
+  }
 }

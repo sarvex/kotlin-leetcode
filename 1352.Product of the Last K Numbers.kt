@@ -1,25 +1,24 @@
-class ProductOfNumbers {
-    private List<Integer> s = new ArrayList<>();
+internal class ProductOfNumbers {
+  private val s: List<Int> = ArrayList()
 
-    public ProductOfNumbers() {
-        s.add(1);
-    }
+  init {
+    s.add(1)
+  }
 
-    public void add(int num) {
-        if (num == 0) {
-            s.clear();
-            s.add(1);
-            return;
-        }
-        s.add(s.get(s.size() - 1) * num);
+  fun add(num: Int) {
+    if (num == 0) {
+      s.clear()
+      s.add(1)
+      return
     }
+    s.add(s[s.size() - 1] * num)
+  }
 
-    public int getProduct(int k) {
-        int n = s.size();
-        return n <= k ? 0 : s.get(n - 1) / s.get(n - k - 1);
-    }
+  fun getProduct(k: Int): Int {
+    val n: Int = s.size()
+    return if (n <= k) 0 else s[n - 1] / s[n - k - 1]
+  }
 }
-
 /**
  * Your ProductOfNumbers object will be instantiated and called as such:
  * ProductOfNumbers obj = new ProductOfNumbers();

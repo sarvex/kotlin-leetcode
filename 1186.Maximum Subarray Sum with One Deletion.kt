@@ -1,21 +1,31 @@
-class Solution {
-    public int maximumSum(int[] arr) {
-        int n = arr.length;
-        int[] left = new int[n];
-        int[] right = new int[n];
-        int ans = -(1 << 30);
-        for (int i = 0, s = 0; i < n; ++i) {
-            s = Math.max(s, 0) + arr[i];
-            left[i] = s;
-            ans = Math.max(ans, left[i]);
-        }
-        for (int i = n - 1, s = 0; i >= 0; --i) {
-            s = Math.max(s, 0) + arr[i];
-            right[i] = s;
-        }
-        for (int i = 1; i < n - 1; ++i) {
-            ans = Math.max(ans, left[i - 1] + right[i + 1]);
-        }
-        return ans;
+internal class Solution {
+  fun maximumSum(arr: IntArray): Int {
+    val n = arr.size
+    val left = IntArray(n)
+    val right = IntArray(n)
+    var ans = -(1 shl 30)
+    run {
+      var i = 0
+      var s = 0
+      while (i < n) {
+        s = max(s, 0) + arr[i]
+        left[i] = s
+        ans = max(ans, left[i])
+        ++i
+      }
     }
+    run {
+      var i = n - 1
+      var s = 0
+      while (i >= 0) {
+        s = max(s, 0) + arr[i]
+        right[i] = s
+        --i
+      }
+    }
+    for (i in 1 until n - 1) {
+      ans = max(ans, left[i - 1] + right[i + 1])
+    }
+    return ans
+  }
 }

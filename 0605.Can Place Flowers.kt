@@ -1,14 +1,15 @@
-class Solution {
-    public boolean canPlaceFlowers(int[] flowerbed, int n) {
-        int m = flowerbed.length;
-        for (int i = 0; i < m; ++i) {
-            int l = i == 0 ? 0 : flowerbed[i - 1];
-            int r = i == m - 1 ? 0 : flowerbed[i + 1];
-            if (l + flowerbed[i] + r == 0) {
-                flowerbed[i] = 1;
-                --n;
-            }
-        }
-        return n <= 0;
+internal class Solution {
+  fun canPlaceFlowers(flowerbed: IntArray, n: Int): Boolean {
+    var n = n
+    val m = flowerbed.size
+    for (i in 0 until m) {
+      val l = if (i == 0) 0 else flowerbed[i - 1]
+      val r = if (i == m - 1) 0 else flowerbed[i + 1]
+      if (l + flowerbed[i] + r == 0) {
+        flowerbed[i] = 1
+        --n
+      }
     }
+    return n <= 0
+  }
 }

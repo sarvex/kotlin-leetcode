@@ -1,35 +1,35 @@
-class Solution {
-    private int[] p;
+internal class Solution {
+  private var p: IntArray
 
-    public boolean containsCycle(char[][] grid) {
-        int m = grid.length;
-        int n = grid[0].length;
-        p = new int[m * n];
-        for (int i = 0; i < p.length; ++i) {
-            p[i] = i;
-        }
-        int[] dirs = {0, 1, 0};
-        for (int i = 0; i < m; ++i) {
-            for (int j = 0; j < n; ++j) {
-                for (int k = 0; k < 2; ++k) {
-                    int x = i + dirs[k];
-                    int y = j + dirs[k + 1];
-                    if (x < m && y < n && grid[i][j] == grid[x][y]) {
-                        if (find(x * n + y) == find(i * n + j)) {
-                            return true;
-                        }
-                        p[find(x * n + y)] = find(i * n + j);
-                    }
-                }
+  fun containsCycle(grid: Array<CharArray>): Boolean {
+    val m = grid.size
+    val n = grid[0].size
+    p = IntArray(m * n)
+    for (i in p.indices) {
+      p[i] = i
+    }
+    val dirs = intArrayOf(0, 1, 0)
+    for (i in 0 until m) {
+      for (j in 0 until n) {
+        for (k in 0..1) {
+          val x: Int = i + dirs[k]
+          val y: Int = j + dirs[k + 1]
+          if (x < m && y < n && grid[i][j] == grid[x][y]) {
+            if (find(x * n + y) == find(i * n + j)) {
+              return true
             }
+            p[find(x * n + y)] = find(i * n + j)
+          }
         }
-        return false;
+      }
     }
+    return false
+  }
 
-    private int find(int x) {
-        if (p[x] != x) {
-            p[x] = find(p[x]);
-        }
-        return p[x];
+  private fun find(x: Int): Int {
+    if (p[x] != x) {
+      p[x] = find(p[x])
     }
+    return p[x]
+  }
 }

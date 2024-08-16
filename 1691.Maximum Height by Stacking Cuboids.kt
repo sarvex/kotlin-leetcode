@@ -1,20 +1,25 @@
-class Solution {
-    public int maxHeight(int[][] cuboids) {
-        for (var c : cuboids) {
-            Arrays.sort(c);
-        }
-        Arrays.sort(cuboids,
-            (a, b) -> a[0] == b[0] ? (a[1] == b[1] ? a[2] - b[2] : a[1] - b[1]) : a[0] - b[0]);
-        int n = cuboids.length;
-        int[] f = new int[n];
-        for (int i = 0; i < n; ++i) {
-            for (int j = 0; j < i; ++j) {
-                if (cuboids[j][1] <= cuboids[i][1] && cuboids[j][2] <= cuboids[i][2]) {
-                    f[i] = Math.max(f[i], f[j]);
-                }
-            }
-            f[i] += cuboids[i][2];
-        }
-        return Arrays.stream(f).max().getAsInt();
+internal class Solution {
+  fun maxHeight(cuboids: Array<IntArray>): Int {
+    for (c in cuboids) {
+      Arrays.sort(c)
     }
+    Arrays.sort(
+      cuboids
+    ) { a, b ->
+      if (a.get(0) === b.get(0)) (if (a.get(1) === b.get(1)) a.get(2) - b.get(2) else a.get(1) - b.get(1)) else a.get(
+        0
+      ) - b.get(0)
+    }
+    val n = cuboids.size
+    val f = IntArray(n)
+    for (i in 0 until n) {
+      for (j in 0 until i) {
+        if (cuboids[j][1] <= cuboids[i][1] && cuboids[j][2] <= cuboids[i][2]) {
+          f[i] = max(f[i], f[j])
+        }
+      }
+      f[i] += cuboids[i][2]
+    }
+    return Arrays.stream(f).max().getAsInt()
+  }
 }

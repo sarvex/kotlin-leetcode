@@ -1,35 +1,36 @@
-class Solution {
-    private int n;
-    private int[] nums;
+internal class Solution {
+  private var n = 0
+  private var nums: IntArray
 
-    public boolean circularArrayLoop(int[] nums) {
-        n = nums.length;
-        this.nums = nums;
-        for (int i = 0; i < n; ++i) {
-            if (nums[i] == 0) {
-                continue;
-            }
-            int slow = i, fast = next(i);
-            while (nums[slow] * nums[fast] > 0 && nums[slow] * nums[next(fast)] > 0) {
-                if (slow == fast) {
-                    if (slow != next(slow)) {
-                        return true;
-                    }
-                    break;
-                }
-                slow = next(slow);
-                fast = next(next(fast));
-            }
-            int j = i;
-            while (nums[j] * nums[next(j)] > 0) {
-                nums[j] = 0;
-                j = next(j);
-            }
+  fun circularArrayLoop(nums: IntArray): Boolean {
+    n = nums.size
+    this.nums = nums
+    for (i in 0 until n) {
+      if (nums[i] == 0) {
+        continue
+      }
+      var slow: Int = i
+      var fast = next(i)
+      while (nums[slow] * nums[fast] > 0 && nums[slow] * nums[next(fast)] > 0) {
+        if (slow == fast) {
+          if (slow != next(slow)) {
+            return true
+          }
+          break
         }
-        return false;
+        slow = next(slow)
+        fast = next(next(fast))
+      }
+      var j: Int = i
+      while (nums[j] * nums[next(j)] > 0) {
+        nums[j] = 0
+        j = next(j)
+      }
     }
+    return false
+  }
 
-    private int next(int i) {
-        return (i + nums[i] % n + n) % n;
-    }
+  private fun next(i: Int): Int {
+    return (i + nums[i] % n + n) % n
+  }
 }

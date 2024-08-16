@@ -1,17 +1,17 @@
-class Solution {
-    public boolean checkAlmostEquivalent(String word1, String word2) {
-        int[] cnt = new int[26];
-        for (int i = 0; i < word1.length(); ++i) {
-            ++cnt[word1.charAt(i) - 'a'];
-        }
-        for (int i = 0; i < word2.length(); ++i) {
-            --cnt[word2.charAt(i) - 'a'];
-        }
-        for (int x : cnt) {
-            if (Math.abs(x) > 3) {
-                return false;
-            }
-        }
-        return true;
+internal class Solution {
+  fun checkAlmostEquivalent(word1: String, word2: String): Boolean {
+    val cnt = IntArray(26)
+    for (i in 0 until word1.length) {
+      ++cnt[word1[i].code - 'a'.code]
     }
+    for (i in 0 until word2.length) {
+      --cnt[word2[i].code - 'a'.code]
+    }
+    for (x in cnt) {
+      if (abs(x) > 3) {
+        return false
+      }
+    }
+    return true
+  }
 }

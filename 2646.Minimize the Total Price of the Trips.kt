@@ -1,56 +1,60 @@
-class Solution {
-    private List<Integer>[] g;
-    private int[] price;
-    private int[] cnt;
+import java.util.*
 
-    public int minimumTotalPrice(int n, int[][] edges, int[] price, int[][] trips) {
-        this.price = price;
-        cnt = new int[n];
-        g = new List[n];
-        Arrays.setAll(g, k -> new ArrayList<>());
-        for (var e : edges) {
-            int a = e[0], b = e[1];
-            g[a].add(b);
-            g[b].add(a);
-        }
-        for (var t : trips) {
-            int start = t[0], end = t[1];
-            dfs(start, -1, end);
-        }
-        int[] ans = dfs2(0, -1);
-        return Math.min(ans[0], ans[1]);
-    }
+internal class Solution {
+  private var g: Array<List<Int>>
+  private var price: IntArray
+  private var cnt: IntArray
 
-    private boolean dfs(int i, int fa, int k) {
-        ++cnt[i];
-        if (i == k) {
-            return true;
-        }
-        boolean ok = false;
-        for (int j : g[i]) {
-            if (j != fa) {
-                ok = dfs(j, i, k);
-                if (ok) {
-                    break;
-                }
-            }
-        }
-        if (!ok) {
-            --cnt[i];
-        }
-        return ok;
+  fun minimumTotalPrice(n: Int, edges: Array<IntArray>, price: IntArray, trips: Array<IntArray>): Int {
+    this.price = price
+    cnt = IntArray(n)
+    g = arrayOfNulls(n)
+    Arrays.setAll(g) { k -> ArrayList() }
+    for (e in edges) {
+      val a = e[0]
+      val b = e[1]
+      g[a].add(b)
+      g[b].add(a)
     }
+    for (t in trips) {
+      val start = t[0]
+      val end = t[1]
+      dfs(start, -1, end)
+    }
+    val ans = dfs2(0, -1)
+    return min(ans[0], ans[1])
+  }
 
-    private int[] dfs2(int i, int fa) {
-        int a = cnt[i] * price[i];
-        int b = a >> 1;
-        for (int j : g[i]) {
-            if (j != fa) {
-                var t = dfs2(j, i);
-                a += Math.min(t[0], t[1]);
-                b += t[0];
-            }
-        }
-        return new int[] {a, b};
+  private fun dfs(i: Int, fa: Int, k: Int): Boolean {
+    ++cnt[i]
+    if (i == k) {
+      return true
     }
+    var ok = false
+    for (j in g[i]) {
+      if (j != fa) {
+        ok = dfs(j, i, k)
+        if (ok) {
+          break
+        }
+      }
+    }
+    if (!ok) {
+      --cnt[i]
+    }
+    return ok
+  }
+
+  private fun dfs2(i: Int, fa: Int): IntArray {
+    var a = cnt[i] * price[i]
+    var b = a shr 1
+    for (j in g[i]) {
+      if (j != fa) {
+        val t = dfs2(j, i)
+        a += min(t[0], t[1])
+        b += t[0]
+      }
+    }
+    return intArrayOf(a, b)
+  }
 }

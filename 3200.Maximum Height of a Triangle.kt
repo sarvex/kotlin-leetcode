@@ -1,13 +1,17 @@
-class Solution {
-    public int maxHeightOfTriangle(int red, int blue) {
-        int ans = 0;
-        for (int k = 0; k < 2; ++k) {
-            int[] c = {red, blue};
-            for (int i = 1, j = k; i <= c[j]; j ^= 1, ++i) {
-                c[j] -= i;
-                ans = Math.max(ans, i);
-            }
-        }
-        return ans;
+internal class Solution {
+  fun maxHeightOfTriangle(red: Int, blue: Int): Int {
+    var ans = 0
+    for (k in 0..1) {
+      val c = intArrayOf(red, blue)
+      var i = 1
+      var j = k
+      while (i <= c[j]) {
+        c[j] -= i
+        ans = max(ans, i)
+        j = j xor 1
+        ++i
+      }
     }
+    return ans
+  }
 }

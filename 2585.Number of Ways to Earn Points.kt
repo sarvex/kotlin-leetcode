@@ -1,19 +1,20 @@
-class Solution {
-    public int waysToReachTarget(int target, int[][] types) {
-        int n = types.length;
-        final int mod = (int) 1e9 + 7;
-        int[][] f = new int[n + 1][target + 1];
-        f[0][0] = 1;
-        for (int i = 1; i <= n; ++i) {
-            int count = types[i - 1][0], marks = types[i - 1][1];
-            for (int j = 0; j <= target; ++j) {
-                for (int k = 0; k <= count; ++k) {
-                    if (j >= k * marks) {
-                        f[i][j] = (f[i][j] + f[i - 1][j - k * marks]) % mod;
-                    }
-                }
-            }
+internal class Solution {
+  fun waysToReachTarget(target: Int, types: Array<IntArray>): Int {
+    val n = types.size
+    val mod = 1e9.toInt() + 7
+    val f = Array(n + 1) { IntArray(target + 1) }
+    f[0][0] = 1
+    for (i in 1..n) {
+      val count = types[i - 1][0]
+      val marks = types[i - 1][1]
+      for (j in 0..target) {
+        for (k in 0..count) {
+          if (j >= k * marks) {
+            f[i][j] = (f[i][j] + f[i - 1][j - k * marks]) % mod
+          }
         }
-        return f[n][target];
+      }
     }
+    return f[n][target]
+  }
 }

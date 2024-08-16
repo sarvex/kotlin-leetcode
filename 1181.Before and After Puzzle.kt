@@ -1,21 +1,21 @@
-class Solution {
-    public List<String> beforeAndAfterPuzzles(String[] phrases) {
-        int n = phrases.length;
-        var ps = new String[n][];
-        for (int i = 0; i < n; ++i) {
-            var ws = phrases[i].split(" ");
-            ps[i] = new String[] {ws[0], ws[ws.length - 1]};
-        }
-        Set<String> s = new HashSet<>();
-        for (int i = 0; i < n; ++i) {
-            for (int j = 0; j < n; ++j) {
-                if (i != j && ps[i][1].equals(ps[j][0])) {
-                    s.add(phrases[i] + phrases[j].substring(ps[j][0].length()));
-                }
-            }
-        }
-        var ans = new ArrayList<>(s);
-        Collections.sort(ans);
-        return ans;
+internal class Solution {
+  fun beforeAndAfterPuzzles(phrases: Array<String>): List<String> {
+    val n = phrases.size
+    val ps: Array<Array<String>> = arrayOfNulls(n)
+    for (i in 0 until n) {
+      val ws: Array<String> = phrases[i].split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+      ps[i] = arrayOf(ws[0], ws[ws.size - 1])
     }
+    val s: Set<String> = HashSet()
+    for (i in 0 until n) {
+      for (j in 0 until n) {
+        if (i != j && ps[i][1] == ps[j][0]) {
+          s.add(phrases[i] + phrases[j].substring(ps[j][0].length))
+        }
+      }
+    }
+    val ans: ArrayList = ArrayList(s)
+    Collections.sort(ans)
+    return ans
+  }
 }

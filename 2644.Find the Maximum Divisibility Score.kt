@@ -1,21 +1,21 @@
-class Solution {
-    public int maxDivScore(int[] nums, int[] divisors) {
-        int ans = divisors[0];
-        int mx = 0;
-        for (int div : divisors) {
-            int cnt = 0;
-            for (int x : nums) {
-                if (x % div == 0) {
-                    ++cnt;
-                }
-            }
-            if (mx < cnt) {
-                mx = cnt;
-                ans = div;
-            } else if (mx == cnt) {
-                ans = Math.min(ans, div);
-            }
+internal class Solution {
+  fun maxDivScore(nums: IntArray, divisors: IntArray): Int {
+    var ans = divisors[0]
+    var mx = 0
+    for (div in divisors) {
+      var cnt = 0
+      for (x in nums) {
+        if (x % div == 0) {
+          ++cnt
         }
-        return ans;
+      }
+      if (mx < cnt) {
+        mx = cnt
+        ans = div
+      } else if (mx == cnt) {
+        ans = min(ans, div)
+      }
     }
+    return ans
+  }
 }

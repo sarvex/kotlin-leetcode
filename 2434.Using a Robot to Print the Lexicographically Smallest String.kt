@@ -1,22 +1,22 @@
-class Solution {
-    public String robotWithString(String s) {
-        int[] cnt = new int[26];
-        for (char c : s.toCharArray()) {
-            ++cnt[c - 'a'];
-        }
-        StringBuilder ans = new StringBuilder();
-        Deque<Character> stk = new ArrayDeque<>();
-        char mi = 'a';
-        for (char c : s.toCharArray()) {
-            --cnt[c - 'a'];
-            while (mi < 'z' && cnt[mi - 'a'] == 0) {
-                ++mi;
-            }
-            stk.push(c);
-            while (!stk.isEmpty() && stk.peek() <= mi) {
-                ans.append(stk.pop());
-            }
-        }
-        return ans.toString();
+internal class Solution {
+  fun robotWithString(s: String): String {
+    val cnt = IntArray(26)
+    for (c in s.toCharArray()) {
+      ++cnt[c.code - 'a'.code]
     }
+    val ans = StringBuilder()
+    val stk: Deque<Char> = ArrayDeque()
+    var mi = 'a'
+    for (c in s.toCharArray()) {
+      --cnt[c.code - 'a'.code]
+      while (mi < 'z' && cnt[mi.code - 'a'.code] == 0) {
+        ++mi
+      }
+      stk.push(c)
+      while (!stk.isEmpty() && stk.peek() <= mi) {
+        ans.append(stk.pop())
+      }
+    }
+    return ans.toString()
+  }
 }

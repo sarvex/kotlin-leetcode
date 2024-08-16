@@ -1,39 +1,38 @@
-class TextEditor {
-    private StringBuilder left = new StringBuilder();
-    private StringBuilder right = new StringBuilder();
+internal class TextEditor {
+  private val left = StringBuilder()
+  private val right = StringBuilder()
 
-    public TextEditor() {
-    }
+  fun addText(text: String?) {
+    left.append(text)
+  }
 
-    public void addText(String text) {
-        left.append(text);
-    }
+  fun deleteText(k: Int): Int {
+    var k = k
+    k = min(k, left.length)
+    left.setLength(left.length - k)
+    return k
+  }
 
-    public int deleteText(int k) {
-        k = Math.min(k, left.length());
-        left.setLength(left.length() - k);
-        return k;
+  fun cursorLeft(k: Int): String {
+    var k = k
+    k = min(k, left.length)
+    for (i in 0 until k) {
+      right.append(left[left.length - 1])
+      left.deleteCharAt(left.length - 1)
     }
+    return left.substring(max(left.length - 10, 0))
+  }
 
-    public String cursorLeft(int k) {
-        k = Math.min(k, left.length());
-        for (int i = 0; i < k; ++i) {
-            right.append(left.charAt(left.length() - 1));
-            left.deleteCharAt(left.length() - 1);
-        }
-        return left.substring(Math.max(left.length() - 10, 0));
+  fun cursorRight(k: Int): String {
+    var k = k
+    k = min(k, right.length)
+    for (i in 0 until k) {
+      left.append(right[right.length - 1])
+      right.deleteCharAt(right.length - 1)
     }
-
-    public String cursorRight(int k) {
-        k = Math.min(k, right.length());
-        for (int i = 0; i < k; ++i) {
-            left.append(right.charAt(right.length() - 1));
-            right.deleteCharAt(right.length() - 1);
-        }
-        return left.substring(Math.max(left.length() - 10, 0));
-    }
+    return left.substring(max(left.length - 10, 0))
+  }
 }
-
 /**
  * Your TextEditor object will be instantiated and called as such:
  * TextEditor obj = new TextEditor();

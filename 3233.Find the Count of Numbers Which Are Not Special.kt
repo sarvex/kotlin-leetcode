@@ -1,28 +1,35 @@
-class Solution {
-    static int m = 31623;
-    static boolean[] primes = new boolean[m + 1];
+import java.util.*
 
-    static {
-        Arrays.fill(primes, true);
-        primes[0] = primes[1] = false;
-        for (int i = 2; i <= m; i++) {
-            if (primes[i]) {
-                for (int j = i + i; j <= m; j += i) {
-                    primes[j] = false;
-                }
-            }
-        }
+internal class Solution {
+  fun nonSpecialCount(l: Int, r: Int): Int {
+    val lo = ceil(sqrt(l)) as Int
+    val hi = floor(sqrt(r)) as Int
+    var cnt = 0
+    for (i in lo..hi) {
+      if (Solution.Companion.primes.get(i)) {
+        cnt++
+      }
     }
+    return r - l + 1 - cnt
+  }
 
-    public int nonSpecialCount(int l, int r) {
-        int lo = (int) Math.ceil(Math.sqrt(l));
-        int hi = (int) Math.floor(Math.sqrt(r));
-        int cnt = 0;
-        for (int i = lo; i <= hi; i++) {
-            if (primes[i]) {
-                cnt++;
-            }
+  companion object {
+    var m: Int = 31623
+    var primes: BooleanArray = BooleanArray(Solution.Companion.m + 1)
+
+    init {
+      Arrays.fill(Solution.Companion.primes, true)
+      Solution.Companion.primes.get(1) = false
+      Solution.Companion.primes.get(0) = Solution.Companion.primes.get(1)
+      for (i in 2..Solution.Companion.m) {
+        if (Solution.Companion.primes.get(i)) {
+          var j = i + i
+          while (j <= Solution.Companion.m) {
+            Solution.Companion.primes.get(j) = false
+            j += i
+          }
         }
-        return r - l + 1 - cnt;
+      }
     }
+  }
 }

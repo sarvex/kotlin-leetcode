@@ -1,25 +1,27 @@
-class Solution {
-    public int[][] differenceOfDistinctValues(int[][] grid) {
-        int m = grid.length, n = grid[0].length;
-        int[][] ans = new int[m][n];
-        for (int i = 0; i < m; ++i) {
-            for (int j = 0; j < n; ++j) {
-                int x = i, y = j;
-                Set<Integer> s = new HashSet<>();
-                while (x > 0 && y > 0) {
-                    s.add(grid[--x][--y]);
-                }
-                int tl = s.size();
-                x = i;
-                y = j;
-                s.clear();
-                while (x < m - 1 && y < n - 1) {
-                    s.add(grid[++x][++y]);
-                }
-                int br = s.size();
-                ans[i][j] = Math.abs(tl - br);
-            }
+internal class Solution {
+  fun differenceOfDistinctValues(grid: Array<IntArray>): Array<IntArray> {
+    val m = grid.size
+    val n = grid[0].size
+    val ans = Array(m) { IntArray(n) }
+    for (i in 0 until m) {
+      for (j in 0 until n) {
+        var x: Int = i
+        var y: Int = j
+        val s: Set<Int> = HashSet()
+        while (x > 0 && y > 0) {
+          s.add(grid[--x][--y])
         }
-        return ans;
+        val tl: Int = s.size()
+        x = i
+        y = j
+        s.clear()
+        while (x < m - 1 && y < n - 1) {
+          s.add(grid[++x][++y])
+        }
+        val br: Int = s.size()
+        ans[i][j] = abs(tl - br)
+      }
     }
+    return ans
+  }
 }

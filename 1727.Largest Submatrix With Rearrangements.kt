@@ -1,21 +1,26 @@
-class Solution {
-    public int largestSubmatrix(int[][] matrix) {
-        int m = matrix.length, n = matrix[0].length;
-        for (int i = 1; i < m; ++i) {
-            for (int j = 0; j < n; ++j) {
-                if (matrix[i][j] == 1) {
-                    matrix[i][j] = matrix[i - 1][j] + 1;
-                }
-            }
+internal class Solution {
+  fun largestSubmatrix(matrix: Array<IntArray>): Int {
+    val m = matrix.size
+    val n = matrix[0].size
+    for (i in 1 until m) {
+      for (j in 0 until n) {
+        if (matrix[i][j] == 1) {
+          matrix[i][j] = matrix[i - 1][j] + 1
         }
-        int ans = 0;
-        for (var row : matrix) {
-            Arrays.sort(row);
-            for (int j = n - 1, k = 1; j >= 0 && row[j] > 0; --j, ++k) {
-                int s = row[j] * k;
-                ans = Math.max(ans, s);
-            }
-        }
-        return ans;
+      }
     }
+    var ans = 0
+    for (row in matrix) {
+      Arrays.sort(row)
+      var j = n - 1
+      var k = 1
+      while (j >= 0 && row[j] > 0) {
+        val s = row[j] * k
+        ans = max(ans, s)
+        --j
+        ++k
+      }
+    }
+    return ans
+  }
 }

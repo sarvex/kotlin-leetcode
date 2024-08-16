@@ -1,19 +1,22 @@
-class Solution {
-    public int maximizeSquareHoleArea(int n, int m, int[] hBars, int[] vBars) {
-        int x = Math.min(f(hBars), f(vBars));
-        return x * x;
-    }
+import java.util.*
 
-    private int f(int[] nums) {
-        Arrays.sort(nums);
-        int ans = 1, cnt = 1;
-        for (int i = 1; i < nums.length; ++i) {
-            if (nums[i] == nums[i - 1] + 1) {
-                ans = Math.max(ans, ++cnt);
-            } else {
-                cnt = 1;
-            }
-        }
-        return ans + 1;
+internal class Solution {
+  fun maximizeSquareHoleArea(n: Int, m: Int, hBars: IntArray, vBars: IntArray): Int {
+    val x: Int = min(f(hBars), f(vBars))
+    return x * x
+  }
+
+  private fun f(nums: IntArray): Int {
+    Arrays.sort(nums)
+    var ans = 1
+    var cnt = 1
+    for (i in 1 until nums.size) {
+      if (nums[i] == nums[i - 1] + 1) {
+        ans = max(ans, ++cnt)
+      } else {
+        cnt = 1
+      }
     }
+    return ans + 1
+  }
 }

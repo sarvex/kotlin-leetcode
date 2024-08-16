@@ -1,88 +1,85 @@
-class MKAverage {
+internal class MKAverage(private val m: Int, private val k: Int) {
+  private var s: Long = 0
+  private var size1 = 0
+  private var size3 = 0
+  private val q: Deque<Int> = ArrayDeque()
+  private val lo: TreeMap<Int, Int> = TreeMap()
+  private val mid: TreeMap<Int, Int> = TreeMap()
+  private val hi: TreeMap<Int, Int> = TreeMap()
 
-    private int m, k;
-    private long s;
-    private int size1, size3;
-    private Deque<Integer> q = new ArrayDeque<>();
-    private TreeMap<Integer, Integer> lo = new TreeMap<>();
-    private TreeMap<Integer, Integer> mid = new TreeMap<>();
-    private TreeMap<Integer, Integer> hi = new TreeMap<>();
-
-    public MKAverage(int m, int k) {
-        this.m = m;
-        this.k = k;
+  fun addElement(num: Int) {
+    if (lo.isEmpty() || num <= lo.lastKey()) {
+      lo.merge(num, 1) { a: Int, b: Int -> Integer.sum(a, b) }
+      ++size1
+    } else if (hi.isEmpty() || num >= hi.firstKey()) {
+      hi.merge(num, 1) { a: Int, b: Int -> Integer.sum(a, b) }
+      ++size3
+    } else {
+      mid.merge(num, 1) { a: Int, b: Int -> Integer.sum(a, b) }
+      s += num.toLong()
     }
-
-    public void addElement(int num) {
-        if (lo.isEmpty() || num <= lo.lastKey()) {
-            lo.merge(num, 1, Integer::sum);
-            ++size1;
-        } else if (hi.isEmpty() || num >= hi.firstKey()) {
-            hi.merge(num, 1, Integer::sum);
-            ++size3;
-        } else {
-            mid.merge(num, 1, Integer::sum);
-            s += num;
+    q.offer(num)
+    if (q.size() > m) {
+      val x: Int = q.poll()
+      if (lo.containsKey(x)) {
+        if (lo.merge(x, -1) { a: Int, b: Int -> Integer.sum(a, b) } === 0) {
+          lo.remove(x)
         }
-        q.offer(num);
-        if (q.size() > m) {
-            int x = q.poll();
-            if (lo.containsKey(x)) {
-                if (lo.merge(x, -1, Integer::sum) == 0) {
-                    lo.remove(x);
-                }
-                --size1;
-            } else if (hi.containsKey(x)) {
-                if (hi.merge(x, -1, Integer::sum) == 0) {
-                    hi.remove(x);
-                }
-                --size3;
-            } else {
-                if (mid.merge(x, -1, Integer::sum) == 0) {
-                    mid.remove(x);
-                }
-                s -= x;
-            }
+        --size1
+      } else if (hi.containsKey(x)) {
+        if (hi.merge(x, -1) { a: Int, b: Int -> Integer.sum(a, b) } === 0) {
+          hi.remove(x)
         }
-        for (; size1 > k; --size1) {
-            int x = lo.lastKey();
-            if (lo.merge(x, -1, Integer::sum) == 0) {
-                lo.remove(x);
-            }
-            mid.merge(x, 1, Integer::sum);
-            s += x;
+        --size3
+      } else {
+        if (mid.merge(x, -1) { a: Int, b: Int -> Integer.sum(a, b) } === 0) {
+          mid.remove(x)
         }
-        for (; size3 > k; --size3) {
-            int x = hi.firstKey();
-            if (hi.merge(x, -1, Integer::sum) == 0) {
-                hi.remove(x);
-            }
-            mid.merge(x, 1, Integer::sum);
-            s += x;
-        }
-        for (; size1 < k && !mid.isEmpty(); ++size1) {
-            int x = mid.firstKey();
-            if (mid.merge(x, -1, Integer::sum) == 0) {
-                mid.remove(x);
-            }
-            s -= x;
-            lo.merge(x, 1, Integer::sum);
-        }
-        for (; size3 < k && !mid.isEmpty(); ++size3) {
-            int x = mid.lastKey();
-            if (mid.merge(x, -1, Integer::sum) == 0) {
-                mid.remove(x);
-            }
-            s -= x;
-            hi.merge(x, 1, Integer::sum);
-        }
+        s -= x.toLong()
+      }
     }
-
-    public int calculateMKAverage() {
-        return q.size() < m ? -1 : (int) (s / (q.size() - k * 2));
+    while (size1 > k) {
+      val x: Int = lo.lastKey()
+      if (lo.merge(x, -1) { a: Int, b: Int -> Integer.sum(a, b) } === 0) {
+        lo.remove(x)
+      }
+      mid.merge(x, 1) { a: Int, b: Int -> Integer.sum(a, b) }
+      s += x.toLong()
+      --size1
     }
+    while (size3 > k) {
+      val x: Int = hi.firstKey()
+      if (hi.merge(x, -1) { a: Int, b: Int -> Integer.sum(a, b) } === 0) {
+        hi.remove(x)
+      }
+      mid.merge(x, 1) { a: Int, b: Int -> Integer.sum(a, b) }
+      s += x.toLong()
+      --size3
+    }
+    while (size1 < k && !mid.isEmpty()) {
+      val x: Int = mid.firstKey()
+      if (mid.merge(x, -1) { a: Int, b: Int -> Integer.sum(a, b) } === 0) {
+        mid.remove(x)
+      }
+      s -= x.toLong()
+      lo.merge(x, 1) { a: Int, b: Int -> Integer.sum(a, b) }
+      ++size1
+    }
+    while (size3 < k && !mid.isEmpty()) {
+      val x: Int = mid.lastKey()
+      if (mid.merge(x, -1) { a: Int, b: Int -> Integer.sum(a, b) } === 0) {
+        mid.remove(x)
+      }
+      s -= x.toLong()
+      hi.merge(x, 1) { a: Int, b: Int -> Integer.sum(a, b) }
+      ++size3
+    }
+  }
+
+  fun calculateMKAverage(): Int {
+    return if (q.size() < m) -1 else (s / (q.size() - k * 2)) as Int
+  }
 }
-
 /**
  * Your MKAverage object will be instantiated and called as such:
  * MKAverage obj = new MKAverage(m, k);

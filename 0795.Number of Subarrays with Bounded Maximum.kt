@@ -1,14 +1,15 @@
-class Solution {
-    public int numSubarrayBoundedMax(int[] nums, int left, int right) {
-        return f(nums, right) - f(nums, left - 1);
-    }
+internal class Solution {
+  fun numSubarrayBoundedMax(nums: IntArray, left: Int, right: Int): Int {
+    return f(nums, right) - f(nums, left - 1)
+  }
 
-    private int f(int[] nums, int x) {
-        int cnt = 0, t = 0;
-        for (int v : nums) {
-            t = v > x ? 0 : t + 1;
-            cnt += t;
-        }
-        return cnt;
+  private fun f(nums: IntArray, x: Int): Int {
+    var cnt = 0
+    var t = 0
+    for (v in nums) {
+      t = if (v > x) 0 else t + 1
+      cnt += t
     }
+    return cnt
+  }
 }

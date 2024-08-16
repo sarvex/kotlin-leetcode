@@ -1,15 +1,15 @@
-class Solution {
-    public int[] createTargetArray(int[] nums, int[] index) {
-        int n = nums.length;
-        List<Integer> target = new ArrayList<>();
-        for (int i = 0; i < n; ++i) {
-            target.add(index[i], nums[i]);
-        }
-        // return target.stream().mapToInt(i -> i).toArray();
-        int[] ans = new int[n];
-        for (int i = 0; i < n; ++i) {
-            ans[i] = target.get(i);
-        }
-        return ans;
+internal class Solution {
+  fun createTargetArray(nums: IntArray, index: IntArray): IntArray {
+    val n = nums.size
+    val target: List<Int> = ArrayList()
+    for (i in 0 until n) {
+      target.add(index[i], nums[i])
     }
+    // return target.stream().mapToInt(i -> i).toArray();
+    val ans = IntArray(n)
+    for (i in 0 until n) {
+      ans[i] = target[i]
+    }
+    return ans
+  }
 }

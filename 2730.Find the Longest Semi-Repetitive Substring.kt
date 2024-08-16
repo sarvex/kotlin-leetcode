@@ -1,13 +1,19 @@
-class Solution {
-    public int longestSemiRepetitiveSubstring(String s) {
-        int ans = 1, n = s.length();
-        for (int i = 1, j = 0, cnt = 0; i < n; ++i) {
-            cnt += s.charAt(i) == s.charAt(i - 1) ? 1 : 0;
-            for (; cnt > 1; ++j) {
-                cnt -= s.charAt(j) == s.charAt(j + 1) ? 1 : 0;
-            }
-            ans = Math.max(ans, i - j + 1);
-        }
-        return ans;
+internal class Solution {
+  fun longestSemiRepetitiveSubstring(s: String): Int {
+    var ans = 1
+    val n = s.length
+    var i = 1
+    var j = 0
+    var cnt = 0
+    while (i < n) {
+      cnt += if (s[i] == s[i - 1]) 1 else 0
+      while (cnt > 1) {
+        cnt -= if (s[j] == s[j + 1]) 1 else 0
+        ++j
+      }
+      ans = max(ans, i - j + 1)
+      ++i
     }
+    return ans
+  }
 }

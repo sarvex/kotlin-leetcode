@@ -1,32 +1,29 @@
-class HitCounter {
-    private List<Integer> ts = new ArrayList<>();
+internal class HitCounter {
+  private val ts: List<Int> = ArrayList()
 
-    public HitCounter() {
-    }
+  fun hit(timestamp: Int) {
+    ts.add(timestamp)
+  }
 
-    public void hit(int timestamp) {
-        ts.add(timestamp);
-    }
+  fun getHits(timestamp: Int): Int {
+    val l = search(timestamp - 300 + 1)
+    return ts.size() - l
+  }
 
-    public int getHits(int timestamp) {
-        int l = search(timestamp - 300 + 1);
-        return ts.size() - l;
+  private fun search(x: Int): Int {
+    var l = 0
+    var r: Int = ts.size()
+    while (l < r) {
+      val mid = (l + r) shr 1
+      if (ts[mid] >= x) {
+        r = mid
+      } else {
+        l = mid + 1
+      }
     }
-
-    private int search(int x) {
-        int l = 0, r = ts.size();
-        while (l < r) {
-            int mid = (l + r) >> 1;
-            if (ts.get(mid) >= x) {
-                r = mid;
-            } else {
-                l = mid + 1;
-            }
-        }
-        return l;
-    }
+    return l
+  }
 }
-
 /**
  * Your HitCounter object will be instantiated and called as such:
  * HitCounter obj = new HitCounter();

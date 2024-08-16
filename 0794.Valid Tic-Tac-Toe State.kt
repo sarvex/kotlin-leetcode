@@ -1,42 +1,43 @@
-class Solution {
-    private String[] board;
+internal class Solution {
+  private var board: Array<String>
 
-    public boolean validTicTacToe(String[] board) {
-        this.board = board;
-        int x = count('X'), o = count('O');
-        if (x != o && x - 1 != o) {
-            return false;
-        }
-        if (win('X') && x - 1 != o) {
-            return false;
-        }
-        return !(win('O') && x != o);
+  fun validTicTacToe(board: Array<String>): Boolean {
+    this.board = board
+    val x = count('X')
+    val o = count('O')
+    if (x != o && x - 1 != o) {
+      return false
     }
+    if (win('X') && x - 1 != o) {
+      return false
+    }
+    return !(win('O') && x != o)
+  }
 
-    private boolean win(char x) {
-        for (int i = 0; i < 3; ++i) {
-            if (board[i].charAt(0) == x && board[i].charAt(1) == x && board[i].charAt(2) == x) {
-                return true;
-            }
-            if (board[0].charAt(i) == x && board[1].charAt(i) == x && board[2].charAt(i) == x) {
-                return true;
-            }
-        }
-        if (board[0].charAt(0) == x && board[1].charAt(1) == x && board[2].charAt(2) == x) {
-            return true;
-        }
-        return board[0].charAt(2) == x && board[1].charAt(1) == x && board[2].charAt(0) == x;
+  private fun win(x: Char): Boolean {
+    for (i in 0..2) {
+      if (board[i][0] == x && board[i][1] == x && board[i][2] == x) {
+        return true
+      }
+      if (board[0][i] == x && board[1][i] == x && board[2][i] == x) {
+        return true
+      }
     }
+    if (board[0][0] == x && board[1][1] == x && board[2][2] == x) {
+      return true
+    }
+    return board[0][2] == x && board[1][1] == x && board[2][0] == x
+  }
 
-    private int count(char x) {
-        int cnt = 0;
-        for (var row : board) {
-            for (var c : row.toCharArray()) {
-                if (c == x) {
-                    ++cnt;
-                }
-            }
+  private fun count(x: Char): Int {
+    var cnt = 0
+    for (row in board) {
+      for (c in row.toCharArray()) {
+        if (c == x) {
+          ++cnt
         }
-        return cnt;
+      }
     }
+    return cnt
+  }
 }

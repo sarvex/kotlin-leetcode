@@ -1,50 +1,46 @@
-class Trie {
-    private Trie[] children = new Trie[26];
-    private int val;
+internal class Trie {
+  private val children: Array<Trie> = arrayOfNulls(26)
+  private var `val` = 0
 
-    public void insert(String w, int x) {
-        Trie node = this;
-        for (int i = 0; i < w.length(); ++i) {
-            int idx = w.charAt(i) - 'a';
-            if (node.children[idx] == null) {
-                node.children[idx] = new Trie();
-            }
-            node = node.children[idx];
-            node.val += x;
-        }
+  fun insert(w: String, x: Int) {
+    var node = this
+    for (i in 0 until w.length) {
+      val idx: Int = w[i].code - 'a'.code
+      if (node.children[idx] == null) {
+        node.children[idx] = Trie()
+      }
+      node = node.children[idx]
+      node.`val` += x
     }
+  }
 
-    public int search(String w) {
-        Trie node = this;
-        for (int i = 0; i < w.length(); ++i) {
-            int idx = w.charAt(i) - 'a';
-            if (node.children[idx] == null) {
-                return 0;
-            }
-            node = node.children[idx];
-        }
-        return node.val;
+  fun search(w: String): Int {
+    var node = this
+    for (i in 0 until w.length) {
+      val idx: Int = w[i].code - 'a'.code
+      if (node.children[idx] == null) {
+        return 0
+      }
+      node = node.children[idx]
     }
+    return node.`val`
+  }
 }
 
-class MapSum {
-    private Map<String, Integer> d = new HashMap<>();
-    private Trie trie = new Trie();
+internal class MapSum {
+  private val d: Map<String, Int> = HashMap()
+  private val trie = Trie()
 
-    public MapSum() {
-    }
+  fun insert(key: String, `val`: Int) {
+    val x = `val` - d.getOrDefault(key, 0)
+    d.put(key, `val`)
+    trie.insert(key, x)
+  }
 
-    public void insert(String key, int val) {
-        int x = val - d.getOrDefault(key, 0);
-        d.put(key, val);
-        trie.insert(key, x);
-    }
-
-    public int sum(String prefix) {
-        return trie.search(prefix);
-    }
+  fun sum(prefix: String): Int {
+    return trie.search(prefix)
+  }
 }
-
 /**
  * Your MapSum object will be instantiated and called as such:
  * MapSum obj = new MapSum();

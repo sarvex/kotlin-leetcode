@@ -1,19 +1,19 @@
-class Solution {
-    public int[] distinctNumbers(int[] nums, int k) {
-        Map<Integer, Integer> cnt = new HashMap<>();
-        for (int i = 0; i < k; ++i) {
-            cnt.merge(nums[i], 1, Integer::sum);
-        }
-        int n = nums.length;
-        int[] ans = new int[n - k + 1];
-        ans[0] = cnt.size();
-        for (int i = k; i < n; ++i) {
-            cnt.merge(nums[i], 1, Integer::sum);
-            if (cnt.merge(nums[i - k], -1, Integer::sum) == 0) {
-                cnt.remove(nums[i - k]);
-            }
-            ans[i - k + 1] = cnt.size();
-        }
-        return ans;
+internal class Solution {
+  fun distinctNumbers(nums: IntArray, k: Int): IntArray {
+    val cnt: Map<Int, Int> = HashMap()
+    for (i in 0 until k) {
+      cnt.merge(nums[i], 1) { a: Int, b: Int -> Integer.sum(a, b) }
     }
+    val n = nums.size
+    val ans = IntArray(n - k + 1)
+    ans[0] = cnt.size()
+    for (i in k until n) {
+      cnt.merge(nums[i], 1) { a: Int, b: Int -> Integer.sum(a, b) }
+      if (cnt.merge(nums[i - k], -1) { a: Int, b: Int -> Integer.sum(a, b) } === 0) {
+        cnt.remove(nums[i - k])
+      }
+      ans[i - k + 1] = cnt.size()
+    }
+    return ans
+  }
 }

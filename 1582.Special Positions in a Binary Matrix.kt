@@ -1,22 +1,23 @@
-class Solution {
-    public int numSpecial(int[][] mat) {
-        int m = mat.length, n = mat[0].length;
-        int[] r = new int[m];
-        int[] c = new int[n];
-        for (int i = 0; i < m; ++i) {
-            for (int j = 0; j < n; ++j) {
-                r[i] += mat[i][j];
-                c[j] += mat[i][j];
-            }
-        }
-        int ans = 0;
-        for (int i = 0; i < m; ++i) {
-            for (int j = 0; j < n; ++j) {
-                if (mat[i][j] == 1 && r[i] == 1 && c[j] == 1) {
-                    ++ans;
-                }
-            }
-        }
-        return ans;
+internal class Solution {
+  fun numSpecial(mat: Array<IntArray>): Int {
+    val m = mat.size
+    val n = mat[0].size
+    val r = IntArray(m)
+    val c = IntArray(n)
+    for (i in 0 until m) {
+      for (j in 0 until n) {
+        r[i] += mat[i][j]
+        c[j] += mat[i][j]
+      }
     }
+    var ans = 0
+    for (i in 0 until m) {
+      for (j in 0 until n) {
+        if (mat[i][j] == 1 && r[i] == 1 && c[j] == 1) {
+          ++ans
+        }
+      }
+    }
+    return ans
+  }
 }

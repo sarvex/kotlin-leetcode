@@ -1,46 +1,49 @@
-class Solution {
-    private int[] f;
-    private int[][] points;
-    private int n;
+internal class Solution {
+  private var f: IntArray
+  private var points: Array<IntArray>
+  private var n = 0
 
-    public int minimumLines(int[][] points) {
-        n = points.length;
-        this.points = points;
-        f = new int[1 << n];
-        return dfs(0);
+  fun minimumLines(points: Array<IntArray>): Int {
+    n = points.size
+    this.points = points
+    f = IntArray(1 shl n)
+    return dfs(0)
+  }
+
+  private fun dfs(state: Int): Int {
+    if (state == (1 shl n) - 1) {
+      return 0
     }
-
-    private int dfs(int state) {
-        if (state == (1 << n) - 1) {
-            return 0;
-        }
-        if (f[state] != 0) {
-            return f[state];
-        }
-        int ans = 1 << 30;
-        for (int i = 0; i < n; ++i) {
-            if (((state >> i) & 1) == 0) {
-                for (int j = i + 1; j < n; ++j) {
-                    int nxt = state | 1 << i | 1 << j;
-                    for (int k = j + 1; k < n; ++k) {
-                        if (((state >> k) & 1) == 0 && check(i, j, k)) {
-                            nxt |= 1 << k;
-                        }
-                    }
-                    ans = Math.min(ans, dfs(nxt) + 1);
-                }
-                if (i == n - 1) {
-                    ans = Math.min(ans, dfs(state | 1 << i) + 1);
-                }
+    if (f[state] != 0) {
+      return f[state]
+    }
+    var ans = 1 shl 30
+    for (i in 0 until n) {
+      if (((state shr i) and 1) == 0) {
+        for (j in i + 1 until n) {
+          var nxt = state or (1 shl i) or (1 shl j)
+          for (k in j + 1 until n) {
+            if (((state shr k) and 1) == 0 && check(i, j, k)) {
+              nxt = nxt or (1 shl k)
             }
+          }
+          ans = min(ans, dfs(nxt) + 1)
         }
-        return f[state] = ans;
+        if (i == n - 1) {
+          ans = min(ans, dfs(state or (1 shl i)) + 1)
+        }
+      }
     }
+    return ans.also { f[state] = it }
+  }
 
-    private boolean check(int i, int j, int k) {
-        int x1 = points[i][0], y1 = points[i][1];
-        int x2 = points[j][0], y2 = points[j][1];
-        int x3 = points[k][0], y3 = points[k][1];
-        return (x2 - x1) * (y3 - y1) == (x3 - x1) * (y2 - y1);
-    }
+  private fun check(i: Int, j: Int, k: Int): Boolean {
+    val x1 = points[i][0]
+    val y1 = points[i][1]
+    val x2 = points[j][0]
+    val y2 = points[j][1]
+    val x3 = points[k][0]
+    val y3 = points[k][1]
+    return (x2 - x1) * (y3 - y1) == (x3 - x1) * (y2 - y1)
+  }
 }

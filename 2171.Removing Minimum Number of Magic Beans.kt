@@ -1,15 +1,17 @@
-class Solution {
-    public long minimumRemoval(int[] beans) {
-        Arrays.sort(beans);
-        long s = 0;
-        for (int x : beans) {
-            s += x;
-        }
-        long ans = s;
-        int n = beans.length;
-        for (int i = 0; i < n; ++i) {
-            ans = Math.min(ans, s - (long) beans[i] * (n - i));
-        }
-        return ans;
+import java.util.*
+
+internal class Solution {
+  fun minimumRemoval(beans: IntArray): Long {
+    Arrays.sort(beans)
+    var s: Long = 0
+    for (x in beans) {
+      s += x.toLong()
     }
+    var ans = s
+    val n = beans.size
+    for (i in 0 until n) {
+      ans = min(ans, s - beans[i].toLong() * (n - i))
+    }
+    return ans
+  }
 }

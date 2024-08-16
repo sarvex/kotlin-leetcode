@@ -1,59 +1,70 @@
-class Solution {
-    private final int mod = (int) 1e9 + 7;
+import java.util.*
 
-    public int countKSubsequencesWithMaxBeauty(String s, int k) {
-        int[] f = new int[26];
-        int n = s.length();
-        int cnt = 0;
-        for (int i = 0; i < n; ++i) {
-            if (++f[s.charAt(i) - 'a'] == 1) {
-                ++cnt;
-            }
-        }
-        if (cnt < k) {
-            return 0;
-        }
-        Integer[] vs = new Integer[cnt];
-        for (int i = 0, j = 0; i < 26; ++i) {
-            if (f[i] > 0) {
-                vs[j++] = f[i];
-            }
-        }
-        Arrays.sort(vs, (a, b) -> b - a);
-        long ans = 1;
-        int val = vs[k - 1];
-        int x = 0;
-        for (int v : vs) {
-            if (v == val) {
-                ++x;
-            }
-        }
-        for (int v : vs) {
-            if (v == val) {
-                break;
-            }
-            --k;
-            ans = ans * v % mod;
-        }
-        int[][] c = new int[x + 1][x + 1];
-        for (int i = 0; i <= x; ++i) {
-            c[i][0] = 1;
-            for (int j = 1; j <= i; ++j) {
-                c[i][j] = (c[i - 1][j - 1] + c[i - 1][j]) % mod;
-            }
-        }
-        ans = ((ans * c[x][k]) % mod) * qpow(val, k) % mod;
-        return (int) ans;
-    }
+internal class Solution {
+  private val mod = 1e9.toInt() + 7
 
-    private long qpow(long a, int n) {
-        long ans = 1;
-        for (; n > 0; n >>= 1) {
-            if ((n & 1) == 1) {
-                ans = ans * a % mod;
-            }
-            a = a * a % mod;
-        }
-        return ans;
+  fun countKSubsequencesWithMaxBeauty(s: String, k: Int): Int {
+    var k = k
+    val f = IntArray(26)
+    val n = s.length
+    var cnt = 0
+    for (i in 0 until n) {
+      if (++f[s[i].code - 'a'.code] == 1) {
+        ++cnt
+      }
     }
+    if (cnt < k) {
+      return 0
+    }
+    val vs: Array<Int> = arrayOfNulls(cnt)
+    run {
+      var i = 0
+      var j = 0
+      while (i < 26) {
+        if (f[i] > 0) {
+          vs[j++] = f[i]
+        }
+        ++i
+      }
+    }
+    Arrays.sort(vs) { a, b -> b - a }
+    var ans: Long = 1
+    val `val` = vs[k - 1]
+    var x = 0
+    for (v in vs) {
+      if (v == `val`) {
+        ++x
+      }
+    }
+    for (v in vs) {
+      if (v == `val`) {
+        break
+      }
+      --k
+      ans = ans * v % mod
+    }
+    val c = Array(x + 1) { IntArray(x + 1) }
+    for (i in 0..x) {
+      c[i][0] = 1
+      for (j in 1..i) {
+        c[i][j] = (c[i - 1][j - 1] + c[i - 1][j]) % mod
+      }
+    }
+    ans = ((ans * c[x][k]) % mod) * qpow(`val`.toLong(), k) % mod
+    return ans.toInt()
+  }
+
+  private fun qpow(a: Long, n: Int): Long {
+    var a = a
+    var n = n
+    var ans: Long = 1
+    while (n > 0) {
+      if ((n and 1) == 1) {
+        ans = ans * a % mod
+      }
+      a = a * a % mod
+      n = n shr 1
+    }
+    return ans
+  }
 }

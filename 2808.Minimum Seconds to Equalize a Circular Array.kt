@@ -1,19 +1,19 @@
-class Solution {
-    public int minimumSeconds(List<Integer> nums) {
-        Map<Integer, List<Integer>> d = new HashMap<>();
-        int n = nums.size();
-        for (int i = 0; i < n; ++i) {
-            d.computeIfAbsent(nums.get(i), k -> new ArrayList<>()).add(i);
-        }
-        int ans = 1 << 30;
-        for (List<Integer> idx : d.values()) {
-            int m = idx.size();
-            int t = idx.get(0) + n - idx.get(m - 1);
-            for (int i = 1; i < m; ++i) {
-                t = Math.max(t, idx.get(i) - idx.get(i - 1));
-            }
-            ans = Math.min(ans, t / 2);
-        }
-        return ans;
+internal class Solution {
+  fun minimumSeconds(nums: List<Int?>): Int {
+    val d: Map<Int, List<Int>> = HashMap()
+    val n: Int = nums.size()
+    for (i in 0 until n) {
+      d.computeIfAbsent(nums[i]) { k -> ArrayList() }.add(i)
     }
+    var ans = 1 shl 30
+    for (idx in d.values()) {
+      val m: Int = idx.size()
+      var t = idx[0] + n - idx[m - 1]
+      for (i in 1 until m) {
+        t = Math.max(t, idx[i] - idx[i - 1])
+      }
+      ans = min(ans, t / 2)
+    }
+    return ans
+  }
 }

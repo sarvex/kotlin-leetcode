@@ -1,17 +1,20 @@
-class Solution {
-    public String getSmallestString(String s, int k) {
-        char[] cs = s.toCharArray();
-        for (int i = 0; i < cs.length; ++i) {
-            char c1 = cs[i];
-            for (char c2 = 'a'; c2 < c1; ++c2) {
-                int d = Math.min(c1 - c2, 26 - c1 + c2);
-                if (d <= k) {
-                    cs[i] = c2;
-                    k -= d;
-                    break;
-                }
-            }
+internal class Solution {
+  fun getSmallestString(s: String, k: Int): String {
+    var k = k
+    val cs: CharArray = s.toCharArray()
+    for (i in cs.indices) {
+      val c1 = cs[i]
+      var c2 = 'a'
+      while (c2 < c1) {
+        val d: Int = min(c1.code - c2.code, 26 - c1.code + c2.code)
+        if (d <= k) {
+          cs[i] = c2
+          k -= d
+          break
         }
-        return new String(cs);
+        ++c2
+      }
     }
+    return String(cs)
+  }
 }

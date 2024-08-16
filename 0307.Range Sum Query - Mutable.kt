@@ -1,50 +1,45 @@
-class BinaryIndexedTree {
-    private int n;
-    private int[] c;
+internal class BinaryIndexedTree(private val n: Int) {
+  private val c = IntArray(n + 1)
 
-    public BinaryIndexedTree(int n) {
-        this.n = n;
-        c = new int[n + 1];
+  fun update(x: Int, delta: Int) {
+    var x = x
+    while (x <= n) {
+      c[x] += delta
+      x += x and -x
     }
+  }
 
-    public void update(int x, int delta) {
-        while (x <= n) {
-            c[x] += delta;
-            x += x & -x;
-        }
+  fun query(x: Int): Int {
+    var x = x
+    var s = 0
+    while (x > 0) {
+      s += c[x]
+      x -= x and -x
     }
-
-    public int query(int x) {
-        int s = 0;
-        while (x > 0) {
-            s += c[x];
-            x -= x & -x;
-        }
-        return s;
-    }
+    return s
+  }
 }
 
-class NumArray {
-    private BinaryIndexedTree tree;
+internal class NumArray(nums: IntArray) {
+  private val tree: BinaryIndexedTree
 
-    public NumArray(int[] nums) {
-        int n = nums.length;
-        tree = new BinaryIndexedTree(n);
-        for (int i = 0; i < n; ++i) {
-            tree.update(i + 1, nums[i]);
-        }
+  init {
+    val n = nums.size
+    tree = BinaryIndexedTree(n)
+    for (i in 0 until n) {
+      tree.update(i + 1, nums[i])
     }
+  }
 
-    public void update(int index, int val) {
-        int prev = sumRange(index, index);
-        tree.update(index + 1, val - prev);
-    }
+  fun update(index: Int, `val`: Int) {
+    val prev = sumRange(index, index)
+    tree.update(index + 1, `val` - prev)
+  }
 
-    public int sumRange(int left, int right) {
-        return tree.query(right + 1) - tree.query(left);
-    }
+  fun sumRange(left: Int, right: Int): Int {
+    return tree.query(right + 1) - tree.query(left)
+  }
 }
-
 /**
  * Your NumArray object will be instantiated and called as such:
  * NumArray obj = new NumArray(nums);

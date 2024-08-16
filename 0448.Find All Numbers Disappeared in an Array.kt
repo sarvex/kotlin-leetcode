@@ -1,16 +1,16 @@
-class Solution {
-    public List<Integer> findDisappearedNumbers(int[] nums) {
-        int n = nums.length;
-        boolean[] s = new boolean[n + 1];
-        for (int x : nums) {
-            s[x] = true;
-        }
-        List<Integer> ans = new ArrayList<>();
-        for (int i = 1; i <= n; i++) {
-            if (!s[i]) {
-                ans.add(i);
-            }
-        }
-        return ans;
+internal class Solution {
+  fun findDisappearedNumbers(nums: IntArray): List<Int> {
+    val n = nums.size
+    val s = BooleanArray(n + 1)
+    for (x in nums) {
+      s[x] = true
     }
+    val ans: List<Int> = ArrayList()
+    for (i in 1..n) {
+      if (!s[i]) {
+        ans.add(i)
+      }
+    }
+    return ans
+  }
 }

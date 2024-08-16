@@ -1,11 +1,11 @@
-class Solution {
-    public int removeElement(int[] nums, int val) {
-        int k = 0;
-        for (int x : nums) {
-            if (x != val) {
-                nums[k++] = x;
-            }
-        }
-        return k;
+internal class Solution {
+  fun removeElement(nums: IntArray, `val`: Int): Int {
+    var k = 0
+    for (x in nums) {
+      if (x != `val`) {
+        nums[k++] = x
+      }
     }
+    return k
+  }
 }

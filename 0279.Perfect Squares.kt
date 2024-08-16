@@ -1,19 +1,19 @@
-class Solution {
-    public int numSquares(int n) {
-        int m = (int) Math.sqrt(n);
-        int[][] f = new int[m + 1][n + 1];
-        for (var g : f) {
-            Arrays.fill(g, 1 << 30);
-        }
-        f[0][0] = 0;
-        for (int i = 1; i <= m; ++i) {
-            for (int j = 0; j <= n; ++j) {
-                f[i][j] = f[i - 1][j];
-                if (j >= i * i) {
-                    f[i][j] = Math.min(f[i][j], f[i][j - i * i] + 1);
-                }
-            }
-        }
-        return f[m][n];
+internal class Solution {
+  fun numSquares(n: Int): Int {
+    val m = sqrt(n) as Int
+    val f = Array(m + 1) { IntArray(n + 1) }
+    for (g in f) {
+      Arrays.fill(g, 1 shl 30)
     }
+    f[0][0] = 0
+    for (i in 1..m) {
+      for (j in 0..n) {
+        f[i][j] = f[i - 1][j]
+        if (j >= i * i) {
+          f[i][j] = min(f[i][j], f[i][j - i * i] + 1)
+        }
+      }
+    }
+    return f[m][n]
+  }
 }

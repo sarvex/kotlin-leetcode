@@ -1,22 +1,22 @@
-class Solution {
-    public int[] getMaximumXor(int[] nums, int maximumBit) {
-        int n = nums.length;
-        int xs = 0;
-        for (int x : nums) {
-            xs ^= x;
-        }
-        int[] ans = new int[n];
-        for (int i = 0; i < n; ++i) {
-            int x = nums[n - i - 1];
-            int k = 0;
-            for (int j = maximumBit - 1; j >= 0; --j) {
-                if (((xs >> j) & 1) == 0) {
-                    k |= 1 << j;
-                }
-            }
-            ans[i] = k;
-            xs ^= x;
-        }
-        return ans;
+internal class Solution {
+  fun getMaximumXor(nums: IntArray, maximumBit: Int): IntArray {
+    val n = nums.size
+    var xs = 0
+    for (x in nums) {
+      xs = xs xor x
     }
+    val ans = IntArray(n)
+    for (i in 0 until n) {
+      val x = nums[n - i - 1]
+      var k = 0
+      for (j in maximumBit - 1 downTo 0) {
+        if (((xs shr j) and 1) == 0) {
+          k = k or (1 shl j)
+        }
+      }
+      ans[i] = k
+      xs = xs xor x
+    }
+    return ans
+  }
 }

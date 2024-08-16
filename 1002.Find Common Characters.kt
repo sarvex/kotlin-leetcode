@@ -1,20 +1,20 @@
-class Solution {
-    public List<String> commonChars(String[] words) {
-        int[] cnt = new int[26];
-        Arrays.fill(cnt, 20000);
-        for (var w : words) {
-            int[] t = new int[26];
-            for (int i = 0; i < w.length(); ++i) {
-                ++t[w.charAt(i) - 'a'];
-            }
-            for (int i = 0; i < 26; ++i) {
-                cnt[i] = Math.min(cnt[i], t[i]);
-            }
-        }
-        List<String> ans = new ArrayList<>();
-        for (int i = 0; i < 26; ++i) {
-            ans.addAll(Collections.nCopies(cnt[i], String.valueOf((char) ('a' + i))));
-        }
-        return ans;
+internal class Solution {
+  fun commonChars(words: Array<String>): List<String> {
+    val cnt = IntArray(26)
+    Arrays.fill(cnt, 20000)
+    for (w in words) {
+      val t = IntArray(26)
+      for (i in 0 until w.length) {
+        ++t[w[i].code - 'a'.code]
+      }
+      for (i in 0..25) {
+        cnt[i] = min(cnt[i], t[i])
+      }
     }
+    val ans: List<String> = ArrayList()
+    for (i in 0..25) {
+      ans.addAll(Collections.nCopies(cnt[i], ('a'.code + i).toChar().toString()))
+    }
+    return ans
+  }
 }

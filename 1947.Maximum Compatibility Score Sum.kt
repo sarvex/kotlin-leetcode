@@ -1,35 +1,35 @@
-class Solution {
-    private int[][] g;
-    private boolean[] vis;
-    private int m;
-    private int ans;
+internal class Solution {
+  private var g: Array<IntArray>
+  private var vis: BooleanArray
+  private var m = 0
+  private var ans = 0
 
-    public int maxCompatibilitySum(int[][] students, int[][] mentors) {
-        m = students.length;
-        g = new int[m][m];
-        vis = new boolean[m];
-        for (int i = 0; i < m; ++i) {
-            for (int j = 0; j < m; ++j) {
-                for (int k = 0; k < students[i].length; ++k) {
-                    g[i][j] += students[i][k] == mentors[j][k] ? 1 : 0;
-                }
-            }
+  fun maxCompatibilitySum(students: Array<IntArray>, mentors: Array<IntArray>): Int {
+    m = students.size
+    g = Array(m) { IntArray(m) }
+    vis = BooleanArray(m)
+    for (i in 0 until m) {
+      for (j in 0 until m) {
+        for (k in students[i].indices) {
+          g[i][j] += if (students[i][k] == mentors[j][k]) 1 else 0
         }
-        dfs(0, 0);
-        return ans;
+      }
     }
+    dfs(0, 0)
+    return ans
+  }
 
-    private void dfs(int i, int t) {
-        if (i == m) {
-            ans = Math.max(ans, t);
-            return;
-        }
-        for (int j = 0; j < m; ++j) {
-            if (!vis[j]) {
-                vis[j] = true;
-                dfs(i + 1, t + g[i][j]);
-                vis[j] = false;
-            }
-        }
+  private fun dfs(i: Int, t: Int) {
+    if (i == m) {
+      ans = max(ans, t)
+      return
     }
+    for (j in 0 until m) {
+      if (!vis[j]) {
+        vis[j] = true
+        dfs(i + 1, t + g[i][j])
+        vis[j] = false
+      }
+    }
+  }
 }

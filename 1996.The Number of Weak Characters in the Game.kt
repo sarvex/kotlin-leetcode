@@ -1,13 +1,14 @@
-class Solution {
-    public int numberOfWeakCharacters(int[][] properties) {
-        Arrays.sort(properties, (a, b) -> b[0] - a[0] == 0 ? a[1] - b[1] : b[0] - a[0]);
-        int ans = 0, mx = 0;
-        for (var x : properties) {
-            if (x[1] < mx) {
-                ++ans;
-            }
-            mx = Math.max(mx, x[1]);
-        }
-        return ans;
+internal class Solution {
+  fun numberOfWeakCharacters(properties: Array<IntArray>): Int {
+    Arrays.sort(properties) { a, b -> if (b.get(0) - a.get(0) === 0) a.get(1) - b.get(1) else b.get(0) - a.get(0) }
+    var ans = 0
+    var mx = 0
+    for (x in properties) {
+      if (x[1] < mx) {
+        ++ans
+      }
+      mx = max(mx, x[1])
     }
+    return ans
+  }
 }

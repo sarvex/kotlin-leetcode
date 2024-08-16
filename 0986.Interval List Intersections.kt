@@ -1,19 +1,22 @@
-class Solution {
-    public int[][] intervalIntersection(int[][] firstList, int[][] secondList) {
-        List<int[]> ans = new ArrayList<>();
-        int m = firstList.length, n = secondList.length;
-        for (int i = 0, j = 0; i < m && j < n;) {
-            int l = Math.max(firstList[i][0], secondList[j][0]);
-            int r = Math.min(firstList[i][1], secondList[j][1]);
-            if (l <= r) {
-                ans.add(new int[] {l, r});
-            }
-            if (firstList[i][1] < secondList[j][1]) {
-                ++i;
-            } else {
-                ++j;
-            }
-        }
-        return ans.toArray(new int[ans.size()][]);
+internal class Solution {
+  fun intervalIntersection(firstList: Array<IntArray>, secondList: Array<IntArray>): Array<IntArray> {
+    val ans: List<IntArray> = ArrayList()
+    val m = firstList.size
+    val n = secondList.size
+    var i = 0
+    var j = 0
+    while (i < m && j < n) {
+      val l: Int = max(firstList[i][0], secondList[j][0])
+      val r: Int = min(firstList[i][1], secondList[j][1])
+      if (l <= r) {
+        ans.add(intArrayOf(l, r))
+      }
+      if (firstList[i][1] < secondList[j][1]) {
+        ++i
+      } else {
+        ++j
+      }
     }
+    return ans.toArray(arrayOfNulls<IntArray>(ans.size()))
+  }
 }

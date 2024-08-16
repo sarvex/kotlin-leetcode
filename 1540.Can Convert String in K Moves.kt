@@ -1,18 +1,18 @@
-class Solution {
-    public boolean canConvertString(String s, String t, int k) {
-        if (s.length() != t.length()) {
-            return false;
-        }
-        int[] cnt = new int[26];
-        for (int i = 0; i < s.length(); ++i) {
-            int x = (t.charAt(i) - s.charAt(i) + 26) % 26;
-            ++cnt[x];
-        }
-        for (int i = 1; i < 26; ++i) {
-            if (i + 26 * (cnt[i] - 1) > k) {
-                return false;
-            }
-        }
-        return true;
+internal class Solution {
+  fun canConvertString(s: String, t: String, k: Int): Boolean {
+    if (s.length != t.length) {
+      return false
     }
+    val cnt = IntArray(26)
+    for (i in 0 until s.length) {
+      val x: Int = (t[i].code - s[i].code + 26) % 26
+      ++cnt[x]
+    }
+    for (i in 1..25) {
+      if (i + 26 * (cnt[i] - 1) > k) {
+        return false
+      }
+    }
+    return true
+  }
 }

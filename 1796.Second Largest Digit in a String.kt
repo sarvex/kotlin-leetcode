@@ -1,18 +1,19 @@
-class Solution {
-    public int secondHighest(String s) {
-        int a = -1, b = -1;
-        for (int i = 0; i < s.length(); ++i) {
-            char c = s.charAt(i);
-            if (Character.isDigit(c)) {
-                int v = c - '0';
-                if (v > a) {
-                    b = a;
-                    a = v;
-                } else if (v > b && v < a) {
-                    b = v;
-                }
-            }
+internal class Solution {
+  fun secondHighest(s: String): Int {
+    var a = -1
+    var b = -1
+    for (i in 0 until s.length) {
+      val c = s[i]
+      if (Character.isDigit(c)) {
+        val v: Int = c.code - '0'.code
+        if (v > a) {
+          b = a
+          a = v
+        } else if (v > b && v < a) {
+          b = v
         }
-        return b;
+      }
     }
+    return b
+  }
 }

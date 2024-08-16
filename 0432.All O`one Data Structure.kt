@@ -1,94 +1,85 @@
-class AllOne {
-    Node root = new Node();
-    Map<String, Node> nodes = new HashMap<>();
+internal class AllOne {
+  var root: Node = Node()
+  var nodes: Map<String, Node> = HashMap()
 
-    public AllOne() {
-        root.next = root;
-        root.prev = root;
+  init {
+    root.next = root
+    root.prev = root
+  }
+
+  fun inc(key: String) {
+    if (!nodes.containsKey(key)) {
+      if (root.next === root || root.next.cnt > 1) {
+        nodes.put(key, root.insert(Node(key, 1)))
+      } else {
+        root.next.keys.add(key)
+        nodes.put(key, root.next)
+      }
+    } else {
+      val curr = nodes[key]!!
+      val next = curr.next
+      if (next === root || next.cnt > curr.cnt + 1) {
+        nodes.put(key, curr.insert(Node(key, curr.cnt + 1)))
+      } else {
+        next.keys.add(key)
+        nodes.put(key, next)
+      }
+      curr.keys.remove(key)
+      if (curr.keys.isEmpty()) {
+        curr.remove()
+      }
+    }
+  }
+
+  fun dec(key: String) {
+    val curr = nodes[key]!!
+    if (curr.cnt == 1) {
+      nodes.remove(key)
+    } else {
+      val prev = curr.prev
+      if (prev === root || prev.cnt < curr.cnt - 1) {
+        nodes.put(key, prev.insert(Node(key, curr.cnt - 1)))
+      } else {
+        prev.keys.add(key)
+        nodes.put(key, prev)
+      }
     }
 
-    public void inc(String key) {
-        if (!nodes.containsKey(key)) {
-            if (root.next == root || root.next.cnt > 1) {
-                nodes.put(key, root.insert(new Node(key, 1)));
-            } else {
-                root.next.keys.add(key);
-                nodes.put(key, root.next);
-            }
-        } else {
-            Node curr = nodes.get(key);
-            Node next = curr.next;
-            if (next == root || next.cnt > curr.cnt + 1) {
-                nodes.put(key, curr.insert(new Node(key, curr.cnt + 1)));
-            } else {
-                next.keys.add(key);
-                nodes.put(key, next);
-            }
-            curr.keys.remove(key);
-            if (curr.keys.isEmpty()) {
-                curr.remove();
-            }
-        }
+    curr.keys.remove(key)
+    if (curr.keys.isEmpty()) {
+      curr.remove()
     }
+  }
 
-    public void dec(String key) {
-        Node curr = nodes.get(key);
-        if (curr.cnt == 1) {
-            nodes.remove(key);
-        } else {
-            Node prev = curr.prev;
-            if (prev == root || prev.cnt < curr.cnt - 1) {
-                nodes.put(key, prev.insert(new Node(key, curr.cnt - 1)));
-            } else {
-                prev.keys.add(key);
-                nodes.put(key, prev);
-            }
-        }
+  val maxKey: String
+    get() = root.prev.keys.iterator().next()
 
-        curr.keys.remove(key);
-        if (curr.keys.isEmpty()) {
-            curr.remove();
-        }
-    }
-
-    public String getMaxKey() {
-        return root.prev.keys.iterator().next();
-    }
-
-    public String getMinKey() {
-        return root.next.keys.iterator().next();
-    }
+  val minKey: String
+    get() = root.next.keys.iterator().next()
 }
 
-class Node {
-    Node prev;
-    Node next;
-    int cnt;
-    Set<String> keys = new HashSet<>();
+internal open class Node @kotlin.jvm.JvmOverloads constructor(key: String? = "", var cnt: Int = 0) {
+  var prev: Node? = null
+  var next: Node? = null
+  var keys: Set<String> = HashSet()
 
-    public Node() {
-        this("", 0);
-    }
+  init {
+    keys.add(key)
+  }
 
-    public Node(String key, int cnt) {
-        this.cnt = cnt;
-        keys.add(key);
-    }
+  fun insert(node: Node): Node {
+    node.prev = this
+    node.next = this.next
+    node.prev!!.next = node
+    node.next!!.prev = node
+    return node
+  }
 
-    public Node insert(Node node) {
-        node.prev = this;
-        node.next = this.next;
-        node.prev.next = node;
-        node.next.prev = node;
-        return node;
-    }
-
-    public void remove() {
-        this.prev.next = this.next;
-        this.next.prev = this.prev;
-    }
+  fun remove() {
+    prev!!.next = this.next
+    next!!.prev = this.prev
+  }
 }
-
 /**
  * Your AllOne object will be instantiated and called as such:
  * AllOne obj = new AllOne();

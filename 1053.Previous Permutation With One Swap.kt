@@ -1,18 +1,18 @@
-class Solution {
-    public int[] prevPermOpt1(int[] arr) {
-        int n = arr.length;
-        for (int i = n - 1; i > 0; --i) {
-            if (arr[i - 1] > arr[i]) {
-                for (int j = n - 1; j > i - 1; --j) {
-                    if (arr[j] < arr[i - 1] && arr[j] != arr[j - 1]) {
-                        int t = arr[i - 1];
-                        arr[i - 1] = arr[j];
-                        arr[j] = t;
-                        return arr;
-                    }
-                }
-            }
+internal class Solution {
+  fun prevPermOpt1(arr: IntArray): IntArray {
+    val n = arr.size
+    for (i in n - 1 downTo 1) {
+      if (arr[i - 1] > arr[i]) {
+        for (j in n - 1 downTo i - 1 + 1) {
+          if (arr[j] < arr[i - 1] && arr[j] != arr[j - 1]) {
+            val t = arr[i - 1]
+            arr[i - 1] = arr[j]
+            arr[j] = t
+            return arr
+          }
         }
-        return arr;
+      }
     }
+    return arr
+  }
 }

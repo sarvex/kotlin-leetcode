@@ -1,19 +1,21 @@
-class Solution {
-    public int minOperations(int[] nums, int[] numsDivide) {
-        int x = 0;
-        for (int v : numsDivide) {
-            x = gcd(x, v);
-        }
-        Arrays.sort(nums);
-        for (int i = 0; i < nums.length; ++i) {
-            if (x % nums[i] == 0) {
-                return i;
-            }
-        }
-        return -1;
-    }
+import java.util.*
 
-    private int gcd(int a, int b) {
-        return b == 0 ? a : gcd(b, a % b);
+internal class Solution {
+  fun minOperations(nums: IntArray, numsDivide: IntArray): Int {
+    var x = 0
+    for (v in numsDivide) {
+      x = gcd(x, v)
     }
+    Arrays.sort(nums)
+    for (i in nums.indices) {
+      if (x % nums[i] == 0) {
+        return i
+      }
+    }
+    return -1
+  }
+
+  private fun gcd(a: Int, b: Int): Int {
+    return if (b == 0) a else gcd(b, a % b)
+  }
 }

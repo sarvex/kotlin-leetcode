@@ -1,24 +1,24 @@
-class Solution {
-    private List<Integer>[] g;
-    private int[] informTime;
+internal class Solution {
+  private var g: Array<List<Int>>
+  private var informTime: IntArray
 
-    public int numOfMinutes(int n, int headID, int[] manager, int[] informTime) {
-        g = new List[n];
-        Arrays.setAll(g, k -> new ArrayList<>());
-        this.informTime = informTime;
-        for (int i = 0; i < n; ++i) {
-            if (manager[i] >= 0) {
-                g[manager[i]].add(i);
-            }
-        }
-        return dfs(headID);
+  fun numOfMinutes(n: Int, headID: Int, manager: IntArray, informTime: IntArray): Int {
+    g = arrayOfNulls(n)
+    Arrays.setAll(g) { k -> ArrayList() }
+    this.informTime = informTime
+    for (i in 0 until n) {
+      if (manager[i] >= 0) {
+        g[manager[i]].add(i)
+      }
     }
+    return dfs(headID)
+  }
 
-    private int dfs(int i) {
-        int ans = 0;
-        for (int j : g[i]) {
-            ans = Math.max(ans, dfs(j) + informTime[i]);
-        }
-        return ans;
+  private fun dfs(i: Int): Int {
+    var ans = 0
+    for (j in g[i]) {
+      ans = max(ans, dfs(j) + informTime[i])
     }
+    return ans
+  }
 }

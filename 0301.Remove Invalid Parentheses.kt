@@ -1,46 +1,47 @@
-class Solution {
-    private String s;
-    private int n;
-    private Set<String> ans = new HashSet<>();
+internal class Solution {
+  private var s: String? = null
+  private var n = 0
+  private val ans: Set<String> = HashSet()
 
-    public List<String> removeInvalidParentheses(String s) {
-        this.s = s;
-        this.n = s.length();
-        int l = 0, r = 0;
-        for (char c : s.toCharArray()) {
-            if (c == '(') {
-                ++l;
-            } else if (c == ')') {
-                if (l > 0) {
-                    --l;
-                } else {
-                    ++r;
-                }
-            }
+  fun removeInvalidParentheses(s: String): List<String> {
+    this.s = s
+    this.n = s.length
+    var l = 0
+    var r = 0
+    for (c in s.toCharArray()) {
+      if (c == '(') {
+        ++l
+      } else if (c == ')') {
+        if (l > 0) {
+          --l
+        } else {
+          ++r
         }
-        dfs(0, l, r, 0, 0, "");
-        return new ArrayList<>(ans);
+      }
     }
+    dfs(0, l, r, 0, 0, "")
+    return ArrayList(ans)
+  }
 
-    private void dfs(int i, int l, int r, int lcnt, int rcnt, String t) {
-        if (i == n) {
-            if (l == 0 && r == 0) {
-                ans.add(t);
-            }
-            return;
-        }
-        if (n - i < l + r || lcnt < rcnt) {
-            return;
-        }
-        char c = s.charAt(i);
-        if (c == '(' && l > 0) {
-            dfs(i + 1, l - 1, r, lcnt, rcnt, t);
-        }
-        if (c == ')' && r > 0) {
-            dfs(i + 1, l, r - 1, lcnt, rcnt, t);
-        }
-        int x = c == '(' ? 1 : 0;
-        int y = c == ')' ? 1 : 0;
-        dfs(i + 1, l, r, lcnt + x, rcnt + y, t + c);
+  private fun dfs(i: Int, l: Int, r: Int, lcnt: Int, rcnt: Int, t: String) {
+    if (i == n) {
+      if (l == 0 && r == 0) {
+        ans.add(t)
+      }
+      return
     }
+    if (n - i < l + r || lcnt < rcnt) {
+      return
+    }
+    val c = s!![i]
+    if (c == '(' && l > 0) {
+      dfs(i + 1, l - 1, r, lcnt, rcnt, t)
+    }
+    if (c == ')' && r > 0) {
+      dfs(i + 1, l, r - 1, lcnt, rcnt, t)
+    }
+    val x = if (c == '(') 1 else 0
+    val y = if (c == ')') 1 else 0
+    dfs(i + 1, l, r, lcnt + x, rcnt + y, t + c)
+  }
 }

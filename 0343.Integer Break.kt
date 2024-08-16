@@ -1,12 +1,12 @@
-class Solution {
-    public int integerBreak(int n) {
-        int[] f = new int[n + 1];
-        f[1] = 1;
-        for (int i = 2; i <= n; ++i) {
-            for (int j = 1; j < i; ++j) {
-                f[i] = Math.max(Math.max(f[i], f[i - j] * j), (i - j) * j);
-            }
-        }
-        return f[n];
+internal class Solution {
+  fun integerBreak(n: Int): Int {
+    val f = IntArray(n + 1)
+    f[1] = 1
+    for (i in 2..n) {
+      for (j in 1 until i) {
+        f[i] = max(max(f[i], f[i - j] * j), (i - j) * j)
+      }
     }
+    return f[n]
+  }
 }

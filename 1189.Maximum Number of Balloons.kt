@@ -1,15 +1,15 @@
-class Solution {
-    public int maxNumberOfBalloons(String text) {
-        int[] cnt = new int[26];
-        for (int i = 0; i < text.length(); ++i) {
-            ++cnt[text.charAt(i) - 'a'];
-        }
-        cnt['l' - 'a'] >>= 1;
-        cnt['o' - 'a'] >>= 1;
-        int ans = 1 << 30;
-        for (char c : "balon".toCharArray()) {
-            ans = Math.min(ans, cnt[c - 'a']);
-        }
-        return ans;
+internal class Solution {
+  fun maxNumberOfBalloons(text: String): Int {
+    val cnt = IntArray(26)
+    for (i in 0 until text.length) {
+      ++cnt[text[i].code - 'a'.code]
     }
+    cnt['l'.code - 'a'.code] = cnt['l'.code - 'a'.code] shr 1
+    cnt['o'.code - 'a'.code] = cnt['o'.code - 'a'.code] shr 1
+    var ans = 1 shl 30
+    for (c in "balon".toCharArray()) {
+      ans = min(ans, cnt[c.code - 'a'.code])
+    }
+    return ans
+  }
 }

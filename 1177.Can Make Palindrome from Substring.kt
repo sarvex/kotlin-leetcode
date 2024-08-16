@@ -1,22 +1,24 @@
-class Solution {
-    public List<Boolean> canMakePaliQueries(String s, int[][] queries) {
-        int n = s.length();
-        int[][] ss = new int[n + 1][26];
-        for (int i = 1; i <= n; ++i) {
-            for (int j = 0; j < 26; ++j) {
-                ss[i][j] = ss[i - 1][j];
-            }
-            ss[i][s.charAt(i - 1) - 'a']++;
-        }
-        List<Boolean> ans = new ArrayList<>();
-        for (var q : queries) {
-            int l = q[0], r = q[1], k = q[2];
-            int x = 0;
-            for (int j = 0; j < 26; ++j) {
-                x += (ss[r + 1][j] - ss[l][j]) & 1;
-            }
-            ans.add(x / 2 <= k);
-        }
-        return ans;
+internal class Solution {
+  fun canMakePaliQueries(s: String, queries: Array<IntArray>): List<Boolean> {
+    val n = s.length
+    val ss = Array(n + 1) { IntArray(26) }
+    for (i in 1..n) {
+      for (j in 0..25) {
+        ss[i][j] = ss[i - 1][j]
+      }
+      ss[i][s[i - 1].code - 'a'.code]++
     }
+    val ans: List<Boolean> = ArrayList()
+    for (q in queries) {
+      val l = q[0]
+      val r = q[1]
+      val k = q[2]
+      var x = 0
+      for (j in 0..25) {
+        x += (ss[r + 1][j] - ss[l][j]) and 1
+      }
+      ans.add(x / 2 <= k)
+    }
+    return ans
+  }
 }

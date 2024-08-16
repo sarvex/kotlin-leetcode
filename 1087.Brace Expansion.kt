@@ -1,44 +1,44 @@
-class Solution {
-    private List<String> ans;
-    private List<String[]> items;
+internal class Solution {
+  private var ans: List<String>? = null
+  private var items: List<Array<String>>? = null
 
-    public String[] expand(String s) {
-        ans = new ArrayList<>();
-        items = new ArrayList<>();
-        convert(s);
-        dfs(0, new ArrayList<>());
-        Collections.sort(ans);
-        return ans.toArray(new String[0]);
-    }
+  fun expand(s: String): Array<String> {
+    ans = ArrayList()
+    items = ArrayList()
+    convert(s)
+    dfs(0, ArrayList())
+    Collections.sort(ans)
+    return ans!!.toArray(arrayOfNulls<String>(0))
+  }
 
-    private void convert(String s) {
-        if ("".equals(s)) {
-            return;
-        }
-        if (s.charAt(0) == '{') {
-            int j = s.indexOf("}");
-            items.add(s.substring(1, j).split(","));
-            convert(s.substring(j + 1));
-        } else {
-            int j = s.indexOf("{");
-            if (j != -1) {
-                items.add(s.substring(0, j).split(","));
-                convert(s.substring(j));
-            } else {
-                items.add(s.split(","));
-            }
-        }
+  private fun convert(s: String) {
+    if ("" == s) {
+      return
     }
+    if (s[0] == '{') {
+      val j: Int = s.indexOf("}")
+      items.add(s.substring(1, j).split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray())
+      convert(s.substring(j + 1))
+    } else {
+      val j: Int = s.indexOf("{")
+      if (j != -1) {
+        items.add(s.substring(0, j).split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray())
+        convert(s.substring(j))
+      } else {
+        items.add(s.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray())
+      }
+    }
+  }
 
-    private void dfs(int i, List<String> t) {
-        if (i == items.size()) {
-            ans.add(String.join("", t));
-            return;
-        }
-        for (String c : items.get(i)) {
-            t.add(c);
-            dfs(i + 1, t);
-            t.remove(t.size() - 1);
-        }
+  private fun dfs(i: Int, t: List<String>) {
+    if (i == items!!.size()) {
+      ans.add(java.lang.String.join("", t))
+      return
     }
+    for (c in items!![i]) {
+      t.add(c)
+      dfs(i + 1, t)
+      t.remove(t.size() - 1)
+    }
+  }
 }

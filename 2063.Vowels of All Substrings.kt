@@ -1,12 +1,15 @@
-class Solution {
-    public long countVowels(String word) {
-        long ans = 0;
-        for (int i = 0, n = word.length(); i < n; ++i) {
-            char c = word.charAt(i);
-            if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u') {
-                ans += (i + 1L) * (n - i);
-            }
-        }
-        return ans;
+internal class Solution {
+  fun countVowels(word: String): Long {
+    var ans: Long = 0
+    var i = 0
+    val n = word.length
+    while (i < n) {
+      val c = word[i]
+      if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u') {
+        ans += (i + 1L) * (n - i)
+      }
+      ++i
     }
+    return ans
+  }
 }

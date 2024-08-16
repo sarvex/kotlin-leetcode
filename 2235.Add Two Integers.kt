@@ -1,5 +1,5 @@
-class Solution {
-    public int sum(int num1, int num2) {
-        return num1 + num2;
-    }
+internal class Solution {
+  fun sum(num1: Int, num2: Int): Int {
+    return num1 + num2
+  }
 }

@@ -1,19 +1,23 @@
-class Solution {
-    public int magicalString(int n) {
-        List<Integer> s = new ArrayList<>(List.of(1, 2, 2));
-        for (int i = 2; s.size() < n; ++i) {
-            int pre = s.get(s.size() - 1);
-            int cur = 3 - pre;
-            for (int j = 0; j < s.get(i); ++j) {
-                s.add(cur);
-            }
+internal class Solution {
+  fun magicalString(n: Int): Int {
+    val s: List<Int> = ArrayList(List.of(1, 2, 2))
+    run {
+      var i = 2
+      while (s.size() < n) {
+        val pre = s[s.size() - 1]
+        val cur = 3 - pre
+        for (j in 0 until s[i]) {
+          s.add(cur)
         }
-        int ans = 0;
-        for (int i = 0; i < n; ++i) {
-            if (s.get(i) == 1) {
-                ++ans;
-            }
-        }
-        return ans;
+        ++i
+      }
     }
+    var ans = 0
+    for (i in 0 until n) {
+      if (s[i] === 1) {
+        ++ans
+      }
+    }
+    return ans
+  }
 }

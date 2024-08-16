@@ -1,17 +1,18 @@
-class Solution {
-    public int countQuadruplets(int[] nums) {
-        int ans = 0, n = nums.length;
-        for (int a = 0; a < n - 3; ++a) {
-            for (int b = a + 1; b < n - 2; ++b) {
-                for (int c = b + 1; c < n - 1; ++c) {
-                    for (int d = c + 1; d < n; ++d) {
-                        if (nums[a] + nums[b] + nums[c] == nums[d]) {
-                            ++ans;
-                        }
-                    }
-                }
+internal class Solution {
+  fun countQuadruplets(nums: IntArray): Int {
+    var ans = 0
+    val n = nums.size
+    for (a in 0 until n - 3) {
+      for (b in a + 1 until n - 2) {
+        for (c in b + 1 until n - 1) {
+          for (d in c + 1 until n) {
+            if (nums[a] + nums[b] + nums[c] == nums[d]) {
+              ++ans
             }
+          }
         }
-        return ans;
+      }
     }
+    return ans
+  }
 }

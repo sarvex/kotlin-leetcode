@@ -1,21 +1,21 @@
-class Solution {
-    public int beautifulSubstrings(String s, int k) {
-        int n = s.length();
-        int[] vs = new int[26];
-        for (char c : "aeiou".toCharArray()) {
-            vs[c - 'a'] = 1;
-        }
-        int ans = 0;
-        for (int i = 0; i < n; ++i) {
-            int vowels = 0;
-            for (int j = i; j < n; ++j) {
-                vowels += vs[s.charAt(j) - 'a'];
-                int consonants = j - i + 1 - vowels;
-                if (vowels == consonants && vowels * consonants % k == 0) {
-                    ++ans;
-                }
-            }
-        }
-        return ans;
+internal class Solution {
+  fun beautifulSubstrings(s: String, k: Int): Int {
+    val n = s.length
+    val vs = IntArray(26)
+    for (c in "aeiou".toCharArray()) {
+      vs[c.code - 'a'.code] = 1
     }
+    var ans = 0
+    for (i in 0 until n) {
+      var vowels = 0
+      for (j in i until n) {
+        vowels += vs[s[j].code - 'a'.code]
+        val consonants: Int = j - i + 1 - vowels
+        if (vowels == consonants && vowels * consonants % k == 0) {
+          ++ans
+        }
+      }
+    }
+    return ans
+  }
 }

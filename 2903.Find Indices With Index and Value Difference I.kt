@@ -1,22 +1,22 @@
-class Solution {
-    public int[] findIndices(int[] nums, int indexDifference, int valueDifference) {
-        int mi = 0;
-        int mx = 0;
-        for (int i = indexDifference; i < nums.length; ++i) {
-            int j = i - indexDifference;
-            if (nums[j] < nums[mi]) {
-                mi = j;
-            }
-            if (nums[j] > nums[mx]) {
-                mx = j;
-            }
-            if (nums[i] - nums[mi] >= valueDifference) {
-                return new int[] {mi, i};
-            }
-            if (nums[mx] - nums[i] >= valueDifference) {
-                return new int[] {mx, i};
-            }
-        }
-        return new int[] {-1, -1};
+internal class Solution {
+  fun findIndices(nums: IntArray, indexDifference: Int, valueDifference: Int): IntArray {
+    var mi = 0
+    var mx = 0
+    for (i in indexDifference until nums.size) {
+      val j: Int = i - indexDifference
+      if (nums[j] < nums[mi]) {
+        mi = j
+      }
+      if (nums[j] > nums[mx]) {
+        mx = j
+      }
+      if (nums[i] - nums[mi] >= valueDifference) {
+        return intArrayOf(mi, i)
+      }
+      if (nums[mx] - nums[i] >= valueDifference) {
+        return intArrayOf(mx, i)
+      }
     }
+    return intArrayOf(-1, -1)
+  }
 }

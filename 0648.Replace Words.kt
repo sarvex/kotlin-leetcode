@@ -1,17 +1,17 @@
-class Solution {
-    public String replaceWords(List<String> dictionary, String sentence) {
-        Set<String> s = new HashSet<>(dictionary);
-        String[] words = sentence.split(" ");
-        for (int i = 0; i < words.length; ++i) {
-            String word = words[i];
-            for (int j = 1; j <= word.length(); ++j) {
-                String t = word.substring(0, j);
-                if (s.contains(t)) {
-                    words[i] = t;
-                    break;
-                }
-            }
+internal class Solution {
+  fun replaceWords(dictionary: List<String?>?, sentence: String): String {
+    val s: Set<String> = HashSet(dictionary)
+    val words: Array<String> = sentence.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+    for (i in words.indices) {
+      val word = words[i]
+      for (j in 1..word.length) {
+        val t: String = word.substring(0, j)
+        if (s.contains(t)) {
+          words[i] = t
+          break
         }
-        return String.join(" ", words);
+      }
     }
+    return java.lang.String.join(" ", *words)
+  }
 }

@@ -1,13 +1,14 @@
-class Solution {
-    public int maximumCount(int[] nums) {
-        int a = 0, b = 0;
-        for (int x : nums) {
-            if (x > 0) {
-                ++a;
-            } else if (x < 0) {
-                ++b;
-            }
-        }
-        return Math.max(a, b);
+internal class Solution {
+  fun maximumCount(nums: IntArray): Int {
+    var a = 0
+    var b = 0
+    for (x in nums) {
+      if (x > 0) {
+        ++a
+      } else if (x < 0) {
+        ++b
+      }
     }
+    return max(a, b)
+  }
 }

@@ -1,13 +1,15 @@
-class Solution {
-    public int minOperations(int[] nums) {
-        int ans = 0, v = 0;
-        for (int x : nums) {
-            x ^= v;
-            if (x == 0) {
-                v ^= 1;
-                ++ans;
-            }
-        }
-        return ans;
+internal class Solution {
+  fun minOperations(nums: IntArray): Int {
+    var ans = 0
+    var v = 0
+    for (x in nums) {
+      var x = x
+      x = x xor v
+      if (x == 0) {
+        v = v xor 1
+        ++ans
+      }
     }
+    return ans
+  }
 }

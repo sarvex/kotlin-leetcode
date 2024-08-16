@@ -1,16 +1,16 @@
-class Solution {
-    public int minimumDeletions(String s) {
-        int n = s.length();
-        int[] f = new int[n + 1];
-        int b = 0;
-        for (int i = 1; i <= n; ++i) {
-            if (s.charAt(i - 1) == 'b') {
-                f[i] = f[i - 1];
-                ++b;
-            } else {
-                f[i] = Math.min(f[i - 1] + 1, b);
-            }
-        }
-        return f[n];
+internal class Solution {
+  fun minimumDeletions(s: String): Int {
+    val n = s.length
+    val f = IntArray(n + 1)
+    var b = 0
+    for (i in 1..n) {
+      if (s[i - 1] == 'b') {
+        f[i] = f[i - 1]
+        ++b
+      } else {
+        f[i] = min(f[i - 1] + 1, b)
+      }
     }
+    return f[n]
+  }
 }

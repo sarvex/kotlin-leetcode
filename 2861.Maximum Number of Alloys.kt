@@ -1,41 +1,45 @@
-class Solution {
-    int n;
-    int budget;
-    List<List<Integer>> composition;
-    List<Integer> stock;
-    List<Integer> cost;
+internal class Solution {
+  var n: Int = 0
+  var budget: Int = 0
+  var composition: List<List<Int>>? = null
+  var stock: List<Int>? = null
+  var cost: List<Int>? = null
 
-    boolean isValid(long target) {
-        for (List<Integer> currMachine : composition) {
-            long remain = budget;
-            for (int j = 0; j < n && remain >= 0; j++) {
-                long need = Math.max(0, currMachine.get(j) * target - stock.get(j));
-                remain -= need * cost.get(j);
-            }
-            if (remain >= 0) {
-                return true;
-            }
-        }
-        return false;
+  fun isValid(target: Long): Boolean {
+    for (currMachine in composition!!) {
+      var remain = budget.toLong()
+      var j = 0
+      while (j < n && remain >= 0) {
+        val need = Math.max(0, currMachine[j] * target - stock!![j])
+        remain -= need * cost!![j]
+        j++
+      }
+      if (remain >= 0) {
+        return true
+      }
     }
+    return false
+  }
 
-    public int maxNumberOfAlloys(int n, int k, int budget, List<List<Integer>> composition,
-        List<Integer> stock, List<Integer> cost) {
-        this.n = n;
-        this.budget = budget;
-        this.composition = composition;
-        this.stock = stock;
-        this.cost = cost;
-        int l = -1;
-        int r = budget / cost.get(0) + stock.get(0);
-        while (l < r) {
-            int mid = (l + r + 1) >> 1;
-            if (isValid(mid)) {
-                l = mid;
-            } else {
-                r = mid - 1;
-            }
-        }
-        return l;
+  fun maxNumberOfAlloys(
+    n: Int, k: Int, budget: Int, composition: List<List<Int>>?,
+    stock: List<Int>, cost: List<Int>
+  ): Int {
+    this.n = n
+    this.budget = budget
+    this.composition = composition
+    this.stock = stock
+    this.cost = cost
+    var l = -1
+    var r = budget / cost[0] + stock[0]
+    while (l < r) {
+      val mid = (l + r + 1) shr 1
+      if (isValid(mid.toLong())) {
+        l = mid
+      } else {
+        r = mid - 1
+      }
     }
+    return l
+  }
 }

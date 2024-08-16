@@ -1,10 +1,10 @@
-class Solution {
-    public String getEncryptedString(String s, int k) {
-        char[] cs = s.toCharArray();
-        int n = cs.length;
-        for (int i = 0; i < n; ++i) {
-            cs[i] = s.charAt((i + k) % n);
-        }
-        return new String(cs);
+internal class Solution {
+  fun getEncryptedString(s: String, k: Int): String {
+    val cs: CharArray = s.toCharArray()
+    val n = cs.size
+    for (i in 0 until n) {
+      cs[i] = s[(i + k) % n]
     }
+    return String(cs)
+  }
 }

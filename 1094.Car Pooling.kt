@@ -1,18 +1,20 @@
-class Solution {
-    public boolean carPooling(int[][] trips, int capacity) {
-        int[] d = new int[1001];
-        for (var trip : trips) {
-            int x = trip[0], f = trip[1], t = trip[2];
-            d[f] += x;
-            d[t] -= x;
-        }
-        int s = 0;
-        for (int x : d) {
-            s += x;
-            if (s > capacity) {
-                return false;
-            }
-        }
-        return true;
+internal class Solution {
+  fun carPooling(trips: Array<IntArray>, capacity: Int): Boolean {
+    val d = IntArray(1001)
+    for (trip in trips) {
+      val x = trip[0]
+      val f = trip[1]
+      val t = trip[2]
+      d[f] += x
+      d[t] -= x
     }
+    var s = 0
+    for (x in d) {
+      s += x
+      if (s > capacity) {
+        return false
+      }
+    }
+    return true
+  }
 }

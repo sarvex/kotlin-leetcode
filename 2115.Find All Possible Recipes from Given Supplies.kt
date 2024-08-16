@@ -1,31 +1,32 @@
-class Solution {
-    public List<String> findAllRecipes(
-        String[] recipes, List<List<String>> ingredients, String[] supplies) {
-        Map<String, List<String>> g = new HashMap<>();
-        Map<String, Integer> indeg = new HashMap<>();
-        for (int i = 0; i < recipes.length; ++i) {
-            for (String v : ingredients.get(i)) {
-                g.computeIfAbsent(v, k -> new ArrayList<>()).add(recipes[i]);
-            }
-            indeg.put(recipes[i], ingredients.get(i).size());
-        }
-        Deque<String> q = new ArrayDeque<>();
-        for (String s : supplies) {
-            q.offer(s);
-        }
-        List<String> ans = new ArrayList<>();
-        while (!q.isEmpty()) {
-            for (int n = q.size(); n > 0; --n) {
-                String i = q.pollFirst();
-                for (String j : g.getOrDefault(i, Collections.emptyList())) {
-                    indeg.put(j, indeg.get(j) - 1);
-                    if (indeg.get(j) == 0) {
-                        ans.add(j);
-                        q.offer(j);
-                    }
-                }
-            }
-        }
-        return ans;
+internal class Solution {
+  fun findAllRecipes(
+    recipes: Array<String?>, ingredients: List<List<String?>>, supplies: Array<String?>
+  ): List<String> {
+    val g: Map<String, List<String>> = HashMap()
+    val indeg: Map<String, Int> = HashMap()
+    for (i in recipes.indices) {
+      for (v in ingredients[i]) {
+        g.computeIfAbsent(v) { k -> ArrayList() }.add(recipes[i])
+      }
+      indeg.put(recipes[i], ingredients[i].size())
     }
+    val q: Deque<String> = ArrayDeque()
+    for (s in supplies) {
+      q.offer(s)
+    }
+    val ans: List<String> = ArrayList()
+    while (!q.isEmpty()) {
+      for (n in q.size() downTo 1) {
+        val i: String = q.pollFirst()
+        for (j in g.getOrDefault(i, Collections.emptyList())) {
+          indeg.put(j, indeg[j]!! - 1)
+          if (indeg[j] === 0) {
+            ans.add(j)
+            q.offer(j)
+          }
+        }
+      }
+    }
+    return ans
+  }
 }

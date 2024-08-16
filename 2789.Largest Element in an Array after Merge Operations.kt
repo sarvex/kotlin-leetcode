@@ -1,15 +1,16 @@
-class Solution {
-    public long maxArrayValue(int[] nums) {
-        int n = nums.length;
-        long ans = nums[n - 1], t = nums[n - 1];
-        for (int i = n - 2; i >= 0; --i) {
-            if (nums[i] <= t) {
-                t += nums[i];
-            } else {
-                t = nums[i];
-            }
-            ans = Math.max(ans, t);
-        }
-        return ans;
+internal class Solution {
+  fun maxArrayValue(nums: IntArray): Long {
+    val n = nums.size
+    var ans = nums[n - 1].toLong()
+    var t = nums[n - 1].toLong()
+    for (i in n - 2 downTo 0) {
+      if (nums[i] <= t) {
+        t += nums[i].toLong()
+      } else {
+        t = nums[i].toLong()
+      }
+      ans = max(ans, t)
     }
+    return ans
+  }
 }

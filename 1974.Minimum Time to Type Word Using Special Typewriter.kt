@@ -1,14 +1,14 @@
-class Solution {
-    public int minTimeToType(String word) {
-        int ans = 0;
-        int prev = 0;
-        for (char c : word.toCharArray()) {
-            int curr = c - 'a';
-            int t = Math.abs(prev - curr);
-            t = Math.min(t, 26 - t);
-            ans += t + 1;
-            prev = curr;
-        }
-        return ans;
+internal class Solution {
+  fun minTimeToType(word: String): Int {
+    var ans = 0
+    var prev = 0
+    for (c in word.toCharArray()) {
+      val curr: Int = c.code - 'a'.code
+      var t: Int = abs(prev - curr)
+      t = min(t, 26 - t)
+      ans += t + 1
+      prev = curr
     }
+    return ans
+  }
 }

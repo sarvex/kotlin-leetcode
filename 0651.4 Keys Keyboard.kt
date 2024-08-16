@@ -1,14 +1,14 @@
-class Solution {
-    public int maxA(int n) {
-        int[] dp = new int[n + 1];
-        for (int i = 0; i < n + 1; ++i) {
-            dp[i] = i;
-        }
-        for (int i = 3; i < n + 1; ++i) {
-            for (int j = 2; j < i - 1; ++j) {
-                dp[i] = Math.max(dp[i], dp[j - 1] * (i - j));
-            }
-        }
-        return dp[n];
+internal class Solution {
+  fun maxA(n: Int): Int {
+    val dp = IntArray(n + 1)
+    for (i in 0 until n + 1) {
+      dp[i] = i
     }
+    for (i in 3 until n + 1) {
+      for (j in 2 until i - 1) {
+        dp[i] = max(dp[i], dp[j - 1] * (i - j))
+      }
+    }
+    return dp[n]
+  }
 }

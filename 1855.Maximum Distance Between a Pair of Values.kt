@@ -1,19 +1,21 @@
-class Solution {
-    public int maxDistance(int[] nums1, int[] nums2) {
-        int ans = 0;
-        int m = nums1.length, n = nums2.length;
-        for (int i = 0; i < m; ++i) {
-            int left = i, right = n - 1;
-            while (left < right) {
-                int mid = (left + right + 1) >> 1;
-                if (nums2[mid] >= nums1[i]) {
-                    left = mid;
-                } else {
-                    right = mid - 1;
-                }
-            }
-            ans = Math.max(ans, left - i);
+internal class Solution {
+  fun maxDistance(nums1: IntArray, nums2: IntArray): Int {
+    var ans = 0
+    val m = nums1.size
+    val n = nums2.size
+    for (i in 0 until m) {
+      var left: Int = i
+      var right = n - 1
+      while (left < right) {
+        val mid = (left + right + 1) shr 1
+        if (nums2[mid] >= nums1[i]) {
+          left = mid
+        } else {
+          right = mid - 1
         }
-        return ans;
+      }
+      ans = max(ans, left - i)
     }
+    return ans
+  }
 }

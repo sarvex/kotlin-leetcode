@@ -1,82 +1,78 @@
-class Node {
-    int key;
-    int val;
-    Node prev;
-    Node next;
+internal open class Node {
+  var key: Int = 0
+  var `val`: Int = 0
+  var prev: Node? = null
+  var next: Node? = null
 
-    Node() {
-    }
+  constructor()
 
-    Node(int key, int val) {
-        this.key = key;
-        this.val = val;
-    }
+  constructor(key: Int, `val`: Int) {
+    this.key = key
+    this.`val` = `val`
+  }
 }
 
-class LRUCache {
-    private Map<Integer, Node> cache = new HashMap<>();
-    private Node head = new Node();
-    private Node tail = new Node();
-    private int capacity;
-    private int size;
+internal class LRUCache(private val capacity: Int) {
+  private val cache: Map<Int, Node> = HashMap()
+  private val head = Node()
+  private val tail = Node()
+  private var size = 0
 
-    public LRUCache(int capacity) {
-        this.capacity = capacity;
-        head.next = tail;
-        tail.prev = head;
-    }
+  init {
+    head.next = tail
+    tail.prev = head
+  }
 
-    public int get(int key) {
-        if (!cache.containsKey(key)) {
-            return -1;
-        }
-        Node node = cache.get(key);
-        moveToHead(node);
-        return node.val;
+  fun get(key: Int): Int {
+    if (!cache.containsKey(key)) {
+      return -1
     }
+    val node = cache[key]!!
+    moveToHead(node)
+    return node.`val`
+  }
 
-    public void put(int key, int value) {
-        if (cache.containsKey(key)) {
-            Node node = cache.get(key);
-            node.val = value;
-            moveToHead(node);
-        } else {
-            Node node = new Node(key, value);
-            cache.put(key, node);
-            addToHead(node);
-            ++size;
-            if (size > capacity) {
-                node = removeTail();
-                cache.remove(node.key);
-                --size;
-            }
-        }
+  fun put(key: Int, value: Int) {
+    if (cache.containsKey(key)) {
+      val node = cache[key]!!
+      node.`val` = value
+      moveToHead(node)
+    } else {
+      var node = Node(key, value)
+      cache.put(key, node)
+      addToHead(node)
+      ++size
+      if (size > capacity) {
+        node = removeTail()
+        cache.remove(node.key)
+        --size
+      }
     }
+  }
 
-    private void moveToHead(Node node) {
-        removeNode(node);
-        addToHead(node);
-    }
+  private fun moveToHead(node: Node) {
+    removeNode(node)
+    addToHead(node)
+  }
 
-    private void removeNode(Node node) {
-        node.prev.next = node.next;
-        node.next.prev = node.prev;
-    }
+  private fun removeNode(node: Node) {
+    node.prev!!.next = node.next
+    node.next!!.prev = node.prev
+  }
 
-    private void addToHead(Node node) {
-        node.next = head.next;
-        node.prev = head;
-        head.next = node;
-        node.next.prev = node;
-    }
+  private fun addToHead(node: Node) {
+    node.next = head.next
+    node.prev = head
+    head.next = node
+    node.next!!.prev = node
+  }
 
-    private Node removeTail() {
-        Node node = tail.prev;
-        removeNode(node);
-        return node;
-    }
+  private fun removeTail(): Node {
+    val node = tail.prev
+    removeNode(node!!)
+    return node
+  }
 }
-
 /**
  * Your LRUCache object will be instantiated and called as such:
  * LRUCache obj = new LRUCache(capacity);

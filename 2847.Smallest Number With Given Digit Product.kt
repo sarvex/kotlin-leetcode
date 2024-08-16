@@ -1,23 +1,24 @@
-class Solution {
-    public String smallestNumber(long n) {
-        int[] cnt = new int[10];
-        for (int i = 9; i > 1; --i) {
-            while (n % i == 0) {
-                ++cnt[i];
-                n /= i;
-            }
-        }
-        if (n > 1) {
-            return "-1";
-        }
-        StringBuilder sb = new StringBuilder();
-        for (int i = 2; i < 10; ++i) {
-            while (cnt[i] > 0) {
-                sb.append(i);
-                --cnt[i];
-            }
-        }
-        String ans = sb.toString();
-        return ans.isEmpty() ? "1" : ans;
+internal class Solution {
+  fun smallestNumber(n: Long): String {
+    var n = n
+    val cnt = IntArray(10)
+    for (i in 9 downTo 2) {
+      while (n % i == 0L) {
+        ++cnt[i]
+        n /= i.toLong()
+      }
     }
+    if (n > 1) {
+      return "-1"
+    }
+    val sb = StringBuilder()
+    for (i in 2..9) {
+      while (cnt[i] > 0) {
+        sb.append(i)
+        --cnt[i]
+      }
+    }
+    val ans = sb.toString()
+    return if (ans.isEmpty()) "1" else ans
+  }
 }

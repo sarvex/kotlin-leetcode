@@ -1,15 +1,15 @@
-class Solution {
-    public List<String> stringMatching(String[] words) {
-        List<String> ans = new ArrayList<>();
-        int n = words.length;
-        for (int i = 0; i < n; ++i) {
-            for (int j = 0; j < n; ++j) {
-                if (i != j && words[j].contains(words[i])) {
-                    ans.add(words[i]);
-                    break;
-                }
-            }
+internal class Solution {
+  fun stringMatching(words: Array<String>): List<String> {
+    val ans: List<String> = ArrayList()
+    val n = words.size
+    for (i in 0 until n) {
+      for (j in 0 until n) {
+        if (i != j && words[j].contains(words[i])) {
+          ans.add(words[i])
+          break
         }
-        return ans;
+      }
     }
+    return ans
+  }
 }

@@ -1,27 +1,27 @@
-class SORTracker {
-    private PriorityQueue<Map.Entry<Integer, String>> good = new PriorityQueue<>(
-        (a, b)
-            -> a.getKey().equals(b.getKey()) ? b.getValue().compareTo(a.getValue())
-                                             : a.getKey() - b.getKey());
-    private PriorityQueue<Map.Entry<Integer, String>> bad = new PriorityQueue<>(
-        (a, b)
-            -> a.getKey().equals(b.getKey()) ? a.getValue().compareTo(b.getValue())
-                                             : b.getKey() - a.getKey());
+internal class SORTracker {
+  private val good: PriorityQueue<Map.Entry<Int, String>> = PriorityQueue { a, b ->
+    if (a.getKey().equals(b.getKey()))
+      b.getValue().compareTo(a.getValue())
+    else
+      a.getKey() - b.getKey()
+  }
+  private val bad: PriorityQueue<Map.Entry<Int, String>> = PriorityQueue { a, b ->
+    if (a.getKey().equals(b.getKey()))
+      a.getValue().compareTo(b.getValue())
+    else
+      b.getKey() - a.getKey()
+  }
 
-    public SORTracker() {
-    }
+  fun add(name: String?, score: Int) {
+    good.offer(Map.entry(score, name))
+    bad.offer(good.poll())
+  }
 
-    public void add(String name, int score) {
-        good.offer(Map.entry(score, name));
-        bad.offer(good.poll());
-    }
-
-    public String get() {
-        good.offer(bad.poll());
-        return good.peek().getValue();
-    }
+  fun get(): String {
+    good.offer(bad.poll())
+    return good.peek().getValue()
+  }
 }
-
 /**
  * Your SORTracker object will be instantiated and called as such:
  * SORTracker obj = new SORTracker();

@@ -1,28 +1,30 @@
-class Solution {
-    public String clearStars(String s) {
-        Deque<Integer>[] g = new Deque[26];
-        Arrays.setAll(g, k -> new ArrayDeque<>());
-        int n = s.length();
-        boolean[] rem = new boolean[n];
-        for (int i = 0; i < n; ++i) {
-            if (s.charAt(i) == '*') {
-                rem[i] = true;
-                for (int j = 0; j < 26; ++j) {
-                    if (!g[j].isEmpty()) {
-                        rem[g[j].pop()] = true;
-                        break;
-                    }
-                }
-            } else {
-                g[s.charAt(i) - 'a'].push(i);
-            }
+import java.util.*
+
+internal class Solution {
+  fun clearStars(s: String): String {
+    val g: Array<Deque<Int>> = arrayOfNulls<Deque>(26)
+    Arrays.setAll(g) { k -> ArrayDeque() }
+    val n = s.length
+    val rem = BooleanArray(n)
+    for (i in 0 until n) {
+      if (s[i] == '*') {
+        rem[i] = true
+        for (j in 0..25) {
+          if (!g[j].isEmpty()) {
+            rem[g[j].pop()] = true
+            break
+          }
         }
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < n; ++i) {
-            if (!rem[i]) {
-                sb.append(s.charAt(i));
-            }
-        }
-        return sb.toString();
+      } else {
+        g[s[i].code - 'a'.code].push(i)
+      }
     }
+    val sb = StringBuilder()
+    for (i in 0 until n) {
+      if (!rem[i]) {
+        sb.append(s[i])
+      }
+    }
+    return sb.toString()
+  }
 }

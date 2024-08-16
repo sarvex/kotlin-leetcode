@@ -1,26 +1,26 @@
-class Solution {
-    private String word;
-    private int n;
+internal class Solution {
+  private var word: String? = null
+  private var n = 0
 
-    public List<String> generateAbbreviations(String word) {
-        this.word = word;
-        n = word.length();
-        return dfs(0);
-    }
+  fun generateAbbreviations(word: String): List<String> {
+    this.word = word
+    n = word.length
+    return dfs(0)
+  }
 
-    private List<String> dfs(int i) {
-        if (i >= n) {
-            return List.of("");
-        }
-        List<String> ans = new ArrayList<>();
-        for (String s : dfs(i + 1)) {
-            ans.add(String.valueOf(word.charAt(i)) + s);
-        }
-        for (int j = i + 1; j <= n; ++j) {
-            for (String s : dfs(j + 1)) {
-                ans.add((j - i) + "" + (j < n ? String.valueOf(word.charAt(j)) : "") + s);
-            }
-        }
-        return ans;
+  private fun dfs(i: Int): List<String> {
+    if (i >= n) {
+      return List.of("")
     }
+    val ans: List<String> = ArrayList()
+    for (s in dfs(i + 1)) {
+      ans.add(word!![i].toString() + s)
+    }
+    for (j in i + 1..n) {
+      for (s in dfs(j + 1)) {
+        ans.add((j - i).toString() + "" + (if (j < n) word!![j].toString() else "") + s)
+      }
+    }
+    return ans
+  }
 }

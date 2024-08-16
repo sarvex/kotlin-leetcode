@@ -1,12 +1,13 @@
-class Solution {
-    public int getXORSum(int[] arr1, int[] arr2) {
-        int a = 0, b = 0;
-        for (int v : arr1) {
-            a ^= v;
-        }
-        for (int v : arr2) {
-            b ^= v;
-        }
-        return a & b;
+internal class Solution {
+  fun getXORSum(arr1: IntArray, arr2: IntArray): Int {
+    var a = 0
+    var b = 0
+    for (v in arr1) {
+      a = a xor v
     }
+    for (v in arr2) {
+      b = b xor v
+    }
+    return a and b
+  }
 }

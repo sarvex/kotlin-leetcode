@@ -1,13 +1,13 @@
-class Solution {
-    public int heightChecker(int[] heights) {
-        int[] expected = heights.clone();
-        Arrays.sort(expected);
-        int ans = 0;
-        for (int i = 0; i < heights.length; ++i) {
-            if (heights[i] != expected[i]) {
-                ++ans;
-            }
-        }
-        return ans;
+internal class Solution {
+  fun heightChecker(heights: IntArray): Int {
+    val expected = heights.clone()
+    Arrays.sort(expected)
+    var ans = 0
+    for (i in heights.indices) {
+      if (heights[i] != expected[i]) {
+        ++ans
+      }
     }
+    return ans
+  }
 }

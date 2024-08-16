@@ -1,12 +1,12 @@
-class Solution {
-    public String reverseWords(String s) {
-        StringBuilder res = new StringBuilder();
-        for (String t : s.split(" ")) {
-            for (int i = t.length() - 1; i >= 0; --i) {
-                res.append(t.charAt(i));
-            }
-            res.append(" ");
-        }
-        return res.substring(0, res.length() - 1);
+internal class Solution {
+  fun reverseWords(s: String): String {
+    val res = StringBuilder()
+    for (t in s.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()) {
+      for (i in t.length - 1 downTo 0) {
+        res.append(t[i])
+      }
+      res.append(" ")
     }
+    return res.substring(0, res.length - 1)
+  }
 }

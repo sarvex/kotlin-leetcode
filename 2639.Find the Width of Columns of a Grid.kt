@@ -1,13 +1,13 @@
-class Solution {
-    public int[] findColumnWidth(int[][] grid) {
-        int n = grid[0].length;
-        int[] ans = new int[n];
-        for (var row : grid) {
-            for (int j = 0; j < n; ++j) {
-                int w = String.valueOf(row[j]).length();
-                ans[j] = Math.max(ans[j], w);
-            }
-        }
-        return ans;
+internal class Solution {
+  fun findColumnWidth(grid: Array<IntArray>): IntArray {
+    val n = grid[0].size
+    val ans = IntArray(n)
+    for (row in grid) {
+      for (j in 0 until n) {
+        val w = row[j].toString().length
+        ans[j] = max(ans[j], w)
+      }
     }
+    return ans
+  }
 }

@@ -1,18 +1,20 @@
-class Solution {
-    public int[] deckRevealedIncreasing(int[] deck) {
-        Deque<Integer> q = new ArrayDeque<>();
-        Arrays.sort(deck);
-        int n = deck.length;
-        for (int i = n - 1; i >= 0; --i) {
-            if (!q.isEmpty()) {
-                q.offerFirst(q.pollLast());
-            }
-            q.offerFirst(deck[i]);
-        }
-        int[] ans = new int[n];
-        for (int i = n - 1; i >= 0; --i) {
-            ans[i] = q.pollLast();
-        }
-        return ans;
+import java.util.Deque
+
+internal class Solution {
+  fun deckRevealedIncreasing(deck: IntArray): IntArray {
+    val q: Deque<Int> = ArrayDeque()
+    Arrays.sort(deck)
+    val n = deck.size
+    for (i in n - 1 downTo 0) {
+      if (!q.isEmpty()) {
+        q.offerFirst(q.pollLast())
+      }
+      q.offerFirst(deck[i])
     }
+    val ans = IntArray(n)
+    for (i in n - 1 downTo 0) {
+      ans[i] = q.pollLast()
+    }
+    return ans
+  }
 }

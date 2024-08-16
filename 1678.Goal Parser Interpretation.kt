@@ -1,5 +1,5 @@
-class Solution {
-    public String interpret(String command) {
-        return command.replace("()", "o").replace("(al)", "al");
-    }
+internal class Solution {
+  fun interpret(command: String): String {
+    return command.replace("()", "o").replace("(al)", "al")
+  }
 }

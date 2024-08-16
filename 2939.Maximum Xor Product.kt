@@ -1,22 +1,22 @@
-class Solution {
-    public int maximumXorProduct(long a, long b, int n) {
-        final int mod = (int) 1e9 + 7;
-        long ax = (a >> n) << n;
-        long bx = (b >> n) << n;
-        for (int i = n - 1; i >= 0; --i) {
-            long x = a >> i & 1;
-            long y = b >> i & 1;
-            if (x == y) {
-                ax |= 1L << i;
-                bx |= 1L << i;
-            } else if (ax < bx) {
-                ax |= 1L << i;
-            } else {
-                bx |= 1L << i;
-            }
-        }
-        ax %= mod;
-        bx %= mod;
-        return (int) (ax * bx % mod);
+internal class Solution {
+  fun maximumXorProduct(a: Long, b: Long, n: Int): Int {
+    val mod = 1e9.toInt() + 7
+    var ax = (a shr n) shl n
+    var bx = (b shr n) shl n
+    for (i in n - 1 downTo 0) {
+      val x = a shr i and 1L
+      val y = b shr i and 1L
+      if (x == y) {
+        ax = ax or (1L shl i)
+        bx = bx or (1L shl i)
+      } else if (ax < bx) {
+        ax = ax or (1L shl i)
+      } else {
+        bx = bx or (1L shl i)
+      }
     }
+    ax %= mod.toLong()
+    bx %= mod.toLong()
+    return (ax * bx % mod).toInt()
+  }
 }

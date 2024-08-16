@@ -2,48 +2,49 @@
  * This is the interface for the expression tree Node.
  * You should not remove it, and you can define some classes to implement it.
  */
+internal abstract class Node {
+  abstract fun evaluate(): Int
 
-abstract class Node {
-    public abstract int evaluate();
-    // define your fields here
-    protected String val;
-    protected Node left;
-    protected Node right;
-};
+  // define your fields here
+  protected var `val`: String? = null
+  var left: Node? = null
+  var right: Node? = null
+}
 
-class MyNode extends Node {
-    public MyNode(String val) {
-        this.val = val;
+internal class MyNode(`val`: String) : Node() {
+  init {
+    this.`val` = `val`
+  }
+
+  override fun evaluate(): Int {
+    if (isNumeric) {
+      return `val`.toInt()
     }
-
-    public int evaluate() {
-        if (isNumeric()) {
-            return Integer.parseInt(val);
-        }
-        int leftVal = left.evaluate();
-        int rightVal = right.evaluate();
-        if (Objects.equals(val, "+")) {
-            return leftVal + rightVal;
-        }
-        if (Objects.equals(val, "-")) {
-            return leftVal - rightVal;
-        }
-        if (Objects.equals(val, "*")) {
-            return leftVal * rightVal;
-        }
-        if (Objects.equals(val, "/")) {
-            return leftVal / rightVal;
-        }
-        return 0;
+    val leftVal: Int = left.evaluate()
+    val rightVal: Int = right.evaluate()
+    if (Objects.equals(`val`, "+")) {
+      return leftVal + rightVal
     }
+    if (Objects.equals(`val`, "-")) {
+      return leftVal - rightVal
+    }
+    if (Objects.equals(`val`, "*")) {
+      return leftVal * rightVal
+    }
+    if (Objects.equals(`val`, "/")) {
+      return leftVal / rightVal
+    }
+    return 0
+  }
 
-    public boolean isNumeric() {
-        for (char c : val.toCharArray()) {
-            if (!Character.isDigit(c)) {
-                return false;
-            }
+  val isNumeric: Boolean
+    get() {
+      for (c in `val`.toCharArray()) {
+        if (!Character.isDigit(c)) {
+          return false
         }
-        return true;
+      }
+      return true
     }
 }
 
@@ -52,22 +53,20 @@ class MyNode extends Node {
  * You can treat it as the driver code that takes the postinfix input
  * and returns the expression tree represnting it as a Node.
  */
-
-class TreeBuilder {
-    Node buildTree(String[] postfix) {
-        Deque<MyNode> stk = new ArrayDeque<>();
-        for (String s : postfix) {
-            MyNode node = new MyNode(s);
-            if (!node.isNumeric()) {
-                node.right = stk.pop();
-                node.left = stk.pop();
-            }
-            stk.push(node);
-        }
-        return stk.peek();
+internal class TreeBuilder {
+  fun buildTree(postfix: Array<String>): Node {
+    val stk: Deque<MyNode> = ArrayDeque()
+    for (s in postfix) {
+      val node = MyNode(s)
+      if (!node.isNumeric) {
+        node.right = stk.pop()
+        node.left = stk.pop()
+      }
+      stk.push(node)
     }
-};
-
+    return stk.peek()
+  }
+}
 /**
  * Your TreeBuilder object will be instantiated and called as such:
  * TreeBuilder obj = new TreeBuilder();

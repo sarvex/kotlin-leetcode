@@ -1,47 +1,49 @@
-class Solution {
-    public List<Integer> mostSimilar(int n, int[][] roads, String[] names, String[] targetPath) {
-        List<Integer>[] g = new List[n];
-        Arrays.setAll(g, i -> new ArrayList<>());
-        for (int[] r : roads) {
-            int a = r[0], b = r[1];
-            g[a].add(b);
-            g[b].add(a);
-        }
-        int m = targetPath.length;
-        final int inf = 1 << 30;
-        int[][] f = new int[m][n];
-        int[][] pre = new int[m][n];
-        for (int i = 0; i < m; i++) {
-            Arrays.fill(f[i], inf);
-            Arrays.fill(pre[i], -1);
-        }
-        for (int j = 0; j < n; ++j) {
-            f[0][j] = targetPath[0].equals(names[j]) ? 0 : 1;
-        }
-        for (int i = 1; i < m; ++i) {
-            for (int j = 0; j < n; ++j) {
-                for (int k : g[j]) {
-                    int t = f[i - 1][k] + (targetPath[i].equals(names[j]) ? 0 : 1);
-                    if (t < f[i][j]) {
-                        f[i][j] = t;
-                        pre[i][j] = k;
-                    }
-                }
-            }
-        }
-        int mi = inf, k = 0;
-        for (int j = 0; j < n; ++j) {
-            if (f[m - 1][j] < mi) {
-                mi = f[m - 1][j];
-                k = j;
-            }
-        }
-        List<Integer> ans = new ArrayList<>();
-        for (int i = m - 1; i >= 0; --i) {
-            ans.add(k);
-            k = pre[i][k];
-        }
-        Collections.reverse(ans);
-        return ans;
+internal class Solution {
+  fun mostSimilar(n: Int, roads: Array<IntArray>, names: Array<String>, targetPath: Array<String>): List<Int> {
+    val g: Array<List<Int>> = arrayOfNulls(n)
+    Arrays.setAll(g) { i -> ArrayList() }
+    for (r in roads) {
+      val a = r[0]
+      val b = r[1]
+      g[a].add(b)
+      g[b].add(a)
     }
+    val m = targetPath.size
+    val inf = 1 shl 30
+    val f = Array(m) { IntArray(n) }
+    val pre = Array(m) { IntArray(n) }
+    for (i in 0 until m) {
+      Arrays.fill(f[i], inf)
+      Arrays.fill(pre[i], -1)
+    }
+    for (j in 0 until n) {
+      f[0][j] = if (targetPath[0] == names[j]) 0 else 1
+    }
+    for (i in 1 until m) {
+      for (j in 0 until n) {
+        for (k in g[j]) {
+          val t = f[i - 1][k] + (if (targetPath[i] == names[j]) 0 else 1)
+          if (t < f[i][j]) {
+            f[i][j] = t
+            pre[i][j] = k
+          }
+        }
+      }
+    }
+    var mi = inf
+    var k = 0
+    for (j in 0 until n) {
+      if (f[m - 1][j] < mi) {
+        mi = f[m - 1][j]
+        k = j
+      }
+    }
+    val ans: List<Int> = ArrayList()
+    for (i in m - 1 downTo 0) {
+      ans.add(k)
+      k = pre[i][k]
+    }
+    Collections.reverse(ans)
+    return ans
+  }
 }

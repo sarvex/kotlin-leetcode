@@ -1,15 +1,15 @@
-class Solution {
-    public int furthestDistanceFromOrigin(String moves) {
-        return Math.abs(count(moves, 'L') - count(moves, 'R')) + count(moves, '_');
-    }
+internal class Solution {
+  fun furthestDistanceFromOrigin(moves: String): Int {
+    return abs(count(moves, 'L') - count(moves, 'R')) + count(moves, '_')
+  }
 
-    private int count(String s, char c) {
-        int cnt = 0;
-        for (int i = 0; i < s.length(); ++i) {
-            if (s.charAt(i) == c) {
-                ++cnt;
-            }
-        }
-        return cnt;
+  private fun count(s: String, c: Char): Int {
+    var cnt = 0
+    for (i in 0 until s.length) {
+      if (s[i] == c) {
+        ++cnt
+      }
     }
+    return cnt
+  }
 }

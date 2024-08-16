@@ -1,44 +1,51 @@
-class Solution {
-    private static final int BASE = 131;
-    private static final long[] MUL = new long[310];
-    private static final int MOD = (int) 1e9 + 7;
-    static {
-        MUL[0] = 1;
-        for (int i = 1; i < MUL.length; ++i) {
-            MUL[i] = (MUL[i - 1] * BASE) % MOD;
-        }
+internal class Solution {
+  fun palindromePairs(words: Array<String>): List<List<Int>> {
+    val n = words.size
+    val prefix = LongArray(n)
+    val suffix = LongArray(n)
+    for (i in 0 until n) {
+      val word = words[i]
+      val m = word.length
+      for (j in 0 until m) {
+        val t: Int = word[j].code - 'a'.code + 1
+        val s: Int = word[m - j - 1].code - 'a'.code + 1
+        prefix[i] = (prefix[i] * Solution.Companion.BASE) % Solution.Companion.MOD + t
+        suffix[i] = (suffix[i] * Solution.Companion.BASE) % Solution.Companion.MOD + s
+      }
     }
-    public List<List<Integer>> palindromePairs(String[] words) {
-        int n = words.length;
-        long[] prefix = new long[n];
-        long[] suffix = new long[n];
-        for (int i = 0; i < n; ++i) {
-            String word = words[i];
-            int m = word.length();
-            for (int j = 0; j < m; ++j) {
-                int t = word.charAt(j) - 'a' + 1;
-                int s = word.charAt(m - j - 1) - 'a' + 1;
-                prefix[i] = (prefix[i] * BASE) % MOD + t;
-                suffix[i] = (suffix[i] * BASE) % MOD + s;
-            }
+    val ans: List<List<Int>> = ArrayList()
+    for (i in 0 until n) {
+      for (j in i + 1 until n) {
+        if (check(i, j, words[j].length, words[i].length, prefix, suffix)) {
+          ans.add(Arrays.asList(i, j))
         }
-        List<List<Integer>> ans = new ArrayList<>();
-        for (int i = 0; i < n; ++i) {
-            for (int j = i + 1; j < n; ++j) {
-                if (check(i, j, words[j].length(), words[i].length(), prefix, suffix)) {
-                    ans.add(Arrays.asList(i, j));
-                }
-                if (check(j, i, words[i].length(), words[j].length(), prefix, suffix)) {
-                    ans.add(Arrays.asList(j, i));
-                }
-            }
+        if (check(j, i, words[i].length, words[j].length, prefix, suffix)) {
+          ans.add(Arrays.asList(j, i))
         }
-        return ans;
+      }
     }
+    return ans
+  }
 
-    private boolean check(int i, int j, int n, int m, long[] prefix, long[] suffix) {
-        long t = ((prefix[i] * MUL[n]) % MOD + prefix[j]) % MOD;
-        long s = ((suffix[j] * MUL[m]) % MOD + suffix[i]) % MOD;
-        return t == s;
+  private fun check(i: Int, j: Int, n: Int, m: Int, prefix: LongArray, suffix: LongArray): Boolean {
+    val t: Long =
+      ((prefix[i] * Solution.Companion.MUL.get(n)) % Solution.Companion.MOD + prefix[j]) % Solution.Companion.MOD
+    val s: Long =
+      ((suffix[j] * Solution.Companion.MUL.get(m)) % Solution.Companion.MOD + suffix[i]) % Solution.Companion.MOD
+    return t == s
+  }
+
+  companion object {
+    private const val BASE = 131
+    private val MUL = LongArray(310)
+    private const val MOD = 1e9.toInt() + 7
+
+    init {
+      Solution.Companion.MUL.get(0) = 1
+      for (i in 1 until Solution.Companion.MUL.size) {
+        Solution.Companion.MUL.get(i) =
+          (Solution.Companion.MUL.get(i - 1) * Solution.Companion.BASE) % Solution.Companion.MOD
+      }
     }
+  }
 }

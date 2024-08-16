@@ -1,29 +1,31 @@
-class Solution {
-    public int trapRainWater(int[][] heightMap) {
-        int m = heightMap.length, n = heightMap[0].length;
-        boolean[][] vis = new boolean[m][n];
-        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[0] - b[0]);
-        for (int i = 0; i < m; ++i) {
-            for (int j = 0; j < n; ++j) {
-                if (i == 0 || i == m - 1 || j == 0 || j == n - 1) {
-                    pq.offer(new int[] {heightMap[i][j], i, j});
-                    vis[i][j] = true;
-                }
-            }
+internal class Solution {
+  fun trapRainWater(heightMap: Array<IntArray>): Int {
+    val m = heightMap.size
+    val n = heightMap[0].size
+    val vis = Array(m) { BooleanArray(n) }
+    val pq: PriorityQueue<IntArray> = PriorityQueue { a, b -> a.get(0) - b.get(0) }
+    for (i in 0 until m) {
+      for (j in 0 until n) {
+        if (i == 0 || i == m - 1 || j == 0 || j == n - 1) {
+          pq.offer(intArrayOf(heightMap[i][j], i, j))
+          vis[i][j] = true
         }
-        int ans = 0;
-        int[] dirs = {-1, 0, 1, 0, -1};
-        while (!pq.isEmpty()) {
-            var p = pq.poll();
-            for (int k = 0; k < 4; ++k) {
-                int x = p[1] + dirs[k], y = p[2] + dirs[k + 1];
-                if (x >= 0 && x < m && y >= 0 && y < n && !vis[x][y]) {
-                    ans += Math.max(0, p[0] - heightMap[x][y]);
-                    vis[x][y] = true;
-                    pq.offer(new int[] {Math.max(p[0], heightMap[x][y]), x, y});
-                }
-            }
-        }
-        return ans;
+      }
     }
+    var ans = 0
+    val dirs = intArrayOf(-1, 0, 1, 0, -1)
+    while (!pq.isEmpty()) {
+      val p: Unit = pq.poll()
+      for (k in 0..3) {
+        val x: Int = p.get(1) + dirs[k]
+        val y: Int = p.get(2) + dirs[k + 1]
+        if (x >= 0 && x < m && y >= 0 && y < n && !vis[x][y]) {
+          ans += Math.max(0, p.get(0) - heightMap[x][y])
+          vis[x][y] = true
+          pq.offer(intArrayOf(Math.max(p.get(0), heightMap[x][y]), x, y))
+        }
+      }
+    }
+    return ans
+  }
 }

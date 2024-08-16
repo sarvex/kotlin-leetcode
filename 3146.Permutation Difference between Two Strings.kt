@@ -1,14 +1,14 @@
-class Solution {
-    public int findPermutationDifference(String s, String t) {
-        int[] d = new int[26];
-        int n = s.length();
-        for (int i = 0; i < n; ++i) {
-            d[s.charAt(i) - 'a'] = i;
-        }
-        int ans = 0;
-        for (int i = 0; i < n; ++i) {
-            ans += Math.abs(d[t.charAt(i) - 'a'] - i);
-        }
-        return ans;
+internal class Solution {
+  fun findPermutationDifference(s: String, t: String): Int {
+    val d = IntArray(26)
+    val n = s.length
+    for (i in 0 until n) {
+      d[s[i].code - 'a'.code] = i
     }
+    var ans = 0
+    for (i in 0 until n) {
+      ans += abs(d[t[i].code - 'a'.code] - i)
+    }
+    return ans
+  }
 }

@@ -2,33 +2,33 @@
  * // This is the HtmlParser's API interface.
  * // You should not implement it, or speculate about its implementation
  * interface HtmlParser {
- *     public List<String> getUrls(String url) {}
+ * public List<String> getUrls(String url) {}
  * }
- */
+</String> */
+internal class Solution {
+  private var ans: Set<String>? = null
 
-class Solution {
-    private Set<String> ans;
+  fun crawl(startUrl: String, htmlParser: HtmlParser): List<String> {
+    ans = HashSet()
+    dfs(startUrl, htmlParser)
+    return ArrayList(ans)
+  }
 
-    public List<String> crawl(String startUrl, HtmlParser htmlParser) {
-        ans = new HashSet<>();
-        dfs(startUrl, htmlParser);
-        return new ArrayList<>(ans);
+  private fun dfs(url: String, htmlParser: HtmlParser) {
+    if (ans!!.contains(url)) {
+      return
     }
-
-    private void dfs(String url, HtmlParser htmlParser) {
-        if (ans.contains(url)) {
-            return;
-        }
-        ans.add(url);
-        for (String next : htmlParser.getUrls(url)) {
-            if (host(next).equals(host(url))) {
-                dfs(next, htmlParser);
-            }
-        }
+    ans.add(url)
+    for (next in htmlParser.getUrls(url)) {
+      if (host(next) == host(url)) {
+        dfs(next, htmlParser)
+      }
     }
+  }
 
-    private String host(String url) {
-        url = url.substring(7);
-        return url.split("/")[0];
-    }
+  private fun host(url: String): String {
+    var url = url
+    url = url.substring(7)
+    return url.split("/".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray().get(0)
+  }
 }

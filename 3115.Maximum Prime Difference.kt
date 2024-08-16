@@ -1,25 +1,31 @@
-class Solution {
-    public int maximumPrimeDifference(int[] nums) {
-        for (int i = 0;; ++i) {
-            if (isPrime(nums[i])) {
-                for (int j = nums.length - 1;; --j) {
-                    if (isPrime(nums[j])) {
-                        return j - i;
-                    }
-                }
-            }
+internal class Solution {
+  fun maximumPrimeDifference(nums: IntArray): Int {
+    var i = 0
+    while (true) {
+      if (isPrime(nums[i])) {
+        var j = nums.size - 1
+        while (true) {
+          if (isPrime(nums[j])) {
+            return j - i
+          }
+          --j
         }
+      }
+      ++i
     }
+  }
 
-    private boolean isPrime(int x) {
-        if (x < 2) {
-            return false;
-        }
-        for (int v = 2; v * v <= x; ++v) {
-            if (x % v == 0) {
-                return false;
-            }
-        }
-        return true;
+  private fun isPrime(x: Int): Boolean {
+    if (x < 2) {
+      return false
     }
+    var v = 2
+    while (v * v <= x) {
+      if (x % v == 0) {
+        return false
+      }
+      ++v
+    }
+    return true
+  }
 }

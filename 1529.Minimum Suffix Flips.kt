@@ -1,12 +1,12 @@
-class Solution {
-    public int minFlips(String target) {
-        int ans = 0;
-        for (int i = 0; i < target.length(); ++i) {
-            int v = target.charAt(i) - '0';
-            if (((ans & 1) ^ v) != 0) {
-                ++ans;
-            }
-        }
-        return ans;
+internal class Solution {
+  fun minFlips(target: String): Int {
+    var ans = 0
+    for (i in 0 until target.length) {
+      val v: Int = target[i].code - '0'.code
+      if (((ans and 1) xor v) != 0) {
+        ++ans
+      }
     }
+    return ans
+  }
 }

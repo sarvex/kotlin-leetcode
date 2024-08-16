@@ -1,16 +1,18 @@
-class Solution {
-    public int uniqueMorseRepresentations(String[] words) {
-        String[] codes = new String[] {".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....",
-            "..", ".---", "-.-", ".-..", "--", "-.", "---", ".--.", "--.-", ".-.", "...", "-",
-            "..-", "...-", ".--", "-..-", "-.--", "--.."};
-        Set<String> s = new HashSet<>();
-        for (String word : words) {
-            StringBuilder t = new StringBuilder();
-            for (char c : word.toCharArray()) {
-                t.append(codes[c - 'a']);
-            }
-            s.add(t.toString());
-        }
-        return s.size();
+internal class Solution {
+  fun uniqueMorseRepresentations(words: Array<String>): Int {
+    val codes = arrayOf(
+      ".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....",
+      "..", ".---", "-.-", ".-..", "--", "-.", "---", ".--.", "--.-", ".-.", "...", "-",
+      "..-", "...-", ".--", "-..-", "-.--", "--.."
+    )
+    val s: Set<String> = HashSet()
+    for (word in words) {
+      val t = StringBuilder()
+      for (c in word.toCharArray()) {
+        t.append(codes[c.code - 'a'.code])
+      }
+      s.add(t.toString())
     }
+    return s.size()
+  }
 }

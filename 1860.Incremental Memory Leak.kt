@@ -1,13 +1,16 @@
-class Solution {
-    public int[] memLeak(int memory1, int memory2) {
-        int i = 1;
-        for (; i <= Math.max(memory1, memory2); ++i) {
-            if (memory1 >= memory2) {
-                memory1 -= i;
-            } else {
-                memory2 -= i;
-            }
-        }
-        return new int[] {i, memory1, memory2};
+internal class Solution {
+  fun memLeak(memory1: Int, memory2: Int): IntArray {
+    var memory1 = memory1
+    var memory2 = memory2
+    var i = 1
+    while (i <= max(memory1, memory2)) {
+      if (memory1 >= memory2) {
+        memory1 -= i
+      } else {
+        memory2 -= i
+      }
+      ++i
     }
+    return intArrayOf(i, memory1, memory2)
+  }
 }

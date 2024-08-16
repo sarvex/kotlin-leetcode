@@ -1,57 +1,56 @@
-class Trie {
-    private Trie[] children = new Trie[26];
-    private int v;
-    private int pv;
+internal class Trie {
+  private val children: Array<Trie> = arrayOfNulls(26)
+  private var v = 0
+  private var pv = 0
 
-    public Trie() {
+  fun insert(word: String) {
+    var node = this
+    for (c in word.toCharArray()) {
+      var c = c
+      (c -= 'a').toChar()
+      if (node.children[c.code] == null) {
+        node.children[c.code] = Trie()
+      }
+      node = node.children[c.code]
+      ++node.pv
     }
+    ++node.v
+  }
 
-    public void insert(String word) {
-        Trie node = this;
-        for (char c : word.toCharArray()) {
-            c -= 'a';
-            if (node.children[c] == null) {
-                node.children[c] = new Trie();
-            }
-            node = node.children[c];
-            ++node.pv;
-        }
-        ++node.v;
-    }
+  fun countWordsEqualTo(word: String): Int {
+    val node = search(word)
+    return if (node == null) 0 else node.v
+  }
 
-    public int countWordsEqualTo(String word) {
-        Trie node = search(word);
-        return node == null ? 0 : node.v;
-    }
+  fun countWordsStartingWith(prefix: String): Int {
+    val node = search(prefix)
+    return if (node == null) 0 else node.pv
+  }
 
-    public int countWordsStartingWith(String prefix) {
-        Trie node = search(prefix);
-        return node == null ? 0 : node.pv;
+  fun erase(word: String) {
+    var node = this
+    for (c in word.toCharArray()) {
+      var c = c
+      (c -= 'a').toChar()
+      node = node.children[c]
+      --node.pv
     }
+    --node.v
+  }
 
-    public void erase(String word) {
-        Trie node = this;
-        for (char c : word.toCharArray()) {
-            c -= 'a';
-            node = node.children[c];
-            --node.pv;
-        }
-        --node.v;
+  private fun search(word: String): Trie? {
+    var node = this
+    for (c in word.toCharArray()) {
+      var c = c
+      (c -= 'a').toChar()
+      if (node.children[c.code] == null) {
+        return null
+      }
+      node = node.children[c.code]
     }
-
-    private Trie search(String word) {
-        Trie node = this;
-        for (char c : word.toCharArray()) {
-            c -= 'a';
-            if (node.children[c] == null) {
-                return null;
-            }
-            node = node.children[c];
-        }
-        return node;
-    }
+    return node
+  }
 }
-
 /**
  * Your Trie object will be instantiated and called as such:
  * Trie obj = new Trie();

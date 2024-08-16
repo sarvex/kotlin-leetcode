@@ -1,19 +1,19 @@
-class Solution {
-    public int rearrangeCharacters(String s, String target) {
-        int[] cnt1 = new int[26];
-        int[] cnt2 = new int[26];
-        for (int i = 0; i < s.length(); ++i) {
-            ++cnt1[s.charAt(i) - 'a'];
-        }
-        for (int i = 0; i < target.length(); ++i) {
-            ++cnt2[target.charAt(i) - 'a'];
-        }
-        int ans = 100;
-        for (int i = 0; i < 26; ++i) {
-            if (cnt2[i] > 0) {
-                ans = Math.min(ans, cnt1[i] / cnt2[i]);
-            }
-        }
-        return ans;
+internal class Solution {
+  fun rearrangeCharacters(s: String, target: String): Int {
+    val cnt1 = IntArray(26)
+    val cnt2 = IntArray(26)
+    for (i in 0 until s.length) {
+      ++cnt1[s[i].code - 'a'.code]
     }
+    for (i in 0 until target.length) {
+      ++cnt2[target[i].code - 'a'.code]
+    }
+    var ans = 100
+    for (i in 0..25) {
+      if (cnt2[i] > 0) {
+        ans = min(ans, cnt1[i] / cnt2[i])
+      }
+    }
+    return ans
+  }
 }

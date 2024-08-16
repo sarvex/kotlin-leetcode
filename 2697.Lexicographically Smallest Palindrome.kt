@@ -1,9 +1,14 @@
-class Solution {
-    public String makeSmallestPalindrome(String s) {
-        char[] cs = s.toCharArray();
-        for (int i = 0, j = cs.length - 1; i < j; ++i, --j) {
-            cs[i] = cs[j] = (char) Math.min(cs[i], cs[j]);
-        }
-        return new String(cs);
+internal class Solution {
+  fun makeSmallestPalindrome(s: String): String {
+    val cs: CharArray = s.toCharArray()
+    var i = 0
+    var j = cs.size - 1
+    while (i < j) {
+      cs[j] = min(cs[i], cs[j]) as Char
+      cs[i] = cs[j]
+      ++i
+      --j
     }
+    return String(cs)
+  }
 }

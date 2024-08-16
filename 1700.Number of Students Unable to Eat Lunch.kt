@@ -1,14 +1,14 @@
-class Solution {
-    public int countStudents(int[] students, int[] sandwiches) {
-        int[] cnt = new int[2];
-        for (int v : students) {
-            ++cnt[v];
-        }
-        for (int v : sandwiches) {
-            if (cnt[v]-- == 0) {
-                return cnt[v ^ 1];
-            }
-        }
-        return 0;
+internal class Solution {
+  fun countStudents(students: IntArray, sandwiches: IntArray): Int {
+    val cnt = IntArray(2)
+    for (v in students) {
+      ++cnt[v]
     }
+    for (v in sandwiches) {
+      if (cnt[v]-- == 0) {
+        return cnt[v xor 1]
+      }
+    }
+    return 0
+  }
 }

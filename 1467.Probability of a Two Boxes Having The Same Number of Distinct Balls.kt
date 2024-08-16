@@ -1,45 +1,45 @@
-class Solution {
-    private int n;
-    private long[][] c;
-    private int[] balls;
-    private Map<List<Integer>, Long> f = new HashMap<>();
+internal class Solution {
+  private var n = 0
+  private var c: Array<LongArray>
+  private var balls: IntArray
+  private val f: Map<List<Int>, Long> = HashMap()
 
-    public double getProbability(int[] balls) {
-        int mx = 0;
-        for (int x : balls) {
-            n += x;
-            mx = Math.max(mx, x);
-        }
-        n >>= 1;
-        this.balls = balls;
-        int m = Math.max(mx, n << 1);
-        c = new long[m + 1][m + 1];
-        for (int i = 0; i <= m; ++i) {
-            c[i][0] = 1;
-            for (int j = 1; j <= i; ++j) {
-                c[i][j] = c[i - 1][j - 1] + c[i - 1][j];
-            }
-        }
-        return dfs(0, n, 0) * 1.0 / c[n << 1][n];
+  fun getProbability(balls: IntArray): Double {
+    var mx = 0
+    for (x in balls) {
+      n += x
+      mx = max(mx, x)
     }
+    n = n shr 1
+    this.balls = balls
+    val m: Int = max(mx, n shl 1)
+    c = Array(m + 1) { LongArray(m + 1) }
+    for (i in 0..m) {
+      c[i][0] = 1
+      for (j in 1..i) {
+        c[i][j] = c[i - 1][j - 1] + c[i - 1][j]
+      }
+    }
+    return dfs(0, n, 0) * 1.0 / c[n shl 1][n]
+  }
 
-    private long dfs(int i, int j, int diff) {
-        if (i >= balls.length) {
-            return j == 0 && diff == 0 ? 1 : 0;
-        }
-        if (j < 0) {
-            return 0;
-        }
-        List<Integer> key = List.of(i, j, diff);
-        if (f.containsKey(key)) {
-            return f.get(key);
-        }
-        long ans = 0;
-        for (int x = 0; x <= balls[i]; ++x) {
-            int y = x == balls[i] ? 1 : (x == 0 ? -1 : 0);
-            ans += dfs(i + 1, j - x, diff + y) * c[balls[i]][x];
-        }
-        f.put(key, ans);
-        return ans;
+  private fun dfs(i: Int, j: Int, diff: Int): Long {
+    if (i >= balls.size) {
+      return if (j == 0 && diff == 0) 1 else 0
     }
+    if (j < 0) {
+      return 0
+    }
+    val key: List<Int> = List.of(i, j, diff)
+    if (f.containsKey(key)) {
+      return f[key]!!
+    }
+    var ans: Long = 0
+    for (x in 0..balls[i]) {
+      val y = if (x == balls[i]) 1 else (if (x == 0) -1 else 0)
+      ans += dfs(i + 1, j - x, diff + y) * c[balls[i]][x]
+    }
+    f.put(key, ans)
+    return ans
+  }
 }

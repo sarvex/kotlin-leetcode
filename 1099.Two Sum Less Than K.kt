@@ -1,26 +1,28 @@
-class Solution {
-    public int twoSumLessThanK(int[] nums, int k) {
-        Arrays.sort(nums);
-        int ans = -1;
-        int n = nums.length;
-        for (int i = 0; i < n; ++i) {
-            int j = search(nums, k - nums[i], i + 1, n) - 1;
-            if (i < j) {
-                ans = Math.max(ans, nums[i] + nums[j]);
-            }
-        }
-        return ans;
+internal class Solution {
+  fun twoSumLessThanK(nums: IntArray, k: Int): Int {
+    Arrays.sort(nums)
+    var ans = -1
+    val n = nums.size
+    for (i in 0 until n) {
+      val j = search(nums, k - nums[i], i + 1, n) - 1
+      if (i < j) {
+        ans = max(ans, nums[i] + nums[j])
+      }
     }
+    return ans
+  }
 
-    private int search(int[] nums, int x, int l, int r) {
-        while (l < r) {
-            int mid = (l + r) >> 1;
-            if (nums[mid] >= x) {
-                r = mid;
-            } else {
-                l = mid + 1;
-            }
-        }
-        return l;
+  private fun search(nums: IntArray, x: Int, l: Int, r: Int): Int {
+    var l = l
+    var r = r
+    while (l < r) {
+      val mid = (l + r) shr 1
+      if (nums[mid] >= x) {
+        r = mid
+      } else {
+        l = mid + 1
+      }
     }
+    return l
+  }
 }

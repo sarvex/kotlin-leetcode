@@ -1,19 +1,23 @@
-class Solution {
-    public boolean reorderedPowerOf2(int n) {
-        String s = convert(n);
-        for (int i = 1; i <= Math.pow(10, 9); i <<= 1) {
-            if (s.equals(convert(i))) {
-                return true;
-            }
-        }
-        return false;
+internal class Solution {
+  fun reorderedPowerOf2(n: Int): Boolean {
+    val s = convert(n)
+    var i = 1
+    while (i <= 10.pow(9)) {
+      if (s == convert(i)) {
+        return true
+      }
+      i = i shl 1
     }
+    return false
+  }
 
-    private String convert(int n) {
-        char[] cnt = new char[10];
-        for (; n > 0; n /= 10) {
-            cnt[n % 10]++;
-        }
-        return new String(cnt);
+  private fun convert(n: Int): String {
+    var n = n
+    val cnt = CharArray(10)
+    while (n > 0) {
+      cnt[n % 10]++
+      n /= 10
     }
+    return String(cnt)
+  }
 }

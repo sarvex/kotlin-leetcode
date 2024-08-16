@@ -1,11 +1,18 @@
-class Solution {
-    public int minimumOperationsToMakeKPeriodic(String word, int k) {
-        Map<String, Integer> cnt = new HashMap<>();
-        int n = word.length();
-        int mx = 0;
-        for (int i = 0; i < n; i += k) {
-            mx = Math.max(mx, cnt.merge(word.substring(i, i + k), 1, Integer::sum));
-        }
-        return n / k - mx;
+internal class Solution {
+  fun minimumOperationsToMakeKPeriodic(word: String, k: Int): Int {
+    val cnt: Map<String, Int> = HashMap()
+    val n = word.length
+    var mx = 0
+    var i = 0
+    while (i < n) {
+      mx = Math.max(mx, cnt.merge(word.substring(i, i + k), 1) { a: Int, b: Int ->
+        Integer.sum(
+          a,
+          b
+        )
+      })
+      i += k
     }
+    return n / k - mx
+  }
 }

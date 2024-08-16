@@ -1,12 +1,12 @@
-class Solution {
-    public int minimumTotal(List<List<Integer>> triangle) {
-        int n = triangle.size();
-        int[] f = new int[n + 1];
-        for (int i = n - 1; i >= 0; --i) {
-            for (int j = 0; j <= i; ++j) {
-                f[j] = Math.min(f[j], f[j + 1]) + triangle.get(i).get(j);
-            }
-        }
-        return f[0];
+internal class Solution {
+  fun minimumTotal(triangle: List<List<Int>>): Int {
+    val n: Int = triangle.size()
+    val f = IntArray(n + 1)
+    for (i in n - 1 downTo 0) {
+      for (j in 0..i) {
+        f[j] = min(f[j], f[j + 1]) + triangle[i][j]
+      }
     }
+    return f[0]
+  }
 }

@@ -1,13 +1,14 @@
-class Solution {
-    public String[] divideString(String s, int k, char fill) {
-        int n = s.length();
-        String[] ans = new String[(n + k - 1) / k];
-        if (n % k != 0) {
-            s += String.valueOf(fill).repeat(k - n % k);
-        }
-        for (int i = 0; i < ans.length; ++i) {
-            ans[i] = s.substring(i * k, (i + 1) * k);
-        }
-        return ans;
+internal class Solution {
+  fun divideString(s: String, k: Int, fill: Char): Array<String> {
+    var s = s
+    val n = s.length
+    val ans: Array<String> = arrayOfNulls((n + k - 1) / k)
+    if (n % k != 0) {
+      s += fill.toString().repeat(k - n % k)
     }
+    for (i in ans.indices) {
+      ans[i] = s.substring(i * k, (i + 1) * k)
+    }
+    return ans
+  }
 }

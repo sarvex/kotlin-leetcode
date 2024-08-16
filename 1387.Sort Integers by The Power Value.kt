@@ -1,25 +1,28 @@
-class Solution {
-    public int getKth(int lo, int hi, int k) {
-        Integer[] nums = new Integer[hi - lo + 1];
-        for (int i = lo; i <= hi; ++i) {
-            nums[i - lo] = i;
-        }
-        Arrays.sort(nums, (a, b) -> {
-            int fa = f(a), fb = f(b);
-            return fa == fb ? a - b : fa - fb;
-        });
-        return nums[k - 1];
+internal class Solution {
+  fun getKth(lo: Int, hi: Int, k: Int): Int {
+    val nums: Array<Int> = arrayOfNulls(hi - lo + 1)
+    for (i in lo..hi) {
+      nums[i - lo] = i
     }
+    Arrays.sort(nums) { a, b ->
+      val fa = f(a)
+      val fb = f(b)
+      if (fa == fb) a - b else fa - fb
+    }
+    return nums[k - 1]
+  }
 
-    private int f(int x) {
-        int ans = 0;
-        for (; x != 1; ++ans) {
-            if (x % 2 == 0) {
-                x /= 2;
-            } else {
-                x = x * 3 + 1;
-            }
-        }
-        return ans;
+  private fun f(x: Int): Int {
+    var x = x
+    var ans = 0
+    while (x != 1) {
+      if (x % 2 == 0) {
+        x /= 2
+      } else {
+        x = x * 3 + 1
+      }
+      ++ans
     }
+    return ans
+  }
 }

@@ -1,13 +1,14 @@
-class Solution {
-    public int numOfWays(int n) {
-        int mod = (int) 1e9 + 7;
-        long f0 = 6, f1 = 6;
-        for (int i = 0; i < n - 1; ++i) {
-            long g0 = (3 * f0 + 2 * f1) % mod;
-            long g1 = (2 * f0 + 2 * f1) % mod;
-            f0 = g0;
-            f1 = g1;
-        }
-        return (int) (f0 + f1) % mod;
+internal class Solution {
+  fun numOfWays(n: Int): Int {
+    val mod = 1e9.toInt() + 7
+    var f0: Long = 6
+    var f1: Long = 6
+    for (i in 0 until n - 1) {
+      val g0 = (3 * f0 + 2 * f1) % mod
+      val g1 = (2 * f0 + 2 * f1) % mod
+      f0 = g0
+      f1 = g1
     }
+    return (f0 + f1).toInt() % mod
+  }
 }

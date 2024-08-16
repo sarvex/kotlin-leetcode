@@ -1,34 +1,33 @@
+internal class Solution {
+  private var ans: List<String>? = null
+  private var num: String? = null
+  private var target = 0
 
-class Solution {
-    private List<String> ans;
-    private String num;
-    private int target;
+  fun addOperators(num: String?, target: Int): List<String>? {
+    ans = ArrayList()
+    this.num = num
+    this.target = target
+    dfs(0, 0, 0, "")
+    return ans
+  }
 
-    public List<String> addOperators(String num, int target) {
-        ans = new ArrayList<>();
-        this.num = num;
-        this.target = target;
-        dfs(0, 0, 0, "");
-        return ans;
+  private fun dfs(u: Int, prev: Long, curr: Long, path: String) {
+    if (u == num!!.length) {
+      if (curr == target.toLong()) ans.add(path)
+      return
     }
-
-    private void dfs(int u, long prev, long curr, String path) {
-        if (u == num.length()) {
-            if (curr == target) ans.add(path);
-            return;
-        }
-        for (int i = u; i < num.length(); i++) {
-            if (i != u && num.charAt(u) == '0') {
-                break;
-            }
-            long next = Long.parseLong(num.substring(u, i + 1));
-            if (u == 0) {
-                dfs(i + 1, next, next, path + next);
-            } else {
-                dfs(i + 1, next, curr + next, path + "+" + next);
-                dfs(i + 1, -next, curr - next, path + "-" + next);
-                dfs(i + 1, prev * next, curr - prev + prev * next, path + "*" + next);
-            }
-        }
+    for (i in u until num!!.length) {
+      if (i != u && num!![u] == '0') {
+        break
+      }
+      val next: Long = num.substring(u, i + 1).toLong()
+      if (u == 0) {
+        dfs(i + 1, next, next, path + next)
+      } else {
+        dfs(i + 1, next, curr + next, "$path+$next")
+        dfs(i + 1, -next, curr - next, "$path-$next")
+        dfs(i + 1, prev * next, curr - prev + prev * next, "$path*$next")
+      }
     }
+  }
 }

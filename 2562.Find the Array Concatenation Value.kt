@@ -1,13 +1,16 @@
-class Solution {
-    public long findTheArrayConcVal(int[] nums) {
-        long ans = 0;
-        int i = 0, j = nums.length - 1;
-        for (; i < j; ++i, --j) {
-            ans += Integer.parseInt(nums[i] + "" + nums[j]);
-        }
-        if (i == j) {
-            ans += nums[i];
-        }
-        return ans;
+internal class Solution {
+  fun findTheArrayConcVal(nums: IntArray): Long {
+    var ans: Long = 0
+    var i = 0
+    var j = nums.size - 1
+    while (i < j) {
+      ans += (nums[i].toString() + "" + nums[j]).toInt()
+      ++i
+      --j
     }
+    if (i == j) {
+      ans += nums[i].toLong()
+    }
+    return ans
+  }
 }

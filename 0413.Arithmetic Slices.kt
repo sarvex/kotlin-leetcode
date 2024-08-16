@@ -1,16 +1,17 @@
-class Solution {
-    public int numberOfArithmeticSlices(int[] nums) {
-        int ans = 0, cnt = 0;
-        int d = 3000;
-        for (int i = 0; i < nums.length - 1; ++i) {
-            if (nums[i + 1] - nums[i] == d) {
-                ++cnt;
-            } else {
-                d = nums[i + 1] - nums[i];
-                cnt = 0;
-            }
-            ans += cnt;
-        }
-        return ans;
+internal class Solution {
+  fun numberOfArithmeticSlices(nums: IntArray): Int {
+    var ans = 0
+    var cnt = 0
+    var d = 3000
+    for (i in 0 until nums.size - 1) {
+      if (nums[i + 1] - nums[i] == d) {
+        ++cnt
+      } else {
+        d = nums[i + 1] - nums[i]
+        cnt = 0
+      }
+      ans += cnt
     }
+    return ans
+  }
 }

@@ -1,17 +1,21 @@
-class Solution {
-    public int shortestDistance(String[] wordsDict, String word1, String word2) {
-        int ans = 0x3f3f3f3f;
-        for (int k = 0, i = -1, j = -1; k < wordsDict.length; ++k) {
-            if (wordsDict[k].equals(word1)) {
-                i = k;
-            }
-            if (wordsDict[k].equals(word2)) {
-                j = k;
-            }
-            if (i != -1 && j != -1) {
-                ans = Math.min(ans, Math.abs(i - j));
-            }
-        }
-        return ans;
+internal class Solution {
+  fun shortestDistance(wordsDict: Array<String>, word1: String, word2: String): Int {
+    var ans = 0x3f3f3f3f
+    var k = 0
+    var i = -1
+    var j = -1
+    while (k < wordsDict.size) {
+      if (wordsDict[k] == word1) {
+        i = k
+      }
+      if (wordsDict[k] == word2) {
+        j = k
+      }
+      if (i != -1 && j != -1) {
+        ans = min(ans, abs(i - j))
+      }
+      ++k
     }
+    return ans
+  }
 }

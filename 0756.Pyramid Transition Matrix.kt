@@ -1,39 +1,41 @@
-class Solution {
-    private int[][] f = new int[7][7];
-    private Map<String, Boolean> dp = new HashMap<>();
+internal class Solution {
+  private val f = Array(7) { IntArray(7) }
+  private val dp: Map<String, Boolean> = HashMap()
 
-    public boolean pyramidTransition(String bottom, List<String> allowed) {
-        for (String s : allowed) {
-            int a = s.charAt(0) - 'A', b = s.charAt(1) - 'A';
-            f[a][b] |= 1 << (s.charAt(2) - 'A');
-        }
-        return dfs(bottom, new StringBuilder());
+  fun pyramidTransition(bottom: String, allowed: List<String>): Boolean {
+    for (s in allowed) {
+      val a: Int = s[0].code - 'A'.code
+      val b: Int = s[1].code - 'A'.code
+      f[a][b] = f[a][b] or (1 shl (s[2].code - 'A'.code))
     }
+    return dfs(bottom, StringBuilder())
+  }
 
-    boolean dfs(String s, StringBuilder t) {
-        if (s.length() == 1) {
-            return true;
-        }
-        if (t.length() + 1 == s.length()) {
-            return dfs(t.toString(), new StringBuilder());
-        }
-        String k = s + "." + t.toString();
-        if (dp.containsKey(k)) {
-            return dp.get(k);
-        }
-        int a = s.charAt(t.length()) - 'A', b = s.charAt(t.length() + 1) - 'A';
-        int cs = f[a][b];
-        for (int i = 0; i < 7; ++i) {
-            if (((cs >> i) & 1) == 1) {
-                t.append((char) ('A' + i));
-                if (dfs(s, t)) {
-                    dp.put(k, true);
-                    return true;
-                }
-                t.deleteCharAt(t.length() - 1);
-            }
-        }
-        dp.put(k, false);
-        return false;
+  fun dfs(s: String, t: StringBuilder): Boolean {
+    if (s.length == 1) {
+      return true
     }
+    if (t.length + 1 == s.length) {
+      return dfs(t.toString(), StringBuilder())
+    }
+    val k = "$s.$t"
+    if (dp.containsKey(k)) {
+      return dp[k]!!
+    }
+    val a: Int = s[t.length].code - 'A'.code
+    val b: Int = s[t.length + 1].code - 'A'.code
+    val cs = f[a][b]
+    for (i in 0..6) {
+      if (((cs shr i) and 1) == 1) {
+        t.append(('A'.code + i).toChar())
+        if (dfs(s, t)) {
+          dp.put(k, true)
+          return true
+        }
+        t.deleteCharAt(t.length - 1)
+      }
+    }
+    dp.put(k, false)
+    return false
+  }
 }

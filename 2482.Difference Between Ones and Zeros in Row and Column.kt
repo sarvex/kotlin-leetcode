@@ -1,21 +1,22 @@
-class Solution {
-    public int[][] onesMinusZeros(int[][] grid) {
-        int m = grid.length, n = grid[0].length;
-        int[] rows = new int[m];
-        int[] cols = new int[n];
-        for (int i = 0; i < m; ++i) {
-            for (int j = 0; j < n; ++j) {
-                int v = grid[i][j];
-                rows[i] += v;
-                cols[j] += v;
-            }
-        }
-        int[][] diff = new int[m][n];
-        for (int i = 0; i < m; ++i) {
-            for (int j = 0; j < n; ++j) {
-                diff[i][j] = rows[i] + cols[j] - (n - rows[i]) - (m - cols[j]);
-            }
-        }
-        return diff;
+internal class Solution {
+  fun onesMinusZeros(grid: Array<IntArray>): Array<IntArray> {
+    val m = grid.size
+    val n = grid[0].size
+    val rows = IntArray(m)
+    val cols = IntArray(n)
+    for (i in 0 until m) {
+      for (j in 0 until n) {
+        val v = grid[i][j]
+        rows[i] += v
+        cols[j] += v
+      }
     }
+    val diff = Array(m) { IntArray(n) }
+    for (i in 0 until m) {
+      for (j in 0 until n) {
+        diff[i][j] = rows[i] + cols[j] - (n - rows[i]) - (m - cols[j])
+      }
+    }
+    return diff
+  }
 }

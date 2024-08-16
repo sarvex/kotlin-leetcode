@@ -1,14 +1,14 @@
-class Solution {
-
-    public int findMinFibonacciNumbers(int k) {
-        if (k < 2) {
-            return k;
-        }
-        int a = 1, b = 1;
-        while (b <= k) {
-            b = a + b;
-            a = b - a;
-        }
-        return 1 + findMinFibonacciNumbers(k - a);
+internal class Solution {
+  fun findMinFibonacciNumbers(k: Int): Int {
+    if (k < 2) {
+      return k
     }
+    var a = 1
+    var b = 1
+    while (b <= k) {
+      b = a + b
+      a = b - a
+    }
+    return 1 + findMinFibonacciNumbers(k - a)
+  }
 }

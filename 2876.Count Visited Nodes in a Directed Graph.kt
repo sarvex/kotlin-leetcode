@@ -1,26 +1,28 @@
-class Solution {
-    public int[] countVisitedNodes(List<Integer> edges) {
-        int n = edges.size();
-        int[] ans = new int[n];
-        int[] vis = new int[n];
-        for (int i = 0; i < n; ++i) {
-            if (ans[i] == 0) {
-                int cnt = 0, j = i;
-                while (vis[j] == 0) {
-                    vis[j] = ++cnt;
-                    j = edges.get(j);
-                }
-                int cycle = 0, total = cnt + ans[j];
-                if (ans[j] == 0) {
-                    cycle = cnt - vis[j] + 1;
-                }
-                j = i;
-                while (ans[j] == 0) {
-                    ans[j] = Math.max(total--, cycle);
-                    j = edges.get(j);
-                }
-            }
+internal class Solution {
+  fun countVisitedNodes(edges: List<Int>): IntArray {
+    val n: Int = edges.size()
+    val ans = IntArray(n)
+    val vis = IntArray(n)
+    for (i in 0 until n) {
+      if (ans[i] == 0) {
+        var cnt = 0
+        var j: Int = i
+        while (vis[j] == 0) {
+          vis[j] = ++cnt
+          j = edges[j]
         }
-        return ans;
+        var cycle = 0
+        var total = cnt + ans[j]
+        if (ans[j] == 0) {
+          cycle = cnt - vis[j] + 1
+        }
+        j = i
+        while (ans[j] == 0) {
+          ans[j] = max(total--, cycle)
+          j = edges[j]
+        }
+      }
     }
+    return ans
+  }
 }

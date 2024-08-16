@@ -1,22 +1,23 @@
-class Solution {
-    public void setZeroes(int[][] matrix) {
-        int m = matrix.length, n = matrix[0].length;
-        boolean[] rows = new boolean[m];
-        boolean[] cols = new boolean[n];
-        for (int i = 0; i < m; ++i) {
-            for (int j = 0; j < n; ++j) {
-                if (matrix[i][j] == 0) {
-                    rows[i] = true;
-                    cols[j] = true;
-                }
-            }
+internal class Solution {
+  fun setZeroes(matrix: Array<IntArray>) {
+    val m = matrix.size
+    val n = matrix[0].size
+    val rows = BooleanArray(m)
+    val cols = BooleanArray(n)
+    for (i in 0 until m) {
+      for (j in 0 until n) {
+        if (matrix[i][j] == 0) {
+          rows[i] = true
+          cols[j] = true
         }
-        for (int i = 0; i < m; ++i) {
-            for (int j = 0; j < n; ++j) {
-                if (rows[i] || cols[j]) {
-                    matrix[i][j] = 0;
-                }
-            }
-        }
+      }
     }
+    for (i in 0 until m) {
+      for (j in 0 until n) {
+        if (rows[i] || cols[j]) {
+          matrix[i][j] = 0
+        }
+      }
+    }
+  }
 }

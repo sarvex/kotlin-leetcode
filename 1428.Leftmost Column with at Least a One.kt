@@ -2,28 +2,29 @@
  * // This is the BinaryMatrix's API interface.
  * // You should not implement it, or speculate about its implementation
  * interface BinaryMatrix {
- *     public int get(int row, int col) {}
- *     public List<Integer> dimensions {}
+ * public int get(int row, int col) {}
+ * public List<Integer> dimensions {}
  * };
- */
-
-class Solution {
-    public int leftMostColumnWithOne(BinaryMatrix binaryMatrix) {
-        List<Integer> e = binaryMatrix.dimensions();
-        int m = e.get(0), n = e.get(1);
-        int ans = n;
-        for (int i = 0; i < m; ++i) {
-            int l = 0, r = n;
-            while (l < r) {
-                int mid = (l + r) >> 1;
-                if (binaryMatrix.get(i, mid) == 1) {
-                    r = mid;
-                } else {
-                    l = mid + 1;
-                }
-            }
-            ans = Math.min(ans, l);
+</Integer> */
+internal class Solution {
+  fun leftMostColumnWithOne(binaryMatrix: BinaryMatrix): Int {
+    val e: List<Int> = binaryMatrix.dimensions()
+    val m = e[0]
+    val n = e[1]
+    var ans = n
+    for (i in 0 until m) {
+      var l = 0
+      var r = n
+      while (l < r) {
+        val mid = (l + r) shr 1
+        if (binaryMatrix.get(i, mid) === 1) {
+          r = mid
+        } else {
+          l = mid + 1
         }
-        return ans >= n ? -1 : ans;
+      }
+      ans = min(ans, l)
     }
+    return if (ans >= n) -1 else ans
+  }
 }

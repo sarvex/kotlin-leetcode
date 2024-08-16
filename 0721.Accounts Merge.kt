@@ -1,68 +1,67 @@
-class UnionFind {
-    private final int[] p;
-    private final int[] size;
+internal class UnionFind(n: Int) {
+  private val p = IntArray(n)
+  private val size = IntArray(n)
 
-    public UnionFind(int n) {
-        p = new int[n];
-        size = new int[n];
-        for (int i = 0; i < n; ++i) {
-            p[i] = i;
-            size[i] = 1;
-        }
+  init {
+    for (i in 0 until n) {
+      p[i] = i
+      size[i] = 1
     }
+  }
 
-    public int find(int x) {
-        if (p[x] != x) {
-            p[x] = find(p[x]);
-        }
-        return p[x];
+  fun find(x: Int): Int {
+    if (p[x] != x) {
+      p[x] = find(p[x])
     }
+    return p[x]
+  }
 
-    public boolean union(int a, int b) {
-        int pa = find(a), pb = find(b);
-        if (pa == pb) {
-            return false;
-        }
-        if (size[pa] > size[pb]) {
-            p[pb] = pa;
-            size[pa] += size[pb];
-        } else {
-            p[pa] = pb;
-            size[pb] += size[pa];
-        }
-        return true;
+  fun union(a: Int, b: Int): Boolean {
+    val pa = find(a)
+    val pb = find(b)
+    if (pa == pb) {
+      return false
     }
+    if (size[pa] > size[pb]) {
+      p[pb] = pa
+      size[pa] += size[pb]
+    } else {
+      p[pa] = pb
+      size[pb] += size[pa]
+    }
+    return true
+  }
 }
 
-class Solution {
-    public List<List<String>> accountsMerge(List<List<String>> accounts) {
-        int n = accounts.size();
-        UnionFind uf = new UnionFind(n);
-        Map<String, Integer> d = new HashMap<>();
-        for (int i = 0; i < n; ++i) {
-            for (int j = 1; j < accounts.get(i).size(); ++j) {
-                String email = accounts.get(i).get(j);
-                if (d.containsKey(email)) {
-                    uf.union(i, d.get(email));
-                } else {
-                    d.put(email, i);
-                }
-            }
+internal class Solution {
+  fun accountsMerge(accounts: List<List<String?>>): List<List<String>> {
+    val n: Int = accounts.size()
+    val uf = UnionFind(n)
+    val d: Map<String?, Int> = HashMap()
+    for (i in 0 until n) {
+      for (j in 1 until accounts[i].size()) {
+        val email = accounts[i][j]
+        if (d.containsKey(email)) {
+          uf.union(i, d[email]!!)
+        } else {
+          d.put(email, i)
         }
-        Map<Integer, Set<String>> g = new HashMap<>();
-        for (int i = 0; i < n; ++i) {
-            int root = uf.find(i);
-            g.computeIfAbsent(root, k -> new HashSet<>())
-                .addAll(accounts.get(i).subList(1, accounts.get(i).size()));
-        }
-        List<List<String>> ans = new ArrayList<>();
-        for (var e : g.entrySet()) {
-            List<String> emails = new ArrayList<>(e.getValue());
-            Collections.sort(emails);
-            ans.add(new ArrayList<>());
-            ans.get(ans.size() - 1).add(accounts.get(e.getKey()).get(0));
-            ans.get(ans.size() - 1).addAll(emails);
-        }
-        return ans;
+      }
     }
+    val g: Map<Int, Set<String>> = HashMap()
+    for (i in 0 until n) {
+      val root = uf.find(i)
+      g.computeIfAbsent(root) { k -> HashSet() }
+        .addAll(accounts[i].subList(1, accounts[i].size()))
+    }
+    val ans: List<List<String>> = ArrayList()
+    for (e in g.entrySet()) {
+      val emails: List<String> = ArrayList(e.getValue())
+      Collections.sort(emails)
+      ans.add(ArrayList())
+      ans[ans.size() - 1].add(accounts[e.getKey()][0])
+      ans[ans.size() - 1].addAll(emails)
+    }
+    return ans
+  }
 }

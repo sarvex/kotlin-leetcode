@@ -1,19 +1,19 @@
-class Solution {
-    private Map<Integer, Integer> f = new HashMap<>();
+internal class Solution {
+  private val f: Map<Int, Int> = HashMap()
 
-    public int minDays(int n) {
-        return dfs(n);
-    }
+  fun minDays(n: Int): Int {
+    return dfs(n)
+  }
 
-    private int dfs(int n) {
-        if (n < 2) {
-            return n;
-        }
-        if (f.containsKey(n)) {
-            return f.get(n);
-        }
-        int res = 1 + Math.min(n % 2 + dfs(n / 2), n % 3 + dfs(n / 3));
-        f.put(n, res);
-        return res;
+  private fun dfs(n: Int): Int {
+    if (n < 2) {
+      return n
     }
+    if (f.containsKey(n)) {
+      return f[n]!!
+    }
+    val res: Int = 1 + min(n % 2 + dfs(n / 2), n % 3 + dfs(n / 3))
+    f.put(n, res)
+    return res
+  }
 }

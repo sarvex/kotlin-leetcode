@@ -1,36 +1,36 @@
-class Solution {
-    private int[][] grid;
-    private boolean[] vis;
-    private int[] match;
-    private int n;
+internal class Solution {
+  private var grid: Array<IntArray>
+  private var vis: BooleanArray
+  private var match: IntArray
+  private var n = 0
 
-    public int maximumInvitations(int[][] grid) {
-        int m = grid.length;
-        n = grid[0].length;
-        this.grid = grid;
-        vis = new boolean[n];
-        match = new int[n];
-        Arrays.fill(match, -1);
-        int ans = 0;
-        for (int i = 0; i < m; ++i) {
-            Arrays.fill(vis, false);
-            if (find(i)) {
-                ++ans;
-            }
-        }
-        return ans;
+  fun maximumInvitations(grid: Array<IntArray>): Int {
+    val m = grid.size
+    n = grid[0].size
+    this.grid = grid
+    vis = BooleanArray(n)
+    match = IntArray(n)
+    Arrays.fill(match, -1)
+    var ans = 0
+    for (i in 0 until m) {
+      Arrays.fill(vis, false)
+      if (find(i)) {
+        ++ans
+      }
     }
+    return ans
+  }
 
-    private boolean find(int i) {
-        for (int j = 0; j < n; ++j) {
-            if (grid[i][j] == 1 && !vis[j]) {
-                vis[j] = true;
-                if (match[j] == -1 || find(match[j])) {
-                    match[j] = i;
-                    return true;
-                }
-            }
+  private fun find(i: Int): Boolean {
+    for (j in 0 until n) {
+      if (grid[i][j] == 1 && !vis[j]) {
+        vis[j] = true
+        if (match[j] == -1 || find(match[j])) {
+          match[j] = i
+          return true
         }
-        return false;
+      }
     }
+    return false
+  }
 }

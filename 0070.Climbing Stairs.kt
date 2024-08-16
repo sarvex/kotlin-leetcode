@@ -1,11 +1,12 @@
-class Solution {
-    public int climbStairs(int n) {
-        int a = 0, b = 1;
-        for (int i = 0; i < n; ++i) {
-            int c = a + b;
-            a = b;
-            b = c;
-        }
-        return b;
+internal class Solution {
+  fun climbStairs(n: Int): Int {
+    var a = 0
+    var b = 1
+    for (i in 0 until n) {
+      val c = a + b
+      a = b
+      b = c
     }
+    return b
+  }
 }

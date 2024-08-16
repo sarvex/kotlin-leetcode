@@ -1,10 +1,13 @@
-class Solution {
-    public int[] replaceElements(int[] arr) {
-        for (int i = arr.length - 1, max = -1; i >= 0; --i) {
-            int t = arr[i];
-            arr[i] = max;
-            max = Math.max(max, t);
-        }
-        return arr;
+internal class Solution {
+  fun replaceElements(arr: IntArray): IntArray {
+    var i = arr.size - 1
+    var max = -1
+    while (i >= 0) {
+      val t = arr[i]
+      arr[i] = max
+      max = max(max, t)
+      --i
     }
+    return arr
+  }
 }

@@ -1,26 +1,26 @@
-class Solution {
-    public int findMaxForm(String[] strs, int m, int n) {
-        int sz = strs.length;
-        int[][][] f = new int[sz + 1][m + 1][n + 1];
-        for (int i = 1; i <= sz; ++i) {
-            int[] cnt = count(strs[i - 1]);
-            for (int j = 0; j <= m; ++j) {
-                for (int k = 0; k <= n; ++k) {
-                    f[i][j][k] = f[i - 1][j][k];
-                    if (j >= cnt[0] && k >= cnt[1]) {
-                        f[i][j][k] = Math.max(f[i][j][k], f[i - 1][j - cnt[0]][k - cnt[1]] + 1);
-                    }
-                }
-            }
+internal class Solution {
+  fun findMaxForm(strs: Array<String>, m: Int, n: Int): Int {
+    val sz = strs.size
+    val f = Array(sz + 1) { Array(m + 1) { IntArray(n + 1) } }
+    for (i in 1..sz) {
+      val cnt = count(strs[i - 1])
+      for (j in 0..m) {
+        for (k in 0..n) {
+          f[i][j][k] = f[i - 1][j][k]
+          if (j >= cnt[0] && k >= cnt[1]) {
+            f[i][j][k] = max(f[i][j][k], f[i - 1][j - cnt[0]][k - cnt[1]] + 1)
+          }
         }
-        return f[sz][m][n];
+      }
     }
+    return f[sz][m][n]
+  }
 
-    private int[] count(String s) {
-        int[] cnt = new int[2];
-        for (int i = 0; i < s.length(); ++i) {
-            ++cnt[s.charAt(i) - '0'];
-        }
-        return cnt;
+  private fun count(s: String): IntArray {
+    val cnt = IntArray(2)
+    for (i in 0 until s.length) {
+      ++cnt[s[i].code - '0'.code]
     }
+    return cnt
+  }
 }

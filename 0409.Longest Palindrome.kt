@@ -1,15 +1,15 @@
-class Solution {
-    public int longestPalindrome(String s) {
-        int[] cnt = new int[128];
-        int n = s.length();
-        for (int i = 0; i < n; ++i) {
-            ++cnt[s.charAt(i)];
-        }
-        int ans = 0;
-        for (int v : cnt) {
-            ans += v / 2 * 2;
-        }
-        ans += ans < n ? 1 : 0;
-        return ans;
+internal class Solution {
+  fun longestPalindrome(s: String): Int {
+    val cnt = IntArray(128)
+    val n = s.length
+    for (i in 0 until n) {
+      ++cnt[s[i].code]
     }
+    var ans = 0
+    for (v in cnt) {
+      ans += v / 2 * 2
+    }
+    ans += if (ans < n) 1 else 0
+    return ans
+  }
 }

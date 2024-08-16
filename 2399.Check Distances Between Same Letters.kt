@@ -1,13 +1,16 @@
-class Solution {
-    public boolean checkDistances(String s, int[] distance) {
-        int[] d = new int[26];
-        for (int i = 1, n = s.length(); i <= n; ++i) {
-            int j = s.charAt(i - 1) - 'a';
-            if (d[j] > 0 && i - d[j] - 1 != distance[j]) {
-                return false;
-            }
-            d[j] = i;
-        }
-        return true;
+internal class Solution {
+  fun checkDistances(s: String, distance: IntArray): Boolean {
+    val d = IntArray(26)
+    var i = 1
+    val n = s.length
+    while (i <= n) {
+      val j: Int = s[i - 1].code - 'a'.code
+      if (d[j] > 0 && i - d[j] - 1 != distance[j]) {
+        return false
+      }
+      d[j] = i
+      ++i
     }
+    return true
+  }
 }

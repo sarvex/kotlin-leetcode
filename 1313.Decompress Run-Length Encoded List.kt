@@ -1,15 +1,22 @@
-class Solution {
-    public int[] decompressRLElist(int[] nums) {
-        int n = 0;
-        for (int i = 0; i < nums.length; i += 2) {
-            n += nums[i];
-        }
-        int[] res = new int[n];
-        for (int i = 1, k = 0; i < nums.length; i += 2) {
-            for (int j = 0; j < nums[i - 1]; ++j) {
-                res[k++] = nums[i];
-            }
-        }
-        return res;
+internal class Solution {
+  fun decompressRLElist(nums: IntArray): IntArray {
+    var n = 0
+    run {
+      var i = 0
+      while (i < nums.size) {
+        n += nums[i]
+        i += 2
+      }
     }
+    val res = IntArray(n)
+    var i = 1
+    var k = 0
+    while (i < nums.size) {
+      for (j in 0 until nums[i - 1]) {
+        res[k++] = nums[i]
+      }
+      i += 2
+    }
+    return res
+  }
 }

@@ -1,29 +1,25 @@
-class FrequencyTracker {
-    private Map<Integer, Integer> cnt = new HashMap<>();
-    private Map<Integer, Integer> freq = new HashMap<>();
+internal class FrequencyTracker {
+  private val cnt: Map<Int, Int> = HashMap()
+  private val freq: Map<Int, Int> = HashMap()
 
-    public FrequencyTracker() {
-    }
+  fun add(number: Int) {
+    freq.merge(cnt.getOrDefault(number, 0), -1) { a: Int, b: Int -> Integer.sum(a, b) }
+    cnt.merge(number, 1) { a: Int, b: Int -> Integer.sum(a, b) }
+    freq.merge(cnt[number], 1) { a: Int, b: Int -> Integer.sum(a, b) }
+  }
 
-    public void add(int number) {
-        freq.merge(cnt.getOrDefault(number, 0), -1, Integer::sum);
-        cnt.merge(number, 1, Integer::sum);
-        freq.merge(cnt.get(number), 1, Integer::sum);
+  fun deleteOne(number: Int) {
+    if (cnt.getOrDefault(number, 0) > 0) {
+      freq.merge(cnt[number], -1) { a: Int, b: Int -> Integer.sum(a, b) }
+      cnt.merge(number, -1) { a: Int, b: Int -> Integer.sum(a, b) }
+      freq.merge(cnt[number], 1) { a: Int, b: Int -> Integer.sum(a, b) }
     }
+  }
 
-    public void deleteOne(int number) {
-        if (cnt.getOrDefault(number, 0) > 0) {
-            freq.merge(cnt.get(number), -1, Integer::sum);
-            cnt.merge(number, -1, Integer::sum);
-            freq.merge(cnt.get(number), 1, Integer::sum);
-        }
-    }
-
-    public boolean hasFrequency(int frequency) {
-        return freq.getOrDefault(frequency, 0) > 0;
-    }
+  fun hasFrequency(frequency: Int): Boolean {
+    return freq.getOrDefault(frequency, 0) > 0
+  }
 }
-
 /**
  * Your FrequencyTracker object will be instantiated and called as such:
  * FrequencyTracker obj = new FrequencyTracker();

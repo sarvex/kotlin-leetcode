@@ -1,9 +1,13 @@
-class Solution {
-    public int[] evenOddBit(int n) {
-        int[] ans = new int[2];
-        for (int i = 0; n > 0; n >>= 1, i ^= 1) {
-            ans[i] += n & 1;
-        }
-        return ans;
+internal class Solution {
+  fun evenOddBit(n: Int): IntArray {
+    var n = n
+    val ans = IntArray(2)
+    var i = 0
+    while (n > 0) {
+      ans[i] += n and 1
+      n = n shr 1
+      i = i xor 1
     }
+    return ans
+  }
 }

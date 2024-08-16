@@ -1,21 +1,22 @@
-class Solution {
-    private char[] s;
-    private int k;
+internal class Solution {
+  private var s: CharArray
+  private var k = 0
 
-    public int maxConsecutiveAnswers(String answerKey, int k) {
-        s = answerKey.toCharArray();
-        this.k = k;
-        return Math.max(f('T'), f('F'));
-    }
+  fun maxConsecutiveAnswers(answerKey: String, k: Int): Int {
+    s = answerKey.toCharArray()
+    this.k = k
+    return max(f('T'), f('F'))
+  }
 
-    private int f(char c) {
-        int l = 0, cnt = 0;
-        for (char ch : s) {
-            cnt += ch == c ? 1 : 0;
-            if (cnt > k) {
-                cnt -= s[l++] == c ? 1 : 0;
-            }
-        }
-        return s.length - l;
+  private fun f(c: Char): Int {
+    var l = 0
+    var cnt = 0
+    for (ch in s) {
+      cnt += if (ch == c) 1 else 0
+      if (cnt > k) {
+        cnt -= if (s[l++] == c) 1 else 0
+      }
     }
+    return s.size - l
+  }
 }

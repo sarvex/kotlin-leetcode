@@ -1,35 +1,36 @@
-class Solution {
-    private int[] p;
+internal class Solution {
+  private var p: IntArray
 
-    public int minimumHammingDistance(int[] source, int[] target, int[][] allowedSwaps) {
-        int n = source.length;
-        p = new int[n];
-        for (int i = 0; i < n; i++) {
-            p[i] = i;
-        }
-        for (int[] a : allowedSwaps) {
-            p[find(a[0])] = find(a[1]);
-        }
-        Map<Integer, Map<Integer, Integer>> cnt = new HashMap<>();
-        for (int i = 0; i < n; ++i) {
-            int j = find(i);
-            cnt.computeIfAbsent(j, k -> new HashMap<>()).merge(source[i], 1, Integer::sum);
-        }
-        int ans = 0;
-        for (int i = 0; i < n; ++i) {
-            int j = find(i);
-            Map<Integer, Integer> t = cnt.get(j);
-            if (t.merge(target[i], -1, Integer::sum) < 0) {
-                ++ans;
-            }
-        }
-        return ans;
+  fun minimumHammingDistance(source: IntArray, target: IntArray, allowedSwaps: Array<IntArray>): Int {
+    val n = source.size
+    p = IntArray(n)
+    for (i in 0 until n) {
+      p[i] = i
     }
+    for (a in allowedSwaps) {
+      p[find(a[0])] = find(a[1])
+    }
+    val cnt: Map<Int, Map<Int, Int>> = HashMap()
+    for (i in 0 until n) {
+      val j = find(i)
+      cnt.computeIfAbsent(j) { k -> HashMap() }
+        .merge(source[i], 1) { a: Int, b: Int -> Integer.sum(a, b) }
+    }
+    var ans = 0
+    for (i in 0 until n) {
+      val j = find(i)
+      val t = cnt[j]!!
+      if (t.merge(target[i], -1) { a: Int, b: Int -> Integer.sum(a, b) } < 0) {
+        ++ans
+      }
+    }
+    return ans
+  }
 
-    private int find(int x) {
-        if (p[x] != x) {
-            p[x] = find(p[x]);
-        }
-        return p[x];
+  private fun find(x: Int): Int {
+    if (p[x] != x) {
+      p[x] = find(p[x])
     }
+    return p[x]
+  }
 }

@@ -1,31 +1,31 @@
-class Solution {
-    public long distinctNames(String[] ideas) {
-        Set<String> s = new HashSet<>();
-        for (String v : ideas) {
-            s.add(v);
-        }
-        int[][] f = new int[26][26];
-        for (String v : ideas) {
-            char[] t = v.toCharArray();
-            int i = t[0] - 'a';
-            for (int j = 0; j < 26; ++j) {
-                t[0] = (char) (j + 'a');
-                if (!s.contains(String.valueOf(t))) {
-                    ++f[i][j];
-                }
-            }
-        }
-        long ans = 0;
-        for (String v : ideas) {
-            char[] t = v.toCharArray();
-            int i = t[0] - 'a';
-            for (int j = 0; j < 26; ++j) {
-                t[0] = (char) (j + 'a');
-                if (!s.contains(String.valueOf(t))) {
-                    ans += f[j][i];
-                }
-            }
-        }
-        return ans;
+internal class Solution {
+  fun distinctNames(ideas: Array<String>): Long {
+    val s: Set<String> = HashSet()
+    for (v in ideas) {
+      s.add(v)
     }
+    val f = Array(26) { IntArray(26) }
+    for (v in ideas) {
+      val t: CharArray = v.toCharArray()
+      val i: Int = t[0].code - 'a'.code
+      for (j in 0..25) {
+        t[0] = (j + 'a'.code).toChar()
+        if (!s.contains(String(t))) {
+          ++f[i][j]
+        }
+      }
+    }
+    var ans: Long = 0
+    for (v in ideas) {
+      val t: CharArray = v.toCharArray()
+      val i: Int = t[0].code - 'a'.code
+      for (j in 0..25) {
+        t[0] = (j + 'a'.code).toChar()
+        if (!s.contains(String(t))) {
+          ans += f[j][i].toLong()
+        }
+      }
+    }
+    return ans
+  }
 }

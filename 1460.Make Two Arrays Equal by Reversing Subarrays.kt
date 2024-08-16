@@ -1,7 +1,7 @@
-class Solution {
-    public boolean canBeEqual(int[] target, int[] arr) {
-        Arrays.sort(target);
-        Arrays.sort(arr);
-        return Arrays.equals(target, arr);
-    }
+internal class Solution {
+  fun canBeEqual(target: IntArray?, arr: IntArray?): Boolean {
+    Arrays.sort(target)
+    Arrays.sort(arr)
+    return Arrays.equals(target, arr)
+  }
 }

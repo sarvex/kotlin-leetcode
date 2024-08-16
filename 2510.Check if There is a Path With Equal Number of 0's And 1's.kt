@@ -1,38 +1,39 @@
-class Solution {
-    private int s;
-    private int m;
-    private int n;
-    private int[][] grid;
-    private Boolean[][][] f;
+internal class Solution {
+  private var s = 0
+  private var m = 0
+  private var n = 0
+  private var grid: Array<IntArray>
+  private var f: Array<Array<Array<Boolean>>>
 
-    public boolean isThereAPath(int[][] grid) {
-        m = grid.length;
-        n = grid[0].length;
-        this.grid = grid;
-        s = m + n - 1;
-        f = new Boolean[m][n][s];
-        if (s % 2 == 1) {
-            return false;
-        }
-        s >>= 1;
-        return dfs(0, 0, 0);
+  fun isThereAPath(grid: Array<IntArray>): Boolean {
+    m = grid.size
+    n = grid[0].size
+    this.grid = grid
+    s = m + n - 1
+    f = Array(m) { Array(n) { arrayOfNulls(s) } }
+    if (s % 2 == 1) {
+      return false
     }
+    s = s shr 1
+    return dfs(0, 0, 0)
+  }
 
-    private boolean dfs(int i, int j, int k) {
-        if (i >= m || j >= n) {
-            return false;
-        }
-        k += grid[i][j];
-        if (f[i][j][k] != null) {
-            return f[i][j][k];
-        }
-        if (k > s || i + j + 1 - k > s) {
-            return false;
-        }
-        if (i == m - 1 && j == n - 1) {
-            return k == s;
-        }
-        f[i][j][k] = dfs(i + 1, j, k) || dfs(i, j + 1, k);
-        return f[i][j][k];
+  private fun dfs(i: Int, j: Int, k: Int): Boolean {
+    var k = k
+    if (i >= m || j >= n) {
+      return false
     }
+    k += grid[i][j]
+    if (f[i][j][k] != null) {
+      return f[i][j][k]
+    }
+    if (k > s || i + j + 1 - k > s) {
+      return false
+    }
+    if (i == m - 1 && j == n - 1) {
+      return k == s
+    }
+    f[i][j][k] = dfs(i + 1, j, k) || dfs(i, j + 1, k)
+    return f[i][j][k]
+  }
 }

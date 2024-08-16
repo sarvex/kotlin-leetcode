@@ -1,45 +1,43 @@
-class Solution {
-    public int kEmptySlots(int[] bulbs, int k) {
-        int n = bulbs.length;
-        BinaryIndexedTree tree = new BinaryIndexedTree(n);
-        boolean[] vis = new boolean[n + 1];
-        for (int i = 1; i <= n; ++i) {
-            int x = bulbs[i - 1];
-            tree.update(x, 1);
-            vis[x] = true;
-            int y = x - k - 1;
-            if (y > 0 && vis[y] && tree.query(x - 1) - tree.query(y) == 0) {
-                return i;
-            }
-            y = x + k + 1;
-            if (y <= n && vis[y] && tree.query(y - 1) - tree.query(x) == 0) {
-                return i;
-            }
-        }
-        return -1;
+internal class Solution {
+  fun kEmptySlots(bulbs: IntArray, k: Int): Int {
+    val n = bulbs.size
+    val tree = BinaryIndexedTree(n)
+    val vis = BooleanArray(n + 1)
+    for (i in 1..n) {
+      val x = bulbs[i - 1]
+      tree.update(x, 1)
+      vis[x] = true
+      var y = x - k - 1
+      if (y > 0 && vis[y] && tree.query(x - 1) - tree.query(y) == 0) {
+        return i
+      }
+      y = x + k + 1
+      if (y <= n && vis[y] && tree.query(y - 1) - tree.query(x) == 0) {
+        return i
+      }
     }
+    return -1
+  }
 }
 
-class BinaryIndexedTree {
-    private int n;
-    private int[] c;
+internal class BinaryIndexedTree(private val n: Int) {
+  private val c = IntArray(n + 1)
 
-    public BinaryIndexedTree(int n) {
-        this.n = n;
-        this.c = new int[n + 1];
+  fun update(x: Int, delta: Int) {
+    var x = x
+    while (x <= n) {
+      c[x] += delta
+      x += x and -x
     }
+  }
 
-    public void update(int x, int delta) {
-        for (; x <= n; x += x & -x) {
-            c[x] += delta;
-        }
+  fun query(x: Int): Int {
+    var x = x
+    var s = 0
+    while (x > 0) {
+      s += c[x]
+      x -= x and -x
     }
-
-    public int query(int x) {
-        int s = 0;
-        for (; x > 0; x -= x & -x) {
-            s += c[x];
-        }
-        return s;
-    }
+    return s
+  }
 }

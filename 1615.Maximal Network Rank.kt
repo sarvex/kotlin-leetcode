@@ -1,20 +1,21 @@
-class Solution {
-    public int maximalNetworkRank(int n, int[][] roads) {
-        int[][] g = new int[n][n];
-        int[] cnt = new int[n];
-        for (var r : roads) {
-            int a = r[0], b = r[1];
-            g[a][b] = 1;
-            g[b][a] = 1;
-            ++cnt[a];
-            ++cnt[b];
-        }
-        int ans = 0;
-        for (int a = 0; a < n; ++a) {
-            for (int b = a + 1; b < n; ++b) {
-                ans = Math.max(ans, cnt[a] + cnt[b] - g[a][b]);
-            }
-        }
-        return ans;
+internal class Solution {
+  fun maximalNetworkRank(n: Int, roads: Array<IntArray>): Int {
+    val g = Array(n) { IntArray(n) }
+    val cnt = IntArray(n)
+    for (r in roads) {
+      val a = r[0]
+      val b = r[1]
+      g[a][b] = 1
+      g[b][a] = 1
+      ++cnt[a]
+      ++cnt[b]
     }
+    var ans = 0
+    for (a in 0 until n) {
+      for (b in a + 1 until n) {
+        ans = max(ans, cnt[a] + cnt[b] - g[a][b])
+      }
+    }
+    return ans
+  }
 }

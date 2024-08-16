@@ -1,16 +1,16 @@
-class Solution {
-    public int[] findErrorNums(int[] nums) {
-        int n = nums.length;
-        int s1 = (1 + n) * n / 2;
-        int s2 = 0;
-        Set<Integer> set = new HashSet<>();
-        int s = 0;
-        for (int x : nums) {
-            if (set.add(x)) {
-                s2 += x;
-            }
-            s += x;
-        }
-        return new int[] {s - s2, s1 - s2};
+internal class Solution {
+  fun findErrorNums(nums: IntArray): IntArray {
+    val n = nums.size
+    val s1 = (1 + n) * n / 2
+    var s2 = 0
+    val set: Set<Int> = HashSet()
+    var s = 0
+    for (x in nums) {
+      if (set.add(x)) {
+        s2 += x
+      }
+      s += x
     }
+    return intArrayOf(s - s2, s1 - s2)
+  }
 }

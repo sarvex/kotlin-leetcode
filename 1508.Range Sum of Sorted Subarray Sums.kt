@@ -1,19 +1,24 @@
-class Solution {
-    public int rangeSum(int[] nums, int n, int left, int right) {
-        int[] arr = new int[n * (n + 1) / 2];
-        for (int i = 0, k = 0; i < n; ++i) {
-            int s = 0;
-            for (int j = i; j < n; ++j) {
-                s += nums[j];
-                arr[k++] = s;
-            }
+internal class Solution {
+  fun rangeSum(nums: IntArray, n: Int, left: Int, right: Int): Int {
+    val arr = IntArray(n * (n + 1) / 2)
+    run {
+      var i = 0
+      var k = 0
+      while (i < n) {
+        var s = 0
+        for (j in i until n) {
+          s += nums[j]
+          arr[k++] = s
         }
-        Arrays.sort(arr);
-        int ans = 0;
-        final int mod = (int) 1e9 + 7;
-        for (int i = left - 1; i < right; ++i) {
-            ans = (ans + arr[i]) % mod;
-        }
-        return ans;
+        ++i
+      }
     }
+    Arrays.sort(arr)
+    var ans = 0
+    val mod = 1e9.toInt() + 7
+    for (i in left - 1 until right) {
+      ans = (ans + arr[i]) % mod
+    }
+    return ans
+  }
 }

@@ -1,49 +1,58 @@
-class Solution {
-    private static final int MOD = (int) (1e9 + 7);
-    private static final int MX = 100000;
-    private static final int[] FAC = new int[MX + 1];
-
-    static {
-        FAC[0] = 1;
-        for (int i = 1; i <= MX; i++) {
-            FAC[i] = (int) ((long) FAC[i - 1] * i % MOD);
-        }
+internal class Solution {
+  fun numberOfSequence(n: Int, sick: IntArray): Int {
+    val m = sick.size
+    val nums = IntArray(m + 1)
+    nums[0] = sick[0]
+    nums[m] = n - sick[m - 1] - 1
+    for (i in 1 until m) {
+      nums[i] = sick[i] - sick[i - 1] - 1
     }
-
-    public int numberOfSequence(int n, int[] sick) {
-        int m = sick.length;
-        int[] nums = new int[m + 1];
-        nums[0] = sick[0];
-        nums[m] = n - sick[m - 1] - 1;
-        for (int i = 1; i < m; i++) {
-            nums[i] = sick[i] - sick[i - 1] - 1;
-        }
-        int s = 0;
-        for (int x : nums) {
-            s += x;
-        }
-        int ans = FAC[s];
-        for (int x : nums) {
-            if (x > 0) {
-                ans = (int) ((long) ans * qpow(FAC[x], MOD - 2) % MOD);
-            }
-        }
-        for (int i = 1; i < nums.length - 1; ++i) {
-            if (nums[i] > 1) {
-                ans = (int) ((long) ans * qpow(2, nums[i] - 1) % MOD);
-            }
-        }
-        return ans;
+    var s = 0
+    for (x in nums) {
+      s += x
     }
-
-    private int qpow(long a, long n) {
-        long ans = 1;
-        for (; n > 0; n >>= 1) {
-            if ((n & 1) == 1) {
-                ans = ans * a % MOD;
-            }
-            a = a * a % MOD;
-        }
-        return (int) ans;
+    var ans: Int = Solution.Companion.FAC.get(s)
+    for (x in nums) {
+      if (x > 0) {
+        ans = (ans.toLong() * qpow(
+          Solution.Companion.FAC.get(x).toLong(),
+          (Solution.Companion.MOD - 2).toLong()
+        ) % Solution.Companion.MOD).toInt()
+      }
     }
+    for (i in 1 until nums.size - 1) {
+      if (nums[i] > 1) {
+        ans = (ans.toLong() * qpow(2, (nums[i] - 1).toLong()) % Solution.Companion.MOD).toInt()
+      }
+    }
+    return ans
+  }
+
+  private fun qpow(a: Long, n: Long): Int {
+    var a = a
+    var n = n
+    var ans: Long = 1
+    while (n > 0) {
+      if ((n and 1L) == 1L) {
+        ans = ans * a % Solution.Companion.MOD
+      }
+      a = a * a % Solution.Companion.MOD
+      n = n shr 1
+    }
+    return ans.toInt()
+  }
+
+  companion object {
+    private const val MOD = (1e9 + 7).toInt()
+    private const val MX = 100000
+    private val FAC = IntArray(Solution.Companion.MX + 1)
+
+    init {
+      Solution.Companion.FAC.get(0) = 1
+      for (i in 1..Solution.Companion.MX) {
+        Solution.Companion.FAC.get(i) =
+          (Solution.Companion.FAC.get(i - 1).toLong() * i % Solution.Companion.MOD).toInt()
+      }
+    }
+  }
 }

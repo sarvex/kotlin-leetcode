@@ -1,21 +1,22 @@
-class Solution {
-    public int oddCells(int m, int n, int[][] indices) {
-        int[][] g = new int[m][n];
-        for (int[] e : indices) {
-            int r = e[0], c = e[1];
-            for (int i = 0; i < m; ++i) {
-                g[i][c]++;
-            }
-            for (int j = 0; j < n; ++j) {
-                g[r][j]++;
-            }
-        }
-        int ans = 0;
-        for (int[] row : g) {
-            for (int v : row) {
-                ans += v % 2;
-            }
-        }
-        return ans;
+internal class Solution {
+  fun oddCells(m: Int, n: Int, indices: Array<IntArray>): Int {
+    val g = Array(m) { IntArray(n) }
+    for (e in indices) {
+      val r = e[0]
+      val c = e[1]
+      for (i in 0 until m) {
+        g[i][c]++
+      }
+      for (j in 0 until n) {
+        g[r][j]++
+      }
     }
+    var ans = 0
+    for (row in g) {
+      for (v in row) {
+        ans += v % 2
+      }
+    }
+    return ans
+  }
 }

@@ -1,12 +1,13 @@
-class Solution {
-    public int distanceBetweenBusStops(int[] distance, int start, int destination) {
-        int s = Arrays.stream(distance).sum();
-        int n = distance.length;
-        int a = 0;
-        while (start != destination) {
-            a += distance[start];
-            start = (start + 1) % n;
-        }
-        return Math.min(a, s - a);
+internal class Solution {
+  fun distanceBetweenBusStops(distance: IntArray, start: Int, destination: Int): Int {
+    var start = start
+    val s: Int = Arrays.stream(distance).sum()
+    val n = distance.size
+    var a = 0
+    while (start != destination) {
+      a += distance[start]
+      start = (start + 1) % n
     }
+    return min(a, s - a)
+  }
 }

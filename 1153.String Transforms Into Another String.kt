@@ -1,29 +1,29 @@
-class Solution {
-    public boolean canConvert(String str1, String str2) {
-        if (str1.equals(str2)) {
-            return true;
-        }
-        int m = 0;
-        int[] cnt = new int[26];
-        int n = str1.length();
-        for (int i = 0; i < n; ++i) {
-            if (++cnt[str2.charAt(i) - 'a'] == 1) {
-                ++m;
-            }
-        }
-        if (m == 26) {
-            return false;
-        }
-        int[] d = new int[26];
-        for (int i = 0; i < n; ++i) {
-            int a = str1.charAt(i) - 'a';
-            int b = str2.charAt(i) - 'a';
-            if (d[a] == 0) {
-                d[a] = b + 1;
-            } else if (d[a] != b + 1) {
-                return false;
-            }
-        }
-        return true;
+internal class Solution {
+  fun canConvert(str1: String, str2: String): Boolean {
+    if (str1 == str2) {
+      return true
     }
+    var m = 0
+    val cnt = IntArray(26)
+    val n = str1.length
+    for (i in 0 until n) {
+      if (++cnt[str2[i].code - 'a'.code] == 1) {
+        ++m
+      }
+    }
+    if (m == 26) {
+      return false
+    }
+    val d = IntArray(26)
+    for (i in 0 until n) {
+      val a: Int = str1[i].code - 'a'.code
+      val b: Int = str2[i].code - 'a'.code
+      if (d[a] == 0) {
+        d[a] = b + 1
+      } else if (d[a] != b + 1) {
+        return false
+      }
+    }
+    return true
+  }
 }

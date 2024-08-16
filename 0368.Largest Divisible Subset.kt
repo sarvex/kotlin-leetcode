@@ -1,29 +1,31 @@
-class Solution {
-    public List<Integer> largestDivisibleSubset(int[] nums) {
-        Arrays.sort(nums);
-        int n = nums.length;
-        int[] f = new int[n];
-        Arrays.fill(f, 1);
-        int k = 0;
-        for (int i = 0; i < n; ++i) {
-            for (int j = 0; j < i; ++j) {
-                if (nums[i] % nums[j] == 0) {
-                    f[i] = Math.max(f[i], f[j] + 1);
-                }
-            }
-            if (f[k] < f[i]) {
-                k = i;
-            }
+internal class Solution {
+  fun largestDivisibleSubset(nums: IntArray): List<Int> {
+    Arrays.sort(nums)
+    val n = nums.size
+    val f = IntArray(n)
+    Arrays.fill(f, 1)
+    var k = 0
+    for (i in 0 until n) {
+      for (j in 0 until i) {
+        if (nums[i] % nums[j] == 0) {
+          f[i] = max(f[i], f[j] + 1)
         }
-        int m = f[k];
-        List<Integer> ans = new ArrayList<>();
-        for (int i = k; m > 0; --i) {
-            if (nums[k] % nums[i] == 0 && f[i] == m) {
-                ans.add(nums[i]);
-                k = i;
-                --m;
-            }
-        }
-        return ans;
+      }
+      if (f[k] < f[i]) {
+        k = i
+      }
     }
+    var m = f[k]
+    val ans: List<Int> = ArrayList()
+    var i = k
+    while (m > 0) {
+      if (nums[k] % nums[i] == 0 && f[i] == m) {
+        ans.add(nums[i])
+        k = i
+        --m
+      }
+      --i
+    }
+    return ans
+  }
 }

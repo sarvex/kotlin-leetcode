@@ -1,7 +1,9 @@
-class Solution {
-    public int findCenter(int[][] edges) {
-        int a = edges[0][0], b = edges[0][1];
-        int c = edges[1][0], d = edges[1][1];
-        return a == c || a == d ? a : b;
-    }
+internal class Solution {
+  fun findCenter(edges: Array<IntArray>): Int {
+    val a = edges[0][0]
+    val b = edges[0][1]
+    val c = edges[1][0]
+    val d = edges[1][1]
+    return if (a == c || a == d) a else b
+  }
 }

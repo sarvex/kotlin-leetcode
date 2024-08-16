@@ -1,40 +1,40 @@
-class Solution {
-    public long countQuadruplets(int[] nums) {
-        int n = nums.length;
-        int[][] f = new int[n][n];
-        int[][] g = new int[n][n];
-        for (int j = 1; j < n - 2; ++j) {
-            int cnt = 0;
-            for (int l = j + 1; l < n; ++l) {
-                if (nums[l] > nums[j]) {
-                    ++cnt;
-                }
-            }
-            for (int k = j + 1; k < n - 1; ++k) {
-                if (nums[j] > nums[k]) {
-                    f[j][k] = cnt;
-                } else {
-                    --cnt;
-                }
-            }
+internal class Solution {
+  fun countQuadruplets(nums: IntArray): Long {
+    val n = nums.size
+    val f = Array(n) { IntArray(n) }
+    val g = Array(n) { IntArray(n) }
+    for (j in 1 until n - 2) {
+      var cnt = 0
+      for (l in j + 1 until n) {
+        if (nums[l] > nums[j]) {
+          ++cnt
         }
-        long ans = 0;
-        for (int k = 2; k < n - 1; ++k) {
-            int cnt = 0;
-            for (int i = 0; i < k; ++i) {
-                if (nums[i] < nums[k]) {
-                    ++cnt;
-                }
-            }
-            for (int j = k - 1; j > 0; --j) {
-                if (nums[j] > nums[k]) {
-                    g[j][k] = cnt;
-                    ans += (long) f[j][k] * g[j][k];
-                } else {
-                    --cnt;
-                }
-            }
+      }
+      for (k in j + 1 until n - 1) {
+        if (nums[j] > nums[k]) {
+          f[j][k] = cnt
+        } else {
+          --cnt
         }
-        return ans;
+      }
     }
+    var ans: Long = 0
+    for (k in 2 until n - 1) {
+      var cnt = 0
+      for (i in 0 until k) {
+        if (nums[i] < nums[k]) {
+          ++cnt
+        }
+      }
+      for (j in k - 1 downTo 1) {
+        if (nums[j] > nums[k]) {
+          g[j][k] = cnt
+          ans += f[j][k].toLong() * g[j][k]
+        } else {
+          --cnt
+        }
+      }
+    }
+    return ans
+  }
 }

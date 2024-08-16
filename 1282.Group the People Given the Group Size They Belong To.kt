@@ -1,18 +1,20 @@
-class Solution {
-    public List<List<Integer>> groupThePeople(int[] groupSizes) {
-        int n = groupSizes.length;
-        List<Integer>[] g = new List[n + 1];
-        Arrays.setAll(g, k -> new ArrayList<>());
-        for (int i = 0; i < n; ++i) {
-            g[groupSizes[i]].add(i);
-        }
-        List<List<Integer>> ans = new ArrayList<>();
-        for (int i = 0; i < g.length; ++i) {
-            List<Integer> v = g[i];
-            for (int j = 0; j < v.size(); j += i) {
-                ans.add(v.subList(j, j + i));
-            }
-        }
-        return ans;
+internal class Solution {
+  fun groupThePeople(groupSizes: IntArray): List<List<Int>> {
+    val n = groupSizes.size
+    val g: Array<List<Int>> = arrayOfNulls(n + 1)
+    Arrays.setAll(g) { k -> ArrayList() }
+    for (i in 0 until n) {
+      g[groupSizes[i]].add(i)
     }
+    val ans: List<List<Int>> = ArrayList()
+    for (i in g.indices) {
+      val v = g[i]
+      var j = 0
+      while (j < v.size()) {
+        ans.add(v.subList(j, j + i))
+        j += i
+      }
+    }
+    return ans
+  }
 }

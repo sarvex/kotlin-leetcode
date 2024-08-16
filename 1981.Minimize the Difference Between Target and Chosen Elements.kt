@@ -1,20 +1,20 @@
-class Solution {
-    public int minimizeTheDifference(int[][] mat, int target) {
-        Set<Integer> f = new HashSet<>();
-        f.add(0);
-        for (var row : mat) {
-            Set<Integer> g = new HashSet<>();
-            for (int a : f) {
-                for (int b : row) {
-                    g.add(a + b);
-                }
-            }
-            f = g;
+internal class Solution {
+  fun minimizeTheDifference(mat: Array<IntArray>, target: Int): Int {
+    var f: Set<Int> = HashSet()
+    f.add(0)
+    for (row in mat) {
+      val g: Set<Int> = HashSet()
+      for (a in f) {
+        for (b in row) {
+          g.add(a + b)
         }
-        int ans = 1 << 30;
-        for (int v : f) {
-            ans = Math.min(ans, Math.abs(v - target));
-        }
-        return ans;
+      }
+      f = g
     }
+    var ans = 1 shl 30
+    for (v in f) {
+      ans = min(ans, abs(v - target))
+    }
+    return ans
+  }
 }

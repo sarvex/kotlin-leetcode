@@ -1,24 +1,27 @@
-class Solution {
-    public int minPathCost(int[][] grid, int[][] moveCost) {
-        int m = grid.length, n = grid[0].length;
-        int[] f = grid[0];
-        final int inf = 1 << 30;
-        for (int i = 1; i < m; ++i) {
-            int[] g = new int[n];
-            Arrays.fill(g, inf);
-            for (int j = 0; j < n; ++j) {
-                for (int k = 0; k < n; ++k) {
-                    g[j] = Math.min(g[j], f[k] + moveCost[grid[i - 1][k]][j] + grid[i][j]);
-                }
-            }
-            f = g;
-        }
+import java.util.*
 
-        // return Arrays.stream(f).min().getAsInt();
-        int ans = inf;
-        for (int v : f) {
-            ans = Math.min(ans, v);
+internal class Solution {
+  fun minPathCost(grid: Array<IntArray>, moveCost: Array<IntArray>): Int {
+    val m = grid.size
+    val n = grid[0].size
+    var f = grid[0]
+    val inf = 1 shl 30
+    for (i in 1 until m) {
+      val g = IntArray(n)
+      Arrays.fill(g, inf)
+      for (j in 0 until n) {
+        for (k in 0 until n) {
+          g[j] = min(g[j], f[k] + moveCost[grid[i - 1][k]][j] + grid[i][j])
         }
-        return ans;
+      }
+      f = g
     }
+
+    // return Arrays.stream(f).min().getAsInt();
+    var ans = inf
+    for (v in f) {
+      ans = min(ans, v)
+    }
+    return ans
+  }
 }

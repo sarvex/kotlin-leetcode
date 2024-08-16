@@ -1,26 +1,28 @@
-class Solution {
-    public int minCost(int[] startPos, int[] homePos, int[] rowCosts, int[] colCosts) {
-        int i = startPos[0], j = startPos[1];
-        int x = homePos[0], y = homePos[1];
-        int ans = 0;
-        if (i < x) {
-            for (int k = i + 1; k <= x; ++k) {
-                ans += rowCosts[k];
-            }
-        } else {
-            for (int k = x; k < i; ++k) {
-                ans += rowCosts[k];
-            }
-        }
-        if (j < y) {
-            for (int k = j + 1; k <= y; ++k) {
-                ans += colCosts[k];
-            }
-        } else {
-            for (int k = y; k < j; ++k) {
-                ans += colCosts[k];
-            }
-        }
-        return ans;
+internal class Solution {
+  fun minCost(startPos: IntArray, homePos: IntArray, rowCosts: IntArray, colCosts: IntArray): Int {
+    val i = startPos[0]
+    val j = startPos[1]
+    val x = homePos[0]
+    val y = homePos[1]
+    var ans = 0
+    if (i < x) {
+      for (k in i + 1..x) {
+        ans += rowCosts[k]
+      }
+    } else {
+      for (k in x until i) {
+        ans += rowCosts[k]
+      }
     }
+    if (j < y) {
+      for (k in j + 1..y) {
+        ans += colCosts[k]
+      }
+    } else {
+      for (k in y until j) {
+        ans += colCosts[k]
+      }
+    }
+    return ans
+  }
 }

@@ -1,11 +1,11 @@
-class Solution {
-    public List<Boolean> prefixesDivBy5(int[] nums) {
-        List<Boolean> ans = new ArrayList<>();
-        int x = 0;
-        for (int v : nums) {
-            x = (x << 1 | v) % 5;
-            ans.add(x == 0);
-        }
-        return ans;
+internal class Solution {
+  fun prefixesDivBy5(nums: IntArray): List<Boolean> {
+    val ans: List<Boolean> = ArrayList()
+    var x = 0
+    for (v in nums) {
+      x = (x shl 1 or v) % 5
+      ans.add(x == 0)
     }
+    return ans
+  }
 }

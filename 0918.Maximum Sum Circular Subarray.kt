@@ -1,15 +1,18 @@
-class Solution {
-    public int maxSubarraySumCircular(int[] nums) {
-        final int inf = 1 << 30;
-        int pmi = 0, pmx = -inf;
-        int ans = -inf, s = 0, smi = inf;
-        for (int x : nums) {
-            s += x;
-            ans = Math.max(ans, s - pmi);
-            smi = Math.min(smi, s - pmx);
-            pmi = Math.min(pmi, s);
-            pmx = Math.max(pmx, s);
-        }
-        return Math.max(ans, s - smi);
+internal class Solution {
+  fun maxSubarraySumCircular(nums: IntArray): Int {
+    val inf = 1 shl 30
+    var pmi = 0
+    var pmx = -inf
+    var ans = -inf
+    var s = 0
+    var smi = inf
+    for (x in nums) {
+      s += x
+      ans = max(ans, s - pmi)
+      smi = min(smi, s - pmx)
+      pmi = min(pmi, s)
+      pmx = max(pmx, s)
     }
+    return max(ans, s - smi)
+  }
 }

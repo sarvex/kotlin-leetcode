@@ -1,23 +1,27 @@
-class Solution {
-    public boolean validWordAbbreviation(String word, String abbr) {
-        int m = word.length(), n = abbr.length();
-        int i = 0, j = 0, x = 0;
-        for (; i < m && j < n; ++j) {
-            char c = abbr.charAt(j);
-            if (Character.isDigit(c)) {
-                if (c == '0' && x == 0) {
-                    return false;
-                }
-                x = x * 10 + (c - '0');
-            } else {
-                i += x;
-                x = 0;
-                if (i >= m || word.charAt(i) != c) {
-                    return false;
-                }
-                ++i;
-            }
+internal class Solution {
+  fun validWordAbbreviation(word: String, abbr: String): Boolean {
+    val m = word.length
+    val n = abbr.length
+    var i = 0
+    var j = 0
+    var x = 0
+    while (i < m && j < n) {
+      val c = abbr[j]
+      if (Character.isDigit(c)) {
+        if (c == '0' && x == 0) {
+          return false
         }
-        return i + x == m && j == n;
+        x = x * 10 + (c.code - '0'.code)
+      } else {
+        i += x
+        x = 0
+        if (i >= m || word[i] != c) {
+          return false
+        }
+        ++i
+      }
+      ++j
     }
+    return i + x == m && j == n
+  }
 }

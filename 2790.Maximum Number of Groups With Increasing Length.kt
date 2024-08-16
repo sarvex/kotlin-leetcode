@@ -1,15 +1,15 @@
-class Solution {
-    public int maxIncreasingGroups(List<Integer> usageLimits) {
-        Collections.sort(usageLimits);
-        int k = 0;
-        long s = 0;
-        for (int x : usageLimits) {
-            s += x;
-            if (s > k) {
-                ++k;
-                s -= k;
-            }
-        }
-        return k;
+internal class Solution {
+  fun maxIncreasingGroups(usageLimits: List<Int>): Int {
+    Collections.sort(usageLimits)
+    var k = 0
+    var s: Long = 0
+    for (x in usageLimits) {
+      s += x.toLong()
+      if (s > k) {
+        ++k
+        s -= k.toLong()
+      }
     }
+    return k
+  }
 }

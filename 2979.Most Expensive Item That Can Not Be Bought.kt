@@ -1,5 +1,5 @@
-class Solution {
-    public int mostExpensiveItem(int primeOne, int primeTwo) {
-        return primeOne * primeTwo - primeOne - primeTwo;
-    }
+internal class Solution {
+  fun mostExpensiveItem(primeOne: Int, primeTwo: Int): Int {
+    return primeOne * primeTwo - primeOne - primeTwo
+  }
 }

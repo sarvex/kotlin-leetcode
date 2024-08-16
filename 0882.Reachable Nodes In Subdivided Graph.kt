@@ -1,40 +1,46 @@
-class Solution {
-    public int reachableNodes(int[][] edges, int maxMoves, int n) {
-        List<int[]>[] g = new List[n];
-        Arrays.setAll(g, e -> new ArrayList<>());
-        for (var e : edges) {
-            int u = e[0], v = e[1], cnt = e[2] + 1;
-            g[u].add(new int[] {v, cnt});
-            g[v].add(new int[] {u, cnt});
-        }
-        int[] dist = new int[n];
-        Arrays.fill(dist, 1 << 30);
-        PriorityQueue<int[]> q = new PriorityQueue<>((a, b) -> a[0] - b[0]);
-        q.offer(new int[] {0, 0});
-        dist[0] = 0;
-        while (!q.isEmpty()) {
-            var p = q.poll();
-            int d = p[0], u = p[1];
-            for (var nxt : g[u]) {
-                int v = nxt[0], cnt = nxt[1];
-                if (d + cnt < dist[v]) {
-                    dist[v] = d + cnt;
-                    q.offer(new int[] {dist[v], v});
-                }
-            }
-        }
-        int ans = 0;
-        for (int d : dist) {
-            if (d <= maxMoves) {
-                ++ans;
-            }
-        }
-        for (var e : edges) {
-            int u = e[0], v = e[1], cnt = e[2];
-            int a = Math.min(cnt, Math.max(0, maxMoves - dist[u]));
-            int b = Math.min(cnt, Math.max(0, maxMoves - dist[v]));
-            ans += Math.min(cnt, a + b);
-        }
-        return ans;
+internal class Solution {
+  fun reachableNodes(edges: Array<IntArray>, maxMoves: Int, n: Int): Int {
+    val g: Array<List<IntArray>> = arrayOfNulls(n)
+    Arrays.setAll(g) { e -> ArrayList() }
+    for (e in edges) {
+      val u = e[0]
+      val v = e[1]
+      val cnt = e[2] + 1
+      g[u].add(intArrayOf(v, cnt))
+      g[v].add(intArrayOf(u, cnt))
     }
+    val dist = IntArray(n)
+    Arrays.fill(dist, 1 shl 30)
+    val q: PriorityQueue<IntArray> = PriorityQueue { a, b -> a.get(0) - b.get(0) }
+    q.offer(intArrayOf(0, 0))
+    dist[0] = 0
+    while (!q.isEmpty()) {
+      val p: Unit = q.poll()
+      val d: Int = p.get(0)
+      val u: Int = p.get(1)
+      for (nxt in g[u]) {
+        val v = nxt[0]
+        val cnt = nxt[1]
+        if (d + cnt < dist[v]) {
+          dist[v] = d + cnt
+          q.offer(intArrayOf(dist[v], v))
+        }
+      }
+    }
+    var ans = 0
+    for (d in dist) {
+      if (d <= maxMoves) {
+        ++ans
+      }
+    }
+    for (e in edges) {
+      val u = e[0]
+      val v = e[1]
+      val cnt = e[2]
+      val a: Int = min(cnt, max(0, maxMoves - dist[u]))
+      val b: Int = min(cnt, max(0, maxMoves - dist[v]))
+      ans += min(cnt, a + b)
+    }
+    return ans
+  }
 }

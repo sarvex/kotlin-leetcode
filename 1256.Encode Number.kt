@@ -1,5 +1,5 @@
-class Solution {
-    public String encode(int num) {
-        return Integer.toBinaryString(num + 1).substring(1);
-    }
+internal class Solution {
+  fun encode(num: Int): String {
+    return Integer.toBinaryString(num + 1).substring(1)
+  }
 }

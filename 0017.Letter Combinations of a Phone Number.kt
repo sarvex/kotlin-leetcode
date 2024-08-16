@@ -1,21 +1,21 @@
-class Solution {
-    public List<String> letterCombinations(String digits) {
-        List<String> ans = new ArrayList<>();
-        if (digits.length() == 0) {
-            return ans;
-        }
-        ans.add("");
-        String[] d = new String[] {"abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
-        for (char i : digits.toCharArray()) {
-            String s = d[i - '2'];
-            List<String> t = new ArrayList<>();
-            for (String a : ans) {
-                for (String b : s.split("")) {
-                    t.add(a + b);
-                }
-            }
-            ans = t;
-        }
-        return ans;
+internal class Solution {
+  fun letterCombinations(digits: String): List<String> {
+    var ans: List<String> = ArrayList()
+    if (digits.length == 0) {
+      return ans
     }
+    ans.add("")
+    val d = arrayOf("abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz")
+    for (i in digits.toCharArray()) {
+      val s = d[i.code - '2'.code]
+      val t: List<String> = ArrayList()
+      for (a in ans) {
+        for (b in s.split("".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()) {
+          t.add(a + b)
+        }
+      }
+      ans = t
+    }
+    return ans
+  }
 }

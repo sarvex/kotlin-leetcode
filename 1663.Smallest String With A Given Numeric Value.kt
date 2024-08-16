@@ -1,12 +1,14 @@
-class Solution {
-    public String getSmallestString(int n, int k) {
-        char[] ans = new char[n];
-        Arrays.fill(ans, 'a');
-        int i = n - 1, d = k - n;
-        for (; d > 25; d -= 25) {
-            ans[i--] = 'z';
-        }
-        ans[i] = (char) ('a' + d);
-        return String.valueOf(ans);
+internal class Solution {
+  fun getSmallestString(n: Int, k: Int): String {
+    val ans = CharArray(n)
+    Arrays.fill(ans, 'a')
+    var i = n - 1
+    var d = k - n
+    while (d > 25) {
+      ans[i--] = 'z'
+      d -= 25
     }
+    ans[i] = ('a'.code + d).toChar()
+    return String(ans)
+  }
 }

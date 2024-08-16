@@ -1,14 +1,15 @@
-class Solution {
-    public int maxSatisfaction(int[] satisfaction) {
-        Arrays.sort(satisfaction);
-        int ans = 0, s = 0;
-        for (int i = satisfaction.length - 1; i >= 0; --i) {
-            s += satisfaction[i];
-            if (s <= 0) {
-                break;
-            }
-            ans += s;
-        }
-        return ans;
+internal class Solution {
+  fun maxSatisfaction(satisfaction: IntArray): Int {
+    Arrays.sort(satisfaction)
+    var ans = 0
+    var s = 0
+    for (i in satisfaction.indices.reversed()) {
+      s += satisfaction[i]
+      if (s <= 0) {
+        break
+      }
+      ans += s
     }
+    return ans
+  }
 }

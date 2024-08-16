@@ -1,13 +1,13 @@
-class Solution {
-    public int[] sortByBits(int[] arr) {
-        int n = arr.length;
-        for (int i = 0; i < n; ++i) {
-            arr[i] += Integer.bitCount(arr[i]) * 100000;
-        }
-        Arrays.sort(arr);
-        for (int i = 0; i < n; ++i) {
-            arr[i] %= 100000;
-        }
-        return arr;
+internal class Solution {
+  fun sortByBits(arr: IntArray): IntArray {
+    val n = arr.size
+    for (i in 0 until n) {
+      arr[i] += Integer.bitCount(arr[i]) * 100000
     }
+    Arrays.sort(arr)
+    for (i in 0 until n) {
+      arr[i] %= 100000
+    }
+    return arr
+  }
 }

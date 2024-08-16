@@ -1,13 +1,13 @@
-class Solution {
-    public int rearrangeSticks(int n, int k) {
-        final int mod = (int) 1e9 + 7;
-        int[][] f = new int[n + 1][k + 1];
-        f[0][0] = 1;
-        for (int i = 1; i <= n; ++i) {
-            for (int j = 1; j <= k; ++j) {
-                f[i][j] = (int) ((f[i - 1][j - 1] + f[i - 1][j] * (long) (i - 1)) % mod);
-            }
-        }
-        return f[n][k];
+internal class Solution {
+  fun rearrangeSticks(n: Int, k: Int): Int {
+    val mod = 1e9.toInt() + 7
+    val f = Array(n + 1) { IntArray(k + 1) }
+    f[0][0] = 1
+    for (i in 1..n) {
+      for (j in 1..k) {
+        f[i][j] = ((f[i - 1][j - 1] + f[i - 1][j] * (i - 1).toLong()) % mod).toInt()
+      }
     }
+    return f[n][k]
+  }
 }

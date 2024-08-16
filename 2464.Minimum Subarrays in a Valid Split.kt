@@ -1,35 +1,35 @@
-class Solution {
-    private int n;
-    private int[] f;
-    private int[] nums;
-    private int inf = 0x3f3f3f3f;
+internal class Solution {
+  private var n = 0
+  private var f: IntArray
+  private var nums: IntArray
+  private val inf = 0x3f3f3f3f
 
-    public int validSubarraySplit(int[] nums) {
-        n = nums.length;
-        f = new int[n];
-        this.nums = nums;
-        int ans = dfs(0);
-        return ans < inf ? ans : -1;
-    }
+  fun validSubarraySplit(nums: IntArray): Int {
+    n = nums.size
+    f = IntArray(n)
+    this.nums = nums
+    val ans = dfs(0)
+    return if (ans < inf) ans else -1
+  }
 
-    private int dfs(int i) {
-        if (i >= n) {
-            return 0;
-        }
-        if (f[i] > 0) {
-            return f[i];
-        }
-        int ans = inf;
-        for (int j = i; j < n; ++j) {
-            if (gcd(nums[i], nums[j]) > 1) {
-                ans = Math.min(ans, 1 + dfs(j + 1));
-            }
-        }
-        f[i] = ans;
-        return ans;
+  private fun dfs(i: Int): Int {
+    if (i >= n) {
+      return 0
     }
+    if (f[i] > 0) {
+      return f[i]
+    }
+    var ans = inf
+    for (j in i until n) {
+      if (gcd(nums[i], nums[j]) > 1) {
+        ans = min(ans, 1 + dfs(j + 1))
+      }
+    }
+    f[i] = ans
+    return ans
+  }
 
-    private int gcd(int a, int b) {
-        return b == 0 ? a : gcd(b, a % b);
-    }
+  private fun gcd(a: Int, b: Int): Int {
+    return if (b == 0) a else gcd(b, a % b)
+  }
 }

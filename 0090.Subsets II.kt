@@ -1,26 +1,27 @@
-class Solution {
-    private List<List<Integer>> ans = new ArrayList<>();
-    private List<Integer> t = new ArrayList<>();
-    private int[] nums;
+internal class Solution {
+  private val ans: List<List<Int>> = ArrayList()
+  private val t: List<Int> = ArrayList()
+  private var nums: IntArray
 
-    public List<List<Integer>> subsetsWithDup(int[] nums) {
-        Arrays.sort(nums);
-        this.nums = nums;
-        dfs(0);
-        return ans;
-    }
+  fun subsetsWithDup(nums: IntArray): List<List<Int>> {
+    Arrays.sort(nums)
+    this.nums = nums
+    dfs(0)
+    return ans
+  }
 
-    private void dfs(int i) {
-        if (i >= nums.length) {
-            ans.add(new ArrayList<>(t));
-            return;
-        }
-        t.add(nums[i]);
-        dfs(i + 1);
-        int x = t.remove(t.size() - 1);
-        while (i + 1 < nums.length && nums[i + 1] == x) {
-            ++i;
-        }
-        dfs(i + 1);
+  private fun dfs(i: Int) {
+    var i = i
+    if (i >= nums.size) {
+      ans.add(ArrayList(t))
+      return
     }
+    t.add(nums[i])
+    dfs(i + 1)
+    val x: Int = t.remove(t.size() - 1)
+    while (i + 1 < nums.size && nums[i + 1] == x) {
+      ++i
+    }
+    dfs(i + 1)
+  }
 }

@@ -1,20 +1,20 @@
-class Solution {
-    public int carFleet(int target, int[] position, int[] speed) {
-        int n = position.length;
-        Integer[] idx = new Integer[n];
-        for (int i = 0; i < n; ++i) {
-            idx[i] = i;
-        }
-        Arrays.sort(idx, (i, j) -> position[j] - position[i]);
-        int ans = 0;
-        double pre = 0;
-        for (int i : idx) {
-            double t = 1.0 * (target - position[i]) / speed[i];
-            if (t > pre) {
-                ++ans;
-                pre = t;
-            }
-        }
-        return ans;
+internal class Solution {
+  fun carFleet(target: Int, position: IntArray, speed: IntArray): Int {
+    val n = position.size
+    val idx: Array<Int> = arrayOfNulls(n)
+    for (i in 0 until n) {
+      idx[i] = i
     }
+    Arrays.sort(idx) { i, j -> position[j] - position[i] }
+    var ans = 0
+    var pre = 0.0
+    for (i in idx) {
+      val t = 1.0 * (target - position[i]) / speed[i]
+      if (t > pre) {
+        ++ans
+        pre = t
+      }
+    }
+    return ans
+  }
 }

@@ -1,11 +1,11 @@
-class Solution {
-    public int findNumbers(int[] nums) {
-        int ans = 0;
-        for (int v : nums) {
-            if (String.valueOf(v).length() % 2 == 0) {
-                ++ans;
-            }
-        }
-        return ans;
+internal class Solution {
+  fun findNumbers(nums: IntArray): Int {
+    var ans = 0
+    for (v in nums) {
+      if (v.toString().length % 2 == 0) {
+        ++ans
+      }
     }
+    return ans
+  }
 }

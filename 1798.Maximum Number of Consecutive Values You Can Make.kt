@@ -1,13 +1,13 @@
-class Solution {
-    public int getMaximumConsecutive(int[] coins) {
-        Arrays.sort(coins);
-        int ans = 1;
-        for (int v : coins) {
-            if (v > ans) {
-                break;
-            }
-            ans += v;
-        }
-        return ans;
+internal class Solution {
+  fun getMaximumConsecutive(coins: IntArray): Int {
+    Arrays.sort(coins)
+    var ans = 1
+    for (v in coins) {
+      if (v > ans) {
+        break
+      }
+      ans += v
     }
+    return ans
+  }
 }

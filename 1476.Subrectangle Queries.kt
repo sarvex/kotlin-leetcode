@@ -1,25 +1,19 @@
-class SubrectangleQueries {
-    private int[][] g;
-    private LinkedList<int[]> ops = new LinkedList<>();
+internal class SubrectangleQueries(private val g: Array<IntArray>) {
+  private val ops: LinkedList<IntArray> = LinkedList()
 
-    public SubrectangleQueries(int[][] rectangle) {
-        g = rectangle;
-    }
+  fun updateSubrectangle(row1: Int, col1: Int, row2: Int, col2: Int, newValue: Int) {
+    ops.addFirst(intArrayOf(row1, col1, row2, col2, newValue))
+  }
 
-    public void updateSubrectangle(int row1, int col1, int row2, int col2, int newValue) {
-        ops.addFirst(new int[] {row1, col1, row2, col2, newValue});
+  fun getValue(row: Int, col: Int): Int {
+    for (op in ops) {
+      if (op.get(0) <= row && row <= op.get(2) && op.get(1) <= col && col <= op.get(3)) {
+        return op.get(4)
+      }
     }
-
-    public int getValue(int row, int col) {
-        for (var op : ops) {
-            if (op[0] <= row && row <= op[2] && op[1] <= col && col <= op[3]) {
-                return op[4];
-            }
-        }
-        return g[row][col];
-    }
+    return g[row][col]
+  }
 }
-
 /**
  * Your SubrectangleQueries object will be instantiated and called as such:
  * SubrectangleQueries obj = new SubrectangleQueries(rectangle);

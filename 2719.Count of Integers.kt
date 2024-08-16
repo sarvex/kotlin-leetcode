@@ -1,39 +1,39 @@
-import java.math.BigInteger;
+import java.math.BigInteger
 
-class Solution {
-    private final int mod = (int) 1e9 + 7;
-    private Integer[][] f;
-    private String num;
-    private int min;
-    private int max;
+internal class Solution {
+  private val mod = 1e9.toInt() + 7
+  private var f: Array<Array<Int>>
+  private var num: String? = null
+  private var min = 0
+  private var max = 0
 
-    public int count(String num1, String num2, int min_sum, int max_sum) {
-        min = min_sum;
-        max = max_sum;
-        num = num2;
-        f = new Integer[23][220];
-        int a = dfs(0, 0, true);
-        num = new BigInteger(num1).subtract(BigInteger.ONE).toString();
-        f = new Integer[23][220];
-        int b = dfs(0, 0, true);
-        return (a - b + mod) % mod;
+  fun count(num1: String, num2: String?, min_sum: Int, max_sum: Int): Int {
+    min = min_sum
+    max = max_sum
+    num = num2
+    f = Array(23) { arrayOfNulls(220) }
+    val a = dfs(0, 0, true)
+    num = BigInteger(num1).subtract(BigInteger.ONE).toString()
+    f = Array(23) { arrayOfNulls(220) }
+    val b = dfs(0, 0, true)
+    return (a - b + mod) % mod
+  }
+
+  private fun dfs(pos: Int, s: Int, limit: Boolean): Int {
+    if (pos >= num!!.length) {
+      return if (s >= min && s <= max) 1 else 0
     }
-
-    private int dfs(int pos, int s, boolean limit) {
-        if (pos >= num.length()) {
-            return s >= min && s <= max ? 1 : 0;
-        }
-        if (!limit && f[pos][s] != null) {
-            return f[pos][s];
-        }
-        int ans = 0;
-        int up = limit ? num.charAt(pos) - '0' : 9;
-        for (int i = 0; i <= up; ++i) {
-            ans = (ans + dfs(pos + 1, s + i, limit && i == up)) % mod;
-        }
-        if (!limit) {
-            f[pos][s] = ans;
-        }
-        return ans;
+    if (!limit && f[pos][s] != null) {
+      return f[pos][s]
     }
+    var ans = 0
+    val up = if (limit) num!![pos].code - '0'.code else 9
+    for (i in 0..up) {
+      ans = (ans + dfs(pos + 1, s + i, limit && i == up)) % mod
+    }
+    if (!limit) {
+      f[pos][s] = ans
+    }
+    return ans
+  }
 }

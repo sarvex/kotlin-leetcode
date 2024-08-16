@@ -1,19 +1,21 @@
-class Solution {
-    public int minSwap(int[] nums1, int[] nums2) {
-        int a = 0, b = 1;
-        for (int i = 1; i < nums1.length; ++i) {
-            int x = a, y = b;
-            if (nums1[i - 1] >= nums1[i] || nums2[i - 1] >= nums2[i]) {
-                a = y;
-                b = x + 1;
-            } else {
-                b = y + 1;
-                if (nums1[i - 1] < nums2[i] && nums2[i - 1] < nums1[i]) {
-                    a = Math.min(a, y);
-                    b = Math.min(b, x + 1);
-                }
-            }
+internal class Solution {
+  fun minSwap(nums1: IntArray, nums2: IntArray): Int {
+    var a = 0
+    var b = 1
+    for (i in 1 until nums1.size) {
+      val x = a
+      val y = b
+      if (nums1[i - 1] >= nums1[i] || nums2[i - 1] >= nums2[i]) {
+        a = y
+        b = x + 1
+      } else {
+        b = y + 1
+        if (nums1[i - 1] < nums2[i] && nums2[i - 1] < nums1[i]) {
+          a = min(a, y)
+          b = min(b, x + 1)
         }
-        return Math.min(a, b);
+      }
     }
+    return min(a, b)
+  }
 }

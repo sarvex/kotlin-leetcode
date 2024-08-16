@@ -1,17 +1,18 @@
-class Solution {
-    public int minimumChairs(String s) {
-        int cnt = 0, left = 0;
-        for (int i = 0; i < s.length(); ++i) {
-            if (s.charAt(i) == 'E') {
-                if (left > 0) {
-                    --left;
-                } else {
-                    ++cnt;
-                }
-            } else {
-                ++left;
-            }
+internal class Solution {
+  fun minimumChairs(s: String): Int {
+    var cnt = 0
+    var left = 0
+    for (i in 0 until s.length) {
+      if (s[i] == 'E') {
+        if (left > 0) {
+          --left
+        } else {
+          ++cnt
         }
-        return cnt;
+      } else {
+        ++left
+      }
     }
+    return cnt
+  }
 }

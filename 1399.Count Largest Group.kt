@@ -1,20 +1,23 @@
-class Solution {
-    public int countLargestGroup(int n) {
-        int[] cnt = new int[40];
-        int ans = 0, mx = 0;
-        for (int i = 1; i <= n; ++i) {
-            int s = 0;
-            for (int x = i; x > 0; x /= 10) {
-                s += x % 10;
-            }
-            ++cnt[s];
-            if (mx < cnt[s]) {
-                mx = cnt[s];
-                ans = 1;
-            } else if (mx == cnt[s]) {
-                ++ans;
-            }
-        }
-        return ans;
+internal class Solution {
+  fun countLargestGroup(n: Int): Int {
+    val cnt = IntArray(40)
+    var ans = 0
+    var mx = 0
+    for (i in 1..n) {
+      var s = 0
+      var x = i
+      while (x > 0) {
+        s += x % 10
+        x /= 10
+      }
+      ++cnt[s]
+      if (mx < cnt[s]) {
+        mx = cnt[s]
+        ans = 1
+      } else if (mx == cnt[s]) {
+        ++ans
+      }
     }
+    return ans
+  }
 }

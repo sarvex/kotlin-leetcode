@@ -1,28 +1,35 @@
-class Solution {
-    public int shortestWordDistance(String[] wordsDict, String word1, String word2) {
-        int ans = wordsDict.length;
-        if (word1.equals(word2)) {
-            for (int i = 0, j = -1; i < wordsDict.length; ++i) {
-                if (wordsDict[i].equals(word1)) {
-                    if (j != -1) {
-                        ans = Math.min(ans, i - j);
-                    }
-                    j = i;
-                }
-            }
-        } else {
-            for (int k = 0, i = -1, j = -1; k < wordsDict.length; ++k) {
-                if (wordsDict[k].equals(word1)) {
-                    i = k;
-                }
-                if (wordsDict[k].equals(word2)) {
-                    j = k;
-                }
-                if (i != -1 && j != -1) {
-                    ans = Math.min(ans, Math.abs(i - j));
-                }
-            }
+internal class Solution {
+  fun shortestWordDistance(wordsDict: Array<String>, word1: String, word2: String): Int {
+    var ans = wordsDict.size
+    if (word1 == word2) {
+      var i = 0
+      var j = -1
+      while (i < wordsDict.size) {
+        if (wordsDict[i] == word1) {
+          if (j != -1) {
+            ans = min(ans, i - j)
+          }
+          j = i
         }
-        return ans;
+        ++i
+      }
+    } else {
+      var k = 0
+      var i = -1
+      var j = -1
+      while (k < wordsDict.size) {
+        if (wordsDict[k] == word1) {
+          i = k
+        }
+        if (wordsDict[k] == word2) {
+          j = k
+        }
+        if (i != -1 && j != -1) {
+          ans = min(ans, abs(i - j))
+        }
+        ++k
+      }
     }
+    return ans
+  }
 }

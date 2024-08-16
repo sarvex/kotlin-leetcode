@@ -1,32 +1,32 @@
-class Solution {
-    public String shortestCompletingWord(String licensePlate, String[] words) {
-        int[] cnt = new int[26];
-        for (int i = 0; i < licensePlate.length(); ++i) {
-            char c = licensePlate.charAt(i);
-            if (Character.isLetter(c)) {
-                cnt[Character.toLowerCase(c) - 'a']++;
-            }
-        }
-        String ans = "";
-        for (String w : words) {
-            if (!ans.isEmpty() && w.length() >= ans.length()) {
-                continue;
-            }
-            int[] t = new int[26];
-            for (int i = 0; i < w.length(); ++i) {
-                t[w.charAt(i) - 'a']++;
-            }
-            boolean ok = true;
-            for (int i = 0; i < 26; ++i) {
-                if (t[i] < cnt[i]) {
-                    ok = false;
-                    break;
-                }
-            }
-            if (ok) {
-                ans = w;
-            }
-        }
-        return ans;
+internal class Solution {
+  fun shortestCompletingWord(licensePlate: String, words: Array<String>): String {
+    val cnt = IntArray(26)
+    for (i in 0 until licensePlate.length) {
+      val c = licensePlate[i]
+      if (Character.isLetter(c)) {
+        cnt[c.lowercaseChar() - 'a']++
+      }
     }
+    var ans = ""
+    for (w in words) {
+      if (!ans.isEmpty() && w.length >= ans.length) {
+        continue
+      }
+      val t = IntArray(26)
+      for (i in 0 until w.length) {
+        t[w[i].code - 'a'.code]++
+      }
+      var ok = true
+      for (i in 0..25) {
+        if (t[i] < cnt[i]) {
+          ok = false
+          break
+        }
+      }
+      if (ok) {
+        ans = w
+      }
+    }
+    return ans
+  }
 }

@@ -1,11 +1,14 @@
-class Solution {
-    public boolean check(int[] nums) {
-        int cnt = 0;
-        for (int i = 0, n = nums.length; i < n; ++i) {
-            if (nums[i] > nums[(i + 1) % n]) {
-                ++cnt;
-            }
-        }
-        return cnt <= 1;
+internal class Solution {
+  fun check(nums: IntArray): Boolean {
+    var cnt = 0
+    var i = 0
+    val n = nums.size
+    while (i < n) {
+      if (nums[i] > nums[(i + 1) % n]) {
+        ++cnt
+      }
+      ++i
     }
+    return cnt <= 1
+  }
 }

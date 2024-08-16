@@ -1,14 +1,19 @@
-class Solution {
-    public int binaryGap(int n) {
-        int ans = 0;
-        for (int i = 0, j = -1; n != 0; ++i, n >>= 1) {
-            if ((n & 1) == 1) {
-                if (j != -1) {
-                    ans = Math.max(ans, i - j);
-                }
-                j = i;
-            }
+internal class Solution {
+  fun binaryGap(n: Int): Int {
+    var n = n
+    var ans = 0
+    var i = 0
+    var j = -1
+    while (n != 0) {
+      if ((n and 1) == 1) {
+        if (j != -1) {
+          ans = max(ans, i - j)
         }
-        return ans;
+        j = i
+      }
+      ++i
+      n = n shr 1
     }
+    return ans
+  }
 }

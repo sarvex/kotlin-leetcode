@@ -1,23 +1,24 @@
-class Solution {
-    public String subStrHash(String s, int power, int modulo, int k, int hashValue) {
-        long h = 0, p = 1;
-        int n = s.length();
-        for (int i = n - 1; i >= n - k; --i) {
-            int val = s.charAt(i) - 'a' + 1;
-            h = ((h * power % modulo) + val) % modulo;
-            if (i != n - k) {
-                p = p * power % modulo;
-            }
-        }
-        int j = n - k;
-        for (int i = n - k - 1; i >= 0; --i) {
-            int pre = s.charAt(i + k) - 'a' + 1;
-            int cur = s.charAt(i) - 'a' + 1;
-            h = ((h - pre * p % modulo + modulo) * power % modulo + cur) % modulo;
-            if (h == hashValue) {
-                j = i;
-            }
-        }
-        return s.substring(j, j + k);
+internal class Solution {
+  fun subStrHash(s: String, power: Int, modulo: Int, k: Int, hashValue: Int): String {
+    var h: Long = 0
+    var p: Long = 1
+    val n = s.length
+    for (i in n - 1 downTo n - k) {
+      val `val`: Int = s[i].code - 'a'.code + 1
+      h = ((h * power % modulo) + `val`) % modulo
+      if (i != n - k) {
+        p = p * power % modulo
+      }
     }
+    var j = n - k
+    for (i in n - k - 1 downTo 0) {
+      val pre: Int = s[i + k].code - 'a'.code + 1
+      val cur: Int = s[i].code - 'a'.code + 1
+      h = ((h - pre * p % modulo + modulo) * power % modulo + cur) % modulo
+      if (h == hashValue.toLong()) {
+        j = i
+      }
+    }
+    return s.substring(j, j + k)
+  }
 }

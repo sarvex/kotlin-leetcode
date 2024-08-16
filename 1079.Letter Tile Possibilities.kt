@@ -1,22 +1,22 @@
-class Solution {
-    public int numTilePossibilities(String tiles) {
-        int[] cnt = new int[26];
-        for (char c : tiles.toCharArray()) {
-            ++cnt[c - 'A'];
-        }
-        return dfs(cnt);
+internal class Solution {
+  fun numTilePossibilities(tiles: String): Int {
+    val cnt = IntArray(26)
+    for (c in tiles.toCharArray()) {
+      ++cnt[c.code - 'A'.code]
     }
+    return dfs(cnt)
+  }
 
-    private int dfs(int[] cnt) {
-        int res = 0;
-        for (int i = 0; i < cnt.length; ++i) {
-            if (cnt[i] > 0) {
-                ++res;
-                --cnt[i];
-                res += dfs(cnt);
-                ++cnt[i];
-            }
-        }
-        return res;
+  private fun dfs(cnt: IntArray): Int {
+    var res = 0
+    for (i in cnt.indices) {
+      if (cnt[i] > 0) {
+        ++res
+        --cnt[i]
+        res += dfs(cnt)
+        ++cnt[i]
+      }
     }
+    return res
+  }
 }

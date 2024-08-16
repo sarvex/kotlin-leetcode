@@ -1,20 +1,22 @@
-class Solution {
-    public String getHint(String secret, String guess) {
-        int x = 0, y = 0;
-        int[] cnt1 = new int[10];
-        int[] cnt2 = new int[10];
-        for (int i = 0; i < secret.length(); ++i) {
-            int a = secret.charAt(i) - '0', b = guess.charAt(i) - '0';
-            if (a == b) {
-                ++x;
-            } else {
-                ++cnt1[a];
-                ++cnt2[b];
-            }
-        }
-        for (int i = 0; i < 10; ++i) {
-            y += Math.min(cnt1[i], cnt2[i]);
-        }
-        return String.format("%dA%dB", x, y);
+internal class Solution {
+  fun getHint(secret: String, guess: String): String {
+    var x = 0
+    var y = 0
+    val cnt1 = IntArray(10)
+    val cnt2 = IntArray(10)
+    for (i in 0 until secret.length) {
+      val a: Int = secret[i].code - '0'.code
+      val b: Int = guess[i].code - '0'.code
+      if (a == b) {
+        ++x
+      } else {
+        ++cnt1[a]
+        ++cnt2[b]
+      }
     }
+    for (i in 0..9) {
+      y += min(cnt1[i], cnt2[i])
+    }
+    return String.format("%dA%dB", x, y)
+  }
 }

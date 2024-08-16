@@ -1,20 +1,22 @@
-class Solution {
-    public int numDifferentIntegers(String word) {
-        Set<String> s = new HashSet<>();
-        int n = word.length();
-        for (int i = 0; i < n; ++i) {
-            if (Character.isDigit(word.charAt(i))) {
-                while (i < n && word.charAt(i) == '0') {
-                    ++i;
-                }
-                int j = i;
-                while (j < n && Character.isDigit(word.charAt(j))) {
-                    ++j;
-                }
-                s.add(word.substring(i, j));
-                i = j;
-            }
+internal class Solution {
+  fun numDifferentIntegers(word: String): Int {
+    val s: Set<String> = HashSet()
+    val n = word.length
+    var i = 0
+    while (i < n) {
+      if (Character.isDigit(word[i])) {
+        while (i < n && word[i] == '0') {
+          ++i
         }
-        return s.size();
+        var j = i
+        while (j < n && Character.isDigit(word[j])) {
+          ++j
+        }
+        s.add(word.substring(i, j))
+        i = j
+      }
+      ++i
     }
+    return s.size()
+  }
 }

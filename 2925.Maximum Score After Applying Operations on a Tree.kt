@@ -1,34 +1,38 @@
-class Solution {
-    private List<Integer>[] g;
-    private int[] values;
+import java.util.*
 
-    public long maximumScoreAfterOperations(int[][] edges, int[] values) {
-        int n = values.length;
-        g = new List[n];
-        this.values = values;
-        Arrays.setAll(g, k -> new ArrayList<>());
-        for (var e : edges) {
-            int a = e[0], b = e[1];
-            g[a].add(b);
-            g[b].add(a);
-        }
-        return dfs(0, -1)[1];
-    }
+internal class Solution {
+  private var g: Array<List<Int>>
+  private var values: IntArray
 
-    private long[] dfs(int i, int fa) {
-        long a = 0, b = 0;
-        boolean leaf = true;
-        for (int j : g[i]) {
-            if (j != fa) {
-                leaf = false;
-                var t = dfs(j, i);
-                a += t[0];
-                b += t[1];
-            }
-        }
-        if (leaf) {
-            return new long[] {values[i], 0};
-        }
-        return new long[] {values[i] + a, Math.max(values[i] + b, a)};
+  fun maximumScoreAfterOperations(edges: Array<IntArray>, values: IntArray): Long {
+    val n = values.size
+    g = arrayOfNulls(n)
+    this.values = values
+    Arrays.setAll(g) { k -> ArrayList() }
+    for (e in edges) {
+      val a = e[0]
+      val b = e[1]
+      g[a].add(b)
+      g[b].add(a)
     }
+    return dfs(0, -1)[1]
+  }
+
+  private fun dfs(i: Int, fa: Int): LongArray {
+    var a: Long = 0
+    var b: Long = 0
+    var leaf = true
+    for (j in g[i]) {
+      if (j != fa) {
+        leaf = false
+        val t = dfs(j, i)
+        a += t[0]
+        b += t[1]
+      }
+    }
+    if (leaf) {
+      return longArrayOf(values[i].toLong(), 0)
+    }
+    return longArrayOf(values[i] + a, max(values[i] + b, a))
+  }
 }

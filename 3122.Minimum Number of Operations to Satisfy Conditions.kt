@@ -1,34 +1,37 @@
-class Solution {
-    public int minimumOperations(int[][] grid) {
-        int m = grid.length, n = grid[0].length;
-        int[][] f = new int[n][10];
-        final int inf = 1 << 29;
-        for (var g : f) {
-            Arrays.fill(g, inf);
-        }
-        for (int i = 0; i < n; ++i) {
-            int[] cnt = new int[10];
-            for (int j = 0; j < m; ++j) {
-                ++cnt[grid[j][i]];
-            }
-            if (i == 0) {
-                for (int j = 0; j < 10; ++j) {
-                    f[i][j] = m - cnt[j];
-                }
-            } else {
-                for (int j = 0; j < 10; ++j) {
-                    for (int k = 0; k < 10; ++k) {
-                        if (k != j) {
-                            f[i][j] = Math.min(f[i][j], f[i - 1][k] + m - cnt[j]);
-                        }
-                    }
-                }
-            }
-        }
-        int ans = inf;
-        for (int j = 0; j < 10; ++j) {
-            ans = Math.min(ans, f[n - 1][j]);
-        }
-        return ans;
+import java.util.*
+
+internal class Solution {
+  fun minimumOperations(grid: Array<IntArray>): Int {
+    val m = grid.size
+    val n = grid[0].size
+    val f = Array(n) { IntArray(10) }
+    val inf = 1 shl 29
+    for (g in f) {
+      Arrays.fill(g, inf)
     }
+    for (i in 0 until n) {
+      val cnt = IntArray(10)
+      for (j in 0 until m) {
+        ++cnt[grid[j][i]]
+      }
+      if (i == 0) {
+        for (j in 0..9) {
+          f[i][j] = m - cnt[j]
+        }
+      } else {
+        for (j in 0..9) {
+          for (k in 0..9) {
+            if (k != j) {
+              f[i][j] = min(f[i][j], f[i - 1][k] + m - cnt[j])
+            }
+          }
+        }
+      }
+    }
+    var ans = inf
+    for (j in 0..9) {
+      ans = min(ans, f[n - 1][j])
+    }
+    return ans
+  }
 }

@@ -1,35 +1,36 @@
-class Solution {
-    private Integer[] f;
-    private int[] nums;
-    private int n, k;
+internal class Solution {
+  private var f: Array<Int>
+  private var nums: IntArray
+  private var n = 0
+  private var k = 0
 
-    public int minCost(int[] nums, int k) {
-        n = nums.length;
-        this.k = k;
-        this.nums = nums;
-        f = new Integer[n];
-        return dfs(0);
-    }
+  fun minCost(nums: IntArray, k: Int): Int {
+    n = nums.size
+    this.k = k
+    this.nums = nums
+    f = arrayOfNulls(n)
+    return dfs(0)
+  }
 
-    private int dfs(int i) {
-        if (i >= n) {
-            return 0;
-        }
-        if (f[i] != null) {
-            return f[i];
-        }
-        int[] cnt = new int[n];
-        int one = 0;
-        int ans = 1 << 30;
-        for (int j = i; j < n; ++j) {
-            int x = ++cnt[nums[j]];
-            if (x == 1) {
-                ++one;
-            } else if (x == 2) {
-                --one;
-            }
-            ans = Math.min(ans, k + j - i + 1 - one + dfs(j + 1));
-        }
-        return f[i] = ans;
+  private fun dfs(i: Int): Int {
+    if (i >= n) {
+      return 0
     }
+    if (f[i] != null) {
+      return f[i]
+    }
+    val cnt = IntArray(n)
+    var one = 0
+    var ans = 1 shl 30
+    for (j in i until n) {
+      val x = ++cnt[nums[j]]
+      if (x == 1) {
+        ++one
+      } else if (x == 2) {
+        --one
+      }
+      ans = min(ans, k + j - i + 1 - one + dfs(j + 1))
+    }
+    return ans.also { f[i] = it }
+  }
 }

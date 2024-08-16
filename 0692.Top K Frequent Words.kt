@@ -1,23 +1,23 @@
-class Solution {
-    public List<String> topKFrequent(String[] words, int k) {
-        Map<String, Integer> cnt = new HashMap<>();
-        for (String v : words) {
-            cnt.put(v, cnt.getOrDefault(v, 0) + 1);
-        }
-        PriorityQueue<String> q = new PriorityQueue<>((a, b) -> {
-            int d = cnt.get(a) - cnt.get(b);
-            return d == 0 ? b.compareTo(a) : d;
-        });
-        for (String v : cnt.keySet()) {
-            q.offer(v);
-            if (q.size() > k) {
-                q.poll();
-            }
-        }
-        LinkedList<String> ans = new LinkedList<>();
-        while (!q.isEmpty()) {
-            ans.addFirst(q.poll());
-        }
-        return ans;
+internal class Solution {
+  fun topKFrequent(words: Array<String>, k: Int): List<String> {
+    val cnt: Map<String, Int> = HashMap()
+    for (v in words) {
+      cnt.put(v, cnt.getOrDefault(v, 0) + 1)
     }
+    val q: PriorityQueue<String> = PriorityQueue { a, b ->
+      val d = cnt[a]!! - cnt[b]!!
+      if (d == 0) b.compareTo(a) else d
+    }
+    for (v in cnt.keySet()) {
+      q.offer(v)
+      if (q.size() > k) {
+        q.poll()
+      }
+    }
+    val ans: LinkedList<String> = LinkedList()
+    while (!q.isEmpty()) {
+      ans.addFirst(q.poll())
+    }
+    return ans
+  }
 }

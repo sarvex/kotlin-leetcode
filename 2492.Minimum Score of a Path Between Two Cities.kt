@@ -1,29 +1,34 @@
-class Solution {
-    private List<int[]>[] g;
-    private boolean[] vis;
-    private int ans = 1 << 30;
+import java.util.*
 
-    public int minScore(int n, int[][] roads) {
-        g = new List[n];
-        vis = new boolean[n];
-        Arrays.setAll(g, k -> new ArrayList<>());
-        for (var e : roads) {
-            int a = e[0] - 1, b = e[1] - 1, d = e[2];
-            g[a].add(new int[] {b, d});
-            g[b].add(new int[] {a, d});
-        }
-        dfs(0);
-        return ans;
-    }
+internal class Solution {
+  private var g: Array<List<IntArray>>
+  private var vis: BooleanArray
+  private var ans = 1 shl 30
 
-    private void dfs(int i) {
-        for (var nxt : g[i]) {
-            int j = nxt[0], d = nxt[1];
-            ans = Math.min(ans, d);
-            if (!vis[j]) {
-                vis[j] = true;
-                dfs(j);
-            }
-        }
+  fun minScore(n: Int, roads: Array<IntArray>): Int {
+    g = arrayOfNulls(n)
+    vis = BooleanArray(n)
+    Arrays.setAll(g) { k -> ArrayList() }
+    for (e in roads) {
+      val a = e[0] - 1
+      val b = e[1] - 1
+      val d = e[2]
+      g[a].add(intArrayOf(b, d))
+      g[b].add(intArrayOf(a, d))
     }
+    dfs(0)
+    return ans
+  }
+
+  private fun dfs(i: Int) {
+    for (nxt in g[i]) {
+      val j = nxt[0]
+      val d = nxt[1]
+      ans = min(ans, d)
+      if (!vis[j]) {
+        vis[j] = true
+        dfs(j)
+      }
+    }
+  }
 }

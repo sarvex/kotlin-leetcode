@@ -1,12 +1,13 @@
-class Solution {
-    public int[][] transpose(int[][] matrix) {
-        int m = matrix.length, n = matrix[0].length;
-        int[][] ans = new int[n][m];
-        for (int i = 0; i < n; ++i) {
-            for (int j = 0; j < m; ++j) {
-                ans[i][j] = matrix[j][i];
-            }
-        }
-        return ans;
+internal class Solution {
+  fun transpose(matrix: Array<IntArray>): Array<IntArray> {
+    val m = matrix.size
+    val n = matrix[0].size
+    val ans = Array(n) { IntArray(m) }
+    for (i in 0 until n) {
+      for (j in 0 until m) {
+        ans[i][j] = matrix[j][i]
+      }
     }
+    return ans
+  }
 }

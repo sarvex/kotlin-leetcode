@@ -1,12 +1,14 @@
-class Solution {
-    public int maximizeGreatness(int[] nums) {
-        Arrays.sort(nums);
-        int i = 0;
-        for (int x : nums) {
-            if (x > nums[i]) {
-                ++i;
-            }
-        }
-        return i;
+import java.util.*
+
+internal class Solution {
+  fun maximizeGreatness(nums: IntArray): Int {
+    Arrays.sort(nums)
+    var i = 0
+    for (x in nums) {
+      if (x > nums[i]) {
+        ++i
+      }
     }
+    return i
+  }
 }

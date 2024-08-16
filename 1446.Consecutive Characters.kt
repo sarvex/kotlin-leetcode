@@ -1,13 +1,14 @@
-class Solution {
-    public int maxPower(String s) {
-        int ans = 1, t = 1;
-        for (int i = 1; i < s.length(); ++i) {
-            if (s.charAt(i) == s.charAt(i - 1)) {
-                ans = Math.max(ans, ++t);
-            } else {
-                t = 1;
-            }
-        }
-        return ans;
+internal class Solution {
+  fun maxPower(s: String): Int {
+    var ans = 1
+    var t = 1
+    for (i in 1 until s.length) {
+      if (s[i] == s[i - 1]) {
+        ans = max(ans, ++t)
+      } else {
+        t = 1
+      }
     }
+    return ans
+  }
 }

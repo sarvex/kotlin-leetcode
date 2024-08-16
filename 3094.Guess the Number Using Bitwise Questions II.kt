@@ -2,17 +2,16 @@
  * Definition of commonBits API (defined in the parent class Problem).
  * int commonBits(int num);
  */
-
-public class Solution extends Problem {
-    public int findNumber() {
-        int n = 0;
-        for (int i = 0; i < 32; ++i) {
-            int count1 = commonBits(1 << i);
-            int count2 = commonBits(1 << i);
-            if (count1 > count2) {
-                n |= 1 << i;
-            }
-        }
-        return n;
+class Solution : Problem() {
+  fun findNumber(): Int {
+    var n = 0
+    for (i in 0..31) {
+      val count1: Int = commonBits(1 shl i)
+      val count2: Int = commonBits(1 shl i)
+      if (count1 > count2) {
+        n = n or (1 shl i)
+      }
     }
+    return n
+  }
 }

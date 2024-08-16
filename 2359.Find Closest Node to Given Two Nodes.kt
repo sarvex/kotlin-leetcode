@@ -1,46 +1,49 @@
-class Solution {
-    private int n;
-    private List<Integer>[] g;
+import java.util.*
 
-    public int closestMeetingNode(int[] edges, int node1, int node2) {
-        n = edges.length;
-        g = new List[n];
-        Arrays.setAll(g, k -> new ArrayList<>());
-        for (int i = 0; i < n; ++i) {
-            if (edges[i] != -1) {
-                g[i].add(edges[i]);
-            }
-        }
-        int[] d1 = dijkstra(node1);
-        int[] d2 = dijkstra(node2);
-        int d = 1 << 30;
-        int ans = -1;
-        for (int i = 0; i < n; ++i) {
-            int t = Math.max(d1[i], d2[i]);
-            if (t < d) {
-                d = t;
-                ans = i;
-            }
-        }
-        return ans;
-    }
+internal class Solution {
+  private var n = 0
+  private var g: Array<List<Int>>
 
-    private int[] dijkstra(int i) {
-        int[] dist = new int[n];
-        Arrays.fill(dist, 1 << 30);
-        dist[i] = 0;
-        PriorityQueue<int[]> q = new PriorityQueue<>((a, b) -> a[0] - b[0]);
-        q.offer(new int[] {0, i});
-        while (!q.isEmpty()) {
-            var p = q.poll();
-            i = p[1];
-            for (int j : g[i]) {
-                if (dist[j] > dist[i] + 1) {
-                    dist[j] = dist[i] + 1;
-                    q.offer(new int[] {dist[j], j});
-                }
-            }
-        }
-        return dist;
+  fun closestMeetingNode(edges: IntArray, node1: Int, node2: Int): Int {
+    n = edges.size
+    g = arrayOfNulls(n)
+    Arrays.setAll(g) { k -> ArrayList() }
+    for (i in 0 until n) {
+      if (edges[i] != -1) {
+        g[i].add(edges[i])
+      }
     }
+    val d1 = dijkstra(node1)
+    val d2 = dijkstra(node2)
+    var d = 1 shl 30
+    var ans = -1
+    for (i in 0 until n) {
+      val t: Int = max(d1[i], d2[i])
+      if (t < d) {
+        d = t
+        ans = i
+      }
+    }
+    return ans
+  }
+
+  private fun dijkstra(i: Int): IntArray {
+    var i = i
+    val dist = IntArray(n)
+    Arrays.fill(dist, 1 shl 30)
+    dist[i] = 0
+    val q: PriorityQueue<IntArray> = PriorityQueue { a, b -> a.get(0) - b.get(0) }
+    q.offer(intArrayOf(0, i))
+    while (!q.isEmpty()) {
+      val p: Unit = q.poll()
+      i = p.get(1)
+      for (j in g[i]) {
+        if (dist[j] > dist[i] + 1) {
+          dist[j] = dist[i] + 1
+          q.offer(intArrayOf(dist[j], j))
+        }
+      }
+    }
+    return dist
+  }
 }

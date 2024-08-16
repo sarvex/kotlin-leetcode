@@ -1,18 +1,21 @@
-class Solution {
-    public String modifyString(String s) {
-        char[] cs = s.toCharArray();
-        int n = cs.length;
-        for (int i = 0; i < n; ++i) {
-            if (cs[i] == '?') {
-                for (char c = 'a'; c <= 'c'; ++c) {
-                    if ((i > 0 && cs[i - 1] == c) || (i + 1 < n && cs[i + 1] == c)) {
-                        continue;
-                    }
-                    cs[i] = c;
-                    break;
-                }
-            }
+internal class Solution {
+  fun modifyString(s: String): String {
+    val cs: CharArray = s.toCharArray()
+    val n = cs.size
+    for (i in 0 until n) {
+      if (cs[i] == '?') {
+        var c = 'a'
+        while (c <= 'c') {
+          if ((i > 0 && cs[i - 1] == c) || (i + 1 < n && cs[i + 1] == c)) {
+            ++c
+            continue
+          }
+          cs[i] = c
+          break
+          ++c
         }
-        return String.valueOf(cs);
+      }
     }
+    return String(cs)
+  }
 }

@@ -1,12 +1,12 @@
-class Solution {
-    public int minMaxDifference(int num) {
-        String s = String.valueOf(num);
-        int mi = Integer.parseInt(s.replace(s.charAt(0), '0'));
-        for (char c : s.toCharArray()) {
-            if (c != '9') {
-                return Integer.parseInt(s.replace(c, '9')) - mi;
-            }
-        }
-        return num - mi;
+internal class Solution {
+  fun minMaxDifference(num: Int): Int {
+    val s = num.toString()
+    val mi: Int = s.replace(s[0], '0').toInt()
+    for (c in s.toCharArray()) {
+      if (c != '9') {
+        return s.replace(c, '9').toInt() - mi
+      }
     }
+    return num - mi
+  }
 }

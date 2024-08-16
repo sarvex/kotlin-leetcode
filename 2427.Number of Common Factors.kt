@@ -1,16 +1,16 @@
-class Solution {
-    public int commonFactors(int a, int b) {
-        int g = gcd(a, b);
-        int ans = 0;
-        for (int x = 1; x <= g; ++x) {
-            if (g % x == 0) {
-                ++ans;
-            }
-        }
-        return ans;
+internal class Solution {
+  fun commonFactors(a: Int, b: Int): Int {
+    val g = gcd(a, b)
+    var ans = 0
+    for (x in 1..g) {
+      if (g % x == 0) {
+        ++ans
+      }
     }
+    return ans
+  }
 
-    private int gcd(int a, int b) {
-        return b == 0 ? a : gcd(b, a % b);
-    }
+  private fun gcd(a: Int, b: Int): Int {
+    return if (b == 0) a else gcd(b, a % b)
+  }
 }

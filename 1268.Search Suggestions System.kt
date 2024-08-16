@@ -1,53 +1,53 @@
-class Trie {
-    Trie[] children = new Trie[26];
-    List<Integer> v = new ArrayList<>();
+internal class Trie {
+  var children: Array<Trie> = arrayOfNulls(26)
+  var v: List<Int> = ArrayList()
 
-    public void insert(String w, int i) {
-        Trie node = this;
-        for (int j = 0; j < w.length(); ++j) {
-            int idx = w.charAt(j) - 'a';
-            if (node.children[idx] == null) {
-                node.children[idx] = new Trie();
-            }
-            node = node.children[idx];
-            if (node.v.size() < 3) {
-                node.v.add(i);
-            }
-        }
+  fun insert(w: String, i: Int) {
+    var node = this
+    for (j in 0 until w.length) {
+      val idx: Int = w[j].code - 'a'.code
+      if (node.children[idx] == null) {
+        node.children[idx] = Trie()
+      }
+      node = node.children[idx]
+      if (node.v.size() < 3) {
+        node.v.add(i)
+      }
     }
+  }
 
-    public List<Integer>[] search(String w) {
-        Trie node = this;
-        int n = w.length();
-        List<Integer>[] ans = new List[n];
-        Arrays.setAll(ans, k -> new ArrayList<>());
-        for (int i = 0; i < n; ++i) {
-            int idx = w.charAt(i) - 'a';
-            if (node.children[idx] == null) {
-                break;
-            }
-            node = node.children[idx];
-            ans[i] = node.v;
-        }
-        return ans;
+  fun search(w: String): Array<List<Int>> {
+    var node = this
+    val n = w.length
+    val ans: Array<List<Int>> = arrayOfNulls(n)
+    Arrays.setAll(ans) { k -> ArrayList() }
+    for (i in 0 until n) {
+      val idx: Int = w[i].code - 'a'.code
+      if (node.children[idx] == null) {
+        break
+      }
+      node = node.children[idx]
+      ans[i] = node.v
     }
+    return ans
+  }
 }
 
-class Solution {
-    public List<List<String>> suggestedProducts(String[] products, String searchWord) {
-        Arrays.sort(products);
-        Trie trie = new Trie();
-        for (int i = 0; i < products.length; ++i) {
-            trie.insert(products[i], i);
-        }
-        List<List<String>> ans = new ArrayList<>();
-        for (var v : trie.search(searchWord)) {
-            List<String> t = new ArrayList<>();
-            for (int i : v) {
-                t.add(products[i]);
-            }
-            ans.add(t);
-        }
-        return ans;
+internal class Solution {
+  fun suggestedProducts(products: Array<String?>, searchWord: String): List<List<String>> {
+    Arrays.sort(products)
+    val trie = Trie()
+    for (i in products.indices) {
+      trie.insert(products[i]!!, i)
     }
+    val ans: List<List<String>> = ArrayList()
+    for (v in trie.search(searchWord)) {
+      val t: List<String> = ArrayList()
+      for (i in v) {
+        t.add(products[i])
+      }
+      ans.add(t)
+    }
+    return ans
+  }
 }

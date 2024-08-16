@@ -1,24 +1,25 @@
-class Solution {
-    public List<Integer> goodSubsetofBinaryMatrix(int[][] grid) {
-        Map<Integer, Integer> g = new HashMap<>();
-        for (int i = 0; i < grid.length; ++i) {
-            int mask = 0;
-            for (int j = 0; j < grid[0].length; ++j) {
-                mask |= grid[i][j] << j;
-            }
-            if (mask == 0) {
-                return List.of(i);
-            }
-            g.put(mask, i);
-        }
-        for (var e1 : g.entrySet()) {
-            for (var e2 : g.entrySet()) {
-                if ((e1.getKey() & e2.getKey()) == 0) {
-                    int i = e1.getValue(), j = e2.getValue();
-                    return List.of(Math.min(i, j), Math.max(i, j));
-                }
-            }
-        }
-        return List.of();
+internal class Solution {
+  fun goodSubsetofBinaryMatrix(grid: Array<IntArray>): List<Int> {
+    val g: Map<Int, Int> = HashMap()
+    for (i in grid.indices) {
+      var mask = 0
+      for (j in grid[0].indices) {
+        mask = mask or (grid[i][j] shl j)
+      }
+      if (mask == 0) {
+        return List.of(i)
+      }
+      g.put(mask, i)
     }
+    for (e1 in g.entrySet()) {
+      for (e2 in g.entrySet()) {
+        if ((e1.getKey() and e2.getKey()) === 0) {
+          val i: Int = e1.getValue()
+          val j: Int = e2.getValue()
+          return List.of(min(i, j), max(i, j))
+        }
+      }
+    }
+    return List.of()
+  }
 }

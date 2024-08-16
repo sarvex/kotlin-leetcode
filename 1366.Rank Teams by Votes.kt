@@ -1,30 +1,31 @@
-class Solution {
-    public String rankTeams(String[] votes) {
-        int n = votes[0].length();
-        int[][] cnt = new int[26][n];
-        for (var vote : votes) {
-            for (int i = 0; i < n; ++i) {
-                cnt[vote.charAt(i) - 'A'][i]++;
-            }
-        }
-        Character[] cs = new Character[n];
-        for (int i = 0; i < n; ++i) {
-            cs[i] = votes[0].charAt(i);
-        }
-        Arrays.sort(cs, (a, b) -> {
-            int i = a - 'A', j = b - 'A';
-            for (int k = 0; k < n; ++k) {
-                int d = cnt[i][k] - cnt[j][k];
-                if (d != 0) {
-                    return d > 0 ? -1 : 1;
-                }
-            }
-            return a - b;
-        });
-        StringBuilder ans = new StringBuilder();
-        for (char c : cs) {
-            ans.append(c);
-        }
-        return ans.toString();
+internal class Solution {
+  fun rankTeams(votes: Array<String>): String {
+    val n = votes[0].length
+    val cnt = Array(26) { IntArray(n) }
+    for (vote in votes) {
+      for (i in 0 until n) {
+        cnt[vote[i].code - 'A'.code][i]++
+      }
     }
+    val cs: Array<Char> = arrayOfNulls(n)
+    for (i in 0 until n) {
+      cs[i] = votes[0][i]
+    }
+    Arrays.sort(cs) { a, b ->
+      val i: Int = a - 'A'
+      val j: Int = b - 'A'
+      for (k in 0 until n) {
+        val d = cnt[i][k] - cnt[j][k]
+        if (d != 0) {
+          return@sort if (d > 0) -1 else 1
+        }
+      }
+      a - b
+    }
+    val ans = StringBuilder()
+    for (c in cs) {
+      ans.append(c)
+    }
+    return ans.toString()
+  }
 }

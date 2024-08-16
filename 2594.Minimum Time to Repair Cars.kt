@@ -1,18 +1,19 @@
-class Solution {
-    public long repairCars(int[] ranks, int cars) {
-        long left = 0, right = 1L * ranks[0] * cars * cars;
-        while (left < right) {
-            long mid = (left + right) >> 1;
-            long cnt = 0;
-            for (int r : ranks) {
-                cnt += Math.sqrt(mid / r);
-            }
-            if (cnt >= cars) {
-                right = mid;
-            } else {
-                left = mid + 1;
-            }
-        }
-        return left;
+internal class Solution {
+  fun repairCars(ranks: IntArray, cars: Int): Long {
+    var left: Long = 0
+    var right = 1L * ranks[0] * cars * cars
+    while (left < right) {
+      val mid = (left + right) shr 1
+      var cnt: Long = 0
+      for (r in ranks) {
+        cnt += sqrt(mid / r)
+      }
+      if (cnt >= cars) {
+        right = mid
+      } else {
+        left = mid + 1
+      }
     }
+    return left
+  }
 }

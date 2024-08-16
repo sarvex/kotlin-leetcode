@@ -1,36 +1,37 @@
-class Solution {
-    private int m;
-    private int n;
-    private int[][] requests;
+internal class Solution {
+  private var m = 0
+  private var n = 0
+  private var requests: Array<IntArray>
 
-    public int maximumRequests(int n, int[][] requests) {
-        m = requests.length;
-        this.n = n;
-        this.requests = requests;
-        int ans = 0;
-        for (int mask = 0; mask < 1 << m; ++mask) {
-            int cnt = Integer.bitCount(mask);
-            if (ans < cnt && check(mask)) {
-                ans = cnt;
-            }
-        }
-        return ans;
+  fun maximumRequests(n: Int, requests: Array<IntArray>): Int {
+    m = requests.size
+    this.n = n
+    this.requests = requests
+    var ans = 0
+    for (mask in 0 until (1 shl m)) {
+      val cnt = Integer.bitCount(mask)
+      if (ans < cnt && check(mask)) {
+        ans = cnt
+      }
     }
+    return ans
+  }
 
-    private boolean check(int mask) {
-        int[] cnt = new int[n];
-        for (int i = 0; i < m; ++i) {
-            if ((mask >> i & 1) == 1) {
-                int f = requests[i][0], t = requests[i][1];
-                --cnt[f];
-                ++cnt[t];
-            }
-        }
-        for (int v : cnt) {
-            if (v != 0) {
-                return false;
-            }
-        }
-        return true;
+  private fun check(mask: Int): Boolean {
+    val cnt = IntArray(n)
+    for (i in 0 until m) {
+      if ((mask shr i and 1) == 1) {
+        val f = requests[i][0]
+        val t = requests[i][1]
+        --cnt[f]
+        ++cnt[t]
+      }
     }
+    for (v in cnt) {
+      if (v != 0) {
+        return false
+      }
+    }
+    return true
+  }
 }

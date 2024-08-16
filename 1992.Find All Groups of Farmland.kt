@@ -1,23 +1,26 @@
-class Solution {
-    public int[][] findFarmland(int[][] land) {
-        List<int[]> ans = new ArrayList<>();
-        int m = land.length;
-        int n = land[0].length;
-        for (int i = 0; i < m; ++i) {
-            for (int j = 0; j < n; ++j) {
-                if (land[i][j] == 0 || (j > 0 && land[i][j - 1] == 1)
-                    || (i > 0 && land[i - 1][j] == 1)) {
-                    continue;
-                }
-                int x = i;
-                int y = j;
-                for (; x + 1 < m && land[x + 1][j] == 1; ++x)
-                    ;
-                for (; y + 1 < n && land[x][y + 1] == 1; ++y)
-                    ;
-                ans.add(new int[] {i, j, x, y});
-            }
+internal class Solution {
+  fun findFarmland(land: Array<IntArray>): Array<IntArray> {
+    val ans: List<IntArray> = ArrayList()
+    val m = land.size
+    val n = land[0].size
+    for (i in 0 until m) {
+      for (j in 0 until n) {
+        if (land[i][j] == 0 || (j > 0 && land[i][j - 1] == 1)
+          || (i > 0 && land[i - 1][j] == 1)
+        ) {
+          continue
         }
-        return ans.toArray(new int[ans.size()][4]);
+        var x: Int = i
+        var y: Int = j
+        while (x + 1 < m && land[x + 1][j] == 1) {
+          ++x
+        }
+        while (y + 1 < n && land[x][y + 1] == 1) {
+          ++y
+        }
+        ans.add(intArrayOf(i, j, x, y))
+      }
     }
+    return ans.toArray(Array(ans.size()) { IntArray(4) })
+  }
 }

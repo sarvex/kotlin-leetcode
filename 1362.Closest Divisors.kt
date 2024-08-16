@@ -1,15 +1,17 @@
-class Solution {
-    public int[] closestDivisors(int num) {
-        int[] a = f(num + 1);
-        int[] b = f(num + 2);
-        return Math.abs(a[0] - a[1]) < Math.abs(b[0] - b[1]) ? a : b;
-    }
+internal class Solution {
+  fun closestDivisors(num: Int): IntArray {
+    val a = f(num + 1)
+    val b = f(num + 2)
+    return if (abs(a[0] - a[1]) < abs(b[0] - b[1])) a else b
+  }
 
-    private int[] f(int x) {
-        for (int i = (int) Math.sqrt(x);; --i) {
-            if (x % i == 0) {
-                return new int[] {i, x / i};
-            }
-        }
+  private fun f(x: Int): IntArray {
+    var i = sqrt(x) as Int
+    while (true) {
+      if (x % i == 0) {
+        return intArrayOf(i, x / i)
+      }
+      --i
     }
+  }
 }

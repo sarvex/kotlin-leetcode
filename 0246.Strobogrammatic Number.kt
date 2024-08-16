@@ -1,12 +1,17 @@
-class Solution {
-    public boolean isStrobogrammatic(String num) {
-        int[] d = new int[] {0, 1, -1, -1, -1, -1, 9, -1, 8, 6};
-        for (int i = 0, j = num.length() - 1; i <= j; ++i, --j) {
-            int a = num.charAt(i) - '0', b = num.charAt(j) - '0';
-            if (d[a] != b) {
-                return false;
-            }
-        }
-        return true;
+internal class Solution {
+  fun isStrobogrammatic(num: String): Boolean {
+    val d = intArrayOf(0, 1, -1, -1, -1, -1, 9, -1, 8, 6)
+    var i = 0
+    var j = num.length - 1
+    while (i <= j) {
+      val a: Int = num[i].code - '0'.code
+      val b: Int = num[j].code - '0'.code
+      if (d[a] != b) {
+        return false
+      }
+      ++i
+      --j
     }
+    return true
+  }
 }

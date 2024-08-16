@@ -1,13 +1,13 @@
-class Solution {
-    public String makeGood(String s) {
-        StringBuilder sb = new StringBuilder();
-        for (char c : s.toCharArray()) {
-            if (sb.length() == 0 || Math.abs(sb.charAt(sb.length() - 1) - c) != 32) {
-                sb.append(c);
-            } else {
-                sb.deleteCharAt(sb.length() - 1);
-            }
-        }
-        return sb.toString();
+internal class Solution {
+  fun makeGood(s: String): String {
+    val sb = StringBuilder()
+    for (c in s.toCharArray()) {
+      if (sb.length == 0 || abs(sb[sb.length - 1].code - c.code) != 32) {
+        sb.append(c)
+      } else {
+        sb.deleteCharAt(sb.length - 1)
+      }
     }
+    return sb.toString()
+  }
 }

@@ -1,11 +1,11 @@
-class Solution {
-    public int numEquivDominoPairs(int[][] dominoes) {
-        int[] cnt = new int[100];
-        int ans = 0;
-        for (var e : dominoes) {
-            int x = e[0] < e[1] ? e[0] * 10 + e[1] : e[1] * 10 + e[0];
-            ans += cnt[x]++;
-        }
-        return ans;
+internal class Solution {
+  fun numEquivDominoPairs(dominoes: Array<IntArray>): Int {
+    val cnt = IntArray(100)
+    var ans = 0
+    for (e in dominoes) {
+      val x = if (e[0] < e[1]) e[0] * 10 + e[1] else e[1] * 10 + e[0]
+      ans += cnt[x]++
     }
+    return ans
+  }
 }

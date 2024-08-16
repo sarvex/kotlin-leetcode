@@ -1,40 +1,41 @@
-class Solution {
-    public int minNumberOfSemesters(int n, int[][] relations, int k) {
-        int[] d = new int[n + 1];
-        for (var e : relations) {
-            d[e[1]] |= 1 << e[0];
-        }
-        Deque<int[]> q = new ArrayDeque<>();
-        q.offer(new int[] {0, 0});
-        Set<Integer> vis = new HashSet<>();
-        vis.add(0);
-        while (!q.isEmpty()) {
-            var p = q.pollFirst();
-            int cur = p[0], t = p[1];
-            if (cur == (1 << (n + 1)) - 2) {
-                return t;
-            }
-            int nxt = 0;
-            for (int i = 1; i <= n; ++i) {
-                if ((cur & d[i]) == d[i]) {
-                    nxt |= 1 << i;
-                }
-            }
-            nxt ^= cur;
-            if (Integer.bitCount(nxt) <= k) {
-                if (vis.add(nxt | cur)) {
-                    q.offer(new int[] {nxt | cur, t + 1});
-                }
-            } else {
-                int x = nxt;
-                while (nxt > 0) {
-                    if (Integer.bitCount(nxt) == k && vis.add(nxt | cur)) {
-                        q.offer(new int[] {nxt | cur, t + 1});
-                    }
-                    nxt = (nxt - 1) & x;
-                }
-            }
-        }
-        return 0;
+internal class Solution {
+  fun minNumberOfSemesters(n: Int, relations: Array<IntArray>, k: Int): Int {
+    val d = IntArray(n + 1)
+    for (e in relations) {
+      d[e[1]] = d[e[1]] or (1 shl e[0])
     }
+    val q: Deque<IntArray> = ArrayDeque()
+    q.offer(intArrayOf(0, 0))
+    val vis: Set<Int> = HashSet()
+    vis.add(0)
+    while (!q.isEmpty()) {
+      val p: Unit = q.pollFirst()
+      val cur: Int = p.get(0)
+      val t: Int = p.get(1)
+      if (cur == (1 shl (n + 1)) - 2) {
+        return t
+      }
+      var nxt = 0
+      for (i in 1..n) {
+        if ((cur and d[i]) == d[i]) {
+          nxt = nxt or (1 shl i)
+        }
+      }
+      nxt = nxt xor cur
+      if (Integer.bitCount(nxt) <= k) {
+        if (vis.add(nxt or cur)) {
+          q.offer(intArrayOf(nxt or cur, t + 1))
+        }
+      } else {
+        val x = nxt
+        while (nxt > 0) {
+          if (Integer.bitCount(nxt) == k && vis.add(nxt or cur)) {
+            q.offer(intArrayOf(nxt or cur, t + 1))
+          }
+          nxt = (nxt - 1) and x
+        }
+      }
+    }
+    return 0
+  }
 }

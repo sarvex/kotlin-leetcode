@@ -1,10 +1,10 @@
-class Solution {
-    public boolean isReachable(int targetX, int targetY) {
-        int x = gcd(targetX, targetY);
-        return (x & (x - 1)) == 0;
-    }
+internal class Solution {
+  fun isReachable(targetX: Int, targetY: Int): Boolean {
+    val x = gcd(targetX, targetY)
+    return (x and (x - 1)) == 0
+  }
 
-    private int gcd(int a, int b) {
-        return b == 0 ? a : gcd(b, a % b);
-    }
+  private fun gcd(a: Int, b: Int): Int {
+    return if (b == 0) a else gcd(b, a % b)
+  }
 }

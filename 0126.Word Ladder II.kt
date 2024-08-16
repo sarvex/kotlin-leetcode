@@ -1,66 +1,71 @@
-class Solution {
-    private List<List<String>> ans;
-    private Map<String, Set<String>> prev;
+import java.util.*
 
-    public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
-        ans = new ArrayList<>();
-        Set<String> words = new HashSet<>(wordList);
-        if (!words.contains(endWord)) {
-            return ans;
-        }
-        words.remove(beginWord);
-        Map<String, Integer> dist = new HashMap<>();
-        dist.put(beginWord, 0);
-        prev = new HashMap<>();
-        Queue<String> q = new ArrayDeque<>();
-        q.offer(beginWord);
-        boolean found = false;
-        int step = 0;
-        while (!q.isEmpty() && !found) {
-            ++step;
-            for (int i = q.size(); i > 0; --i) {
-                String p = q.poll();
-                char[] chars = p.toCharArray();
-                for (int j = 0; j < chars.length; ++j) {
-                    char ch = chars[j];
-                    for (char k = 'a'; k <= 'z'; ++k) {
-                        chars[j] = k;
-                        String t = new String(chars);
-                        if (dist.getOrDefault(t, 0) == step) {
-                            prev.get(t).add(p);
-                        }
-                        if (!words.contains(t)) {
-                            continue;
-                        }
-                        prev.computeIfAbsent(t, key -> new HashSet<>()).add(p);
-                        words.remove(t);
-                        q.offer(t);
-                        dist.put(t, step);
-                        if (endWord.equals(t)) {
-                            found = true;
-                        }
-                    }
-                    chars[j] = ch;
-                }
+internal class Solution {
+  private var ans: List<List<String>>? = null
+  private var prev: Map<String, Set<String>>? = null
+
+  fun findLadders(beginWord: String, endWord: String, wordList: List<String?>?): List<List<String>>? {
+    ans = ArrayList()
+    val words: Set<String> = HashSet(wordList)
+    if (!words.contains(endWord)) {
+      return ans
+    }
+    words.remove(beginWord)
+    val dist: Map<String, Int> = HashMap()
+    dist.put(beginWord, 0)
+    prev = HashMap()
+    val q: Queue<String> = ArrayDeque()
+    q.offer(beginWord)
+    var found = false
+    var step = 0
+    while (!q.isEmpty() && !found) {
+      ++step
+      for (i in q.size() downTo 1) {
+        val p: String = q.poll()
+        val chars: CharArray = p.toCharArray()
+        for (j in chars.indices) {
+          val ch = chars[j]
+          var k = 'a'
+          while (k <= 'z') {
+            chars[j] = k
+            val t = String(chars)
+            if (dist.getOrDefault(t, 0) === step) {
+              prev!![t].add(p)
             }
+            if (!words.contains(t)) {
+              ++k
+              continue
+            }
+            prev.computeIfAbsent(t) { key -> HashSet() }.add(p)
+            words.remove(t)
+            q.offer(t)
+            dist.put(t, step)
+            if (endWord == t) {
+              found = true
+            }
+            ++k
+          }
+          chars[j] = ch
         }
-        if (found) {
-            Deque<String> path = new ArrayDeque<>();
-            path.add(endWord);
-            dfs(path, beginWord, endWord);
-        }
-        return ans;
+      }
     }
+    if (found) {
+      val path: Deque<String> = ArrayDeque()
+      path.add(endWord)
+      dfs(path, beginWord, endWord)
+    }
+    return ans
+  }
 
-    private void dfs(Deque<String> path, String beginWord, String cur) {
-        if (cur.equals(beginWord)) {
-            ans.add(new ArrayList<>(path));
-            return;
-        }
-        for (String precursor : prev.get(cur)) {
-            path.addFirst(precursor);
-            dfs(path, beginWord, precursor);
-            path.removeFirst();
-        }
+  private fun dfs(path: Deque<String>, beginWord: String, cur: String) {
+    if (cur == beginWord) {
+      ans.add(ArrayList(path))
+      return
     }
+    for (precursor in prev!![cur]!!) {
+      path.addFirst(precursor)
+      dfs(path, beginWord, precursor)
+      path.removeFirst()
+    }
+  }
 }

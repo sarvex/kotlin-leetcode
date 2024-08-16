@@ -1,21 +1,22 @@
-class Solution {
-    public int maxLength(int[] ribbons, int k) {
-        int left = 0, right = 0;
-        for (int x : ribbons) {
-            right = Math.max(right, x);
-        }
-        while (left < right) {
-            int mid = (left + right + 1) >>> 1;
-            int cnt = 0;
-            for (int x : ribbons) {
-                cnt += x / mid;
-            }
-            if (cnt >= k) {
-                left = mid;
-            } else {
-                right = mid - 1;
-            }
-        }
-        return left;
+internal class Solution {
+  fun maxLength(ribbons: IntArray, k: Int): Int {
+    var left = 0
+    var right = 0
+    for (x in ribbons) {
+      right = max(right, x)
     }
+    while (left < right) {
+      val mid = (left + right + 1) ushr 1
+      var cnt = 0
+      for (x in ribbons) {
+        cnt += x / mid
+      }
+      if (cnt >= k) {
+        left = mid
+      } else {
+        right = mid - 1
+      }
+    }
+    return left
+  }
 }

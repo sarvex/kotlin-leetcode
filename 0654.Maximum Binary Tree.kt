@@ -1,39 +1,39 @@
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
+ * int val;
+ * TreeNode left;
+ * TreeNode right;
+ * TreeNode() {}
+ * TreeNode(int val) { this.val = val; }
+ * TreeNode(int val, TreeNode left, TreeNode right) {
+ * this.val = val;
+ * this.left = left;
+ * this.right = right;
+ * }
  * }
  */
-class Solution {
-    private int[] nums;
+internal class Solution {
+  private var nums: IntArray
 
-    public TreeNode constructMaximumBinaryTree(int[] nums) {
-        this.nums = nums;
-        return dfs(0, nums.length - 1);
-    }
+  fun constructMaximumBinaryTree(nums: IntArray): TreeNode? {
+    this.nums = nums
+    return dfs(0, nums.size - 1)
+  }
 
-    private TreeNode dfs(int l, int r) {
-        if (l > r) {
-            return null;
-        }
-        int i = l;
-        for (int j = l; j <= r; ++j) {
-            if (nums[i] < nums[j]) {
-                i = j;
-            }
-        }
-        TreeNode root = new TreeNode(nums[i]);
-        root.left = dfs(l, i - 1);
-        root.right = dfs(i + 1, r);
-        return root;
+  private fun dfs(l: Int, r: Int): TreeNode? {
+    if (l > r) {
+      return null
     }
+    var i = l
+    for (j in l..r) {
+      if (nums[i] < nums[j]) {
+        i = j
+      }
+    }
+    val root: TreeNode = TreeNode(nums[i])
+    root.left = dfs(l, i - 1)
+    root.right = dfs(i + 1, r)
+    return root
+  }
 }

@@ -1,36 +1,37 @@
 /**
  * Definition for singly-linked list.
  * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * int val;
+ * ListNode next;
+ * ListNode() {}
+ * ListNode(int val) { this.val = val; }
+ * ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  * }
  */
-class Solution {
-    public ListNode insertionSortList(ListNode head) {
-        if (head == null || head.next == null) {
-            return head;
-        }
-        ListNode dummy = new ListNode(head.val, head);
-        ListNode pre = dummy, cur = head;
-        while (cur != null) {
-            if (pre.val <= cur.val) {
-                pre = cur;
-                cur = cur.next;
-                continue;
-            }
-            ListNode p = dummy;
-            while (p.next.val <= cur.val) {
-                p = p.next;
-            }
-            ListNode t = cur.next;
-            cur.next = p.next;
-            p.next = cur;
-            pre.next = t;
-            cur = t;
-        }
-        return dummy.next;
+internal class Solution {
+  fun insertionSortList(head: ListNode?): ListNode? {
+    if (head == null || head.next == null) {
+      return head
     }
+    val dummy: ListNode = ListNode(head.`val`, head)
+    var pre: ListNode = dummy
+    var cur: ListNode = head
+    while (cur != null) {
+      if (pre.`val` <= cur.`val`) {
+        pre = cur
+        cur = cur.next
+        continue
+      }
+      var p: ListNode = dummy
+      while (p.next.`val` <= cur.`val`) {
+        p = p.next
+      }
+      val t: ListNode = cur.next
+      cur.next = p.next
+      p.next = cur
+      pre.next = t
+      cur = t
+    }
+    return dummy.next
+  }
 }

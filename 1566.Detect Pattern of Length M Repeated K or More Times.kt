@@ -1,17 +1,18 @@
-class Solution {
-    public boolean containsPattern(int[] arr, int m, int k) {
-        int n = arr.length;
-        for (int i = 0; i <= n - m * k; ++i) {
-            int j = 0;
-            for (; j < m * k; ++j) {
-                if (arr[i + j] != arr[i + (j % m)]) {
-                    break;
-                }
-            }
-            if (j == m * k) {
-                return true;
-            }
+internal class Solution {
+  fun containsPattern(arr: IntArray, m: Int, k: Int): Boolean {
+    val n = arr.size
+    for (i in 0..(n - m * k)) {
+      var j = 0
+      while (j < m * k) {
+        if (arr[i + j] != arr[i + (j % m)]) {
+          break
         }
-        return false;
+        ++j
+      }
+      if (j == m * k) {
+        return true
+      }
     }
+    return false
+  }
 }

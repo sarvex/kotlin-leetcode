@@ -1,31 +1,35 @@
-class Solution {
-    public int minimumDifference(int[] nums, int k) {
-        int mx = 0;
-        for (int x : nums) {
-            mx = Math.max(mx, x);
-        }
-        int m = 32 - Integer.numberOfLeadingZeros(mx);
-        int[] cnt = new int[m];
-        int n = nums.length;
-        int ans = Integer.MAX_VALUE;
-        for (int i = 0, j = 0, s = 0; j < n; ++j) {
-            s |= nums[j];
-            ans = Math.min(ans, Math.abs(s - k));
-            for (int h = 0; h < m; ++h) {
-                if ((nums[j] >> h & 1) == 1) {
-                    ++cnt[h];
-                }
-            }
-            while (i < j && s > k) {
-                for (int h = 0; h < m; ++h) {
-                    if ((nums[i] >> h & 1) == 1 && --cnt[h] == 0) {
-                        s ^= 1 << h;
-                    }
-                }
-                ++i;
-                ans = Math.min(ans, Math.abs(s - k));
-            }
-        }
-        return ans;
+internal class Solution {
+  fun minimumDifference(nums: IntArray, k: Int): Int {
+    var mx = 0
+    for (x in nums) {
+      mx = max(mx, x)
     }
+    val m = 32 - Integer.numberOfLeadingZeros(mx)
+    val cnt = IntArray(m)
+    val n = nums.size
+    var ans: Int = MAX_VALUE
+    var i = 0
+    var j = 0
+    var s = 0
+    while (j < n) {
+      s = s or nums[j]
+      ans = min(ans, abs(s - k))
+      for (h in 0 until m) {
+        if ((nums[j] shr h and 1) == 1) {
+          ++cnt[h]
+        }
+      }
+      while (i < j && s > k) {
+        for (h in 0 until m) {
+          if ((nums[i] shr h and 1) == 1 && --cnt[h] == 0) {
+            s = s xor (1 shl h)
+          }
+        }
+        ++i
+        ans = min(ans, abs(s - k))
+      }
+      ++j
+    }
+    return ans
+  }
 }

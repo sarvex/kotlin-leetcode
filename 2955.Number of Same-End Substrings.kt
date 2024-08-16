@@ -1,23 +1,24 @@
-class Solution {
-    public int[] sameEndSubstringCount(String s, int[][] queries) {
-        int n = s.length();
-        int[][] cnt = new int[26][n + 1];
-        for (int j = 1; j <= n; ++j) {
-            for (int i = 0; i < 26; ++i) {
-                cnt[i][j] = cnt[i][j - 1];
-            }
-            cnt[s.charAt(j - 1) - 'a'][j]++;
-        }
-        int m = queries.length;
-        int[] ans = new int[m];
-        for (int k = 0; k < m; ++k) {
-            int l = queries[k][0], r = queries[k][1];
-            ans[k] = r - l + 1;
-            for (int i = 0; i < 26; ++i) {
-                int x = cnt[i][r + 1] - cnt[i][l];
-                ans[k] += x * (x - 1) / 2;
-            }
-        }
-        return ans;
+internal class Solution {
+  fun sameEndSubstringCount(s: String, queries: Array<IntArray>): IntArray {
+    val n = s.length
+    val cnt = Array(26) { IntArray(n + 1) }
+    for (j in 1..n) {
+      for (i in 0..25) {
+        cnt[i][j] = cnt[i][j - 1]
+      }
+      cnt[s[j - 1].code - 'a'.code][j]++
     }
+    val m = queries.size
+    val ans = IntArray(m)
+    for (k in 0 until m) {
+      val l = queries[k][0]
+      val r = queries[k][1]
+      ans[k] = r - l + 1
+      for (i in 0..25) {
+        val x = cnt[i][r + 1] - cnt[i][l]
+        ans[k] += x * (x - 1) / 2
+      }
+    }
+    return ans
+  }
 }

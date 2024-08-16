@@ -1,32 +1,36 @@
-class Solution {
-    private static final int MOD = (int) 1e9 + 7;
+internal class Solution {
+  fun numPrimeArrangements(n: Int): Int {
+    val cnt = count(n)
+    val ans = f(cnt) * f(n - cnt)
+    return (ans % Solution.Companion.MOD).toInt()
+  }
 
-    public int numPrimeArrangements(int n) {
-        int cnt = count(n);
-        long ans = f(cnt) * f(n - cnt);
-        return (int) (ans % MOD);
+  private fun f(n: Int): Long {
+    var ans: Long = 1
+    for (i in 2..n) {
+      ans = (ans * i) % Solution.Companion.MOD
     }
+    return ans
+  }
 
-    private long f(int n) {
-        long ans = 1;
-        for (int i = 2; i <= n; ++i) {
-            ans = (ans * i) % MOD;
+  private fun count(n: Int): Int {
+    var cnt = 0
+    val primes = BooleanArray(n + 1)
+    Arrays.fill(primes, true)
+    for (i in 2..n) {
+      if (primes[i]) {
+        ++cnt
+        var j = i + i
+        while (j <= n) {
+          primes[j] = false
+          j += i
         }
-        return ans;
+      }
     }
+    return cnt
+  }
 
-    private int count(int n) {
-        int cnt = 0;
-        boolean[] primes = new boolean[n + 1];
-        Arrays.fill(primes, true);
-        for (int i = 2; i <= n; ++i) {
-            if (primes[i]) {
-                ++cnt;
-                for (int j = i + i; j <= n; j += i) {
-                    primes[j] = false;
-                }
-            }
-        }
-        return cnt;
-    }
+  companion object {
+    private const val MOD = 1e9.toInt() + 7
+  }
 }

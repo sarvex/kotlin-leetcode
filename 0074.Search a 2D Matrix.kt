@@ -1,16 +1,19 @@
-class Solution {
-    public boolean searchMatrix(int[][] matrix, int target) {
-        int m = matrix.length, n = matrix[0].length;
-        int left = 0, right = m * n - 1;
-        while (left < right) {
-            int mid = (left + right) >> 1;
-            int x = mid / n, y = mid % n;
-            if (matrix[x][y] >= target) {
-                right = mid;
-            } else {
-                left = mid + 1;
-            }
-        }
-        return matrix[left / n][left % n] == target;
+internal class Solution {
+  fun searchMatrix(matrix: Array<IntArray>, target: Int): Boolean {
+    val m = matrix.size
+    val n = matrix[0].size
+    var left = 0
+    var right = m * n - 1
+    while (left < right) {
+      val mid = (left + right) shr 1
+      val x = mid / n
+      val y = mid % n
+      if (matrix[x][y] >= target) {
+        right = mid
+      } else {
+        left = mid + 1
+      }
     }
+    return matrix[left / n][left % n] == target
+  }
 }

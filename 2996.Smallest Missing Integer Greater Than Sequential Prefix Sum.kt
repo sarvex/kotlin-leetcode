@@ -1,17 +1,21 @@
-class Solution {
-    public int missingInteger(int[] nums) {
-        int s = nums[0];
-        for (int j = 1; j < nums.length && nums[j] == nums[j - 1] + 1; ++j) {
-            s += nums[j];
-        }
-        boolean[] vis = new boolean[51];
-        for (int x : nums) {
-            vis[x] = true;
-        }
-        for (int x = s;; ++x) {
-            if (x >= vis.length || !vis[x]) {
-                return x;
-            }
-        }
+internal class Solution {
+  fun missingInteger(nums: IntArray): Int {
+    var s = nums[0]
+    var j = 1
+    while (j < nums.size && nums[j] == nums[j - 1] + 1) {
+      s += nums[j]
+      ++j
     }
+    val vis = BooleanArray(51)
+    for (x in nums) {
+      vis[x] = true
+    }
+    var x = s
+    while (true) {
+      if (x >= vis.size || !vis[x]) {
+        return x
+      }
+      ++x
+    }
+  }
 }

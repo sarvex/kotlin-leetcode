@@ -1,18 +1,18 @@
-class Solution {
-    public int makePrefSumNonNegative(int[] nums) {
-        PriorityQueue<Integer> pq = new PriorityQueue<>();
-        int ans = 0;
-        long s = 0;
-        for (int x : nums) {
-            s += x;
-            if (x < 0) {
-                pq.offer(x);
-            }
-            while (s < 0) {
-                s -= pq.poll();
-                ++ans;
-            }
-        }
-        return ans;
+internal class Solution {
+  fun makePrefSumNonNegative(nums: IntArray): Int {
+    val pq: PriorityQueue<Int> = PriorityQueue()
+    var ans = 0
+    var s: Long = 0
+    for (x in nums) {
+      s += x.toLong()
+      if (x < 0) {
+        pq.offer(x)
+      }
+      while (s < 0) {
+        s -= pq.poll()
+        ++ans
+      }
     }
+    return ans
+  }
 }

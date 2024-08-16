@@ -1,26 +1,26 @@
-class Solution {
-    public int subarrayLCM(int[] nums, int k) {
-        int n = nums.length;
-        int ans = 0;
-        for (int i = 0; i < n; ++i) {
-            int a = nums[i];
-            for (int j = i; j < n; ++j) {
-                int b = nums[j];
-                int x = lcm(a, b);
-                if (x == k) {
-                    ++ans;
-                }
-                a = x;
-            }
+internal class Solution {
+  fun subarrayLCM(nums: IntArray, k: Int): Int {
+    val n = nums.size
+    var ans = 0
+    for (i in 0 until n) {
+      var a = nums[i]
+      for (j in i until n) {
+        val b = nums[j]
+        val x = lcm(a, b)
+        if (x == k) {
+          ++ans
         }
-        return ans;
+        a = x
+      }
     }
+    return ans
+  }
 
-    private int lcm(int a, int b) {
-        return a * b / gcd(a, b);
-    }
+  private fun lcm(a: Int, b: Int): Int {
+    return a * b / gcd(a, b)
+  }
 
-    private int gcd(int a, int b) {
-        return b == 0 ? a : gcd(b, a % b);
-    }
+  private fun gcd(a: Int, b: Int): Int {
+    return if (b == 0) a else gcd(b, a % b)
+  }
 }

@@ -1,13 +1,14 @@
-class Solution {
-    public int[] constructArray(int n, int k) {
-        int l = 1, r = n;
-        int[] ans = new int[n];
-        for (int i = 0; i < k; ++i) {
-            ans[i] = i % 2 == 0 ? l++ : r--;
-        }
-        for (int i = k; i < n; ++i) {
-            ans[i] = k % 2 == 0 ? r-- : l++;
-        }
-        return ans;
+internal class Solution {
+  fun constructArray(n: Int, k: Int): IntArray {
+    var l = 1
+    var r = n
+    val ans = IntArray(n)
+    for (i in 0 until k) {
+      ans[i] = if (i % 2 == 0) l++ else r--
     }
+    for (i in k until n) {
+      ans[i] = if (k % 2 == 0) r-- else l++
+    }
+    return ans
+  }
 }

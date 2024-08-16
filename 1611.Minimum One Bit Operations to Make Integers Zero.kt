@@ -1,9 +1,11 @@
-class Solution {
-    public int minimumOneBitOperations(int n) {
-        int ans = 0;
-        for (; n > 0; n >>= 1) {
-            ans ^= n;
-        }
-        return ans;
+internal class Solution {
+  fun minimumOneBitOperations(n: Int): Int {
+    var n = n
+    var ans = 0
+    while (n > 0) {
+      ans = ans xor n
+      n = n shr 1
     }
+    return ans
+  }
 }

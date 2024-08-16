@@ -1,9 +1,10 @@
-class Solution {
-    public int minOperations(String s) {
-        int cnt = 0, n = s.length();
-        for (int i = 0; i < n; ++i) {
-            cnt += (s.charAt(i) != "01".charAt(i & 1) ? 1 : 0);
-        }
-        return Math.min(cnt, n - cnt);
+internal class Solution {
+  fun minOperations(s: String): Int {
+    var cnt = 0
+    val n = s.length
+    for (i in 0 until n) {
+      cnt += (if (s[i] != "01"[i and 1]) 1 else 0)
     }
+    return min(cnt, n - cnt)
+  }
 }

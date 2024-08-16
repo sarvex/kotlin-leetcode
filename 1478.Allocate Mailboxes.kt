@@ -1,26 +1,28 @@
-class Solution {
-    public int minDistance(int[] houses, int k) {
-        Arrays.sort(houses);
-        int n = houses.length;
-        int[][] g = new int[n][n];
-        for (int i = n - 2; i >= 0; --i) {
-            for (int j = i + 1; j < n; ++j) {
-                g[i][j] = g[i + 1][j - 1] + houses[j] - houses[i];
-            }
-        }
-        int[][] f = new int[n][k + 1];
-        final int inf = 1 << 30;
-        for (int[] e : f) {
-            Arrays.fill(e, inf);
-        }
-        for (int i = 0; i < n; ++i) {
-            f[i][1] = g[0][i];
-            for (int j = 2; j <= k && j <= i + 1; ++j) {
-                for (int p = 0; p < i; ++p) {
-                    f[i][j] = Math.min(f[i][j], f[p][j - 1] + g[p + 1][i]);
-                }
-            }
-        }
-        return f[n - 1][k];
+internal class Solution {
+  fun minDistance(houses: IntArray, k: Int): Int {
+    Arrays.sort(houses)
+    val n = houses.size
+    val g = Array(n) { IntArray(n) }
+    for (i in n - 2 downTo 0) {
+      for (j in i + 1 until n) {
+        g[i][j] = g[i + 1][j - 1] + houses[j] - houses[i]
+      }
     }
+    val f = Array(n) { IntArray(k + 1) }
+    val inf = 1 shl 30
+    for (e in f) {
+      Arrays.fill(e, inf)
+    }
+    for (i in 0 until n) {
+      f[i][1] = g[0][i]
+      var j = 2
+      while (j <= k && j <= i + 1) {
+        for (p in 0 until i) {
+          f[i][j] = min(f[i][j], f[p][j - 1] + g[p + 1][i])
+        }
+        ++j
+      }
+    }
+    return f[n - 1][k]
+  }
 }

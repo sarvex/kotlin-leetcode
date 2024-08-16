@@ -1,15 +1,15 @@
-class Solution {
-    public int findKOr(int[] nums, int k) {
-        int ans = 0;
-        for (int i = 0; i < 32; ++i) {
-            int cnt = 0;
-            for (int x : nums) {
-                cnt += (x >> i & 1);
-            }
-            if (cnt >= k) {
-                ans |= 1 << i;
-            }
-        }
-        return ans;
+internal class Solution {
+  fun findKOr(nums: IntArray, k: Int): Int {
+    var ans = 0
+    for (i in 0..31) {
+      var cnt = 0
+      for (x in nums) {
+        cnt += (x shr i and 1)
+      }
+      if (cnt >= k) {
+        ans = ans or (1 shl i)
+      }
     }
+    return ans
+  }
 }

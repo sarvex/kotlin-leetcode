@@ -1,27 +1,27 @@
-class Solution {
-    private int n;
-    private int[] cost;
-    private int[] time;
-    private Integer[][] f;
+internal class Solution {
+  private var n = 0
+  private var cost: IntArray
+  private var time: IntArray
+  private var f: Array<Array<Int>>
 
-    public int paintWalls(int[] cost, int[] time) {
-        n = cost.length;
-        this.cost = cost;
-        this.time = time;
-        f = new Integer[n][n << 1 | 1];
-        return dfs(0, n);
-    }
+  fun paintWalls(cost: IntArray, time: IntArray): Int {
+    n = cost.size
+    this.cost = cost
+    this.time = time
+    f = Array(n) { arrayOfNulls(n shl 1 or 1) }
+    return dfs(0, n)
+  }
 
-    private int dfs(int i, int j) {
-        if (n - i <= j - n) {
-            return 0;
-        }
-        if (i >= n) {
-            return 1 << 30;
-        }
-        if (f[i][j] == null) {
-            f[i][j] = Math.min(dfs(i + 1, j + time[i]) + cost[i], dfs(i + 1, j - 1));
-        }
-        return f[i][j];
+  private fun dfs(i: Int, j: Int): Int {
+    if (n - i <= j - n) {
+      return 0
     }
+    if (i >= n) {
+      return 1 shl 30
+    }
+    if (f[i][j] == null) {
+      f[i][j] = min(dfs(i + 1, j + time[i]) + cost[i], dfs(i + 1, j - 1))
+    }
+    return f[i][j]
+  }
 }

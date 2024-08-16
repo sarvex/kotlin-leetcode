@@ -1,20 +1,20 @@
-class Solution {
-    public int findMinDifference(List<String> timePoints) {
-        if (timePoints.size() > 1440) {
-            return 0;
-        }
-        int n = timePoints.size();
-        int[] nums = new int[n + 1];
-        for (int i = 0; i < n; ++i) {
-            String[] t = timePoints.get(i).split(":");
-            nums[i] = Integer.parseInt(t[0]) * 60 + Integer.parseInt(t[1]);
-        }
-        Arrays.sort(nums, 0, n);
-        nums[n] = nums[0] + 1440;
-        int ans = 1 << 30;
-        for (int i = 1; i <= n; ++i) {
-            ans = Math.min(ans, nums[i] - nums[i - 1]);
-        }
-        return ans;
+internal class Solution {
+  fun findMinDifference(timePoints: List<String>): Int {
+    if (timePoints.size() > 1440) {
+      return 0
     }
+    val n: Int = timePoints.size()
+    val nums = IntArray(n + 1)
+    for (i in 0 until n) {
+      val t: Array<String> = timePoints[i].split(":")
+      nums[i] = t[0].toInt() * 60 + t[1].toInt()
+    }
+    Arrays.sort(nums, 0, n)
+    nums[n] = nums[0] + 1440
+    var ans = 1 shl 30
+    for (i in 1..n) {
+      ans = min(ans, nums[i] - nums[i - 1])
+    }
+    return ans
+  }
 }

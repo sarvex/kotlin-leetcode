@@ -1,11 +1,11 @@
-class Solution {
-    public boolean findSubarrays(int[] nums) {
-        Set<Integer> vis = new HashSet<>();
-        for (int i = 1; i < nums.length; ++i) {
-            if (!vis.add(nums[i - 1] + nums[i])) {
-                return true;
-            }
-        }
-        return false;
+internal class Solution {
+  fun findSubarrays(nums: IntArray): Boolean {
+    val vis: Set<Int> = HashSet()
+    for (i in 1 until nums.size) {
+      if (!vis.add(nums[i - 1] + nums[i])) {
+        return true
+      }
     }
+    return false
+  }
 }

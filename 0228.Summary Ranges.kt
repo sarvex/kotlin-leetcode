@@ -1,17 +1,21 @@
-class Solution {
-    public List<String> summaryRanges(int[] nums) {
-        List<String> ans = new ArrayList<>();
-        for (int i = 0, j, n = nums.length; i < n; i = j + 1) {
-            j = i;
-            while (j + 1 < n && nums[j + 1] == nums[j] + 1) {
-                ++j;
-            }
-            ans.add(f(nums, i, j));
-        }
-        return ans;
+internal class Solution {
+  fun summaryRanges(nums: IntArray): List<String> {
+    val ans: List<String> = ArrayList()
+    var i = 0
+    var j: Int
+    val n = nums.size
+    while (i < n) {
+      j = i
+      while (j + 1 < n && nums[j + 1] == nums[j] + 1) {
+        ++j
+      }
+      ans.add(f(nums, i, j))
+      i = j + 1
     }
+    return ans
+  }
 
-    private String f(int[] nums, int i, int j) {
-        return i == j ? nums[i] + "" : String.format("%d->%d", nums[i], nums[j]);
-    }
+  private fun f(nums: IntArray, i: Int, j: Int): String {
+    return if (i == j) nums[i].toString() + "" else String.format("%d->%d", nums[i], nums[j])
+  }
 }

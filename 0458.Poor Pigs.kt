@@ -1,10 +1,12 @@
-class Solution {
-    public int poorPigs(int buckets, int minutesToDie, int minutesToTest) {
-        int base = minutesToTest / minutesToDie + 1;
-        int res = 0;
-        for (int p = 1; p < buckets; p *= base) {
-            ++res;
-        }
-        return res;
+internal class Solution {
+  fun poorPigs(buckets: Int, minutesToDie: Int, minutesToTest: Int): Int {
+    val base = minutesToTest / minutesToDie + 1
+    var res = 0
+    var p = 1
+    while (p < buckets) {
+      ++res
+      p *= base
     }
+    return res
+  }
 }

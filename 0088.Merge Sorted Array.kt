@@ -1,7 +1,11 @@
-class Solution {
-    public void merge(int[] nums1, int m, int[] nums2, int n) {
-        for (int i = m - 1, j = n - 1, k = m + n - 1; j >= 0; --k) {
-            nums1[k] = i >= 0 && nums1[i] > nums2[j] ? nums1[i--] : nums2[j--];
-        }
+internal class Solution {
+  fun merge(nums1: IntArray, m: Int, nums2: IntArray, n: Int) {
+    var i = m - 1
+    var j = n - 1
+    var k = m + n - 1
+    while (j >= 0) {
+      nums1[k] = if (i >= 0 && nums1[i] > nums2[j]) nums1[i--] else nums2[j--]
+      --k
     }
+  }
 }

@@ -1,23 +1,24 @@
-class Solution {
-    public int[] smallerNumbersThanCurrent(int[] nums) {
-        int[] arr = nums.clone();
-        Arrays.sort(arr);
-        for (int i = 0; i < nums.length; ++i) {
-            nums[i] = search(arr, nums[i]);
-        }
-        return nums;
+internal class Solution {
+  fun smallerNumbersThanCurrent(nums: IntArray): IntArray {
+    val arr = nums.clone()
+    Arrays.sort(arr)
+    for (i in nums.indices) {
+      nums[i] = search(arr, nums[i])
     }
+    return nums
+  }
 
-    private int search(int[] nums, int x) {
-        int l = 0, r = nums.length;
-        while (l < r) {
-            int mid = (l + r) >> 1;
-            if (nums[mid] >= x) {
-                r = mid;
-            } else {
-                l = mid + 1;
-            }
-        }
-        return l;
+  private fun search(nums: IntArray, x: Int): Int {
+    var l = 0
+    var r = nums.size
+    while (l < r) {
+      val mid = (l + r) shr 1
+      if (nums[mid] >= x) {
+        r = mid
+      } else {
+        l = mid + 1
+      }
     }
+    return l
+  }
 }

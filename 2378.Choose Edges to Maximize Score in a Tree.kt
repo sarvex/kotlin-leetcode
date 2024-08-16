@@ -1,27 +1,33 @@
-class Solution {
-    private List<int[]>[] g;
+import java.util.*
 
-    public long maxScore(int[][] edges) {
-        int n = edges.length;
-        g = new List[n];
-        Arrays.setAll(g, k -> new ArrayList<>());
-        for (int i = 1; i < n; ++i) {
-            int p = edges[i][0], w = edges[i][1];
-            g[p].add(new int[] {i, w});
-        }
-        return dfs(0)[1];
-    }
+internal class Solution {
+  private var g: Array<List<IntArray>>
 
-    private long[] dfs(int i) {
-        long a = 0, b = 0, t = 0;
-        for (int[] nxt : g[i]) {
-            int j = nxt[0], w = nxt[1];
-            long[] s = dfs(j);
-            a += s[1];
-            b += s[1];
-            t = Math.max(t, s[0] - s[1] + w);
-        }
-        b += t;
-        return new long[] {a, b};
+  fun maxScore(edges: Array<IntArray>): Long {
+    val n = edges.size
+    g = arrayOfNulls(n)
+    Arrays.setAll(g) { k -> ArrayList() }
+    for (i in 1 until n) {
+      val p = edges[i][0]
+      val w = edges[i][1]
+      g[p].add(intArrayOf(i, w))
     }
+    return dfs(0)[1]
+  }
+
+  private fun dfs(i: Int): LongArray {
+    var a: Long = 0
+    var b: Long = 0
+    var t: Long = 0
+    for (nxt in g[i]) {
+      val j = nxt[0]
+      val w = nxt[1]
+      val s = dfs(j)
+      a += s[1]
+      b += s[1]
+      t = max(t, s[0] - s[1] + w)
+    }
+    b += t
+    return longArrayOf(a, b)
+  }
 }

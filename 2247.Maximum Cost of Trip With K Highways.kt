@@ -1,38 +1,43 @@
-class Solution {
-    public int maximumCost(int n, int[][] highways, int k) {
-        if (k >= n) {
-            return -1;
-        }
-        List<int[]>[] g = new List[n];
-        Arrays.setAll(g, h -> new ArrayList<>());
-        for (int[] h : highways) {
-            int a = h[0], b = h[1], cost = h[2];
-            g[a].add(new int[] {b, cost});
-            g[b].add(new int[] {a, cost});
-        }
-        int[][] f = new int[1 << n][n];
-        for (int[] e : f) {
-            Arrays.fill(e, -(1 << 30));
-        }
-        for (int i = 0; i < n; ++i) {
-            f[1 << i][i] = 0;
-        }
-        int ans = -1;
-        for (int i = 0; i < 1 << n; ++i) {
-            for (int j = 0; j < n; ++j) {
-                if ((i >> j & 1) == 1) {
-                    for (var e : g[j]) {
-                        int h = e[0], cost = e[1];
-                        if ((i >> h & 1) == 1) {
-                            f[i][j] = Math.max(f[i][j], f[i ^ (1 << j)][h] + cost);
-                        }
-                    }
-                }
-                if (Integer.bitCount(i) == k + 1) {
-                    ans = Math.max(ans, f[i][j]);
-                }
-            }
-        }
-        return ans;
+import java.util.*
+
+internal class Solution {
+  fun maximumCost(n: Int, highways: Array<IntArray>, k: Int): Int {
+    if (k >= n) {
+      return -1
     }
+    val g: Array<List<IntArray>> = arrayOfNulls(n)
+    Arrays.setAll(g) { h -> ArrayList() }
+    for (h in highways) {
+      val a = h[0]
+      val b = h[1]
+      val cost = h[2]
+      g[a].add(intArrayOf(b, cost))
+      g[b].add(intArrayOf(a, cost))
+    }
+    val f = Array(1 shl n) { IntArray(n) }
+    for (e in f) {
+      Arrays.fill(e, -(1 shl 30))
+    }
+    for (i in 0 until n) {
+      f[1 shl i][i] = 0
+    }
+    var ans = -1
+    for (i in 0 until (1 shl n)) {
+      for (j in 0 until n) {
+        if ((i shr j and 1) == 1) {
+          for (e in g[j]) {
+            val h = e[0]
+            val cost = e[1]
+            if ((i shr h and 1) == 1) {
+              f[i][j] = max(f[i][j], f[i xor (1 shl j)][h] + cost)
+            }
+          }
+        }
+        if (Integer.bitCount(i) == k + 1) {
+          ans = max(ans, f[i][j])
+        }
+      }
+    }
+    return ans
+  }
 }

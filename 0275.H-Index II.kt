@@ -1,15 +1,16 @@
-class Solution {
-    public int hIndex(int[] citations) {
-        int n = citations.length;
-        int left = 0, right = n;
-        while (left < right) {
-            int mid = (left + right) >>> 1;
-            if (citations[mid] >= n - mid) {
-                right = mid;
-            } else {
-                left = mid + 1;
-            }
-        }
-        return n - left;
+internal class Solution {
+  fun hIndex(citations: IntArray): Int {
+    val n = citations.size
+    var left = 0
+    var right = n
+    while (left < right) {
+      val mid = (left + right) ushr 1
+      if (citations[mid] >= n - mid) {
+        right = mid
+      } else {
+        left = mid + 1
+      }
     }
+    return n - left
+  }
 }

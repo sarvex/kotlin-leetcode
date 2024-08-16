@@ -1,13 +1,13 @@
-class Solution {
-    public String removeStars(String s) {
-        StringBuilder ans = new StringBuilder();
-        for (int i = 0; i < s.length(); ++i) {
-            if (s.charAt(i) == '*') {
-                ans.deleteCharAt(ans.length() - 1);
-            } else {
-                ans.append(s.charAt(i));
-            }
-        }
-        return ans.toString();
+internal class Solution {
+  fun removeStars(s: String): String {
+    val ans = StringBuilder()
+    for (i in 0 until s.length) {
+      if (s[i] == '*') {
+        ans.deleteCharAt(ans.length - 1)
+      } else {
+        ans.append(s[i])
+      }
     }
+    return ans.toString()
+  }
 }

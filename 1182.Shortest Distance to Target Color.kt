@@ -1,29 +1,30 @@
-class Solution {
-    public List<Integer> shortestDistanceColor(int[] colors, int[][] queries) {
-        int n = colors.length;
-        final int inf = 1 << 30;
-        int[][] right = new int[n + 1][3];
-        Arrays.fill(right[n], inf);
-        for (int i = n - 1; i >= 0; --i) {
-            for (int j = 0; j < 3; ++j) {
-                right[i][j] = right[i + 1][j];
-            }
-            right[i][colors[i] - 1] = i;
-        }
-        int[][] left = new int[n + 1][3];
-        Arrays.fill(left[0], -inf);
-        for (int i = 1; i <= n; ++i) {
-            for (int j = 0; j < 3; ++j) {
-                left[i][j] = left[i - 1][j];
-            }
-            left[i][colors[i - 1] - 1] = i - 1;
-        }
-        List<Integer> ans = new ArrayList<>();
-        for (int[] q : queries) {
-            int i = q[0], c = q[1] - 1;
-            int d = Math.min(i - left[i + 1][c], right[i][c] - i);
-            ans.add(d > n ? -1 : d);
-        }
-        return ans;
+internal class Solution {
+  fun shortestDistanceColor(colors: IntArray, queries: Array<IntArray>): List<Int> {
+    val n = colors.size
+    val inf = 1 shl 30
+    val right = Array(n + 1) { IntArray(3) }
+    Arrays.fill(right[n], inf)
+    for (i in n - 1 downTo 0) {
+      for (j in 0..2) {
+        right[i][j] = right[i + 1][j]
+      }
+      right[i][colors[i] - 1] = i
     }
+    val left = Array(n + 1) { IntArray(3) }
+    Arrays.fill(left[0], -inf)
+    for (i in 1..n) {
+      for (j in 0..2) {
+        left[i][j] = left[i - 1][j]
+      }
+      left[i][colors[i - 1] - 1] = i - 1
+    }
+    val ans: List<Int> = ArrayList()
+    for (q in queries) {
+      val i = q[0]
+      val c = q[1] - 1
+      val d: Int = min(i - left[i + 1][c], right[i][c] - i)
+      ans.add(if (d > n) -1 else d)
+    }
+    return ans
+  }
 }

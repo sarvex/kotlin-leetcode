@@ -1,29 +1,34 @@
-class Solution {
-    public int visiblePoints(List<List<Integer>> points, int angle, List<Integer> location) {
-        List<Double> v = new ArrayList<>();
-        int x = location.get(0), y = location.get(1);
-        int same = 0;
-        for (List<Integer> p : points) {
-            int xi = p.get(0), yi = p.get(1);
-            if (xi == x && yi == y) {
-                ++same;
-                continue;
-            }
-            v.add(Math.atan2(yi - y, xi - x));
-        }
-        Collections.sort(v);
-        int n = v.size();
-        for (int i = 0; i < n; ++i) {
-            v.add(v.get(i) + 2 * Math.PI);
-        }
-        int mx = 0;
-        Double t = angle * Math.PI / 180;
-        for (int i = 0, j = 0; j < 2 * n; ++j) {
-            while (i < j && v.get(j) - v.get(i) > t) {
-                ++i;
-            }
-            mx = Math.max(mx, j - i + 1);
-        }
-        return mx + same;
+internal class Solution {
+  fun visiblePoints(points: List<List<Int>>, angle: Int, location: List<Int>): Int {
+    val v: List<Double> = ArrayList()
+    val x = location[0]
+    val y = location[1]
+    var same = 0
+    for (p in points) {
+      val xi = p[0]
+      val yi = p[1]
+      if (xi == x && yi == y) {
+        ++same
+        continue
+      }
+      v.add(atan2(yi - y, xi - x))
     }
+    Collections.sort(v)
+    val n: Int = v.size()
+    for (i in 0 until n) {
+      v.add(v[i] + 2 * Math.PI)
+    }
+    var mx = 0
+    val t = angle * Math.PI / 180
+    var i = 0
+    var j = 0
+    while (j < 2 * n) {
+      while (i < j && v[j] - v[i] > t) {
+        ++i
+      }
+      mx = max(mx, j - i + 1)
+      ++j
+    }
+    return mx + same
+  }
 }

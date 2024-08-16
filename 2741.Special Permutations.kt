@@ -1,29 +1,29 @@
-class Solution {
-    public int specialPerm(int[] nums) {
-        final int mod = (int) 1e9 + 7;
-        int n = nums.length;
-        int m = 1 << n;
-        int[][] f = new int[m][n];
-        for (int i = 1; i < m; ++i) {
-            for (int j = 0; j < n; ++j) {
-                if ((i >> j & 1) == 1) {
-                    int ii = i ^ (1 << j);
-                    if (ii == 0) {
-                        f[i][j] = 1;
-                        continue;
-                    }
-                    for (int k = 0; k < n; ++k) {
-                        if (nums[j] % nums[k] == 0 || nums[k] % nums[j] == 0) {
-                            f[i][j] = (f[i][j] + f[ii][k]) % mod;
-                        }
-                    }
-                }
+internal class Solution {
+  fun specialPerm(nums: IntArray): Int {
+    val mod = 1e9.toInt() + 7
+    val n = nums.size
+    val m = 1 shl n
+    val f = Array(m) { IntArray(n) }
+    for (i in 1 until m) {
+      for (j in 0 until n) {
+        if ((i shr j and 1) == 1) {
+          val ii: Int = i xor (1 shl j)
+          if (ii == 0) {
+            f[i][j] = 1
+            continue
+          }
+          for (k in 0 until n) {
+            if (nums[j] % nums[k] == 0 || nums[k] % nums[j] == 0) {
+              f[i][j] = (f[i][j] + f[ii][k]) % mod
             }
+          }
         }
-        int ans = 0;
-        for (int x : f[m - 1]) {
-            ans = (ans + x) % mod;
-        }
-        return ans;
+      }
     }
+    var ans = 0
+    for (x in f[m - 1]) {
+      ans = (ans + x) % mod
+    }
+    return ans
+  }
 }

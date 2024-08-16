@@ -1,28 +1,28 @@
-class Solution {
-    private final int mod = (int) 1e9 + 7;
-    private int n;
-    private Integer[][][] f;
+internal class Solution {
+  private val mod = 1e9.toInt() + 7
+  private var n = 0
+  private var f: Array<Array<Array<Int>>>
 
-    public int checkRecord(int n) {
-        this.n = n;
-        f = new Integer[n][2][3];
-        return dfs(0, 0, 0);
-    }
+  fun checkRecord(n: Int): Int {
+    this.n = n
+    f = Array(n) { Array(2) { arrayOfNulls(3) } }
+    return dfs(0, 0, 0)
+  }
 
-    private int dfs(int i, int j, int k) {
-        if (i >= n) {
-            return 1;
-        }
-        if (f[i][j][k] != null) {
-            return f[i][j][k];
-        }
-        int ans = dfs(i + 1, j, 0);
-        if (j == 0) {
-            ans = (ans + dfs(i + 1, j + 1, 0)) % mod;
-        }
-        if (k < 2) {
-            ans = (ans + dfs(i + 1, j, k + 1)) % mod;
-        }
-        return f[i][j][k] = ans;
+  private fun dfs(i: Int, j: Int, k: Int): Int {
+    if (i >= n) {
+      return 1
     }
+    if (f[i][j][k] != null) {
+      return f[i][j][k]
+    }
+    var ans = dfs(i + 1, j, 0)
+    if (j == 0) {
+      ans = (ans + dfs(i + 1, j + 1, 0)) % mod
+    }
+    if (k < 2) {
+      ans = (ans + dfs(i + 1, j, k + 1)) % mod
+    }
+    return ans.also { f[i][j][k] = it }
+  }
 }

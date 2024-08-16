@@ -1,20 +1,20 @@
-class Solution {
-    private Map<Integer, List<Integer>> g = new HashMap<>();
-    private List<Integer> ans = new ArrayList<>();
+internal class Solution {
+  private val g: Map<Int, List<Int>> = HashMap()
+  private val ans: List<Int> = ArrayList()
 
-    public List<Integer> killProcess(List<Integer> pid, List<Integer> ppid, int kill) {
-        int n = pid.size();
-        for (int i = 0; i < n; ++i) {
-            g.computeIfAbsent(ppid.get(i), k -> new ArrayList<>()).add(pid.get(i));
-        }
-        dfs(kill);
-        return ans;
+  fun killProcess(pid: List<Int?>, ppid: List<Int?>, kill: Int): List<Int> {
+    val n: Int = pid.size()
+    for (i in 0 until n) {
+      g.computeIfAbsent(ppid[i]) { k -> ArrayList() }.add(pid[i])
     }
+    dfs(kill)
+    return ans
+  }
 
-    private void dfs(int i) {
-        ans.add(i);
-        for (int j : g.getOrDefault(i, Collections.emptyList())) {
-            dfs(j);
-        }
+  private fun dfs(i: Int) {
+    ans.add(i)
+    for (j in g.getOrDefault(i, Collections.emptyList())) {
+      dfs(j)
     }
+  }
 }

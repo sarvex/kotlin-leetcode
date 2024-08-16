@@ -1,33 +1,37 @@
-class Solution {
-    private int n;
-    private char[] s;
-    private int[] cnt = new int[26];
+internal class Solution {
+  private var n = 0
+  private var s: CharArray
+  private val cnt = IntArray(26)
 
-    public int minAnagramLength(String s) {
-        n = s.length();
-        this.s = s.toCharArray();
-        for (int i = 0; i < n; ++i) {
-            ++cnt[this.s[i] - 'a'];
-        }
-        for (int i = 1;; ++i) {
-            if (n % i == 0 && check(i)) {
-                return i;
-            }
-        }
+  fun minAnagramLength(s: String): Int {
+    n = s.length
+    this.s = s.toCharArray()
+    for (i in 0 until n) {
+      ++cnt[this.s[i].code - 'a'.code]
     }
+    var i = 1
+    while (true) {
+      if (n % i == 0 && check(i)) {
+        return i
+      }
+      ++i
+    }
+  }
 
-    private boolean check(int k) {
-        for (int i = 0; i < n; i += k) {
-            int[] cnt1 = new int[26];
-            for (int j = i; j < i + k; ++j) {
-                ++cnt1[s[j] - 'a'];
-            }
-            for (int j = 0; j < 26; ++j) {
-                if (cnt1[j] * (n / k) != cnt[j]) {
-                    return false;
-                }
-            }
+  private fun check(k: Int): Boolean {
+    var i = 0
+    while (i < n) {
+      val cnt1 = IntArray(26)
+      for (j in i until i + k) {
+        ++cnt1[s[j].code - 'a'.code]
+      }
+      for (j in 0..25) {
+        if (cnt1[j] * (n / k) != cnt[j]) {
+          return false
         }
-        return true;
+      }
+      i += k
     }
+    return true
+  }
 }

@@ -1,16 +1,22 @@
-class Solution {
-    public int maxNumOfMarkedIndices(int[] nums) {
-        Arrays.sort(nums);
-        int n = nums.length;
-        int ans = 0;
-        for (int i = 0, j = (n + 1) / 2; j < n; ++i, ++j) {
-            while (j < n && nums[i] * 2 > nums[j]) {
-                ++j;
-            }
-            if (j < n) {
-                ans += 2;
-            }
-        }
-        return ans;
+import java.util.*
+
+internal class Solution {
+  fun maxNumOfMarkedIndices(nums: IntArray): Int {
+    Arrays.sort(nums)
+    val n = nums.size
+    var ans = 0
+    var i = 0
+    var j = (n + 1) / 2
+    while (j < n) {
+      while (j < n && nums[i] * 2 > nums[j]) {
+        ++j
+      }
+      if (j < n) {
+        ans += 2
+      }
+      ++i
+      ++j
     }
+    return ans
+  }
 }

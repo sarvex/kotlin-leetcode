@@ -1,39 +1,38 @@
-class neighborSum {
-    private int[][] grid;
-    private final Map<Integer, int[]> d = new HashMap<>();
-    private final int[][] dirs = {{-1, 0, 1, 0, -1}, {-1, 1, 1, -1, -1}};
+internal class neighborSum(private val grid: Array<IntArray>) {
+  private val d: Map<Int, IntArray> = HashMap()
+  private val dirs = arrayOf(intArrayOf(-1, 0, 1, 0, -1), intArrayOf(-1, 1, 1, -1, -1))
 
-    public neighborSum(int[][] grid) {
-        this.grid = grid;
-        int m = grid.length, n = grid[0].length;
-        for (int i = 0; i < m; ++i) {
-            for (int j = 0; j < n; ++j) {
-                d.put(grid[i][j], new int[] {i, j});
-            }
-        }
+  init {
+    val m = grid.size
+    val n = grid[0].size
+    for (i in 0 until m) {
+      for (j in 0 until n) {
+        d.put(grid[i][j], intArrayOf(i, j))
+      }
     }
+  }
 
-    public int adjacentSum(int value) {
-        return cal(value, 0);
-    }
+  fun adjacentSum(value: Int): Int {
+    return cal(value, 0)
+  }
 
-    public int diagonalSum(int value) {
-        return cal(value, 1);
-    }
+  fun diagonalSum(value: Int): Int {
+    return cal(value, 1)
+  }
 
-    private int cal(int value, int k) {
-        int[] p = d.get(value);
-        int s = 0;
-        for (int q = 0; q < 4; ++q) {
-            int x = p[0] + dirs[k][q], y = p[1] + dirs[k][q + 1];
-            if (x >= 0 && x < grid.length && y >= 0 && y < grid[0].length) {
-                s += grid[x][y];
-            }
-        }
-        return s;
+  private fun cal(value: Int, k: Int): Int {
+    val p = d[value]!!
+    var s = 0
+    for (q in 0..3) {
+      val x = p[0] + dirs[k][q]
+      val y = p[1] + dirs[k][q + 1]
+      if (x >= 0 && x < grid.size && y >= 0 && y < grid[0].size) {
+        s += grid[x][y]
+      }
     }
+    return s
+  }
 }
-
 /**
  * Your neighborSum object will be instantiated and called as such:
  * neighborSum obj = new neighborSum(grid);

@@ -1,24 +1,34 @@
-class Solution {
-    public int[] minOperations(String boxes) {
-        int n = boxes.length();
-        int[] left = new int[n];
-        int[] right = new int[n];
-        for (int i = 1, cnt = 0; i < n; ++i) {
-            if (boxes.charAt(i - 1) == '1') {
-                ++cnt;
-            }
-            left[i] = left[i - 1] + cnt;
+internal class Solution {
+  fun minOperations(boxes: String): IntArray {
+    val n = boxes.length
+    val left = IntArray(n)
+    val right = IntArray(n)
+    run {
+      var i = 1
+      var cnt = 0
+      while (i < n) {
+        if (boxes[i - 1] == '1') {
+          ++cnt
         }
-        for (int i = n - 2, cnt = 0; i >= 0; --i) {
-            if (boxes.charAt(i + 1) == '1') {
-                ++cnt;
-            }
-            right[i] = right[i + 1] + cnt;
-        }
-        int[] ans = new int[n];
-        for (int i = 0; i < n; ++i) {
-            ans[i] = left[i] + right[i];
-        }
-        return ans;
+        left[i] = left[i - 1] + cnt
+        ++i
+      }
     }
+    run {
+      var i = n - 2
+      var cnt = 0
+      while (i >= 0) {
+        if (boxes[i + 1] == '1') {
+          ++cnt
+        }
+        right[i] = right[i + 1] + cnt
+        --i
+      }
+    }
+    val ans = IntArray(n)
+    for (i in 0 until n) {
+      ans[i] = left[i] + right[i]
+    }
+    return ans
+  }
 }

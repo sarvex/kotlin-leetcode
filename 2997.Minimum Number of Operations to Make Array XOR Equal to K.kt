@@ -1,8 +1,9 @@
-class Solution {
-    public int minOperations(int[] nums, int k) {
-        for (int x : nums) {
-            k ^= x;
-        }
-        return Integer.bitCount(k);
+internal class Solution {
+  fun minOperations(nums: IntArray, k: Int): Int {
+    var k = k
+    for (x in nums) {
+      k = k xor x
     }
+    return Integer.bitCount(k)
+  }
 }

@@ -1,13 +1,12 @@
-class Solution {
-
-    public String[] findOcurrences(String text, String first, String second) {
-        String[] words = text.split(" ");
-        List<String> ans = new ArrayList<>();
-        for (int i = 0; i < words.length - 2; ++i) {
-            if (first.equals(words[i]) && second.equals(words[i + 1])) {
-                ans.add(words[i + 2]);
-            }
-        }
-        return ans.toArray(new String[0]);
+internal class Solution {
+  fun findOcurrences(text: String, first: String, second: String): Array<String> {
+    val words: Array<String> = text.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+    val ans: List<String> = ArrayList()
+    for (i in 0 until words.size - 2) {
+      if (first == words[i] && second == words[i + 1]) {
+        ans.add(words[i + 2])
+      }
     }
+    return ans.toArray(arrayOfNulls<String>(0))
+  }
 }

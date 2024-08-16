@@ -1,30 +1,31 @@
-class Solution {
-    public int minSubArrayLen(int target, int[] nums) {
-        int n = nums.length;
-        long[] s = new long[n + 1];
-        for (int i = 0; i < n; ++i) {
-            s[i + 1] = s[i] + nums[i];
-        }
-        int ans = n + 1;
-        for (int i = 0; i <= n; ++i) {
-            int j = search(s, s[i] + target);
-            if (j <= n) {
-                ans = Math.min(ans, j - i);
-            }
-        }
-        return ans <= n ? ans : 0;
+internal class Solution {
+  fun minSubArrayLen(target: Int, nums: IntArray): Int {
+    val n = nums.size
+    val s = LongArray(n + 1)
+    for (i in 0 until n) {
+      s[i + 1] = s[i] + nums[i]
     }
+    var ans = n + 1
+    for (i in 0..n) {
+      val j = search(s, s[i] + target)
+      if (j <= n) {
+        ans = min(ans, j - i)
+      }
+    }
+    return if (ans <= n) ans else 0
+  }
 
-    private int search(long[] nums, long x) {
-        int l = 0, r = nums.length;
-        while (l < r) {
-            int mid = (l + r) >> 1;
-            if (nums[mid] >= x) {
-                r = mid;
-            } else {
-                l = mid + 1;
-            }
-        }
-        return l;
+  private fun search(nums: LongArray, x: Long): Int {
+    var l = 0
+    var r = nums.size
+    while (l < r) {
+      val mid = (l + r) shr 1
+      if (nums[mid] >= x) {
+        r = mid
+      } else {
+        l = mid + 1
+      }
     }
+    return l
+  }
 }

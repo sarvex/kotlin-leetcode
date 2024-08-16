@@ -1,26 +1,32 @@
-class Solution {
-    public boolean canChoose(int[][] groups, int[] nums) {
-        int n = groups.length, m = nums.length;
-        int i = 0;
-        for (int j = 0; i < n && j < m;) {
-            if (check(groups[i], nums, j)) {
-                j += groups[i].length;
-                ++i;
-            } else {
-                ++j;
-            }
-        }
-        return i == n;
+internal class Solution {
+  fun canChoose(groups: Array<IntArray>, nums: IntArray): Boolean {
+    val n = groups.size
+    val m = nums.size
+    var i = 0
+    var j = 0
+    while (i < n && j < m) {
+      if (check(groups[i], nums, j)) {
+        j += groups[i].size
+        ++i
+      } else {
+        ++j
+      }
     }
+    return i == n
+  }
 
-    private boolean check(int[] a, int[] b, int j) {
-        int m = a.length, n = b.length;
-        int i = 0;
-        for (; i < m && j < n; ++i, ++j) {
-            if (a[i] != b[j]) {
-                return false;
-            }
-        }
-        return i == m;
+  private fun check(a: IntArray, b: IntArray, j: Int): Boolean {
+    var j = j
+    val m = a.size
+    val n = b.size
+    var i = 0
+    while (i < m && j < n) {
+      if (a[i] != b[j]) {
+        return false
+      }
+      ++i
+      ++j
     }
+    return i == m
+  }
 }

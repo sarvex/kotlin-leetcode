@@ -1,26 +1,26 @@
-class Solution {
-    public String longestNiceSubstring(String s) {
-        int n = s.length();
-        int k = -1;
-        int mx = 0;
-        for (int i = 0; i < n; ++i) {
-            Set<Character> ss = new HashSet<>();
-            for (int j = i; j < n; ++j) {
-                ss.add(s.charAt(j));
-                boolean ok = true;
-                for (char a : ss) {
-                    char b = (char) (a ^ 32);
-                    if (!(ss.contains(a) && ss.contains(b))) {
-                        ok = false;
-                        break;
-                    }
-                }
-                if (ok && mx < j - i + 1) {
-                    mx = j - i + 1;
-                    k = i;
-                }
-            }
+internal class Solution {
+  fun longestNiceSubstring(s: String): String {
+    val n = s.length
+    var k = -1
+    var mx = 0
+    for (i in 0 until n) {
+      val ss: Set<Char> = HashSet()
+      for (j in i until n) {
+        ss.add(s[j])
+        var ok = true
+        for (a in ss) {
+          val b: Char = (a.code xor 32).toChar()
+          if (!(ss.contains(a) && ss.contains(b))) {
+            ok = false
+            break
+          }
         }
-        return k == -1 ? "" : s.substring(k, k + mx);
+        if (ok && mx < j - i + 1) {
+          mx = j - i + 1
+          k = i
+        }
+      }
     }
+    return if (k == -1) "" else s.substring(k, k + mx)
+  }
 }

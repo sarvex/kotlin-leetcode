@@ -1,11 +1,13 @@
-class Solution {
-    public int fib(int n) {
-        int a = 0, b = 1;
-        while (n-- > 0) {
-            int c = a + b;
-            a = b;
-            b = c;
-        }
-        return a;
+internal class Solution {
+  fun fib(n: Int): Int {
+    var n = n
+    var a = 0
+    var b = 1
+    while (n-- > 0) {
+      val c = a + b
+      a = b
+      b = c
     }
+    return a
+  }
 }

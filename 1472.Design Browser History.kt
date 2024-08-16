@@ -1,31 +1,34 @@
-class BrowserHistory {
-    private Deque<String> stk1 = new ArrayDeque<>();
-    private Deque<String> stk2 = new ArrayDeque<>();
+internal class BrowserHistory(homepage: String?) {
+  private val stk1: Deque<String> = ArrayDeque()
+  private val stk2: Deque<String> = ArrayDeque()
 
-    public BrowserHistory(String homepage) {
-        visit(homepage);
-    }
+  init {
+    visit(homepage)
+  }
 
-    public void visit(String url) {
-        stk1.push(url);
-        stk2.clear();
-    }
+  fun visit(url: String?) {
+    stk1.push(url)
+    stk2.clear()
+  }
 
-    public String back(int steps) {
-        for (; steps > 0 && stk1.size() > 1; --steps) {
-            stk2.push(stk1.pop());
-        }
-        return stk1.peek();
+  fun back(steps: Int): String {
+    var steps = steps
+    while (steps > 0 && stk1.size() > 1) {
+      stk2.push(stk1.pop())
+      --steps
     }
+    return stk1.peek()
+  }
 
-    public String forward(int steps) {
-        for (; steps > 0 && !stk2.isEmpty(); --steps) {
-            stk1.push(stk2.pop());
-        }
-        return stk1.peek();
+  fun forward(steps: Int): String {
+    var steps = steps
+    while (steps > 0 && !stk2.isEmpty()) {
+      stk1.push(stk2.pop())
+      --steps
     }
+    return stk1.peek()
+  }
 }
-
 /**
  * Your BrowserHistory object will be instantiated and called as such:
  * BrowserHistory obj = new BrowserHistory(homepage);

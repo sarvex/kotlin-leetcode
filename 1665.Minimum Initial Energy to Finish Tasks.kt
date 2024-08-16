@@ -1,15 +1,17 @@
-class Solution {
-    public int minimumEffort(int[][] tasks) {
-        Arrays.sort(tasks, (a, b) -> a[0] - b[0] - (a[1] - b[1]));
-        int ans = 0, cur = 0;
-        for (var task : tasks) {
-            int a = task[0], m = task[1];
-            if (cur < m) {
-                ans += m - cur;
-                cur = m;
-            }
-            cur -= a;
-        }
-        return ans;
+internal class Solution {
+  fun minimumEffort(tasks: Array<IntArray>): Int {
+    Arrays.sort(tasks) { a, b -> a.get(0) - b.get(0) - (a.get(1) - b.get(1)) }
+    var ans = 0
+    var cur = 0
+    for (task in tasks) {
+      val a = task[0]
+      val m = task[1]
+      if (cur < m) {
+        ans += m - cur
+        cur = m
+      }
+      cur -= a
     }
+    return ans
+  }
 }

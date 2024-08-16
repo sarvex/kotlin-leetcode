@@ -1,31 +1,34 @@
-class Solution {
-    private int[] p;
+internal class Solution {
+  private var p: IntArray
 
-    public int minimumCost(int n, int[][] connections) {
-        Arrays.sort(connections, Comparator.comparingInt(a -> a[2]));
-        p = new int[n];
-        for (int i = 0; i < n; ++i) {
-            p[i] = i;
-        }
-        int ans = 0;
-        for (int[] e : connections) {
-            int x = e[0] - 1, y = e[1] - 1, cost = e[2];
-            if (find(x) == find(y)) {
-                continue;
-            }
-            p[find(x)] = find(y);
-            ans += cost;
-            if (--n == 1) {
-                return ans;
-            }
-        }
-        return -1;
+  fun minimumCost(n: Int, connections: Array<IntArray>): Int {
+    var n = n
+    Arrays.sort(connections, Comparator.comparingInt { a -> a.get(2) })
+    p = IntArray(n)
+    for (i in 0 until n) {
+      p[i] = i
     }
+    var ans = 0
+    for (e in connections) {
+      val x = e[0] - 1
+      val y = e[1] - 1
+      val cost = e[2]
+      if (find(x) == find(y)) {
+        continue
+      }
+      p[find(x)] = find(y)
+      ans += cost
+      if (--n == 1) {
+        return ans
+      }
+    }
+    return -1
+  }
 
-    private int find(int x) {
-        if (p[x] != x) {
-            p[x] = find(p[x]);
-        }
-        return p[x];
+  private fun find(x: Int): Int {
+    if (p[x] != x) {
+      p[x] = find(p[x])
     }
+    return p[x]
+  }
 }

@@ -1,29 +1,24 @@
-class Solution {
-    private int m;
-    private int n;
-    private int total;
-    private Random rand = new Random();
-    private Map<Integer, Integer> mp = new HashMap<>();
+internal class Solution(private val m: Int, private val n: Int) {
+  private var total: Int
+  private val rand: Random = Random()
+  private val mp: Map<Int, Int> = HashMap()
 
-    public Solution(int m, int n) {
-        this.m = m;
-        this.n = n;
-        this.total = m * n;
-    }
+  init {
+    this.total = m * n
+  }
 
-    public int[] flip() {
-        int x = rand.nextInt(total--);
-        int idx = mp.getOrDefault(x, x);
-        mp.put(x, mp.getOrDefault(total, total));
-        return new int[] {idx / n, idx % n};
-    }
+  fun flip(): IntArray {
+    val x: Int = rand.nextInt(total--)
+    val idx = mp.getOrDefault(x, x)
+    mp.put(x, mp.getOrDefault(total, total))
+    return intArrayOf(idx / n, idx % n)
+  }
 
-    public void reset() {
-        total = m * n;
-        mp.clear();
-    }
+  fun reset() {
+    total = m * n
+    mp.clear()
+  }
 }
-
 /**
  * Your Solution object will be instantiated and called as such:
  * Solution obj = new Solution(m, n);

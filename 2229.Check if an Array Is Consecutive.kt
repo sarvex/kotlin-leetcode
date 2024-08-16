@@ -1,14 +1,14 @@
-class Solution {
-    public boolean isConsecutive(int[] nums) {
-        int mi = nums[0];
-        int mx = nums[0];
-        Set<Integer> s = new HashSet<>();
-        for (int v : nums) {
-            mi = Math.min(mi, v);
-            mx = Math.max(mx, v);
-            s.add(v);
-        }
-        int n = nums.length;
-        return s.size() == n && mx == mi + n - 1;
+internal class Solution {
+  fun isConsecutive(nums: IntArray): Boolean {
+    var mi = nums[0]
+    var mx = nums[0]
+    val s: Set<Int> = HashSet()
+    for (v in nums) {
+      mi = min(mi, v)
+      mx = max(mx, v)
+      s.add(v)
     }
+    val n = nums.size
+    return s.size() === n && mx == mi + n - 1
+  }
 }

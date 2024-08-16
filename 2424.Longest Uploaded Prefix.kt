@@ -1,22 +1,18 @@
-class LUPrefix {
-    private int r;
-    private Set<Integer> s = new HashSet<>();
+internal class LUPrefix(n: Int) {
+  private var r = 0
+  private val s: Set<Int> = HashSet()
 
-    public LUPrefix(int n) {
+  fun upload(video: Int) {
+    s.add(video)
+    while (s.contains(r + 1)) {
+      ++r
     }
+  }
 
-    public void upload(int video) {
-        s.add(video);
-        while (s.contains(r + 1)) {
-            ++r;
-        }
-    }
-
-    public int longest() {
-        return r;
-    }
+  fun longest(): Int {
+    return r
+  }
 }
-
 /**
  * Your LUPrefix object will be instantiated and called as such:
  * LUPrefix obj = new LUPrefix(n);

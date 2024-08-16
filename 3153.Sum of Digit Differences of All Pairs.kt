@@ -1,19 +1,21 @@
-class Solution {
-    public long sumDigitDifferences(int[] nums) {
-        int n = nums.length;
-        int m = (int) Math.floor(Math.log10(nums[0])) + 1;
-        int[] cnt = new int[10];
-        long ans = 0;
-        for (int k = 0; k < m; ++k) {
-            Arrays.fill(cnt, 0);
-            for (int i = 0; i < n; ++i) {
-                ++cnt[nums[i] % 10];
-                nums[i] /= 10;
-            }
-            for (int i = 0; i < 10; ++i) {
-                ans += 1L * cnt[i] * (n - cnt[i]);
-            }
-        }
-        return ans / 2;
+import java.util.*
+
+internal class Solution {
+  fun sumDigitDifferences(nums: IntArray): Long {
+    val n = nums.size
+    val m = floor(log10(nums[0])) as Int + 1
+    val cnt = IntArray(10)
+    var ans: Long = 0
+    for (k in 0 until m) {
+      Arrays.fill(cnt, 0)
+      for (i in 0 until n) {
+        ++cnt[nums[i] % 10]
+        nums[i] /= 10
+      }
+      for (i in 0..9) {
+        ans += 1L * cnt[i] * (n - cnt[i])
+      }
     }
+    return ans / 2
+  }
 }

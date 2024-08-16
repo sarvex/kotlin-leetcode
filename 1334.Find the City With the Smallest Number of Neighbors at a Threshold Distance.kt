@@ -1,58 +1,61 @@
-class Solution {
-    private int n;
-    private int[][] g;
-    private int[] dist;
-    private boolean[] vis;
-    private final int inf = 1 << 30;
-    private int distanceThreshold;
+internal class Solution {
+  private var n = 0
+  private var g: Array<IntArray>
+  private var dist: IntArray
+  private var vis: BooleanArray
+  private val inf = 1 shl 30
+  private var distanceThreshold = 0
 
-    public int findTheCity(int n, int[][] edges, int distanceThreshold) {
-        this.n = n;
-        this.distanceThreshold = distanceThreshold;
-        g = new int[n][n];
-        dist = new int[n];
-        vis = new boolean[n];
-        for (var e : g) {
-            Arrays.fill(e, inf);
-        }
-        for (var e : edges) {
-            int f = e[0], t = e[1], w = e[2];
-            g[f][t] = w;
-            g[t][f] = w;
-        }
-        int ans = n, cnt = inf;
-        for (int i = n - 1; i >= 0; --i) {
-            int t = dijkstra(i);
-            if (t < cnt) {
-                cnt = t;
-                ans = i;
-            }
-        }
-        return ans;
+  fun findTheCity(n: Int, edges: Array<IntArray>, distanceThreshold: Int): Int {
+    this.n = n
+    this.distanceThreshold = distanceThreshold
+    g = Array(n) { IntArray(n) }
+    dist = IntArray(n)
+    vis = BooleanArray(n)
+    for (e in g) {
+      Arrays.fill(e, inf)
     }
+    for (e in edges) {
+      val f = e[0]
+      val t = e[1]
+      val w = e[2]
+      g[f][t] = w
+      g[t][f] = w
+    }
+    var ans = n
+    var cnt = inf
+    for (i in n - 1 downTo 0) {
+      val t = dijkstra(i)
+      if (t < cnt) {
+        cnt = t
+        ans = i
+      }
+    }
+    return ans
+  }
 
-    private int dijkstra(int u) {
-        Arrays.fill(dist, inf);
-        Arrays.fill(vis, false);
-        dist[u] = 0;
-        for (int i = 0; i < n; ++i) {
-            int k = -1;
-            for (int j = 0; j < n; ++j) {
-                if (!vis[j] && (k == -1 || dist[k] > dist[j])) {
-                    k = j;
-                }
-            }
-            vis[k] = true;
-            for (int j = 0; j < n; ++j) {
-                dist[j] = Math.min(dist[j], dist[k] + g[k][j]);
-            }
+  private fun dijkstra(u: Int): Int {
+    Arrays.fill(dist, inf)
+    Arrays.fill(vis, false)
+    dist[u] = 0
+    for (i in 0 until n) {
+      var k = -1
+      for (j in 0 until n) {
+        if (!vis[j] && (k == -1 || dist[k] > dist[j])) {
+          k = j
         }
-        int cnt = 0;
-        for (int d : dist) {
-            if (d <= distanceThreshold) {
-                ++cnt;
-            }
-        }
-        return cnt;
+      }
+      vis[k] = true
+      for (j in 0 until n) {
+        dist[j] = min(dist[j], dist[k] + g[k][j])
+      }
     }
+    var cnt = 0
+    for (d in dist) {
+      if (d <= distanceThreshold) {
+        ++cnt
+      }
+    }
+    return cnt
+  }
 }

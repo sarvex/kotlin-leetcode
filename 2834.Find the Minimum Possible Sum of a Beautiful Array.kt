@@ -1,12 +1,12 @@
-class Solution {
-    public int minimumPossibleSum(int n, int target) {
-        final int mod = (int) 1e9 + 7;
-        int m = target / 2;
-        if (n <= m) {
-            return (int) ((1L + n) * n / 2 % mod);
-        }
-        long a = (1L + m) * m / 2 % mod;
-        long b = ((1L * target + target + n - m - 1) * (n - m) / 2) % mod;
-        return (int) ((a + b) % mod);
+internal class Solution {
+  fun minimumPossibleSum(n: Int, target: Int): Int {
+    val mod = 1e9.toInt() + 7
+    val m = target / 2
+    if (n <= m) {
+      return ((1L + n) * n / 2 % mod).toInt()
     }
+    val a = (1L + m) * m / 2 % mod
+    val b = ((1L * target + target + n - m - 1) * (n - m) / 2) % mod
+    return ((a + b) % mod).toInt()
+  }
 }

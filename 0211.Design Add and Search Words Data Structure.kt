@@ -1,53 +1,48 @@
-class Trie {
-    Trie[] children = new Trie[26];
-    boolean isEnd;
+internal class Trie {
+  var children: Array<Trie> = arrayOfNulls(26)
+  var isEnd: Boolean = false
 }
 
-class WordDictionary {
-    private Trie trie;
+internal class WordDictionary {
+  private val trie = Trie()
 
-    /** Initialize your data structure here. */
-    public WordDictionary() {
-        trie = new Trie();
+  fun addWord(word: String) {
+    var node = trie
+    for (c in word.toCharArray()) {
+      val idx: Int = c.code - 'a'.code
+      if (node.children[idx] == null) {
+        node.children[idx] = Trie()
+      }
+      node = node.children[idx]
     }
+    node.isEnd = true
+  }
 
-    public void addWord(String word) {
-        Trie node = trie;
-        for (char c : word.toCharArray()) {
-            int idx = c - 'a';
-            if (node.children[idx] == null) {
-                node.children[idx] = new Trie();
-            }
-            node = node.children[idx];
+  fun search(word: String): Boolean {
+    return search(word, trie)
+  }
+
+  private fun search(word: String, node: Trie): Boolean {
+    var node = node
+    for (i in 0 until word.length) {
+      val c = word[i]
+      val idx: Int = c.code - 'a'.code
+      if (c != '.' && node.children[idx] == null) {
+        return false
+      }
+      if (c == '.') {
+        for (child in node.children) {
+          if (child != null && search(word.substring(i + 1), child)) {
+            return true
+          }
         }
-        node.isEnd = true;
+        return false
+      }
+      node = node.children[idx]
     }
-
-    public boolean search(String word) {
-        return search(word, trie);
-    }
-
-    private boolean search(String word, Trie node) {
-        for (int i = 0; i < word.length(); ++i) {
-            char c = word.charAt(i);
-            int idx = c - 'a';
-            if (c != '.' && node.children[idx] == null) {
-                return false;
-            }
-            if (c == '.') {
-                for (Trie child : node.children) {
-                    if (child != null && search(word.substring(i + 1), child)) {
-                        return true;
-                    }
-                }
-                return false;
-            }
-            node = node.children[idx];
-        }
-        return node.isEnd;
-    }
+    return node.isEnd
+  }
 }
-
 /**
  * Your WordDictionary object will be instantiated and called as such:
  * WordDictionary obj = new WordDictionary();

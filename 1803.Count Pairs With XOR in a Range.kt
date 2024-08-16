@@ -1,45 +1,47 @@
-class Trie {
-    private Trie[] children = new Trie[2];
-    private int cnt;
+internal class Trie {
+  private val children: Array<Trie> = arrayOfNulls(2)
+  private var cnt = 0
 
-    public void insert(int x) {
-        Trie node = this;
-        for (int i = 15; i >= 0; --i) {
-            int v = (x >> i) & 1;
-            if (node.children[v] == null) {
-                node.children[v] = new Trie();
-            }
-            node = node.children[v];
-            ++node.cnt;
-        }
+  fun insert(x: Int) {
+    var node = this
+    for (i in 15 downTo 0) {
+      val v = (x shr i) and 1
+      if (node.children[v] == null) {
+        node.children[v] = Trie()
+      }
+      node = node.children[v]
+      ++node.cnt
     }
+  }
 
-    public int search(int x, int limit) {
-        Trie node = this;
-        int ans = 0;
-        for (int i = 15; i >= 0 && node != null; --i) {
-            int v = (x >> i) & 1;
-            if (((limit >> i) & 1) == 1) {
-                if (node.children[v] != null) {
-                    ans += node.children[v].cnt;
-                }
-                node = node.children[v ^ 1];
-            } else {
-                node = node.children[v];
-            }
+  fun search(x: Int, limit: Int): Int {
+    var node = this
+    var ans = 0
+    var i = 15
+    while (i >= 0 && node != null) {
+      val v = (x shr i) and 1
+      if (((limit shr i) and 1) == 1) {
+        if (node.children[v] != null) {
+          ans += node.children[v].cnt
         }
-        return ans;
+        node = node.children[v xor 1]
+      } else {
+        node = node.children[v]
+      }
+      --i
     }
+    return ans
+  }
 }
 
-class Solution {
-    public int countPairs(int[] nums, int low, int high) {
-        Trie trie = new Trie();
-        int ans = 0;
-        for (int x : nums) {
-            ans += trie.search(x, high + 1) - trie.search(x, low);
-            trie.insert(x);
-        }
-        return ans;
+internal class Solution {
+  fun countPairs(nums: IntArray, low: Int, high: Int): Int {
+    val trie = Trie()
+    var ans = 0
+    for (x in nums) {
+      ans += trie.search(x, high + 1) - trie.search(x, low)
+      trie.insert(x)
     }
+    return ans
+  }
 }

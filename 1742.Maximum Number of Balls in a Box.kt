@@ -1,13 +1,15 @@
-class Solution {
-    public int countBalls(int lowLimit, int highLimit) {
-        int[] cnt = new int[50];
-        for (int i = lowLimit; i <= highLimit; ++i) {
-            int y = 0;
-            for (int x = i; x > 0; x /= 10) {
-                y += x % 10;
-            }
-            ++cnt[y];
-        }
-        return Arrays.stream(cnt).max().getAsInt();
+internal class Solution {
+  fun countBalls(lowLimit: Int, highLimit: Int): Int {
+    val cnt = IntArray(50)
+    for (i in lowLimit..highLimit) {
+      var y = 0
+      var x = i
+      while (x > 0) {
+        y += x % 10
+        x /= 10
+      }
+      ++cnt[y]
     }
+    return Arrays.stream(cnt).max().getAsInt()
+  }
 }

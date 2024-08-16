@@ -1,18 +1,18 @@
-class Solution {
-    public int[] distinctDifferenceArray(int[] nums) {
-        int n = nums.length;
-        int[] suf = new int[n + 1];
-        Set<Integer> s = new HashSet<>();
-        for (int i = n - 1; i >= 0; --i) {
-            s.add(nums[i]);
-            suf[i] = s.size();
-        }
-        s.clear();
-        int[] ans = new int[n];
-        for (int i = 0; i < n; ++i) {
-            s.add(nums[i]);
-            ans[i] = s.size() - suf[i + 1];
-        }
-        return ans;
+internal class Solution {
+  fun distinctDifferenceArray(nums: IntArray): IntArray {
+    val n = nums.size
+    val suf = IntArray(n + 1)
+    val s: Set<Int> = HashSet()
+    for (i in n - 1 downTo 0) {
+      s.add(nums[i])
+      suf[i] = s.size()
     }
+    s.clear()
+    val ans = IntArray(n)
+    for (i in 0 until n) {
+      s.add(nums[i])
+      ans[i] = s.size() - suf[i + 1]
+    }
+    return ans
+  }
 }

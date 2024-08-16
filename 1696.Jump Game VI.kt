@@ -1,19 +1,19 @@
-class Solution {
-    public int maxResult(int[] nums, int k) {
-        int n = nums.length;
-        int[] f = new int[n];
-        Deque<Integer> q = new ArrayDeque<>();
-        q.offer(0);
-        for (int i = 0; i < n; ++i) {
-            if (i - q.peekFirst() > k) {
-                q.pollFirst();
-            }
-            f[i] = nums[i] + f[q.peekFirst()];
-            while (!q.isEmpty() && f[q.peekLast()] <= f[i]) {
-                q.pollLast();
-            }
-            q.offerLast(i);
-        }
-        return f[n - 1];
+internal class Solution {
+  fun maxResult(nums: IntArray, k: Int): Int {
+    val n = nums.size
+    val f = IntArray(n)
+    val q: Deque<Int> = ArrayDeque()
+    q.offer(0)
+    for (i in 0 until n) {
+      if (i - q.peekFirst() > k) {
+        q.pollFirst()
+      }
+      f[i] = nums[i] + f[q.peekFirst()]
+      while (!q.isEmpty() && f[q.peekLast()] <= f[i]) {
+        q.pollLast()
+      }
+      q.offerLast(i)
     }
+    return f[n - 1]
+  }
 }

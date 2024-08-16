@@ -1,53 +1,52 @@
-class Solution {
-    public List<Integer> countSmaller(int[] nums) {
-        Set<Integer> s = new HashSet<>();
-        for (int v : nums) {
-            s.add(v);
-        }
-        List<Integer> alls = new ArrayList<>(s);
-        alls.sort(Comparator.comparingInt(a -> a));
-        int n = alls.size();
-        Map<Integer, Integer> m = new HashMap<>(n);
-        for (int i = 0; i < n; ++i) {
-            m.put(alls.get(i), i + 1);
-        }
-        BinaryIndexedTree tree = new BinaryIndexedTree(n);
-        LinkedList<Integer> ans = new LinkedList<>();
-        for (int i = nums.length - 1; i >= 0; --i) {
-            int x = m.get(nums[i]);
-            tree.update(x, 1);
-            ans.addFirst(tree.query(x - 1));
-        }
-        return ans;
+internal class Solution {
+  fun countSmaller(nums: IntArray): List<Int> {
+    val s: Set<Int> = HashSet()
+    for (v in nums) {
+      s.add(v)
     }
+    val alls: List<Int> = ArrayList(s)
+    alls.sort(Comparator.comparingInt { a -> a })
+    val n: Int = alls.size()
+    val m: Map<Int, Int> = HashMap(n)
+    for (i in 0 until n) {
+      m.put(alls[i], i + 1)
+    }
+    val tree = BinaryIndexedTree(n)
+    val ans: LinkedList<Int> = LinkedList()
+    for (i in nums.indices.reversed()) {
+      val x = m[nums[i]]!!
+      tree.update(x, 1)
+      ans.addFirst(tree.query(x - 1))
+    }
+    return ans
+  }
 }
 
-class BinaryIndexedTree {
-    private int n;
-    private int[] c;
+internal class BinaryIndexedTree(private val n: Int) {
+  private val c = IntArray(n + 1)
 
-    public BinaryIndexedTree(int n) {
-        this.n = n;
-        c = new int[n + 1];
+  fun update(x: Int, delta: Int) {
+    var x = x
+    while (x <= n) {
+      c[x] += delta
+      x += lowbit(x)
     }
+  }
 
-    public void update(int x, int delta) {
-        while (x <= n) {
-            c[x] += delta;
-            x += lowbit(x);
-        }
+  fun query(x: Int): Int {
+    var x = x
+    var s = 0
+    while (x > 0) {
+      s += c[x]
+      x -= lowbit(x)
     }
+    return s
+  }
 
-    public int query(int x) {
-        int s = 0;
-        while (x > 0) {
-            s += c[x];
-            x -= lowbit(x);
-        }
-        return s;
+  companion object {
+    @kotlin.jvm.JvmStatic
+    fun lowbit(x: Int): Int {
+      return x and -x
     }
-
-    public static int lowbit(int x) {
-        return x & -x;
-    }
+  }
 }

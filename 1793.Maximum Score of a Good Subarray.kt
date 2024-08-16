@@ -1,38 +1,38 @@
-class Solution {
-    public int maximumScore(int[] nums, int k) {
-        int n = nums.length;
-        int[] left = new int[n];
-        int[] right = new int[n];
-        Arrays.fill(left, -1);
-        Arrays.fill(right, n);
-        Deque<Integer> stk = new ArrayDeque<>();
-        for (int i = 0; i < n; ++i) {
-            int v = nums[i];
-            while (!stk.isEmpty() && nums[stk.peek()] >= v) {
-                stk.pop();
-            }
-            if (!stk.isEmpty()) {
-                left[i] = stk.peek();
-            }
-            stk.push(i);
-        }
-        stk.clear();
-        for (int i = n - 1; i >= 0; --i) {
-            int v = nums[i];
-            while (!stk.isEmpty() && nums[stk.peek()] > v) {
-                stk.pop();
-            }
-            if (!stk.isEmpty()) {
-                right[i] = stk.peek();
-            }
-            stk.push(i);
-        }
-        int ans = 0;
-        for (int i = 0; i < n; ++i) {
-            if (left[i] + 1 <= k && k <= right[i] - 1) {
-                ans = Math.max(ans, nums[i] * (right[i] - left[i] - 1));
-            }
-        }
-        return ans;
+internal class Solution {
+  fun maximumScore(nums: IntArray, k: Int): Int {
+    val n = nums.size
+    val left = IntArray(n)
+    val right = IntArray(n)
+    Arrays.fill(left, -1)
+    Arrays.fill(right, n)
+    val stk: Deque<Int> = ArrayDeque()
+    for (i in 0 until n) {
+      val v = nums[i]
+      while (!stk.isEmpty() && nums[stk.peek()] >= v) {
+        stk.pop()
+      }
+      if (!stk.isEmpty()) {
+        left[i] = stk.peek()
+      }
+      stk.push(i)
     }
+    stk.clear()
+    for (i in n - 1 downTo 0) {
+      val v = nums[i]
+      while (!stk.isEmpty() && nums[stk.peek()] > v) {
+        stk.pop()
+      }
+      if (!stk.isEmpty()) {
+        right[i] = stk.peek()
+      }
+      stk.push(i)
+    }
+    var ans = 0
+    for (i in 0 until n) {
+      if (left[i] + 1 <= k && k <= right[i] - 1) {
+        ans = max(ans, nums[i] * (right[i] - left[i] - 1))
+      }
+    }
+    return ans
+  }
 }

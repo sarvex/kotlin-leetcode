@@ -1,13 +1,13 @@
-class Solution {
-    public List<String> findRepeatedDnaSequences(String s) {
-        Map<String, Integer> cnt = new HashMap<>();
-        List<String> ans = new ArrayList<>();
-        for (int i = 0; i < s.length() - 10 + 1; ++i) {
-            String t = s.substring(i, i + 10);
-            if (cnt.merge(t, 1, Integer::sum) == 2) {
-                ans.add(t);
-            }
-        }
-        return ans;
+internal class Solution {
+  fun findRepeatedDnaSequences(s: String): List<String> {
+    val cnt: Map<String, Int> = HashMap()
+    val ans: List<String> = ArrayList()
+    for (i in 0 until s.length - 10 + 1) {
+      val t: String = s.substring(i, i + 10)
+      if (cnt.merge(t, 1) { a: Int, b: Int -> Integer.sum(a, b) } === 2) {
+        ans.add(t)
+      }
     }
+    return ans
+  }
 }

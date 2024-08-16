@@ -1,51 +1,61 @@
-class Solution {
-    private int m;
-    private int n;
-    private int[] f;
-    private int[] g;
+internal class Solution {
+  private var m = 0
+  private var n = 0
+  private var f: IntArray
+  private var g: IntArray
 
-    public int minimumScore(String s, String t) {
-        m = s.length();
-        n = t.length();
-        f = new int[n];
-        g = new int[n];
-        for (int i = 0; i < n; ++i) {
-            f[i] = 1 << 30;
-            g[i] = -1;
-        }
-        for (int i = 0, j = 0; i < m && j < n; ++i) {
-            if (s.charAt(i) == t.charAt(j)) {
-                f[j] = i;
-                ++j;
-            }
-        }
-        for (int i = m - 1, j = n - 1; i >= 0 && j >= 0; --i) {
-            if (s.charAt(i) == t.charAt(j)) {
-                g[j] = i;
-                --j;
-            }
-        }
-        int l = 0, r = n;
-        while (l < r) {
-            int mid = (l + r) >> 1;
-            if (check(mid)) {
-                r = mid;
-            } else {
-                l = mid + 1;
-            }
-        }
-        return l;
+  fun minimumScore(s: String, t: String): Int {
+    m = s.length
+    n = t.length
+    f = IntArray(n)
+    g = IntArray(n)
+    for (i in 0 until n) {
+      f[i] = 1 shl 30
+      g[i] = -1
     }
+    run {
+      var i = 0
+      var j = 0
+      while (i < m && j < n) {
+        if (s[i] == t[j]) {
+          f[j] = i
+          ++j
+        }
+        ++i
+      }
+    }
+    var i = m - 1
+    var j = n - 1
+    while (i >= 0 && j >= 0) {
+      if (s[i] == t[j]) {
+        g[j] = i
+        --j
+      }
+      --i
+    }
+    var l = 0
+    var r = n
+    while (l < r) {
+      val mid = (l + r) shr 1
+      if (check(mid)) {
+        r = mid
+      } else {
+        l = mid + 1
+      }
+    }
+    return l
+  }
 
-    private boolean check(int len) {
-        for (int k = 0; k < n; ++k) {
-            int i = k - 1, j = k + len;
-            int l = i >= 0 ? f[i] : -1;
-            int r = j < n ? g[j] : m + 1;
-            if (l < r) {
-                return true;
-            }
-        }
-        return false;
+  private fun check(len: Int): Boolean {
+    for (k in 0 until n) {
+      val i: Int = k - 1
+      val j: Int = k + len
+      val l = if (i >= 0) f[i] else -1
+      val r = if (j < n) g[j] else m + 1
+      if (l < r) {
+        return true
+      }
     }
+    return false
+  }
 }

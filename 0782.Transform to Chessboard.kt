@@ -1,54 +1,57 @@
-class Solution {
-    private int n;
+internal class Solution {
+  private var n = 0
 
-    public int movesToChessboard(int[][] board) {
-        n = board.length;
-        int mask = (1 << n) - 1;
-        int rowMask = 0, colMask = 0;
-        for (int i = 0; i < n; ++i) {
-            rowMask |= board[0][i] << i;
-            colMask |= board[i][0] << i;
-        }
-        int revRowMask = mask ^ rowMask;
-        int revColMask = mask ^ colMask;
-        int sameRow = 0, sameCol = 0;
-        for (int i = 0; i < n; ++i) {
-            int curRowMask = 0, curColMask = 0;
-            for (int j = 0; j < n; ++j) {
-                curRowMask |= board[i][j] << j;
-                curColMask |= board[j][i] << j;
-            }
-            if (curRowMask != rowMask && curRowMask != revRowMask) {
-                return -1;
-            }
-            if (curColMask != colMask && curColMask != revColMask) {
-                return -1;
-            }
-            sameRow += curRowMask == rowMask ? 1 : 0;
-            sameCol += curColMask == colMask ? 1 : 0;
-        }
-        int t1 = f(rowMask, sameRow);
-        int t2 = f(colMask, sameCol);
-        return t1 == -1 || t2 == -1 ? -1 : t1 + t2;
+  fun movesToChessboard(board: Array<IntArray>): Int {
+    n = board.size
+    val mask = (1 shl n) - 1
+    var rowMask = 0
+    var colMask = 0
+    for (i in 0 until n) {
+      rowMask = rowMask or (board[0][i] shl i)
+      colMask = colMask or (board[i][0] shl i)
     }
+    val revRowMask = mask xor rowMask
+    val revColMask = mask xor colMask
+    var sameRow = 0
+    var sameCol = 0
+    for (i in 0 until n) {
+      var curRowMask = 0
+      var curColMask = 0
+      for (j in 0 until n) {
+        curRowMask = curRowMask or (board[i][j] shl j)
+        curColMask = curColMask or (board[j][i] shl j)
+      }
+      if (curRowMask != rowMask && curRowMask != revRowMask) {
+        return -1
+      }
+      if (curColMask != colMask && curColMask != revColMask) {
+        return -1
+      }
+      sameRow += if (curRowMask == rowMask) 1 else 0
+      sameCol += if (curColMask == colMask) 1 else 0
+    }
+    val t1 = f(rowMask, sameRow)
+    val t2 = f(colMask, sameCol)
+    return if (t1 == -1 || t2 == -1) -1 else t1 + t2
+  }
 
-    private int f(int mask, int cnt) {
-        int ones = Integer.bitCount(mask);
-        if (n % 2 == 1) {
-            if (Math.abs(n - ones * 2) != 1 || Math.abs(n - cnt * 2) != 1) {
-                return -1;
-            }
-            if (ones == n / 2) {
-                return n / 2 - Integer.bitCount(mask & 0xAAAAAAAA);
-            }
-            return (n / 2 + 1) - Integer.bitCount(mask & 0x55555555);
-        } else {
-            if (ones != n / 2 || cnt != n / 2) {
-                return -1;
-            }
-            int cnt0 = n / 2 - Integer.bitCount(mask & 0xAAAAAAAA);
-            int cnt1 = n / 2 - Integer.bitCount(mask & 0x55555555);
-            return Math.min(cnt0, cnt1);
-        }
+  private fun f(mask: Int, cnt: Int): Int {
+    val ones = Integer.bitCount(mask)
+    if (n % 2 == 1) {
+      if (abs(n - ones * 2) != 1 || abs(n - cnt * 2) != 1) {
+        return -1
+      }
+      if (ones == n / 2) {
+        return n / 2 - Integer.bitCount(mask and -0x55555556)
+      }
+      return (n / 2 + 1) - Integer.bitCount(mask and 0x55555555)
+    } else {
+      if (ones != n / 2 || cnt != n / 2) {
+        return -1
+      }
+      val cnt0 = n / 2 - Integer.bitCount(mask and -0x55555556)
+      val cnt1 = n / 2 - Integer.bitCount(mask and 0x55555555)
+      return min(cnt0, cnt1)
     }
+  }
 }

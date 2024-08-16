@@ -1,57 +1,57 @@
-class UnionFind {
-    private final int[] p;
-    private final int[] size;
+internal class UnionFind(n: Int) {
+  private val p = IntArray(n)
+  private val size = IntArray(n)
 
-    public UnionFind(int n) {
-        p = new int[n];
-        size = new int[n];
-        for (int i = 0; i < n; ++i) {
-            p[i] = i;
-            size[i] = 1;
-        }
+  init {
+    for (i in 0 until n) {
+      p[i] = i
+      size[i] = 1
     }
+  }
 
-    public int find(int x) {
-        if (p[x] != x) {
-            p[x] = find(p[x]);
-        }
-        return p[x];
+  fun find(x: Int): Int {
+    if (p[x] != x) {
+      p[x] = find(p[x])
     }
+    return p[x]
+  }
 
-    public boolean union(int a, int b) {
-        int pa = find(a), pb = find(b);
-        if (pa == pb) {
-            return false;
-        }
-        if (size[pa] > size[pb]) {
-            p[pb] = pa;
-            size[pa] += size[pb];
-        } else {
-            p[pa] = pb;
-            size[pb] += size[pa];
-        }
-        return true;
+  fun union(a: Int, b: Int): Boolean {
+    val pa = find(a)
+    val pb = find(b)
+    if (pa == pb) {
+      return false
     }
+    if (size[pa] > size[pb]) {
+      p[pb] = pa
+      size[pa] += size[pb]
+    } else {
+      p[pa] = pb
+      size[pb] += size[pa]
+    }
+    return true
+  }
 }
 
-class Solution {
-    public int numSimilarGroups(String[] strs) {
-        int n = strs.length, m = strs[0].length();
-        UnionFind uf = new UnionFind(n);
-        int cnt = n;
-        for (int i = 0; i < n; ++i) {
-            for (int j = 0; j < i; ++j) {
-                int diff = 0;
-                for (int k = 0; k < m; ++k) {
-                    if (strs[i].charAt(k) != strs[j].charAt(k)) {
-                        ++diff;
-                    }
-                }
-                if (diff <= 2 && uf.union(i, j)) {
-                    --cnt;
-                }
-            }
+internal class Solution {
+  fun numSimilarGroups(strs: Array<String>): Int {
+    val n = strs.size
+    val m = strs[0].length
+    val uf = UnionFind(n)
+    var cnt = n
+    for (i in 0 until n) {
+      for (j in 0 until i) {
+        var diff = 0
+        for (k in 0 until m) {
+          if (strs[i][k] != strs[j][k]) {
+            ++diff
+          }
         }
-        return cnt;
+        if (diff <= 2 && uf.union(i, j)) {
+          --cnt
+        }
+      }
     }
+    return cnt
+  }
 }

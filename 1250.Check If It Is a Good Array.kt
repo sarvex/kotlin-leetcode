@@ -1,13 +1,13 @@
-class Solution {
-    public boolean isGoodArray(int[] nums) {
-        int g = 0;
-        for (int x : nums) {
-            g = gcd(x, g);
-        }
-        return g == 1;
+internal class Solution {
+  fun isGoodArray(nums: IntArray): Boolean {
+    var g = 0
+    for (x in nums) {
+      g = gcd(x, g)
     }
+    return g == 1
+  }
 
-    private int gcd(int a, int b) {
-        return b == 0 ? a : gcd(b, a % b);
-    }
+  private fun gcd(a: Int, b: Int): Int {
+    return if (b == 0) a else gcd(b, a % b)
+  }
 }

@@ -1,10 +1,10 @@
-class Solution {
-    public int[] orArray(int[] nums) {
-        int n = nums.length;
-        int[] ans = new int[n - 1];
-        for (int i = 0; i < n - 1; ++i) {
-            ans[i] = nums[i] | nums[i + 1];
-        }
-        return ans;
+internal class Solution {
+  fun orArray(nums: IntArray): IntArray {
+    val n = nums.size
+    val ans = IntArray(n - 1)
+    for (i in 0 until n - 1) {
+      ans[i] = nums[i] or nums[i + 1]
     }
+    return ans
+  }
 }

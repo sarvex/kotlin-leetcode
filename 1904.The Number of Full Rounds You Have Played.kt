@@ -1,15 +1,16 @@
-class Solution {
-    public int numberOfRounds(String loginTime, String logoutTime) {
-        int a = f(loginTime), b = f(logoutTime);
-        if (a > b) {
-            b += 1440;
-        }
-        return Math.max(0, b / 15 - (a + 14) / 15);
+internal class Solution {
+  fun numberOfRounds(loginTime: String, logoutTime: String): Int {
+    val a = f(loginTime)
+    var b = f(logoutTime)
+    if (a > b) {
+      b += 1440
     }
+    return max(0, b / 15 - (a + 14) / 15)
+  }
 
-    private int f(String s) {
-        int h = Integer.parseInt(s.substring(0, 2));
-        int m = Integer.parseInt(s.substring(3, 5));
-        return h * 60 + m;
-    }
+  private fun f(s: String): Int {
+    val h: Int = s.substring(0, 2).toInt()
+    val m: Int = s.substring(3, 5).toInt()
+    return h * 60 + m
+  }
 }

@@ -1,18 +1,18 @@
-class Solution {
-    public int[] missingRolls(int[] rolls, int mean, int n) {
-        int m = rolls.length;
-        int s = (n + m) * mean;
-        for (int v : rolls) {
-            s -= v;
-        }
-        if (s > n * 6 || s < n) {
-            return new int[0];
-        }
-        int[] ans = new int[n];
-        Arrays.fill(ans, s / n);
-        for (int i = 0; i < s % n; ++i) {
-            ++ans[i];
-        }
-        return ans;
+internal class Solution {
+  fun missingRolls(rolls: IntArray, mean: Int, n: Int): IntArray {
+    val m = rolls.size
+    var s = (n + m) * mean
+    for (v in rolls) {
+      s -= v
     }
+    if (s > n * 6 || s < n) {
+      return IntArray(0)
+    }
+    val ans = IntArray(n)
+    Arrays.fill(ans, s / n)
+    for (i in 0 until s % n) {
+      ++ans[i]
+    }
+    return ans
+  }
 }

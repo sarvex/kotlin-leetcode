@@ -1,8 +1,9 @@
-class Solution {
-    public String removeOccurrences(String s, String part) {
-        while (s.contains(part)) {
-            s = s.replaceFirst(part, "");
-        }
-        return s;
+internal class Solution {
+  fun removeOccurrences(s: String, part: String): String {
+    var s = s
+    while (s.contains(part)) {
+      s = s.replaceFirst(part.toRegex(), "")
     }
+    return s
+  }
 }

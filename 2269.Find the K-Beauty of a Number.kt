@@ -1,13 +1,13 @@
-class Solution {
-    public int divisorSubstrings(int num, int k) {
-        int ans = 0;
-        String s = "" + num;
-        for (int i = 0; i < s.length() - k + 1; ++i) {
-            int t = Integer.parseInt(s.substring(i, i + k));
-            if (t != 0 && num % t == 0) {
-                ++ans;
-            }
-        }
-        return ans;
+internal class Solution {
+  fun divisorSubstrings(num: Int, k: Int): Int {
+    var ans = 0
+    val s = "" + num
+    for (i in 0 until s.length - k + 1) {
+      val t: Int = s.substring(i, i + k).toInt()
+      if (t != 0 && num % t == 0) {
+        ++ans
+      }
     }
+    return ans
+  }
 }

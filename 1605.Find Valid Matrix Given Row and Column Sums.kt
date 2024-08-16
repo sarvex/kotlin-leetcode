@@ -1,16 +1,16 @@
-class Solution {
-    public int[][] restoreMatrix(int[] rowSum, int[] colSum) {
-        int m = rowSum.length;
-        int n = colSum.length;
-        int[][] ans = new int[m][n];
-        for (int i = 0; i < m; ++i) {
-            for (int j = 0; j < n; ++j) {
-                int x = Math.min(rowSum[i], colSum[j]);
-                ans[i][j] = x;
-                rowSum[i] -= x;
-                colSum[j] -= x;
-            }
-        }
-        return ans;
+internal class Solution {
+  fun restoreMatrix(rowSum: IntArray, colSum: IntArray): Array<IntArray> {
+    val m = rowSum.size
+    val n = colSum.size
+    val ans = Array(m) { IntArray(n) }
+    for (i in 0 until m) {
+      for (j in 0 until n) {
+        val x: Int = min(rowSum[i], colSum[j])
+        ans[i][j] = x
+        rowSum[i] -= x
+        colSum[j] -= x
+      }
     }
+    return ans
+  }
 }

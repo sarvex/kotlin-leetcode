@@ -1,22 +1,23 @@
-class Solution {
-    public int minOperations(int[][] grid, int x) {
-        int m = grid.length, n = grid[0].length;
-        int[] nums = new int[m * n];
-        int mod = grid[0][0] % x;
-        for (int i = 0; i < m; ++i) {
-            for (int j = 0; j < n; ++j) {
-                if (grid[i][j] % x != mod) {
-                    return -1;
-                }
-                nums[i * n + j] = grid[i][j];
-            }
+internal class Solution {
+  fun minOperations(grid: Array<IntArray>, x: Int): Int {
+    val m = grid.size
+    val n = grid[0].size
+    val nums = IntArray(m * n)
+    val mod = grid[0][0] % x
+    for (i in 0 until m) {
+      for (j in 0 until n) {
+        if (grid[i][j] % x != mod) {
+          return -1
         }
-        Arrays.sort(nums);
-        int mid = nums[nums.length >> 1];
-        int ans = 0;
-        for (int v : nums) {
-            ans += Math.abs(v - mid) / x;
-        }
-        return ans;
+        nums[i * n + j] = grid[i][j]
+      }
     }
+    Arrays.sort(nums)
+    val mid = nums[nums.size shr 1]
+    var ans = 0
+    for (v in nums) {
+      ans += abs(v - mid) / x
+    }
+    return ans
+  }
 }

@@ -1,27 +1,30 @@
-class Solution {
-    public int[] answerQueries(int[] nums, int[] queries) {
-        Arrays.sort(nums);
-        for (int i = 1; i < nums.length; ++i) {
-            nums[i] += nums[i - 1];
-        }
-        int m = queries.length;
-        int[] ans = new int[m];
-        for (int i = 0; i < m; ++i) {
-            ans[i] = search(nums, queries[i]);
-        }
-        return ans;
-    }
+import java.util.*
 
-    private int search(int[] nums, int x) {
-        int l = 0, r = nums.length;
-        while (l < r) {
-            int mid = (l + r) >> 1;
-            if (nums[mid] > x) {
-                r = mid;
-            } else {
-                l = mid + 1;
-            }
-        }
-        return l;
+internal class Solution {
+  fun answerQueries(nums: IntArray, queries: IntArray): IntArray {
+    Arrays.sort(nums)
+    for (i in 1 until nums.size) {
+      nums[i] += nums[i - 1]
     }
+    val m = queries.size
+    val ans = IntArray(m)
+    for (i in 0 until m) {
+      ans[i] = search(nums, queries[i])
+    }
+    return ans
+  }
+
+  private fun search(nums: IntArray, x: Int): Int {
+    var l = 0
+    var r = nums.size
+    while (l < r) {
+      val mid = (l + r) shr 1
+      if (nums[mid] > x) {
+        r = mid
+      } else {
+        l = mid + 1
+      }
+    }
+    return l
+  }
 }

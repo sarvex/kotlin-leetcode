@@ -1,23 +1,23 @@
-class Solution {
-    public boolean isNStraightHand(int[] hand, int groupSize) {
-        Map<Integer, Integer> cnt = new HashMap<>();
-        for (int v : hand) {
-            cnt.put(v, cnt.getOrDefault(v, 0) + 1);
-        }
-        Arrays.sort(hand);
-        for (int v : hand) {
-            if (cnt.containsKey(v)) {
-                for (int x = v; x < v + groupSize; ++x) {
-                    if (!cnt.containsKey(x)) {
-                        return false;
-                    }
-                    cnt.put(x, cnt.get(x) - 1);
-                    if (cnt.get(x) == 0) {
-                        cnt.remove(x);
-                    }
-                }
-            }
-        }
-        return true;
+internal class Solution {
+  fun isNStraightHand(hand: IntArray, groupSize: Int): Boolean {
+    val cnt: Map<Int, Int> = HashMap()
+    for (v in hand) {
+      cnt.put(v, cnt.getOrDefault(v, 0) + 1)
     }
+    Arrays.sort(hand)
+    for (v in hand) {
+      if (cnt.containsKey(v)) {
+        for (x in v until v + groupSize) {
+          if (!cnt.containsKey(x)) {
+            return false
+          }
+          cnt.put(x, cnt[x]!! - 1)
+          if (cnt[x] === 0) {
+            cnt.remove(x)
+          }
+        }
+      }
+    }
+    return true
+  }
 }

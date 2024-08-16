@@ -1,14 +1,16 @@
-class Solution {
-    public String findContestMatch(int n) {
-        String[] s = new String[n];
-        for (int i = 0; i < n; ++i) {
-            s[i] = String.valueOf(i + 1);
-        }
-        for (; n > 1; n >>= 1) {
-            for (int i = 0; i < n >> 1; ++i) {
-                s[i] = String.format("(%s,%s)", s[i], s[n - i - 1]);
-            }
-        }
-        return s[0];
+internal class Solution {
+  fun findContestMatch(n: Int): String {
+    var n = n
+    val s: Array<String> = arrayOfNulls(n)
+    for (i in 0 until n) {
+      s[i] = (i + 1).toString()
     }
+    while (n > 1) {
+      for (i in 0 until (n shr 1)) {
+        s[i] = String.format("(%s,%s)", s[i], s[n - i - 1])
+      }
+      n = n shr 1
+    }
+    return s[0]
+  }
 }

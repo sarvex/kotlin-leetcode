@@ -1,32 +1,32 @@
-class Solution {
-    public int numberWays(List<List<Integer>> hats) {
-        int n = hats.size();
-        int m = 0;
-        for (var h : hats) {
-            for (int v : h) {
-                m = Math.max(m, v);
-            }
-        }
-        List<Integer>[] g = new List[m + 1];
-        Arrays.setAll(g, k -> new ArrayList<>());
-        for (int i = 0; i < n; ++i) {
-            for (int v : hats.get(i)) {
-                g[v].add(i);
-            }
-        }
-        final int mod = (int) 1e9 + 7;
-        int[][] f = new int[m + 1][1 << n];
-        f[0][0] = 1;
-        for (int i = 1; i <= m; ++i) {
-            for (int j = 0; j < 1 << n; ++j) {
-                f[i][j] = f[i - 1][j];
-                for (int k : g[i]) {
-                    if ((j >> k & 1) == 1) {
-                        f[i][j] = (f[i][j] + f[i - 1][j ^ (1 << k)]) % mod;
-                    }
-                }
-            }
-        }
-        return f[m][(1 << n) - 1];
+internal class Solution {
+  fun numberWays(hats: List<List<Int>>): Int {
+    val n: Int = hats.size()
+    var m = 0
+    for (h in hats) {
+      for (v in h) {
+        m = max(m, v)
+      }
     }
+    val g: Array<List<Int>> = arrayOfNulls(m + 1)
+    Arrays.setAll(g) { k -> ArrayList() }
+    for (i in 0 until n) {
+      for (v in hats[i]) {
+        g[v].add(i)
+      }
+    }
+    val mod = 1e9.toInt() + 7
+    val f = Array(m + 1) { IntArray(1 shl n) }
+    f[0][0] = 1
+    for (i in 1..m) {
+      for (j in 0 until (1 shl n)) {
+        f[i][j] = f[i - 1][j]
+        for (k in g[i]) {
+          if ((j shr k and 1) == 1) {
+            f[i][j] = (f[i][j] + f[i - 1][j xor (1 shl k)]) % mod
+          }
+        }
+      }
+    }
+    return f[m][(1 shl n) - 1]
+  }
 }

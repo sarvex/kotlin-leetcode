@@ -1,24 +1,28 @@
-class Solution {
-    public int maxSum(int[] nums1, int[] nums2) {
-        final int mod = (int) 1e9 + 7;
-        int m = nums1.length, n = nums2.length;
-        int i = 0, j = 0;
-        long f = 0, g = 0;
-        while (i < m || j < n) {
-            if (i == m) {
-                g += nums2[j++];
-            } else if (j == n) {
-                f += nums1[i++];
-            } else if (nums1[i] < nums2[j]) {
-                f += nums1[i++];
-            } else if (nums1[i] > nums2[j]) {
-                g += nums2[j++];
-            } else {
-                f = g = Math.max(f, g) + nums1[i];
-                i++;
-                j++;
-            }
-        }
-        return (int) (Math.max(f, g) % mod);
+internal class Solution {
+  fun maxSum(nums1: IntArray, nums2: IntArray): Int {
+    val mod = 1e9.toInt() + 7
+    val m = nums1.size
+    val n = nums2.size
+    var i = 0
+    var j = 0
+    var f: Long = 0
+    var g: Long = 0
+    while (i < m || j < n) {
+      if (i == m) {
+        g += nums2[j++].toLong()
+      } else if (j == n) {
+        f += nums1[i++].toLong()
+      } else if (nums1[i] < nums2[j]) {
+        f += nums1[i++].toLong()
+      } else if (nums1[i] > nums2[j]) {
+        g += nums2[j++].toLong()
+      } else {
+        g = max(f, g) + nums1[i]
+        f = g
+        i++
+        j++
+      }
     }
+    return (max(f, g) % mod).toInt()
+  }
 }

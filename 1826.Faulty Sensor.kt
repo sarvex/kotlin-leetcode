@@ -1,17 +1,19 @@
-class Solution {
-    public int badSensor(int[] sensor1, int[] sensor2) {
-        int i = 0;
-        int n = sensor1.length;
-        for (; i < n - 1 && sensor1[i] == sensor2[i]; ++i) {
-        }
-        for (; i < n - 1; ++i) {
-            if (sensor1[i + 1] != sensor2[i]) {
-                return 1;
-            }
-            if (sensor1[i] != sensor2[i + 1]) {
-                return 2;
-            }
-        }
-        return -1;
+internal class Solution {
+  fun badSensor(sensor1: IntArray, sensor2: IntArray): Int {
+    var i = 0
+    val n = sensor1.size
+    while (i < n - 1 && sensor1[i] == sensor2[i]) {
+      ++i
     }
+    while (i < n - 1) {
+      if (sensor1[i + 1] != sensor2[i]) {
+        return 1
+      }
+      if (sensor1[i] != sensor2[i + 1]) {
+        return 2
+      }
+      ++i
+    }
+    return -1
+  }
 }

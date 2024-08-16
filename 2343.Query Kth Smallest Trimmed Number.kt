@@ -1,20 +1,26 @@
-class Solution {
-    public int[] smallestTrimmedNumbers(String[] nums, int[][] queries) {
-        int n = nums.length;
-        int m = queries.length;
-        int[] ans = new int[m];
-        String[][] t = new String[n][2];
-        for (int i = 0; i < m; ++i) {
-            int k = queries[i][0], trim = queries[i][1];
-            for (int j = 0; j < n; ++j) {
-                t[j] = new String[] {nums[j].substring(nums[j].length() - trim), String.valueOf(j)};
-            }
-            Arrays.sort(t, (a, b) -> {
-                int x = a[0].compareTo(b[0]);
-                return x == 0 ? Long.compare(Integer.valueOf(a[1]), Integer.valueOf(b[1])) : x;
-            });
-            ans[i] = Integer.valueOf(t[k - 1][1]);
-        }
-        return ans;
+import java.util.*
+
+internal class Solution {
+  fun smallestTrimmedNumbers(nums: Array<String>, queries: Array<IntArray>): IntArray {
+    val n = nums.size
+    val m = queries.size
+    val ans = IntArray(m)
+    val t = Array<Array<String>>(n) { arrayOfNulls(2) }
+    for (i in 0 until m) {
+      val k = queries[i][0]
+      val trim = queries[i][1]
+      for (j in 0 until n) {
+        t[j] = arrayOf<String>(nums[j].substring(nums[j].length - trim), j.toString())
+      }
+      Arrays.sort(t) { a, b ->
+        val x = a[0].compareTo(b[0])
+        if (x == 0) java.lang.Long.compare(
+          Integer.valueOf(a[1]).toLong(),
+          Integer.valueOf(b[1]).toLong()
+        ) else x
+      }
+      ans[i] = t[k - 1][1].toInt()
     }
+    return ans
+  }
 }

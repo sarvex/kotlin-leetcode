@@ -1,16 +1,19 @@
-class Solution {
-    public int maxCount(int[] banned, int n, int maxSum) {
-        Set<Integer> ban = new HashSet<>(banned.length);
-        for (int x : banned) {
-            ban.add(x);
-        }
-        int ans = 0, s = 0;
-        for (int i = 1; i <= n && s + i <= maxSum; ++i) {
-            if (!ban.contains(i)) {
-                ++ans;
-                s += i;
-            }
-        }
-        return ans;
+internal class Solution {
+  fun maxCount(banned: IntArray, n: Int, maxSum: Int): Int {
+    val ban: Set<Int> = HashSet(banned.size)
+    for (x in banned) {
+      ban.add(x)
     }
+    var ans = 0
+    var s = 0
+    var i = 1
+    while (i <= n && s + i <= maxSum) {
+      if (!ban.contains(i)) {
+        ++ans
+        s += i
+      }
+      ++i
+    }
+    return ans
+  }
 }

@@ -1,22 +1,21 @@
-class Solution {
-
-    public int findTheLongestSubstring(String s) {
-        int[] pos = new int[32];
-        Arrays.fill(pos, Integer.MAX_VALUE);
-        pos[0] = -1;
-        String vowels = "aeiou";
-        int state = 0;
-        int ans = 0;
-        for (int i = 0; i < s.length(); ++i) {
-            char c = s.charAt(i);
-            for (int j = 0; j < 5; ++j) {
-                if (c == vowels.charAt(j)) {
-                    state ^= (1 << j);
-                }
-            }
-            ans = Math.max(ans, i - pos[state]);
-            pos[state] = Math.min(pos[state], i);
+internal class Solution {
+  fun findTheLongestSubstring(s: String): Int {
+    val pos = IntArray(32)
+    Arrays.fill(pos, MAX_VALUE)
+    pos[0] = -1
+    val vowels = "aeiou"
+    var state = 0
+    var ans = 0
+    for (i in 0 until s.length) {
+      val c = s[i]
+      for (j in 0..4) {
+        if (c == vowels[j]) {
+          state = state xor (1 shl j)
         }
-        return ans;
+      }
+      ans = max(ans, i - pos[state])
+      pos[state] = min(pos[state], i)
     }
+    return ans
+  }
 }

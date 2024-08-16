@@ -1,13 +1,13 @@
-class Solution {
-    public boolean canPermutePalindrome(String s) {
-        int[] cnt = new int[26];
-        for (char c : s.toCharArray()) {
-            ++cnt[c - 'a'];
-        }
-        int odd = 0;
-        for (int x : cnt) {
-            odd += x & 1;
-        }
-        return odd < 2;
+internal class Solution {
+  fun canPermutePalindrome(s: String): Boolean {
+    val cnt = IntArray(26)
+    for (c in s.toCharArray()) {
+      ++cnt[c.code - 'a'.code]
     }
+    var odd = 0
+    for (x in cnt) {
+      odd += x and 1
+    }
+    return odd < 2
+  }
 }

@@ -1,12 +1,12 @@
-class Solution {
-    public int largestPerimeter(int[] nums) {
-        Arrays.sort(nums);
-        for (int i = nums.length - 1; i >= 2; --i) {
-            int c = nums[i - 1] + nums[i - 2];
-            if (c > nums[i]) {
-                return c + nums[i];
-            }
-        }
-        return 0;
+internal class Solution {
+  fun largestPerimeter(nums: IntArray): Int {
+    Arrays.sort(nums)
+    for (i in nums.size - 1 downTo 2) {
+      val c = nums[i - 1] + nums[i - 2]
+      if (c > nums[i]) {
+        return c + nums[i]
+      }
     }
+    return 0
+  }
 }

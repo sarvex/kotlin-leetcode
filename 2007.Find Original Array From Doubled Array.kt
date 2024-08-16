@@ -1,25 +1,25 @@
-class Solution {
-    public int[] findOriginalArray(int[] changed) {
-        int n = changed.length;
-        Arrays.sort(changed);
-        int[] cnt = new int[changed[n - 1] + 1];
-        for (int x : changed) {
-            ++cnt[x];
-        }
-        int[] ans = new int[n >> 1];
-        int i = 0;
-        for (int x : changed) {
-            if (cnt[x] == 0) {
-                continue;
-            }
-            --cnt[x];
-            int y = x << 1;
-            if (y >= cnt.length || cnt[y] <= 0) {
-                return new int[0];
-            }
-            --cnt[y];
-            ans[i++] = x;
-        }
-        return ans;
+internal class Solution {
+  fun findOriginalArray(changed: IntArray): IntArray {
+    val n = changed.size
+    Arrays.sort(changed)
+    val cnt = IntArray(changed[n - 1] + 1)
+    for (x in changed) {
+      ++cnt[x]
     }
+    val ans = IntArray(n shr 1)
+    var i = 0
+    for (x in changed) {
+      if (cnt[x] == 0) {
+        continue
+      }
+      --cnt[x]
+      val y = x shl 1
+      if (y >= cnt.size || cnt[y] <= 0) {
+        return IntArray(0)
+      }
+      --cnt[y]
+      ans[i++] = x
+    }
+    return ans
+  }
 }

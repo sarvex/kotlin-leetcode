@@ -1,17 +1,21 @@
-class Solution {
-    public int[] countPoints(int[][] points, int[][] queries) {
-        int m = queries.length;
-        int[] ans = new int[m];
-        for (int k = 0; k < m; ++k) {
-            int x = queries[k][0], y = queries[k][1], r = queries[k][2];
-            for (var p : points) {
-                int i = p[0], j = p[1];
-                int dx = i - x, dy = j - y;
-                if (dx * dx + dy * dy <= r * r) {
-                    ++ans[k];
-                }
-            }
+internal class Solution {
+  fun countPoints(points: Array<IntArray>, queries: Array<IntArray>): IntArray {
+    val m = queries.size
+    val ans = IntArray(m)
+    for (k in 0 until m) {
+      val x = queries[k][0]
+      val y = queries[k][1]
+      val r = queries[k][2]
+      for (p in points) {
+        val i = p[0]
+        val j = p[1]
+        val dx = i - x
+        val dy = j - y
+        if (dx * dx + dy * dy <= r * r) {
+          ++ans[k]
         }
-        return ans;
+      }
     }
+    return ans
+  }
 }

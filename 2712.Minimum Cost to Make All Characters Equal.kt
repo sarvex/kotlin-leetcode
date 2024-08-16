@@ -1,12 +1,12 @@
-class Solution {
-    public long minimumCost(String s) {
-        long ans = 0;
-        int n = s.length();
-        for (int i = 1; i < n; ++i) {
-            if (s.charAt(i) != s.charAt(i - 1)) {
-                ans += Math.min(i, n - i);
-            }
-        }
-        return ans;
+internal class Solution {
+  fun minimumCost(s: String): Long {
+    var ans: Long = 0
+    val n = s.length
+    for (i in 1 until n) {
+      if (s[i] != s[i - 1]) {
+        ans += min(i, n - i)
+      }
     }
+    return ans
+  }
 }

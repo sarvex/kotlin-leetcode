@@ -1,106 +1,108 @@
-class Node {
-    int l, r;
-    int x, cnt;
+internal open class Node {
+  var l: Int = 0
+  var r: Int = 0
+  var x: Int = 0
+  @kotlin.jvm.JvmField
+  var cnt: Int = 0
 }
 
-class SegmentTree {
-    private Node[] tr;
-    private int[] nums;
+internal class SegmentTree(nums: IntArray) {
+  private val tr: Array<Node>
+  private val nums: IntArray
 
-    public SegmentTree(int[] nums) {
-        int n = nums.length;
-        this.nums = nums;
-        tr = new Node[n << 2];
-        for (int i = 0; i < tr.length; ++i) {
-            tr[i] = new Node();
-        }
-        build(1, 1, n);
+  init {
+    val n = nums.size
+    this.nums = nums
+    tr = arrayOfNulls(n shl 2)
+    for (i in tr.indices) {
+      tr[i] = Node()
     }
+    build(1, 1, n)
+  }
 
-    private void build(int u, int l, int r) {
-        tr[u].l = l;
-        tr[u].r = r;
-        if (l == r) {
-            tr[u].x = nums[l - 1];
-            tr[u].cnt = 1;
-            return;
-        }
-        int mid = (l + r) >> 1;
-        build(u << 1, l, mid);
-        build(u << 1 | 1, mid + 1, r);
-        pushup(u);
+  private fun build(u: Int, l: Int, r: Int) {
+    tr[u].l = l
+    tr[u].r = r
+    if (l == r) {
+      tr[u].x = nums[l - 1]
+      tr[u].cnt = 1
+      return
     }
+    val mid = (l + r) shr 1
+    build(u shl 1, l, mid)
+    build(u shl 1 or 1, mid + 1, r)
+    pushup(u)
+  }
 
-    public int[] query(int u, int l, int r) {
-        if (tr[u].l >= l && tr[u].r <= r) {
-            return new int[] {tr[u].x, tr[u].cnt};
-        }
-        int mid = (tr[u].l + tr[u].r) >> 1;
-        if (r <= mid) {
-            return query(u << 1, l, r);
-        }
-        if (l > mid) {
-            return query(u << 1 | 1, l, r);
-        }
-        var left = query(u << 1, l, r);
-        var right = query(u << 1 | 1, l, r);
-        if (left[0] == right[0]) {
-            left[1] += right[1];
-        } else if (left[1] >= right[1]) {
-            left[1] -= right[1];
-        } else {
-            right[1] -= left[1];
-            left = right;
-        }
-        return left;
+  fun query(u: Int, l: Int, r: Int): IntArray {
+    if (tr[u].l >= l && tr[u].r <= r) {
+      return intArrayOf(tr[u].x, tr[u].cnt)
     }
+    val mid: Int = (tr[u].l + tr[u].r) shr 1
+    if (r <= mid) {
+      return query(u shl 1, l, r)
+    }
+    if (l > mid) {
+      return query(u shl 1 or 1, l, r)
+    }
+    var left = query(u shl 1, l, r)
+    val right = query(u shl 1 or 1, l, r)
+    if (left[0] == right[0]) {
+      left[1] += right[1]
+    } else if (left[1] >= right[1]) {
+      left[1] -= right[1]
+    } else {
+      right[1] -= left[1]
+      left = right
+    }
+    return left
+  }
 
-    private void pushup(int u) {
-        if (tr[u << 1].x == tr[u << 1 | 1].x) {
-            tr[u].x = tr[u << 1].x;
-            tr[u].cnt = tr[u << 1].cnt + tr[u << 1 | 1].cnt;
-        } else if (tr[u << 1].cnt >= tr[u << 1 | 1].cnt) {
-            tr[u].x = tr[u << 1].x;
-            tr[u].cnt = tr[u << 1].cnt - tr[u << 1 | 1].cnt;
-        } else {
-            tr[u].x = tr[u << 1 | 1].x;
-            tr[u].cnt = tr[u << 1 | 1].cnt - tr[u << 1].cnt;
-        }
+  private fun pushup(u: Int) {
+    if (tr[u shl 1].x == tr[u shl 1 or 1].x) {
+      tr[u].x = tr[u shl 1].x
+      tr[u].cnt = tr[u shl 1].cnt + tr[u shl 1 or 1].cnt
+    } else if (tr[u shl 1].cnt >= tr[u shl 1 or 1].cnt) {
+      tr[u].x = tr[u shl 1].x
+      tr[u].cnt = tr[u shl 1].cnt - tr[u shl 1 or 1].cnt
+    } else {
+      tr[u].x = tr[u shl 1 or 1].x
+      tr[u].cnt = tr[u shl 1 or 1].cnt - tr[u shl 1].cnt
     }
+  }
 }
 
-class MajorityChecker {
-    private SegmentTree tree;
-    private Map<Integer, List<Integer>> d = new HashMap<>();
+internal class MajorityChecker(arr: IntArray) {
+  private val tree = SegmentTree(arr)
+  private val d: Map<Int, List<Int>> = HashMap()
 
-    public MajorityChecker(int[] arr) {
-        tree = new SegmentTree(arr);
-        for (int i = 0; i < arr.length; ++i) {
-            d.computeIfAbsent(arr[i], k -> new ArrayList<>()).add(i);
-        }
+  init {
+    for (i in arr.indices) {
+      d.computeIfAbsent(arr[i]) { k -> ArrayList() }.add(i)
     }
+  }
 
-    public int query(int left, int right, int threshold) {
-        int x = tree.query(1, left + 1, right + 1)[0];
-        int l = search(d.get(x), left);
-        int r = search(d.get(x), right + 1);
-        return r - l >= threshold ? x : -1;
-    }
+  fun query(left: Int, right: Int, threshold: Int): Int {
+    val x: Int = tree.query(1, left + 1, right + 1).get(0)
+    val l = search(d[x]!!, left)
+    val r = search(d[x]!!, right + 1)
+    return if (r - l >= threshold) x else -1
+  }
 
-    private int search(List<Integer> arr, int x) {
-        int left = 0, right = arr.size();
-        while (left < right) {
-            int mid = (left + right) >> 1;
-            if (arr.get(mid) >= x) {
-                right = mid;
-            } else {
-                left = mid + 1;
-            }
-        }
-        return left;
+  private fun search(arr: List<Int>, x: Int): Int {
+    var left = 0
+    var right: Int = arr.size()
+    while (left < right) {
+      val mid = (left + right) shr 1
+      if (arr[mid] >= x) {
+        right = mid
+      } else {
+        left = mid + 1
+      }
     }
+    return left
+  }
 }
-
 /**
  * Your MajorityChecker object will be instantiated and called as such:
  * MajorityChecker obj = new MajorityChecker(arr);

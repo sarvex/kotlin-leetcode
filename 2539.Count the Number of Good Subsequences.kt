@@ -1,50 +1,60 @@
-class Solution {
-    private static final int N = 10001;
-    private static final int MOD = (int) 1e9 + 7;
-    private static final long[] F = new long[N];
-    private static final long[] G = new long[N];
-
-    static {
-        F[0] = 1;
-        G[0] = 1;
-        for (int i = 1; i < N; ++i) {
-            F[i] = F[i - 1] * i % MOD;
-            G[i] = qmi(F[i], MOD - 2, MOD);
+internal class Solution {
+  fun countGoodSubsequences(s: String): Int {
+    val cnt = IntArray(26)
+    var mx = 1
+    for (i in 0 until s.length) {
+      mx = max(mx, ++cnt[s[i].code - 'a'.code])
+    }
+    var ans: Long = 0
+    for (i in 1..mx) {
+      var x: Long = 1
+      for (j in 0..25) {
+        if (cnt[j] >= i) {
+          x = x * (Solution.Companion.comb(cnt[j], i) + 1) % Solution.Companion.MOD
         }
+      }
+      ans = (ans + x - 1) % Solution.Companion.MOD
+    }
+    return ans.toInt()
+  }
+
+  companion object {
+    private const val N = 10001
+    private const val MOD = 1e9.toInt() + 7
+    private val F = LongArray(Solution.Companion.N)
+    private val G = LongArray(Solution.Companion.N)
+
+    init {
+      Solution.Companion.F.get(0) = 1
+      Solution.Companion.G.get(0) = 1
+      for (i in 1 until Solution.Companion.N) {
+        Solution.Companion.F.get(i) = Solution.Companion.F.get(i - 1) * i % Solution.Companion.MOD
+        Solution.Companion.G.get(i) = Solution.Companion.qmi(
+          Solution.Companion.F.get(i),
+          (Solution.Companion.MOD - 2).toLong(),
+          Solution.Companion.MOD.toLong()
+        )
+      }
     }
 
-    public static long qmi(long a, long k, long p) {
-        long res = 1;
-        while (k != 0) {
-            if ((k & 1) == 1) {
-                res = res * a % p;
-            }
-            k >>= 1;
-            a = a * a % p;
+    fun qmi(a: Long, k: Long, p: Long): Long {
+      var a = a
+      var k = k
+      var res: Long = 1
+      while (k != 0L) {
+        if ((k and 1L) == 1L) {
+          res = res * a % p
         }
-        return res;
+        k = k shr 1
+        a = a * a % p
+      }
+      return res
     }
 
-    public static long comb(int n, int k) {
-        return (F[n] * G[k] % MOD) * G[n - k] % MOD;
+    fun comb(n: Int, k: Int): Long {
+      return (Solution.Companion.F.get(n) * Solution.Companion.G.get(k) % Solution.Companion.MOD) * Solution.Companion.G.get(
+        n - k
+      ) % Solution.Companion.MOD
     }
-
-    public int countGoodSubsequences(String s) {
-        int[] cnt = new int[26];
-        int mx = 1;
-        for (int i = 0; i < s.length(); ++i) {
-            mx = Math.max(mx, ++cnt[s.charAt(i) - 'a']);
-        }
-        long ans = 0;
-        for (int i = 1; i <= mx; ++i) {
-            long x = 1;
-            for (int j = 0; j < 26; ++j) {
-                if (cnt[j] >= i) {
-                    x = x * (comb(cnt[j], i) + 1) % MOD;
-                }
-            }
-            ans = (ans + x - 1) % MOD;
-        }
-        return (int) ans;
-    }
+  }
 }

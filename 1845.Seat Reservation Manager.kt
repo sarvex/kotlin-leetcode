@@ -1,21 +1,20 @@
-class SeatManager {
-    private PriorityQueue<Integer> q = new PriorityQueue<>();
+internal class SeatManager(n: Int) {
+  private val q: PriorityQueue<Int> = PriorityQueue()
 
-    public SeatManager(int n) {
-        for (int i = 1; i <= n; ++i) {
-            q.offer(i);
-        }
+  init {
+    for (i in 1..n) {
+      q.offer(i)
     }
+  }
 
-    public int reserve() {
-        return q.poll();
-    }
+  fun reserve(): Int {
+    return q.poll()
+  }
 
-    public void unreserve(int seatNumber) {
-        q.offer(seatNumber);
-    }
+  fun unreserve(seatNumber: Int) {
+    q.offer(seatNumber)
+  }
 }
-
 /**
  * Your SeatManager object will be instantiated and called as such:
  * SeatManager obj = new SeatManager(n);

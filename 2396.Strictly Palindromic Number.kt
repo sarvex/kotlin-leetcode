@@ -1,5 +1,5 @@
-class Solution {
-    public boolean isStrictlyPalindromic(int n) {
-        return false;
-    }
+internal class Solution {
+  fun isStrictlyPalindromic(n: Int): Boolean {
+    return false
+  }
 }

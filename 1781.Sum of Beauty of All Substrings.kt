@@ -1,21 +1,22 @@
-class Solution {
-    public int beautySum(String s) {
-        int ans = 0;
-        int n = s.length();
-        for (int i = 0; i < n; ++i) {
-            int[] cnt = new int[26];
-            for (int j = i; j < n; ++j) {
-                ++cnt[s.charAt(j) - 'a'];
-                int mi = 1000, mx = 0;
-                for (int v : cnt) {
-                    if (v > 0) {
-                        mi = Math.min(mi, v);
-                        mx = Math.max(mx, v);
-                    }
-                }
-                ans += mx - mi;
-            }
+internal class Solution {
+  fun beautySum(s: String): Int {
+    var ans = 0
+    val n = s.length
+    for (i in 0 until n) {
+      val cnt = IntArray(26)
+      for (j in i until n) {
+        ++cnt[s[j].code - 'a'.code]
+        var mi = 1000
+        var mx = 0
+        for (v in cnt) {
+          if (v > 0) {
+            mi = min(mi, v)
+            mx = max(mx, v)
+          }
         }
-        return ans;
+        ans += mx - mi
+      }
     }
+    return ans
+  }
 }

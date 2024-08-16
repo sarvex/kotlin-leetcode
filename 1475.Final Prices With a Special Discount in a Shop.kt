@@ -1,16 +1,16 @@
-class Solution {
-    public int[] finalPrices(int[] prices) {
-        int n = prices.length;
-        int[] ans = new int[n];
-        for (int i = 0; i < n; ++i) {
-            ans[i] = prices[i];
-            for (int j = i + 1; j < n; ++j) {
-                if (prices[j] <= prices[i]) {
-                    ans[i] -= prices[j];
-                    break;
-                }
-            }
+internal class Solution {
+  fun finalPrices(prices: IntArray): IntArray {
+    val n = prices.size
+    val ans = IntArray(n)
+    for (i in 0 until n) {
+      ans[i] = prices[i]
+      for (j in i + 1 until n) {
+        if (prices[j] <= prices[i]) {
+          ans[i] -= prices[j]
+          break
         }
-        return ans;
+      }
     }
+    return ans
+  }
 }

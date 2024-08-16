@@ -1,9 +1,9 @@
-class Solution {
-    public List<Integer> grayCode(int n) {
-        List<Integer> ans = new ArrayList<>();
-        for (int i = 0; i < 1 << n; ++i) {
-            ans.add(i ^ (i >> 1));
-        }
-        return ans;
+internal class Solution {
+  fun grayCode(n: Int): List<Int> {
+    val ans: List<Int> = ArrayList()
+    for (i in 0 until (1 shl n)) {
+      ans.add(i xor (i shr 1))
     }
+    return ans
+  }
 }

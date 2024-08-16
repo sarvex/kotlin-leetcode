@@ -1,61 +1,61 @@
-class Solution {
-    public String minInteger(String num, int k) {
-        Queue<Integer>[] pos = new Queue[10];
-        for (int i = 0; i < 10; ++i) {
-            pos[i] = new ArrayDeque<>();
-        }
-        int n = num.length();
-        for (int i = 0; i < n; ++i) {
-            pos[num.charAt(i) - '0'].offer(i + 1);
-        }
-        StringBuilder ans = new StringBuilder();
-        BinaryIndexedTree tree = new BinaryIndexedTree(n);
-        for (int i = 1; i <= n; ++i) {
-            for (int v = 0; v < 10; ++v) {
-                if (!pos[v].isEmpty()) {
-                    Queue<Integer> q = pos[v];
-                    int j = q.peek();
-                    int dist = tree.query(n) - tree.query(j) + j - i;
-                    if (dist <= k) {
-                        k -= dist;
-                        q.poll();
-                        ans.append(v);
-                        tree.update(j, 1);
-                        break;
-                    }
-                }
-            }
-        }
-        return ans.toString();
+internal class Solution {
+  fun minInteger(num: String, k: Int): String {
+    var k = k
+    val pos: Array<Queue<Int>> = arrayOfNulls<Queue>(10)
+    for (i in 0..9) {
+      pos[i] = ArrayDeque()
     }
+    val n = num.length
+    for (i in 0 until n) {
+      pos[num[i].code - '0'.code].offer(i + 1)
+    }
+    val ans = StringBuilder()
+    val tree = BinaryIndexedTree(n)
+    for (i in 1..n) {
+      for (v in 0..9) {
+        if (!pos[v].isEmpty()) {
+          val q: Queue<Int> = pos[v]
+          val j: Int = q.peek()
+          val dist = tree.query(n) - tree.query(j) + j - i
+          if (dist <= k) {
+            k -= dist
+            q.poll()
+            ans.append(v)
+            tree.update(j, 1)
+            break
+          }
+        }
+      }
+    }
+    return ans.toString()
+  }
 }
 
-class BinaryIndexedTree {
-    private int n;
-    private int[] c;
+internal class BinaryIndexedTree(private val n: Int) {
+  private val c = IntArray(n + 1)
 
-    public BinaryIndexedTree(int n) {
-        this.n = n;
-        c = new int[n + 1];
+  fun update(x: Int, delta: Int) {
+    var x = x
+    while (x <= n) {
+      c[x] += delta
+      x += BinaryIndexedTree.Companion.lowbit(x)
     }
+  }
 
-    public void update(int x, int delta) {
-        while (x <= n) {
-            c[x] += delta;
-            x += lowbit(x);
-        }
+  fun query(x: Int): Int {
+    var x = x
+    var s = 0
+    while (x > 0) {
+      s += c[x]
+      x -= BinaryIndexedTree.Companion.lowbit(x)
     }
+    return s
+  }
 
-    public int query(int x) {
-        int s = 0;
-        while (x > 0) {
-            s += c[x];
-            x -= lowbit(x);
-        }
-        return s;
+  companion object {
+    @kotlin.jvm.JvmStatic
+    fun lowbit(x: Int): Int {
+      return x and -x
     }
-
-    public static int lowbit(int x) {
-        return x & -x;
-    }
+  }
 }

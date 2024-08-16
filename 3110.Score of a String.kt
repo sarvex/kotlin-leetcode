@@ -1,9 +1,9 @@
-class Solution {
-    public int scoreOfString(String s) {
-        int ans = 0;
-        for (int i = 1; i < s.length(); ++i) {
-            ans += Math.abs(s.charAt(i - 1) - s.charAt(i));
-        }
-        return ans;
+internal class Solution {
+  fun scoreOfString(s: String): Int {
+    var ans = 0
+    for (i in 1 until s.length) {
+      ans += abs(s[i - 1].code - s[i].code)
     }
+    return ans
+  }
 }

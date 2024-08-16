@@ -1,25 +1,26 @@
-class Solution {
-    public List<List<Integer>> findRLEArray(int[][] encoded1, int[][] encoded2) {
-        List<List<Integer>> ans = new ArrayList<>();
-        int j = 0;
-        for (var e : encoded1) {
-            int vi = e[0], fi = e[1];
-            while (fi > 0) {
-                int f = Math.min(fi, encoded2[j][1]);
-                int v = vi * encoded2[j][0];
-                int m = ans.size();
-                if (m > 0 && ans.get(m - 1).get(0) == v) {
-                    ans.get(m - 1).set(1, ans.get(m - 1).get(1) + f);
-                } else {
-                    ans.add(new ArrayList<>(List.of(v, f)));
-                }
-                fi -= f;
-                encoded2[j][1] -= f;
-                if (encoded2[j][1] == 0) {
-                    ++j;
-                }
-            }
+internal class Solution {
+  fun findRLEArray(encoded1: Array<IntArray>, encoded2: Array<IntArray>): List<List<Int>> {
+    val ans: List<List<Int>> = ArrayList()
+    var j = 0
+    for (e in encoded1) {
+      val vi = e[0]
+      var fi = e[1]
+      while (fi > 0) {
+        val f: Int = min(fi, encoded2[j][1])
+        val v = vi * encoded2[j][0]
+        val m: Int = ans.size()
+        if (m > 0 && ans[m - 1][0] === v) {
+          ans[m - 1].set(1, ans[m - 1][1] + f)
+        } else {
+          ans.add(ArrayList(List.of(v, f)))
         }
-        return ans;
+        fi -= f
+        encoded2[j][1] -= f
+        if (encoded2[j][1] == 0) {
+          ++j
+        }
+      }
     }
+    return ans
+  }
 }

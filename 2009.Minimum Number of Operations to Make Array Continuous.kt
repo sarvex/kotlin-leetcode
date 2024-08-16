@@ -1,30 +1,32 @@
-class Solution {
-    public int minOperations(int[] nums) {
-        int n = nums.length;
-        Arrays.sort(nums);
-        int m = 1;
-        for (int i = 1; i < n; ++i) {
-            if (nums[i] != nums[i - 1]) {
-                nums[m++] = nums[i];
-            }
-        }
-        int ans = n;
-        for (int i = 0; i < m; ++i) {
-            int j = search(nums, nums[i] + n - 1, i, m);
-            ans = Math.min(ans, n - (j - i));
-        }
-        return ans;
+internal class Solution {
+  fun minOperations(nums: IntArray): Int {
+    val n = nums.size
+    Arrays.sort(nums)
+    var m = 1
+    for (i in 1 until n) {
+      if (nums[i] != nums[i - 1]) {
+        nums[m++] = nums[i]
+      }
     }
+    var ans = n
+    for (i in 0 until m) {
+      val j = search(nums, nums[i] + n - 1, i, m)
+      ans = min(ans, n - (j - i))
+    }
+    return ans
+  }
 
-    private int search(int[] nums, int x, int left, int right) {
-        while (left < right) {
-            int mid = (left + right) >> 1;
-            if (nums[mid] > x) {
-                right = mid;
-            } else {
-                left = mid + 1;
-            }
-        }
-        return left;
+  private fun search(nums: IntArray, x: Int, left: Int, right: Int): Int {
+    var left = left
+    var right = right
+    while (left < right) {
+      val mid = (left + right) shr 1
+      if (nums[mid] > x) {
+        right = mid
+      } else {
+        left = mid + 1
+      }
     }
+    return left
+  }
 }

@@ -1,17 +1,18 @@
-class Solution {
-    public int minimumSplits(int[] nums) {
-        int ans = 1, g = 0;
-        for (int x : nums) {
-            g = gcd(g, x);
-            if (g == 1) {
-                ++ans;
-                g = x;
-            }
-        }
-        return ans;
+internal class Solution {
+  fun minimumSplits(nums: IntArray): Int {
+    var ans = 1
+    var g = 0
+    for (x in nums) {
+      g = gcd(g, x)
+      if (g == 1) {
+        ++ans
+        g = x
+      }
     }
+    return ans
+  }
 
-    private int gcd(int a, int b) {
-        return b == 0 ? a : gcd(b, a % b);
-    }
+  private fun gcd(a: Int, b: Int): Int {
+    return if (b == 0) a else gcd(b, a % b)
+  }
 }

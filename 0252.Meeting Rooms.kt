@@ -1,13 +1,13 @@
-class Solution {
-    public boolean canAttendMeetings(int[][] intervals) {
-        Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
-        for (int i = 1; i < intervals.length; ++i) {
-            var a = intervals[i - 1];
-            var b = intervals[i];
-            if (a[1] > b[0]) {
-                return false;
-            }
-        }
-        return true;
+internal class Solution {
+  fun canAttendMeetings(intervals: Array<IntArray>): Boolean {
+    Arrays.sort(intervals) { a, b -> a.get(0) - b.get(0) }
+    for (i in 1 until intervals.size) {
+      val a = intervals[i - 1]
+      val b = intervals[i]
+      if (a[1] > b[0]) {
+        return false
+      }
     }
+    return true
+  }
 }

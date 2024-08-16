@@ -1,12 +1,11 @@
-import java.util.Calendar;
+import java.util.*
 
-class Solution {
-    private static final String[] WEEK
-        = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+internal object Solution {
+  private val WEEK = arrayOf("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")
 
-    public static String dayOfTheWeek(int day, int month, int year) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month - 1, day);
-        return WEEK[calendar.get(Calendar.DAY_OF_WEEK) - 1];
-    }
+  fun dayOfTheWeek(day: Int, month: Int, year: Int): String {
+    val calendar = Calendar.getInstance()
+    calendar[year, month - 1] = day
+    return Solution.WEEK.get(calendar[Calendar.DAY_OF_WEEK] - 1)
+  }
 }

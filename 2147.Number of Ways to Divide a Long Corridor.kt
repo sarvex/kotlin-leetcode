@@ -1,36 +1,39 @@
-class Solution {
-    private String s;
-    private int n;
-    private int[][] f;
-    private static final int MOD = (int) 1e9 + 7;
-
-    public int numberOfWays(String corridor) {
-        s = corridor;
-        n = s.length();
-        f = new int[n][3];
-        for (var e : f) {
-            Arrays.fill(e, -1);
-        }
-        return dfs(0, 0);
+internal class Solution {
+  private var s: String? = null
+  private var n = 0
+  private var f: Array<IntArray>
+  fun numberOfWays(corridor: String?): Int {
+    s = corridor
+    n = s!!.length
+    f = Array(n) { IntArray(3) }
+    for (e in f) {
+      Arrays.fill(e, -1)
     }
+    return dfs(0, 0)
+  }
 
-    private int dfs(int i, int cnt) {
-        if (i == n) {
-            return cnt == 2 ? 1 : 0;
-        }
-        cnt += s.charAt(i) == 'S' ? 1 : 0;
-        if (cnt > 2) {
-            return 0;
-        }
-        if (f[i][cnt] != -1) {
-            return f[i][cnt];
-        }
-        int ans = dfs(i + 1, cnt);
-        if (cnt == 2) {
-            ans += dfs(i + 1, 0);
-            ans %= MOD;
-        }
-        f[i][cnt] = ans;
-        return ans;
+  private fun dfs(i: Int, cnt: Int): Int {
+    var cnt = cnt
+    if (i == n) {
+      return if (cnt == 2) 1 else 0
     }
+    cnt += if (s!![i] == 'S') 1 else 0
+    if (cnt > 2) {
+      return 0
+    }
+    if (f[i][cnt] != -1) {
+      return f[i][cnt]
+    }
+    var ans = dfs(i + 1, cnt)
+    if (cnt == 2) {
+      ans += dfs(i + 1, 0)
+      ans %= Solution.Companion.MOD
+    }
+    f[i][cnt] = ans
+    return ans
+  }
+
+  companion object {
+    private const val MOD = 1e9.toInt() + 7
+  }
 }

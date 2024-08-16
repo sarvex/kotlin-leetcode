@@ -1,22 +1,23 @@
-class Solution {
-    public int minOperations(int[] nums) {
-        List<Integer> g = new ArrayList<>();
-        for (int x : nums) {
-            int l = 0, r = g.size();
-            while (l < r) {
-                int mid = (l + r) >> 1;
-                if (g.get(mid) < x) {
-                    r = mid;
-                } else {
-                    l = mid + 1;
-                }
-            }
-            if (l == g.size()) {
-                g.add(x);
-            } else {
-                g.set(l, x);
-            }
+internal class Solution {
+  fun minOperations(nums: IntArray): Int {
+    val g: List<Int> = ArrayList()
+    for (x in nums) {
+      var l = 0
+      var r: Int = g.size()
+      while (l < r) {
+        val mid = (l + r) shr 1
+        if (g[mid] < x) {
+          r = mid
+        } else {
+          l = mid + 1
         }
-        return g.size();
+      }
+      if (l == g.size()) {
+        g.add(x)
+      } else {
+        g.set(l, x)
+      }
     }
+    return g.size()
+  }
 }

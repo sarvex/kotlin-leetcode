@@ -1,35 +1,31 @@
-import java.util.Deque;
+import java.util.*
 
-class MyStack {
-    private Deque<Integer> q1 = new ArrayDeque<>();
-    private Deque<Integer> q2 = new ArrayDeque<>();
+internal class MyStack {
+  private var q1: Deque<Int> = ArrayDeque()
+  private var q2: Deque<Int> = ArrayDeque()
 
-    public MyStack() {
+  fun push(x: Int) {
+    q2.offer(x)
+    while (!q1.isEmpty()) {
+      q2.offer(q1.poll())
     }
+    val q = q1
+    q1 = q2
+    q2 = q
+  }
 
-    public void push(int x) {
-        q2.offer(x);
-        while (!q1.isEmpty()) {
-            q2.offer(q1.poll());
-        }
-        Deque<Integer> q = q1;
-        q1 = q2;
-        q2 = q;
-    }
+  fun pop(): Int {
+    return q1.poll()
+  }
 
-    public int pop() {
-        return q1.poll();
-    }
+  fun top(): Int {
+    return q1.peek()
+  }
 
-    public int top() {
-        return q1.peek();
-    }
-
-    public boolean empty() {
-        return q1.isEmpty();
-    }
+  fun empty(): Boolean {
+    return q1.isEmpty()
+  }
 }
-
 /**
  * Your MyStack object will be instantiated and called as such:
  * MyStack obj = new MyStack();

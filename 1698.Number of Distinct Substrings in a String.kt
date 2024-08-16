@@ -1,12 +1,12 @@
-class Solution {
-    public int countDistinct(String s) {
-        Set<String> ss = new HashSet<>();
-        int n = s.length();
-        for (int i = 0; i < n; ++i) {
-            for (int j = i + 1; j <= n; ++j) {
-                ss.add(s.substring(i, j));
-            }
-        }
-        return ss.size();
+internal class Solution {
+  fun countDistinct(s: String): Int {
+    val ss: Set<String> = HashSet()
+    val n = s.length
+    for (i in 0 until n) {
+      for (j in i + 1..n) {
+        ss.add(s.substring(i, j))
+      }
     }
+    return ss.size()
+  }
 }

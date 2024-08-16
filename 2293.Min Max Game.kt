@@ -1,12 +1,14 @@
-class Solution {
-    public int minMaxGame(int[] nums) {
-        for (int n = nums.length; n > 1;) {
-            n >>= 1;
-            for (int i = 0; i < n; ++i) {
-                int a = nums[i << 1], b = nums[i << 1 | 1];
-                nums[i] = i % 2 == 0 ? Math.min(a, b) : Math.max(a, b);
-            }
-        }
-        return nums[0];
+internal class Solution {
+  fun minMaxGame(nums: IntArray): Int {
+    var n = nums.size
+    while (n > 1) {
+      n = n shr 1
+      for (i in 0 until n) {
+        val a = nums[i shl 1]
+        val b = nums[i shl 1 or 1]
+        nums[i] = if (i % 2 == 0) min(a, b) else max(a, b)
+      }
     }
+    return nums[0]
+  }
 }

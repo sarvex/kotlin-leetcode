@@ -1,15 +1,16 @@
-class Solution {
-    public int countSubstrings(String s) {
-        int ans = 0;
-        int n = s.length();
-        for (int k = 0; k < n * 2 - 1; ++k) {
-            int i = k / 2, j = (k + 1) / 2;
-            while (i >= 0 && j < n && s.charAt(i) == s.charAt(j)) {
-                ++ans;
-                --i;
-                ++j;
-            }
-        }
-        return ans;
+internal class Solution {
+  fun countSubstrings(s: String): Int {
+    var ans = 0
+    val n = s.length
+    for (k in 0 until n * 2 - 1) {
+      var i: Int = k / 2
+      var j: Int = (k + 1) / 2
+      while (i >= 0 && j < n && s[i] == s[j]) {
+        ++ans
+        --i
+        ++j
+      }
     }
+    return ans
+  }
 }

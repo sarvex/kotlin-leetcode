@@ -1,57 +1,59 @@
-class Solution {
-    private int[] nums1;
-    private int[] nums2;
+internal class Solution {
+  private var nums1: IntArray
+  private var nums2: IntArray
 
-    public long kthSmallestProduct(int[] nums1, int[] nums2, long k) {
-        this.nums1 = nums1;
-        this.nums2 = nums2;
-        int m = nums1.length;
-        int n = nums2.length;
-        int a = Math.max(Math.abs(nums1[0]), Math.abs(nums1[m - 1]));
-        int b = Math.max(Math.abs(nums2[0]), Math.abs(nums2[n - 1]));
-        long r = (long) a * b;
-        long l = (long) -a * b;
+  fun kthSmallestProduct(nums1: IntArray, nums2: IntArray, k: Long): Long {
+    this.nums1 = nums1
+    this.nums2 = nums2
+    val m = nums1.size
+    val n = nums2.size
+    val a: Int = max(abs(nums1[0]), abs(nums1[m - 1]))
+    val b: Int = max(abs(nums2[0]), abs(nums2[n - 1]))
+    var r = a.toLong() * b
+    var l = -a.toLong() * b
+    while (l < r) {
+      val mid = (l + r) shr 1
+      if (count(mid) >= k) {
+        r = mid
+      } else {
+        l = mid + 1
+      }
+    }
+    return l
+  }
+
+  private fun count(p: Long): Long {
+    var cnt: Long = 0
+    val n = nums2.size
+    for (x in nums1) {
+      if (x > 0) {
+        var l = 0
+        var r = n
         while (l < r) {
-            long mid = (l + r) >> 1;
-            if (count(mid) >= k) {
-                r = mid;
-            } else {
-                l = mid + 1;
-            }
+          val mid = (l + r) shr 1
+          if (x.toLong() * nums2[mid] > p) {
+            r = mid
+          } else {
+            l = mid + 1
+          }
         }
-        return l;
-    }
-
-    private long count(long p) {
-        long cnt = 0;
-        int n = nums2.length;
-        for (int x : nums1) {
-            if (x > 0) {
-                int l = 0, r = n;
-                while (l < r) {
-                    int mid = (l + r) >> 1;
-                    if ((long) x * nums2[mid] > p) {
-                        r = mid;
-                    } else {
-                        l = mid + 1;
-                    }
-                }
-                cnt += l;
-            } else if (x < 0) {
-                int l = 0, r = n;
-                while (l < r) {
-                    int mid = (l + r) >> 1;
-                    if ((long) x * nums2[mid] <= p) {
-                        r = mid;
-                    } else {
-                        l = mid + 1;
-                    }
-                }
-                cnt += n - l;
-            } else if (p >= 0) {
-                cnt += n;
-            }
+        cnt += l.toLong()
+      } else if (x < 0) {
+        var l = 0
+        var r = n
+        while (l < r) {
+          val mid = (l + r) shr 1
+          if (x.toLong() * nums2[mid] <= p) {
+            r = mid
+          } else {
+            l = mid + 1
+          }
         }
-        return cnt;
+        cnt += (n - l).toLong()
+      } else if (p >= 0) {
+        cnt += n.toLong()
+      }
     }
+    return cnt
+  }
 }

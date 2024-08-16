@@ -1,14 +1,14 @@
-class Solution {
-    public int minLength(String s) {
-        Deque<Character> stk = new ArrayDeque<>();
-        stk.push(' ');
-        for (char c : s.toCharArray()) {
-            if ((c == 'B' && stk.peek() == 'A') || (c == 'D' && stk.peek() == 'C')) {
-                stk.pop();
-            } else {
-                stk.push(c);
-            }
-        }
-        return stk.size() - 1;
+internal class Solution {
+  fun minLength(s: String): Int {
+    val stk: Deque<Char> = ArrayDeque()
+    stk.push(' ')
+    for (c in s.toCharArray()) {
+      if ((c == 'B' && stk.peek() === 'A') || (c == 'D' && stk.peek() === 'C')) {
+        stk.pop()
+      } else {
+        stk.push(c)
+      }
     }
+    return stk.size() - 1
+  }
 }

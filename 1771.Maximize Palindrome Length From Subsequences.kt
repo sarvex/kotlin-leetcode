@@ -1,24 +1,24 @@
-class Solution {
-    public int longestPalindrome(String word1, String word2) {
-        String s = word1 + word2;
-        int n = s.length();
-        int[][] f = new int[n][n];
-        for (int i = 0; i < n; ++i) {
-            f[i][i] = 1;
-        }
-        int ans = 0;
-        for (int i = n - 2; i >= 0; --i) {
-            for (int j = i + 1; j < n; ++j) {
-                if (s.charAt(i) == s.charAt(j)) {
-                    f[i][j] = f[i + 1][j - 1] + 2;
-                    if (i < word1.length() && j >= word1.length()) {
-                        ans = Math.max(ans, f[i][j]);
-                    }
-                } else {
-                    f[i][j] = Math.max(f[i + 1][j], f[i][j - 1]);
-                }
-            }
-        }
-        return ans;
+internal class Solution {
+  fun longestPalindrome(word1: String, word2: String): Int {
+    val s = word1 + word2
+    val n = s.length
+    val f = Array(n) { IntArray(n) }
+    for (i in 0 until n) {
+      f[i][i] = 1
     }
+    var ans = 0
+    for (i in n - 2 downTo 0) {
+      for (j in i + 1 until n) {
+        if (s[i] == s[j]) {
+          f[i][j] = f[i + 1][j - 1] + 2
+          if (i < word1.length && j >= word1.length) {
+            ans = max(ans, f[i][j])
+          }
+        } else {
+          f[i][j] = max(f[i + 1][j], f[i][j - 1])
+        }
+      }
+    }
+    return ans
+  }
 }

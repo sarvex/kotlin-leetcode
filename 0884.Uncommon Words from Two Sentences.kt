@@ -1,18 +1,18 @@
-class Solution {
-    public String[] uncommonFromSentences(String s1, String s2) {
-        Map<String, Integer> cnt = new HashMap<>();
-        for (String s : s1.split(" ")) {
-            cnt.merge(s, 1, Integer::sum);
-        }
-        for (String s : s2.split(" ")) {
-            cnt.merge(s, 1, Integer::sum);
-        }
-        List<String> ans = new ArrayList<>();
-        for (var e : cnt.entrySet()) {
-            if (e.getValue() == 1) {
-                ans.add(e.getKey());
-            }
-        }
-        return ans.toArray(new String[0]);
+internal class Solution {
+  fun uncommonFromSentences(s1: String, s2: String): Array<String> {
+    val cnt: Map<String, Int> = HashMap()
+    for (s in s1.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()) {
+      cnt.merge(s, 1) { a: Int, b: Int -> Integer.sum(a, b) }
     }
+    for (s in s2.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()) {
+      cnt.merge(s, 1) { a: Int, b: Int -> Integer.sum(a, b) }
+    }
+    val ans: List<String> = ArrayList()
+    for (e in cnt.entrySet()) {
+      if (e.getValue() === 1) {
+        ans.add(e.getKey())
+      }
+    }
+    return ans.toArray(arrayOfNulls<String>(0))
+  }
 }

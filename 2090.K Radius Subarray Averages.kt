@@ -1,22 +1,23 @@
-class Solution {
-    public int[] getAverages(int[] nums, int k) {
-        k = k << 1 | 1;
-        int n = nums.length;
-        int[] ans = new int[n];
-        Arrays.fill(ans, -1);
-        if (k > n) {
-            return ans;
-        }
-        long s = 0;
-        for (int i = 0; i < k; ++i) {
-            s += nums[i];
-        }
-        int j = k / 2;
-        ans[j] = (int) (s / k);
-        for (int i = k; i < n; ++i) {
-            s += nums[i] - nums[i - k];
-            ans[++j] = (int) (s / k);
-        }
-        return ans;
+internal class Solution {
+  fun getAverages(nums: IntArray, k: Int): IntArray {
+    var k = k
+    k = k shl 1 or 1
+    val n = nums.size
+    val ans = IntArray(n)
+    Arrays.fill(ans, -1)
+    if (k > n) {
+      return ans
     }
+    var s: Long = 0
+    for (i in 0 until k) {
+      s += nums[i].toLong()
+    }
+    var j = k / 2
+    ans[j] = (s / k).toInt()
+    for (i in k until n) {
+      s += (nums[i] - nums[i - k]).toLong()
+      ans[++j] = (s / k).toInt()
+    }
+    return ans
+  }
 }

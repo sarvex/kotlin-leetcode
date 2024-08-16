@@ -1,30 +1,33 @@
-class Solution {
-    private List<Integer>[] g;
-    private boolean[] vis;
+import java.util.*
 
-    public int reachableNodes(int n, int[][] edges, int[] restricted) {
-        g = new List[n];
-        vis = new boolean[n];
-        Arrays.setAll(g, k -> new ArrayList<>());
-        for (var e : edges) {
-            int a = e[0], b = e[1];
-            g[a].add(b);
-            g[b].add(a);
-        }
-        for (int i : restricted) {
-            vis[i] = true;
-        }
-        return dfs(0);
-    }
+internal class Solution {
+  private var g: Array<List<Int>>
+  private var vis: BooleanArray
 
-    private int dfs(int i) {
-        vis[i] = true;
-        int ans = 1;
-        for (int j : g[i]) {
-            if (!vis[j]) {
-                ans += dfs(j);
-            }
-        }
-        return ans;
+  fun reachableNodes(n: Int, edges: Array<IntArray>, restricted: IntArray): Int {
+    g = arrayOfNulls(n)
+    vis = BooleanArray(n)
+    Arrays.setAll(g) { k -> ArrayList() }
+    for (e in edges) {
+      val a = e[0]
+      val b = e[1]
+      g[a].add(b)
+      g[b].add(a)
     }
+    for (i in restricted) {
+      vis[i] = true
+    }
+    return dfs(0)
+  }
+
+  private fun dfs(i: Int): Int {
+    vis[i] = true
+    var ans = 1
+    for (j in g[i]) {
+      if (!vis[j]) {
+        ans += dfs(j)
+      }
+    }
+    return ans
+  }
 }

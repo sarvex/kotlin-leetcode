@@ -1,18 +1,18 @@
-class Solution {
-    public String orderlyQueue(String s, int k) {
-        if (k == 1) {
-            String ans = s;
-            StringBuilder sb = new StringBuilder(s);
-            for (int i = 0; i < s.length() - 1; ++i) {
-                sb.append(sb.charAt(0)).deleteCharAt(0);
-                if (sb.toString().compareTo(ans) < 0) {
-                    ans = sb.toString();
-                }
-            }
-            return ans;
+internal class Solution {
+  fun orderlyQueue(s: String, k: Int): String {
+    if (k == 1) {
+      var ans = s
+      val sb = StringBuilder(s)
+      for (i in 0 until s.length - 1) {
+        sb.append(sb[0]).deleteCharAt(0)
+        if (sb.toString().compareTo(ans) < 0) {
+          ans = sb.toString()
         }
-        char[] cs = s.toCharArray();
-        Arrays.sort(cs);
-        return String.valueOf(cs);
+      }
+      return ans
     }
+    val cs: CharArray = s.toCharArray()
+    Arrays.sort(cs)
+    return String(cs)
+  }
 }

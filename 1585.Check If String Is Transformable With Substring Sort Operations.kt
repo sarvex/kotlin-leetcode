@@ -1,22 +1,22 @@
-class Solution {
-    public boolean isTransformable(String s, String t) {
-        Deque<Integer>[] pos = new Deque[10];
-        Arrays.setAll(pos, k -> new ArrayDeque<>());
-        for (int i = 0; i < s.length(); ++i) {
-            pos[s.charAt(i) - '0'].offer(i);
-        }
-        for (int i = 0; i < t.length(); ++i) {
-            int x = t.charAt(i) - '0';
-            if (pos[x].isEmpty()) {
-                return false;
-            }
-            for (int j = 0; j < x; ++j) {
-                if (!pos[j].isEmpty() && pos[j].peek() < pos[x].peek()) {
-                    return false;
-                }
-            }
-            pos[x].poll();
-        }
-        return true;
+internal class Solution {
+  fun isTransformable(s: String, t: String): Boolean {
+    val pos: Array<Deque<Int>> = arrayOfNulls<Deque>(10)
+    Arrays.setAll(pos) { k -> ArrayDeque() }
+    for (i in 0 until s.length) {
+      pos[s[i].code - '0'.code].offer(i)
     }
+    for (i in 0 until t.length) {
+      val x: Int = t[i].code - '0'.code
+      if (pos[x].isEmpty()) {
+        return false
+      }
+      for (j in 0 until x) {
+        if (!pos[j].isEmpty() && pos[j].peek() < pos[x].peek()) {
+          return false
+        }
+      }
+      pos[x].poll()
+    }
+    return true
+  }
 }

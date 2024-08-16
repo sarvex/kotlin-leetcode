@@ -1,18 +1,23 @@
-class Solution {
-    public int[] decode(int[] encoded) {
-        int n = encoded.length + 1;
-        int a = 0, b = 0;
-        for (int i = 0; i < n - 1; i += 2) {
-            a ^= encoded[i];
-        }
-        for (int i = 1; i <= n; ++i) {
-            b ^= i;
-        }
-        int[] perm = new int[n];
-        perm[n - 1] = a ^ b;
-        for (int i = n - 2; i >= 0; --i) {
-            perm[i] = encoded[i] ^ perm[i + 1];
-        }
-        return perm;
+internal class Solution {
+  fun decode(encoded: IntArray): IntArray {
+    val n = encoded.size + 1
+    var a = 0
+    var b = 0
+    run {
+      var i = 0
+      while (i < n - 1) {
+        a = a xor encoded[i]
+        i += 2
+      }
     }
+    for (i in 1..n) {
+      b = b xor i
+    }
+    val perm = IntArray(n)
+    perm[n - 1] = a xor b
+    for (i in n - 2 downTo 0) {
+      perm[i] = encoded[i] xor perm[i + 1]
+    }
+    return perm
+  }
 }

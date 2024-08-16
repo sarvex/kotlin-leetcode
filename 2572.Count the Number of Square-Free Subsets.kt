@@ -1,38 +1,38 @@
-class Solution {
-    public int squareFreeSubsets(int[] nums) {
-        int[] primes = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29};
-        int[] cnt = new int[31];
-        for (int x : nums) {
-            ++cnt[x];
-        }
-        final int mod = (int) 1e9 + 7;
-        int n = primes.length;
-        long[] f = new long[1 << n];
-        f[0] = 1;
-        for (int i = 0; i < cnt[1]; ++i) {
-            f[0] = (f[0] * 2) % mod;
-        }
-        for (int x = 2; x < 31; ++x) {
-            if (cnt[x] == 0 || x % 4 == 0 || x % 9 == 0 || x % 25 == 0) {
-                continue;
-            }
-            int mask = 0;
-            for (int i = 0; i < n; ++i) {
-                if (x % primes[i] == 0) {
-                    mask |= 1 << i;
-                }
-            }
-            for (int state = (1 << n) - 1; state > 0; --state) {
-                if ((state & mask) == mask) {
-                    f[state] = (f[state] + cnt[x] * f[state ^ mask]) % mod;
-                }
-            }
-        }
-        long ans = 0;
-        for (int i = 0; i < 1 << n; ++i) {
-            ans = (ans + f[i]) % mod;
-        }
-        ans -= 1;
-        return (int) ans;
+internal class Solution {
+  fun squareFreeSubsets(nums: IntArray): Int {
+    val primes = intArrayOf(2, 3, 5, 7, 11, 13, 17, 19, 23, 29)
+    val cnt = IntArray(31)
+    for (x in nums) {
+      ++cnt[x]
     }
+    val mod = 1e9.toInt() + 7
+    val n = primes.size
+    val f = LongArray(1 shl n)
+    f[0] = 1
+    for (i in 0 until cnt[1]) {
+      f[0] = (f[0] * 2) % mod
+    }
+    for (x in 2..30) {
+      if (cnt[x] == 0 || x % 4 == 0 || x % 9 == 0 || x % 25 == 0) {
+        continue
+      }
+      var mask = 0
+      for (i in 0 until n) {
+        if (x % primes[i] == 0) {
+          mask = mask or (1 shl i)
+        }
+      }
+      for (state in (1 shl n) - 1 downTo 1) {
+        if ((state and mask) == mask) {
+          f[state] = (f[state] + cnt[x] * f[state xor mask]) % mod
+        }
+      }
+    }
+    var ans: Long = 0
+    for (i in 0 until (1 shl n)) {
+      ans = (ans + f[i]) % mod
+    }
+    ans -= 1
+    return ans.toInt()
+  }
 }

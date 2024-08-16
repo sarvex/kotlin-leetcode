@@ -1,18 +1,18 @@
-class Solution {
-    public boolean checkIfCanBreak(String s1, String s2) {
-        char[] cs1 = s1.toCharArray();
-        char[] cs2 = s2.toCharArray();
-        Arrays.sort(cs1);
-        Arrays.sort(cs2);
-        return check(cs1, cs2) || check(cs2, cs1);
-    }
+internal class Solution {
+  fun checkIfCanBreak(s1: String, s2: String): Boolean {
+    val cs1: CharArray = s1.toCharArray()
+    val cs2: CharArray = s2.toCharArray()
+    Arrays.sort(cs1)
+    Arrays.sort(cs2)
+    return check(cs1, cs2) || check(cs2, cs1)
+  }
 
-    private boolean check(char[] cs1, char[] cs2) {
-        for (int i = 0; i < cs1.length; ++i) {
-            if (cs1[i] < cs2[i]) {
-                return false;
-            }
-        }
-        return true;
+  private fun check(cs1: CharArray, cs2: CharArray): Boolean {
+    for (i in cs1.indices) {
+      if (cs1[i] < cs2[i]) {
+        return false
+      }
     }
+    return true
+  }
 }

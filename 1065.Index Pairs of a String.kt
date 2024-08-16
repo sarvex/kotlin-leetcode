@@ -1,41 +1,44 @@
-class Trie {
-    Trie[] children = new Trie[26];
-    boolean isEnd = false;
+internal class Trie {
+  @kotlin.jvm.JvmField
+  var children: Array<Trie> = arrayOfNulls(26)
+  @kotlin.jvm.JvmField
+  var isEnd: Boolean = false
 
-    void insert(String word) {
-        Trie node = this;
-        for (char c : word.toCharArray()) {
-            c -= 'a';
-            if (node.children[c] == null) {
-                node.children[c] = new Trie();
-            }
-            node = node.children[c];
-        }
-        node.isEnd = true;
+  fun insert(word: String) {
+    var node = this
+    for (c in word.toCharArray()) {
+      var c = c
+      (c -= 'a').toChar()
+      if (node.children[c.code] == null) {
+        node.children[c.code] = Trie()
+      }
+      node = node.children[c.code]
     }
+    node.isEnd = true
+  }
 }
 
-class Solution {
-    public int[][] indexPairs(String text, String[] words) {
-        Trie trie = new Trie();
-        for (String w : words) {
-            trie.insert(w);
-        }
-        int n = text.length();
-        List<int[]> ans = new ArrayList<>();
-        for (int i = 0; i < n; ++i) {
-            Trie node = trie;
-            for (int j = i; j < n; ++j) {
-                int idx = text.charAt(j) - 'a';
-                if (node.children[idx] == null) {
-                    break;
-                }
-                node = node.children[idx];
-                if (node.isEnd) {
-                    ans.add(new int[] {i, j});
-                }
-            }
-        }
-        return ans.toArray(new int[ans.size()][2]);
+internal class Solution {
+  fun indexPairs(text: String, words: Array<String>): Array<IntArray> {
+    val trie = Trie()
+    for (w in words) {
+      trie.insert(w)
     }
+    val n = text.length
+    val ans: List<IntArray> = ArrayList()
+    for (i in 0 until n) {
+      var node = trie
+      for (j in i until n) {
+        val idx: Int = text[j].code - 'a'.code
+        if (node.children[idx] == null) {
+          break
+        }
+        node = node.children[idx]
+        if (node.isEnd) {
+          ans.add(intArrayOf(i, j))
+        }
+      }
+    }
+    return ans.toArray(Array(ans.size()) { IntArray(2) })
+  }
 }

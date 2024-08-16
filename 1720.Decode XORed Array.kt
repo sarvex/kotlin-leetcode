@@ -1,11 +1,11 @@
-class Solution {
-    public int[] decode(int[] encoded, int first) {
-        int n = encoded.length;
-        int[] ans = new int[n + 1];
-        ans[0] = first;
-        for (int i = 0; i < n; ++i) {
-            ans[i + 1] = ans[i] ^ encoded[i];
-        }
-        return ans;
+internal class Solution {
+  fun decode(encoded: IntArray, first: Int): IntArray {
+    val n = encoded.size
+    val ans = IntArray(n + 1)
+    ans[0] = first
+    for (i in 0 until n) {
+      ans[i + 1] = ans[i] xor encoded[i]
     }
+    return ans
+  }
 }

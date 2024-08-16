@@ -1,26 +1,27 @@
-class Solution {
-    public char[][] rotateTheBox(char[][] box) {
-        int m = box.length, n = box[0].length;
-        char[][] ans = new char[n][m];
-        for (int i = 0; i < m; ++i) {
-            for (int j = 0; j < n; ++j) {
-                ans[j][m - i - 1] = box[i][j];
-            }
-        }
-        for (int j = 0; j < m; ++j) {
-            Deque<Integer> q = new ArrayDeque<>();
-            for (int i = n - 1; i >= 0; --i) {
-                if (ans[i][j] == '*') {
-                    q.clear();
-                } else if (ans[i][j] == '.') {
-                    q.offer(i);
-                } else if (!q.isEmpty()) {
-                    ans[q.pollFirst()][j] = '#';
-                    ans[i][j] = '.';
-                    q.offer(i);
-                }
-            }
-        }
-        return ans;
+internal class Solution {
+  fun rotateTheBox(box: Array<CharArray>): Array<CharArray> {
+    val m = box.size
+    val n = box[0].size
+    val ans = Array(n) { CharArray(m) }
+    for (i in 0 until m) {
+      for (j in 0 until n) {
+        ans[j][m - i - 1] = box[i][j]
+      }
     }
+    for (j in 0 until m) {
+      val q: Deque<Int> = ArrayDeque()
+      for (i in n - 1 downTo 0) {
+        if (ans[i][j] == '*') {
+          q.clear()
+        } else if (ans[i][j] == '.') {
+          q.offer(i)
+        } else if (!q.isEmpty()) {
+          ans[q.pollFirst()][j] = '#'
+          ans[i][j] = '.'
+          q.offer(i)
+        }
+      }
+    }
+    return ans
+  }
 }

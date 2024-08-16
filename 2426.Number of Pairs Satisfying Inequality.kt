@@ -1,42 +1,40 @@
-class BinaryIndexedTree {
-    private int n;
-    private int[] c;
+internal class BinaryIndexedTree(private val n: Int) {
+  private val c = IntArray(n + 1)
 
-    public BinaryIndexedTree(int n) {
-        this.n = n;
-        c = new int[n + 1];
+  fun update(x: Int, delta: Int) {
+    var x = x
+    while (x <= n) {
+      c[x] += delta
+      x += BinaryIndexedTree.Companion.lowbit(x)
     }
+  }
 
-    public static final int lowbit(int x) {
-        return x & -x;
+  fun query(x: Int): Int {
+    var x = x
+    var s = 0
+    while (x > 0) {
+      s += c[x]
+      x -= BinaryIndexedTree.Companion.lowbit(x)
     }
+    return s
+  }
 
-    public void update(int x, int delta) {
-        while (x <= n) {
-            c[x] += delta;
-            x += lowbit(x);
-        }
+  companion object {
+    fun lowbit(x: Int): Int {
+      return x and -x
     }
-
-    public int query(int x) {
-        int s = 0;
-        while (x > 0) {
-            s += c[x];
-            x -= lowbit(x);
-        }
-        return s;
-    }
+  }
 }
 
-class Solution {
-    public long numberOfPairs(int[] nums1, int[] nums2, int diff) {
-        BinaryIndexedTree tree = new BinaryIndexedTree(100000);
-        long ans = 0;
-        for (int i = 0; i < nums1.length; ++i) {
-            int v = nums1[i] - nums2[i];
-            ans += tree.query(v + diff + 40000);
-            tree.update(v + 40000, 1);
-        }
-        return ans;
+internal class Solution {
+  fun numberOfPairs(nums1: IntArray, nums2: IntArray, diff: Int): Long {
+    val tree = BinaryIndexedTree(100000)
+    var ans: Long = 0
+    for (i in nums1.indices) {
+      val v = nums1[i] - nums2[i]
+      ans += tree.query(v + diff + 40000).toLong()
+      tree.update(v + 40000, 1)
     }
+    return ans
+  }
 }

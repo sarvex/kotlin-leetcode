@@ -1,14 +1,14 @@
-class Solution {
-    public int countPairs(int[] nums, int k) {
-        int n = nums.length;
-        int ans = 0;
-        for (int i = 0; i < n; ++i) {
-            for (int j = i + 1; j < n; ++j) {
-                if (nums[i] == nums[j] && (i * j) % k == 0) {
-                    ++ans;
-                }
-            }
+internal class Solution {
+  fun countPairs(nums: IntArray, k: Int): Int {
+    val n = nums.size
+    var ans = 0
+    for (i in 0 until n) {
+      for (j in i + 1 until n) {
+        if (nums[i] == nums[j] && (i * j) % k == 0) {
+          ++ans
         }
-        return ans;
+      }
     }
+    return ans
+  }
 }

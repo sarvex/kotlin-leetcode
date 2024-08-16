@@ -1,38 +1,38 @@
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
+ * int val;
+ * TreeNode left;
+ * TreeNode right;
+ * TreeNode() {}
+ * TreeNode(int val) { this.val = val; }
+ * TreeNode(int val, TreeNode left, TreeNode right) {
+ * this.val = val;
+ * this.left = left;
+ * this.right = right;
+ * }
  * }
  */
-class Solution {
-    private List<String> ans = new ArrayList<>();
-    private List<String> t = new ArrayList<>();
+internal class Solution {
+  private val ans: List<String> = ArrayList()
+  private val t: List<String> = ArrayList()
 
-    public List<String> binaryTreePaths(TreeNode root) {
-        dfs(root);
-        return ans;
-    }
+  fun binaryTreePaths(root: TreeNode?): List<String> {
+    dfs(root)
+    return ans
+  }
 
-    private void dfs(TreeNode root) {
-        if (root == null) {
-            return;
-        }
-        t.add(root.val + "");
-        if (root.left == null && root.right == null) {
-            ans.add(String.join("->", t));
-        } else {
-            dfs(root.left);
-            dfs(root.right);
-        }
-        t.remove(t.size() - 1);
+  private fun dfs(root: TreeNode?) {
+    if (root == null) {
+      return
     }
+    t.add(root.`val` + "")
+    if (root.left == null && root.right == null) {
+      ans.add(java.lang.String.join("->", t))
+    } else {
+      dfs(root.left)
+      dfs(root.right)
+    }
+    t.remove(t.size() - 1)
+  }
 }

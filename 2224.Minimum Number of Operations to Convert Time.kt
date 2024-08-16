@@ -1,14 +1,17 @@
-class Solution {
-    public int convertTime(String current, String correct) {
-        int a = Integer.parseInt(current.substring(0, 2)) * 60
-            + Integer.parseInt(current.substring(3));
-        int b = Integer.parseInt(correct.substring(0, 2)) * 60
-            + Integer.parseInt(correct.substring(3));
-        int ans = 0, d = b - a;
-        for (int i : Arrays.asList(60, 15, 5, 1)) {
-            ans += d / i;
-            d %= i;
-        }
-        return ans;
+import java.util.*
+
+internal class Solution {
+  fun convertTime(current: String, correct: String): Int {
+    val a: Int = (current.substring(0, 2).toInt() * 60
+        + current.substring(3).toInt())
+    val b: Int = (correct.substring(0, 2).toInt() * 60
+        + correct.substring(3).toInt())
+    var ans = 0
+    var d = b - a
+    for (i in Arrays.asList(60, 15, 5, 1)) {
+      ans += d / i
+      d %= i
     }
+    return ans
+  }
 }

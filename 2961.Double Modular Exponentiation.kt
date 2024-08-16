@@ -1,24 +1,30 @@
-class Solution {
-    public List<Integer> getGoodIndices(int[][] variables, int target) {
-        List<Integer> ans = new ArrayList<>();
-        for (int i = 0; i < variables.length; ++i) {
-            var e = variables[i];
-            int a = e[0], b = e[1], c = e[2], m = e[3];
-            if (qpow(qpow(a, b, 10), c, m) == target) {
-                ans.add(i);
-            }
-        }
-        return ans;
+internal class Solution {
+  fun getGoodIndices(variables: Array<IntArray>, target: Int): List<Int> {
+    val ans: List<Int> = ArrayList()
+    for (i in variables.indices) {
+      val e = variables[i]
+      val a = e[0]
+      val b = e[1]
+      val c = e[2]
+      val m = e[3]
+      if (qpow(qpow(a.toLong(), b, 10).toLong(), c, m) == target) {
+        ans.add(i)
+      }
     }
+    return ans
+  }
 
-    private int qpow(long a, int n, int mod) {
-        long ans = 1;
-        for (; n > 0; n >>= 1) {
-            if ((n & 1) == 1) {
-                ans = ans * a % mod;
-            }
-            a = a * a % mod;
-        }
-        return (int) ans;
+  private fun qpow(a: Long, n: Int, mod: Int): Int {
+    var a = a
+    var n = n
+    var ans: Long = 1
+    while (n > 0) {
+      if ((n and 1) == 1) {
+        ans = ans * a % mod
+      }
+      a = a * a % mod
+      n = n shr 1
     }
+    return ans.toInt()
+  }
 }

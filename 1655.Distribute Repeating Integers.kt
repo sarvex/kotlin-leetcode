@@ -1,45 +1,51 @@
-class Solution {
-    public boolean canDistribute(int[] nums, int[] quantity) {
-        int m = quantity.length;
-        int[] s = new int[1 << m];
-        for (int i = 1; i < 1 << m; ++i) {
-            for (int j = 0; j < m; ++j) {
-                if ((i >> j & 1) != 0) {
-                    s[i] = s[i ^ (1 << j)] + quantity[j];
-                    break;
-                }
-            }
+internal class Solution {
+  fun canDistribute(nums: IntArray, quantity: IntArray): Boolean {
+    val m = quantity.size
+    val s = IntArray(1 shl m)
+    for (i in 1 until (1 shl m)) {
+      for (j in 0 until m) {
+        if ((i shr j and 1) != 0) {
+          s[i] = s[i xor (1 shl j)] + quantity[j]
+          break
         }
-        Map<Integer, Integer> cnt = new HashMap<>(50);
-        for (int x : nums) {
-            cnt.merge(x, 1, Integer::sum);
-        }
-        int n = cnt.size();
-        int[] arr = new int[n];
-        int i = 0;
-        for (int x : cnt.values()) {
-            arr[i++] = x;
-        }
-        boolean[][] f = new boolean[n][1 << m];
-        for (i = 0; i < n; ++i) {
-            f[i][0] = true;
-        }
-        for (i = 0; i < n; ++i) {
-            for (int j = 1; j < 1 << m; ++j) {
-                if (i > 0 && f[i - 1][j]) {
-                    f[i][j] = true;
-                    continue;
-                }
-                for (int k = j; k > 0; k = (k - 1) & j) {
-                    boolean ok1 = i == 0 ? j == k : f[i - 1][j ^ k];
-                    boolean ok2 = s[k] <= arr[i];
-                    if (ok1 && ok2) {
-                        f[i][j] = true;
-                        break;
-                    }
-                }
-            }
-        }
-        return f[n - 1][(1 << m) - 1];
+      }
     }
+    val cnt: Map<Int, Int> = HashMap(50)
+    for (x in nums) {
+      cnt.merge(x, 1) { a: Int, b: Int -> Integer.sum(a, b) }
+    }
+    val n: Int = cnt.size()
+    val arr = IntArray(n)
+    var i = 0
+    for (x in cnt.values()) {
+      arr[i++] = x
+    }
+    val f = Array(n) { BooleanArray(1 shl m) }
+    i = 0
+    while (i < n) {
+      f[i][0] = true
+      ++i
+    }
+    i = 0
+    while (i < n) {
+      for (j in 1 until (1 shl m)) {
+        if (i > 0 && f[i - 1][j]) {
+          f[i][j] = true
+          continue
+        }
+        var k: Int = j
+        while (k > 0) {
+          val ok1 = if (i == 0) j == k else f[i - 1][j xor k]
+          val ok2 = s[k] <= arr[i]
+          if (ok1 && ok2) {
+            f[i][j] = true
+            break
+          }
+          k = (k - 1) and j
+        }
+      }
+      ++i
+    }
+    return f[n - 1][(1 shl m) - 1]
+  }
 }

@@ -1,13 +1,14 @@
-class Solution {
-    public boolean canAliceWin(int[] nums) {
-        int a = 0, b = 0;
-        for (int x : nums) {
-            if (x < 10) {
-                a += x;
-            } else {
-                b += x;
-            }
-        }
-        return a != b;
+internal class Solution {
+  fun canAliceWin(nums: IntArray): Boolean {
+    var a = 0
+    var b = 0
+    for (x in nums) {
+      if (x < 10) {
+        a += x
+      } else {
+        b += x
+      }
     }
+    return a != b
+  }
 }

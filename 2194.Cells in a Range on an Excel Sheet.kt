@@ -1,11 +1,15 @@
-class Solution {
-    public List<String> cellsInRange(String s) {
-        List<String> ans = new ArrayList<>();
-        for (char i = s.charAt(0); i <= s.charAt(3); ++i) {
-            for (char j = s.charAt(1); j <= s.charAt(4); ++j) {
-                ans.add(i + "" + j);
-            }
-        }
-        return ans;
+internal class Solution {
+  fun cellsInRange(s: String): List<String> {
+    val ans: List<String> = ArrayList()
+    var i = s[0]
+    while (i <= s[3]) {
+      var j = s[1]
+      while (j <= s[4]) {
+        ans.add(i.toString() + "" + j)
+        ++j
+      }
+      ++i
     }
+    return ans
+  }
 }

@@ -1,23 +1,29 @@
-class Solution {
-    public int[] findEvenNumbers(int[] digits) {
-        int[] cnt = new int[10];
-        for (int x : digits) {
-            ++cnt[x];
-        }
-        List<Integer> ans = new ArrayList<>();
-        for (int x = 100; x < 1000; x += 2) {
-            int[] cnt1 = new int[10];
-            for (int y = x; y > 0; y /= 10) {
-                ++cnt1[y % 10];
-            }
-            boolean ok = true;
-            for (int i = 0; i < 10 && ok; ++i) {
-                ok = cnt[i] >= cnt1[i];
-            }
-            if (ok) {
-                ans.add(x);
-            }
-        }
-        return ans.stream().mapToInt(i -> i).toArray();
+internal class Solution {
+  fun findEvenNumbers(digits: IntArray): IntArray {
+    val cnt = IntArray(10)
+    for (x in digits) {
+      ++cnt[x]
     }
+    val ans: List<Int> = ArrayList()
+    var x = 100
+    while (x < 1000) {
+      val cnt1 = IntArray(10)
+      var y = x
+      while (y > 0) {
+        ++cnt1[y % 10]
+        y /= 10
+      }
+      var ok = true
+      var i = 0
+      while (i < 10 && ok) {
+        ok = cnt[i] >= cnt1[i]
+        ++i
+      }
+      if (ok) {
+        ans.add(x)
+      }
+      x += 2
+    }
+    return ans.stream().mapToInt { i -> i }.toArray()
+  }
 }

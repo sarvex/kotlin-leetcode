@@ -1,22 +1,18 @@
-class MyHashSet {
-    private boolean[] data = new boolean[1000001];
+internal class MyHashSet {
+  private val data = BooleanArray(1000001)
 
-    public MyHashSet() {
-    }
+  fun add(key: Int) {
+    data[key] = true
+  }
 
-    public void add(int key) {
-        data[key] = true;
-    }
+  fun remove(key: Int) {
+    data[key] = false
+  }
 
-    public void remove(int key) {
-        data[key] = false;
-    }
-
-    public boolean contains(int key) {
-        return data[key];
-    }
+  fun contains(key: Int): Boolean {
+    return data[key]
+  }
 }
-
 /**
  * Your MyHashSet object will be instantiated and called as such:
  * MyHashSet obj = new MyHashSet();

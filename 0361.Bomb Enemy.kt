@@ -1,56 +1,56 @@
-class Solution {
-    public int maxKilledEnemies(char[][] grid) {
-        int m = grid.length;
-        int n = grid[0].length;
-        int[][] g = new int[m][n];
-        for (int i = 0; i < m; ++i) {
-            int t = 0;
-            for (int j = 0; j < n; ++j) {
-                if (grid[i][j] == 'W') {
-                    t = 0;
-                } else if (grid[i][j] == 'E') {
-                    ++t;
-                }
-                g[i][j] += t;
-            }
-            t = 0;
-            for (int j = n - 1; j >= 0; --j) {
-                if (grid[i][j] == 'W') {
-                    t = 0;
-                } else if (grid[i][j] == 'E') {
-                    ++t;
-                }
-                g[i][j] += t;
-            }
+internal class Solution {
+  fun maxKilledEnemies(grid: Array<CharArray>): Int {
+    val m = grid.size
+    val n = grid[0].size
+    val g = Array(m) { IntArray(n) }
+    for (i in 0 until m) {
+      var t = 0
+      for (j in 0 until n) {
+        if (grid[i][j] == 'W') {
+          t = 0
+        } else if (grid[i][j] == 'E') {
+          ++t
         }
-        for (int j = 0; j < n; ++j) {
-            int t = 0;
-            for (int i = 0; i < m; ++i) {
-                if (grid[i][j] == 'W') {
-                    t = 0;
-                } else if (grid[i][j] == 'E') {
-                    ++t;
-                }
-                g[i][j] += t;
-            }
-            t = 0;
-            for (int i = m - 1; i >= 0; --i) {
-                if (grid[i][j] == 'W') {
-                    t = 0;
-                } else if (grid[i][j] == 'E') {
-                    ++t;
-                }
-                g[i][j] += t;
-            }
+        g[i][j] += t
+      }
+      t = 0
+      for (j in n - 1 downTo 0) {
+        if (grid[i][j] == 'W') {
+          t = 0
+        } else if (grid[i][j] == 'E') {
+          ++t
         }
-        int ans = 0;
-        for (int i = 0; i < m; ++i) {
-            for (int j = 0; j < n; ++j) {
-                if (grid[i][j] == '0') {
-                    ans = Math.max(ans, g[i][j]);
-                }
-            }
-        }
-        return ans;
+        g[i][j] += t
+      }
     }
+    for (j in 0 until n) {
+      var t = 0
+      for (i in 0 until m) {
+        if (grid[i][j] == 'W') {
+          t = 0
+        } else if (grid[i][j] == 'E') {
+          ++t
+        }
+        g[i][j] += t
+      }
+      t = 0
+      for (i in m - 1 downTo 0) {
+        if (grid[i][j] == 'W') {
+          t = 0
+        } else if (grid[i][j] == 'E') {
+          ++t
+        }
+        g[i][j] += t
+      }
+    }
+    var ans = 0
+    for (i in 0 until m) {
+      for (j in 0 until n) {
+        if (grid[i][j] == '0') {
+          ans = max(ans, g[i][j])
+        }
+      }
+    }
+    return ans
+  }
 }

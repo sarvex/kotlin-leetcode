@@ -1,24 +1,25 @@
-class Solution {
-    public int maxSumRangeQuery(int[] nums, int[][] requests) {
-        int n = nums.length;
-        int[] d = new int[n];
-        for (var req : requests) {
-            int l = req[0], r = req[1];
-            d[l]++;
-            if (r + 1 < n) {
-                d[r + 1]--;
-            }
-        }
-        for (int i = 1; i < n; ++i) {
-            d[i] += d[i - 1];
-        }
-        Arrays.sort(nums);
-        Arrays.sort(d);
-        final int mod = (int) 1e9 + 7;
-        long ans = 0;
-        for (int i = 0; i < n; ++i) {
-            ans = (ans + 1L * nums[i] * d[i]) % mod;
-        }
-        return (int) ans;
+internal class Solution {
+  fun maxSumRangeQuery(nums: IntArray, requests: Array<IntArray>): Int {
+    val n = nums.size
+    val d = IntArray(n)
+    for (req in requests) {
+      val l = req[0]
+      val r = req[1]
+      d[l]++
+      if (r + 1 < n) {
+        d[r + 1]--
+      }
     }
+    for (i in 1 until n) {
+      d[i] += d[i - 1]
+    }
+    Arrays.sort(nums)
+    Arrays.sort(d)
+    val mod = 1e9.toInt() + 7
+    var ans: Long = 0
+    for (i in 0 until n) {
+      ans = (ans + 1L * nums[i] * d[i]) % mod
+    }
+    return ans.toInt()
+  }
 }

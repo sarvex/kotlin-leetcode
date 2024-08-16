@@ -1,14 +1,15 @@
-class Solution {
-    public int finalPositionOfSnake(int n, List<String> commands) {
-        int x = 0, y = 0;
-        for (var c : commands) {
-            switch (c.charAt(0)) {
-                case 'U' -> x--;
-                case 'D' -> x++;
-                case 'L' -> y--;
-                case 'R' -> y++;
-            }
-        }
-        return x * n + y;
+internal class Solution {
+  fun finalPositionOfSnake(n: Int, commands: List<String>): Int {
+    var x = 0
+    var y = 0
+    for (c in commands) {
+      when (c.charAt(0)) {
+        'U' -> x--
+        'D' -> x++
+        'L' -> y--
+        'R' -> y++
+      }
     }
+    return x * n + y
+  }
 }

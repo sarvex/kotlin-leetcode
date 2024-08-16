@@ -1,17 +1,17 @@
-class Solution {
-    public long[] minimumCosts(int[] regular, int[] express, int expressCost) {
-        int n = regular.length;
-        long[] f = new long[n + 1];
-        long[] g = new long[n + 1];
-        g[0] = 1 << 30;
-        long[] cost = new long[n];
-        for (int i = 1; i <= n; ++i) {
-            int a = regular[i - 1];
-            int b = express[i - 1];
-            f[i] = Math.min(f[i - 1] + a, g[i - 1] + a);
-            g[i] = Math.min(f[i - 1] + expressCost + b, g[i - 1] + b);
-            cost[i - 1] = Math.min(f[i], g[i]);
-        }
-        return cost;
+internal class Solution {
+  fun minimumCosts(regular: IntArray, express: IntArray, expressCost: Int): LongArray {
+    val n = regular.size
+    val f = LongArray(n + 1)
+    val g = LongArray(n + 1)
+    g[0] = (1 shl 30).toLong()
+    val cost = LongArray(n)
+    for (i in 1..n) {
+      val a = regular[i - 1]
+      val b = express[i - 1]
+      f[i] = min(f[i - 1] + a, g[i - 1] + a)
+      g[i] = min(f[i - 1] + expressCost + b, g[i - 1] + b)
+      cost[i - 1] = min(f[i], g[i])
     }
+    return cost
+  }
 }

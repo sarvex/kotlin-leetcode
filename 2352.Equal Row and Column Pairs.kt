@@ -1,19 +1,19 @@
-class Solution {
-    public int equalPairs(int[][] grid) {
-        int n = grid.length;
-        int ans = 0;
-        for (int i = 0; i < n; ++i) {
-            for (int j = 0; j < n; ++j) {
-                int ok = 1;
-                for (int k = 0; k < n; ++k) {
-                    if (grid[i][k] != grid[k][j]) {
-                        ok = 0;
-                        break;
-                    }
-                }
-                ans += ok;
-            }
+internal class Solution {
+  fun equalPairs(grid: Array<IntArray>): Int {
+    val n = grid.size
+    var ans = 0
+    for (i in 0 until n) {
+      for (j in 0 until n) {
+        var ok = 1
+        for (k in 0 until n) {
+          if (grid[i][k] != grid[k][j]) {
+            ok = 0
+            break
+          }
         }
-        return ans;
+        ans += ok
+      }
     }
+    return ans
+  }
 }

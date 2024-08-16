@@ -1,18 +1,20 @@
-class Solution {
-    public int findMaximumLength(int[] nums) {
-        int n = nums.length;
-        long[] s = new long[n + 1];
-        for (int i = 0; i < n; ++i) {
-            s[i + 1] = s[i] + nums[i];
-        }
-        int[] f = new int[n + 1];
-        int[] pre = new int[n + 2];
-        for (int i = 1; i <= n; ++i) {
-            pre[i] = Math.max(pre[i], pre[i - 1]);
-            f[i] = f[pre[i]] + 1;
-            int j = Arrays.binarySearch(s, s[i] * 2 - s[pre[i]]);
-            pre[j < 0 ? -j - 1 : j] = i;
-        }
-        return f[n];
+import java.util.*
+
+internal class Solution {
+  fun findMaximumLength(nums: IntArray): Int {
+    val n = nums.size
+    val s = LongArray(n + 1)
+    for (i in 0 until n) {
+      s[i + 1] = s[i] + nums[i]
     }
+    val f = IntArray(n + 1)
+    val pre = IntArray(n + 2)
+    for (i in 1..n) {
+      pre[i] = max(pre[i], pre[i - 1])
+      f[i] = f[pre[i]] + 1
+      val j = Arrays.binarySearch(s, s[i] * 2 - s[pre[i]])
+      pre[if (j < 0) -j - 1 else j] = i
+    }
+    return f[n]
+  }
 }

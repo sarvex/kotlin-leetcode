@@ -1,39 +1,41 @@
-class Solution {
-    private int n;
-    private List<Integer>[] g;
-    private List<List<Integer>> ans;
+import java.util.*
 
-    public List<List<Integer>> getAncestors(int n, int[][] edges) {
-        g = new List[n];
-        this.n = n;
-        Arrays.setAll(g, i -> new ArrayList<>());
-        for (var e : edges) {
-            g[e[0]].add(e[1]);
-        }
-        ans = new ArrayList<>();
-        for (int i = 0; i < n; ++i) {
-            ans.add(new ArrayList<>());
-        }
-        for (int i = 0; i < n; ++i) {
-            bfs(i);
-        }
-        return ans;
-    }
+internal class Solution {
+  private var n = 0
+  private var g: Array<List<Int>>
+  private var ans: List<List<Int>>? = null
 
-    private void bfs(int s) {
-        Deque<Integer> q = new ArrayDeque<>();
-        q.offer(s);
-        boolean[] vis = new boolean[n];
-        vis[s] = true;
-        while (!q.isEmpty()) {
-            int i = q.poll();
-            for (int j : g[i]) {
-                if (!vis[j]) {
-                    vis[j] = true;
-                    q.offer(j);
-                    ans.get(j).add(s);
-                }
-            }
-        }
+  fun getAncestors(n: Int, edges: Array<IntArray>): List<List<Int>>? {
+    g = arrayOfNulls(n)
+    this.n = n
+    Arrays.setAll(g) { i -> ArrayList() }
+    for (e in edges) {
+      g[e[0]].add(e[1])
     }
+    ans = ArrayList()
+    for (i in 0 until n) {
+      ans.add(ArrayList())
+    }
+    for (i in 0 until n) {
+      bfs(i)
+    }
+    return ans
+  }
+
+  private fun bfs(s: Int) {
+    val q: Deque<Int> = ArrayDeque()
+    q.offer(s)
+    val vis = BooleanArray(n)
+    vis[s] = true
+    while (!q.isEmpty()) {
+      val i: Int = q.poll()
+      for (j in g[i]) {
+        if (!vis[j]) {
+          vis[j] = true
+          q.offer(j)
+          ans!![j].add(s)
+        }
+      }
+    }
+  }
 }

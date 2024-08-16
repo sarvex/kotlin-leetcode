@@ -1,21 +1,24 @@
-class Solution {
-    public int maximumValue(String[] strs) {
-        int ans = 0;
-        for (var s : strs) {
-            ans = Math.max(ans, f(s));
-        }
-        return ans;
+internal class Solution {
+  fun maximumValue(strs: Array<String>): Int {
+    var ans = 0
+    for (s in strs) {
+      ans = max(ans, f(s))
     }
+    return ans
+  }
 
-    private int f(String s) {
-        int x = 0;
-        for (int i = 0, n = s.length(); i < n; ++i) {
-            char c = s.charAt(i);
-            if (Character.isLetter(c)) {
-                return n;
-            }
-            x = x * 10 + (c - '0');
-        }
-        return x;
+  private fun f(s: String): Int {
+    var x = 0
+    var i = 0
+    val n = s.length
+    while (i < n) {
+      val c = s[i]
+      if (Character.isLetter(c)) {
+        return n
+      }
+      x = x * 10 + (c.code - '0'.code)
+      ++i
     }
+    return x
+  }
 }

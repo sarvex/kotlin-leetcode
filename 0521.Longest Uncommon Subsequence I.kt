@@ -1,5 +1,5 @@
-class Solution {
-    public int findLUSlength(String a, String b) {
-        return a.equals(b) ? -1 : Math.max(a.length(), b.length());
-    }
+internal class Solution {
+  fun findLUSlength(a: String, b: String): Int {
+    return if (a == b) -1 else max(a.length, b.length)
+  }
 }

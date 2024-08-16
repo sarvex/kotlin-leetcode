@@ -1,23 +1,22 @@
-class ValidWordAbbr {
-    private Map<String, Set<String>> d = new HashMap<>();
+internal class ValidWordAbbr(dictionary: Array<String>) {
+  private val d: Map<String, Set<String>> = HashMap()
 
-    public ValidWordAbbr(String[] dictionary) {
-        for (var s : dictionary) {
-            d.computeIfAbsent(abbr(s), k -> new HashSet<>()).add(s);
-        }
+  init {
+    for (s in dictionary) {
+      d.computeIfAbsent(abbr(s)) { k -> HashSet() }.add(s)
     }
+  }
 
-    public boolean isUnique(String word) {
-        var ws = d.get(abbr(word));
-        return ws == null || (ws.size() == 1 && ws.contains(word));
-    }
+  fun isUnique(word: String): Boolean {
+    val ws: Unit = d[abbr(word)]
+    return ws == null || (ws.size() === 1 && ws.contains(word))
+  }
 
-    private String abbr(String s) {
-        int n = s.length();
-        return n < 3 ? s : s.substring(0, 1) + (n - 2) + s.substring(n - 1);
-    }
+  private fun abbr(s: String): String {
+    val n = s.length
+    return if (n < 3) s else s.substring(0, 1) + (n - 2) + s.substring(n - 1)
+  }
 }
-
 /**
  * Your ValidWordAbbr object will be instantiated and called as such:
  * ValidWordAbbr obj = new ValidWordAbbr(dictionary);

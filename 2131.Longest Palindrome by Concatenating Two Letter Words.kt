@@ -1,22 +1,23 @@
-class Solution {
-    public int longestPalindrome(String[] words) {
-        Map<String, Integer> cnt = new HashMap<>();
-        for (var w : words) {
-            cnt.put(w, cnt.getOrDefault(w, 0) + 1);
-        }
-        int ans = 0, x = 0;
-        for (var e : cnt.entrySet()) {
-            var k = e.getKey();
-            var rk = new StringBuilder(k).reverse().toString();
-            int v = e.getValue();
-            if (k.charAt(0) == k.charAt(1)) {
-                x += v & 1;
-                ans += v / 2 * 2 * 2;
-            } else {
-                ans += Math.min(v, cnt.getOrDefault(rk, 0)) * 2;
-            }
-        }
-        ans += x > 0 ? 2 : 0;
-        return ans;
+internal class Solution {
+  fun longestPalindrome(words: Array<String>): Int {
+    val cnt: Map<String, Int> = HashMap()
+    for (w in words) {
+      cnt.put(w, cnt.getOrDefault(w, 0) + 1)
     }
+    var ans = 0
+    var x = 0
+    for (e in cnt.entrySet()) {
+      val k = e.getKey()
+      val rk: String = StringBuilder(k).reverse().toString()
+      val v: Int = e.getValue()
+      if (k.charAt(0) === k.charAt(1)) {
+        x += v and 1
+        ans += v / 2 * 2 * 2
+      } else {
+        ans += Math.min(v, cnt.getOrDefault(rk, 0)) * 2
+      }
+    }
+    ans += if (x > 0) 2 else 0
+    return ans
+  }
 }

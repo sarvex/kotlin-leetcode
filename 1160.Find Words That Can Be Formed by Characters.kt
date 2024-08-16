@@ -1,24 +1,24 @@
-class Solution {
-    public int countCharacters(String[] words, String chars) {
-        int[] cnt = new int[26];
-        for (int i = 0; i < chars.length(); ++i) {
-            ++cnt[chars.charAt(i) - 'a'];
-        }
-        int ans = 0;
-        for (String w : words) {
-            int[] wc = new int[26];
-            boolean ok = true;
-            for (int i = 0; i < w.length(); ++i) {
-                int j = w.charAt(i) - 'a';
-                if (++wc[j] > cnt[j]) {
-                    ok = false;
-                    break;
-                }
-            }
-            if (ok) {
-                ans += w.length();
-            }
-        }
-        return ans;
+internal class Solution {
+  fun countCharacters(words: Array<String>, chars: String): Int {
+    val cnt = IntArray(26)
+    for (i in 0 until chars.length) {
+      ++cnt[chars[i].code - 'a'.code]
     }
+    var ans = 0
+    for (w in words) {
+      val wc = IntArray(26)
+      var ok = true
+      for (i in 0 until w.length) {
+        val j: Int = w[i].code - 'a'.code
+        if (++wc[j] > cnt[j]) {
+          ok = false
+          break
+        }
+      }
+      if (ok) {
+        ans += w.length
+      }
+    }
+    return ans
+  }
 }

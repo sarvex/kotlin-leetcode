@@ -1,52 +1,52 @@
-class Trie {
-    private final int inf = 1 << 30;
-    private Trie[] children = new Trie[26];
-    private int length = inf;
-    private int idx = inf;
+internal class Trie {
+  private val inf = 1 shl 30
+  private val children: Array<Trie> = arrayOfNulls(26)
+  private var length = inf
+  private var idx = inf
 
-    public void insert(String w, int i) {
-        Trie node = this;
-        if (node.length > w.length()) {
-            node.length = w.length();
-            node.idx = i;
-        }
-        for (int k = w.length() - 1; k >= 0; --k) {
-            int idx = w.charAt(k) - 'a';
-            if (node.children[idx] == null) {
-                node.children[idx] = new Trie();
-            }
-            node = node.children[idx];
-            if (node.length > w.length()) {
-                node.length = w.length();
-                node.idx = i;
-            }
-        }
+  fun insert(w: String, i: Int) {
+    var node = this
+    if (node.length > w.length) {
+      node.length = w.length
+      node.idx = i
     }
+    for (k in w.length - 1 downTo 0) {
+      val idx: Int = w[k].code - 'a'.code
+      if (node.children[idx] == null) {
+        node.children[idx] = Trie()
+      }
+      node = node.children[idx]
+      if (node.length > w.length) {
+        node.length = w.length
+        node.idx = i
+      }
+    }
+  }
 
-    public int query(String w) {
-        Trie node = this;
-        for (int k = w.length() - 1; k >= 0; --k) {
-            int idx = w.charAt(k) - 'a';
-            if (node.children[idx] == null) {
-                break;
-            }
-            node = node.children[idx];
-        }
-        return node.idx;
+  fun query(w: String): Int {
+    var node = this
+    for (k in w.length - 1 downTo 0) {
+      val idx: Int = w[k].code - 'a'.code
+      if (node.children[idx] == null) {
+        break
+      }
+      node = node.children[idx]
     }
+    return node.idx
+  }
 }
 
-class Solution {
-    public int[] stringIndices(String[] wordsContainer, String[] wordsQuery) {
-        Trie trie = new Trie();
-        for (int i = 0; i < wordsContainer.length; ++i) {
-            trie.insert(wordsContainer[i], i);
-        }
-        int n = wordsQuery.length;
-        int[] ans = new int[n];
-        for (int i = 0; i < n; ++i) {
-            ans[i] = trie.query(wordsQuery[i]);
-        }
-        return ans;
+internal class Solution {
+  fun stringIndices(wordsContainer: Array<String?>, wordsQuery: Array<String?>): IntArray {
+    val trie = Trie()
+    for (i in wordsContainer.indices) {
+      trie.insert(wordsContainer[i]!!, i)
     }
+    val n = wordsQuery.size
+    val ans = IntArray(n)
+    for (i in 0 until n) {
+      ans[i] = trie.query(wordsQuery[i])
+    }
+    return ans
+  }
 }

@@ -1,18 +1,19 @@
-class Solution {
-    public int maxValue(int n, int index, int maxSum) {
-        int left = 1, right = maxSum;
-        while (left < right) {
-            int mid = (left + right + 1) >>> 1;
-            if (sum(mid - 1, index) + sum(mid, n - index) <= maxSum) {
-                left = mid;
-            } else {
-                right = mid - 1;
-            }
-        }
-        return left;
+internal class Solution {
+  fun maxValue(n: Int, index: Int, maxSum: Int): Int {
+    var left = 1
+    var right = maxSum
+    while (left < right) {
+      val mid = (left + right + 1) ushr 1
+      if (sum((mid - 1).toLong(), index) + sum(mid.toLong(), n - index) <= maxSum) {
+        left = mid
+      } else {
+        right = mid - 1
+      }
     }
+    return left
+  }
 
-    private long sum(long x, int cnt) {
-        return x >= cnt ? (x + x - cnt + 1) * cnt / 2 : (x + 1) * x / 2 + cnt - x;
-    }
+  private fun sum(x: Long, cnt: Int): Long {
+    return if (x >= cnt) (x + x - cnt + 1) * cnt / 2 else (x + 1) * x / 2 + cnt - x
+  }
 }

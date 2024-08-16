@@ -1,17 +1,17 @@
-class Solution {
-    public boolean wordBreak(String s, List<String> wordDict) {
-        Set<String> words = new HashSet<>(wordDict);
-        int n = s.length();
-        boolean[] f = new boolean[n + 1];
-        f[0] = true;
-        for (int i = 1; i <= n; ++i) {
-            for (int j = 0; j < i; ++j) {
-                if (f[j] && words.contains(s.substring(j, i))) {
-                    f[i] = true;
-                    break;
-                }
-            }
+internal class Solution {
+  fun wordBreak(s: String, wordDict: List<String?>?): Boolean {
+    val words: Set<String> = HashSet(wordDict)
+    val n = s.length
+    val f = BooleanArray(n + 1)
+    f[0] = true
+    for (i in 1..n) {
+      for (j in 0 until i) {
+        if (f[j] && words.contains(s.substring(j, i))) {
+          f[i] = true
+          break
         }
-        return f[n];
+      }
     }
+    return f[n]
+  }
 }

@@ -1,30 +1,31 @@
-class Solution {
-    public int unhappyFriends(int n, int[][] preferences, int[][] pairs) {
-        int[][] d = new int[n][n];
-        for (int i = 0; i < n; ++i) {
-            for (int j = 0; j < n - 1; ++j) {
-                d[i][preferences[i][j]] = j;
-            }
-        }
-        int[] p = new int[n];
-        for (var e : pairs) {
-            int x = e[0], y = e[1];
-            p[x] = y;
-            p[y] = x;
-        }
-        int ans = 0;
-        for (int x = 0; x < n; ++x) {
-            int y = p[x];
-            int find = 0;
-            for (int i = 0; i < d[x][y]; ++i) {
-                int u = preferences[x][i];
-                if (d[u][x] < d[u][p[u]]) {
-                    find = 1;
-                    break;
-                }
-            }
-            ans += find;
-        }
-        return ans;
+internal class Solution {
+  fun unhappyFriends(n: Int, preferences: Array<IntArray>, pairs: Array<IntArray>): Int {
+    val d = Array(n) { IntArray(n) }
+    for (i in 0 until n) {
+      for (j in 0 until n - 1) {
+        d[i][preferences[i][j]] = j
+      }
     }
+    val p = IntArray(n)
+    for (e in pairs) {
+      val x = e[0]
+      val y = e[1]
+      p[x] = y
+      p[y] = x
+    }
+    var ans = 0
+    for (x in 0 until n) {
+      val y = p[x]
+      var find = 0
+      for (i in 0 until d[x][y]) {
+        val u = preferences[x][i]
+        if (d[u][x] < d[u][p[u]]) {
+          find = 1
+          break
+        }
+      }
+      ans += find
+    }
+    return ans
+  }
 }

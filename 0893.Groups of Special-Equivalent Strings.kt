@@ -1,32 +1,32 @@
-class Solution {
-    public int numSpecialEquivGroups(String[] words) {
-        Set<String> s = new HashSet<>();
-        for (String word : words) {
-            s.add(convert(word));
-        }
-        return s.size();
+internal class Solution {
+  fun numSpecialEquivGroups(words: Array<String>): Int {
+    val s: Set<String> = HashSet()
+    for (word in words) {
+      s.add(convert(word))
     }
+    return s.size()
+  }
 
-    private String convert(String word) {
-        List<Character> a = new ArrayList<>();
-        List<Character> b = new ArrayList<>();
-        for (int i = 0; i < word.length(); ++i) {
-            char ch = word.charAt(i);
-            if (i % 2 == 0) {
-                a.add(ch);
-            } else {
-                b.add(ch);
-            }
-        }
-        Collections.sort(a);
-        Collections.sort(b);
-        StringBuilder sb = new StringBuilder();
-        for (char c : a) {
-            sb.append(c);
-        }
-        for (char c : b) {
-            sb.append(c);
-        }
-        return sb.toString();
+  private fun convert(word: String): String {
+    val a: List<Char> = ArrayList()
+    val b: List<Char> = ArrayList()
+    for (i in 0 until word.length) {
+      val ch = word[i]
+      if (i % 2 == 0) {
+        a.add(ch)
+      } else {
+        b.add(ch)
+      }
     }
+    Collections.sort(a)
+    Collections.sort(b)
+    val sb = StringBuilder()
+    for (c in a) {
+      sb.append(c)
+    }
+    for (c in b) {
+      sb.append(c)
+    }
+    return sb.toString()
+  }
 }

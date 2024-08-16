@@ -1,21 +1,23 @@
-class Solution {
-    public String[] findWords(String[] words) {
-        String s = "12210111011122000010020202";
-        List<String> ans = new ArrayList<>();
-        for (var w : words) {
-            String t = w.toLowerCase();
-            char x = s.charAt(t.charAt(0) - 'a');
-            boolean ok = true;
-            for (char c : t.toCharArray()) {
-                if (s.charAt(c - 'a') != x) {
-                    ok = false;
-                    break;
-                }
-            }
-            if (ok) {
-                ans.add(w);
-            }
+import java.util.*
+
+internal class Solution {
+  fun findWords(words: Array<String>): Array<String> {
+    val s = "12210111011122000010020202"
+    val ans: List<String> = ArrayList()
+    for (w in words) {
+      val t: String = w.lowercase(Locale.getDefault())
+      val x = s[t[0].code - 'a'.code]
+      var ok = true
+      for (c in t.toCharArray()) {
+        if (s[c.code - 'a'.code] != x) {
+          ok = false
+          break
         }
-        return ans.toArray(new String[0]);
+      }
+      if (ok) {
+        ans.add(w)
+      }
     }
+    return ans.toArray(arrayOfNulls<String>(0))
+  }
 }

@@ -1,42 +1,49 @@
-class Solution {
-    private boolean ok;
-    private char[][] board;
-    private List<Integer> t = new ArrayList<>();
-    private boolean[][] row = new boolean[9][9];
-    private boolean[][] col = new boolean[9][9];
-    private boolean[][][] block = new boolean[3][3][9];
+internal class Solution {
+  private var ok = false
+  private var board: Array<CharArray>
+  private val t: List<Int> = ArrayList()
+  private val row = Array(9) { BooleanArray(9) }
+  private val col = Array(9) { BooleanArray(9) }
+  private val block = Array(3) { Array(3) { BooleanArray(9) } }
 
-    public void solveSudoku(char[][] board) {
-        this.board = board;
-        for (int i = 0; i < 9; ++i) {
-            for (int j = 0; j < 9; ++j) {
-                if (board[i][j] == '.') {
-                    t.add(i * 9 + j);
-                } else {
-                    int v = board[i][j] - '1';
-                    row[i][v] = col[j][v] = block[i / 3][j / 3][v] = true;
-                }
-            }
+  fun solveSudoku(board: Array<CharArray>) {
+    this.board = board
+    for (i in 0..8) {
+      for (j in 0..8) {
+        if (board[i][j] == '.') {
+          t.add(i * 9 + j)
+        } else {
+          val v: Int = board[i][j].code - '1'.code
+          block[i / 3][j / 3][v] = true
+          col[j][v] = block[i / 3][j / 3][v]
+          row[i][v] = col[j][v]
         }
-        dfs(0);
+      }
     }
+    dfs(0)
+  }
 
-    private void dfs(int k) {
-        if (k == t.size()) {
-            ok = true;
-            return;
-        }
-        int i = t.get(k) / 9, j = t.get(k) % 9;
-        for (int v = 0; v < 9; ++v) {
-            if (!row[i][v] && !col[j][v] && !block[i / 3][j / 3][v]) {
-                row[i][v] = col[j][v] = block[i / 3][j / 3][v] = true;
-                board[i][j] = (char) (v + '1');
-                dfs(k + 1);
-                row[i][v] = col[j][v] = block[i / 3][j / 3][v] = false;
-            }
-            if (ok) {
-                return;
-            }
-        }
+  private fun dfs(k: Int) {
+    if (k == t.size()) {
+      ok = true
+      return
     }
+    val i = t[k] / 9
+    val j = t[k] % 9
+    for (v in 0..8) {
+      if (!row[i][v] && !col[j][v] && !block[i / 3][j / 3][v]) {
+        block[i / 3][j / 3][v] = true
+        col[j][v] = block[i / 3][j / 3][v]
+        row[i][v] = col[j][v]
+        board[i][j] = (v + '1'.code).toChar()
+        dfs(k + 1)
+        block[i / 3][j / 3][v] = false
+        col[j][v] = block[i / 3][j / 3][v]
+        row[i][v] = col[j][v]
+      }
+      if (ok) {
+        return
+      }
+    }
+  }
 }

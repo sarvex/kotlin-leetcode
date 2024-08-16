@@ -1,30 +1,30 @@
-class MinStack {
-    private Deque<Integer> stk1 = new ArrayDeque<>();
-    private Deque<Integer> stk2 = new ArrayDeque<>();
+import java.util.*
 
-    public MinStack() {
-        stk2.push(Integer.MAX_VALUE);
-    }
+internal class MinStack {
+  private val stk1: Deque<Int> = ArrayDeque()
+  private val stk2: Deque<Int> = ArrayDeque()
 
-    public void push(int val) {
-        stk1.push(val);
-        stk2.push(Math.min(val, stk2.peek()));
-    }
+  init {
+    stk2.push(MAX_VALUE)
+  }
 
-    public void pop() {
-        stk1.pop();
-        stk2.pop();
-    }
+  fun push(`val`: Int) {
+    stk1.push(`val`)
+    stk2.push(Math.min(`val`, stk2.peek()))
+  }
 
-    public int top() {
-        return stk1.peek();
-    }
+  fun pop() {
+    stk1.pop()
+    stk2.pop()
+  }
 
-    public int getMin() {
-        return stk2.peek();
-    }
+  fun top(): Int {
+    return stk1.peek()
+  }
+
+  val min: Int
+    get() = stk2.peek()
 }
-
 /**
  * Your MinStack object will be instantiated and called as such:
  * MinStack obj = new MinStack();

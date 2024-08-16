@@ -1,20 +1,20 @@
-class Solution {
-    public List<Boolean> checkIfPrerequisite(int n, int[][] prerequisites, int[][] queries) {
-        boolean[][] f = new boolean[n][n];
-        for (var p : prerequisites) {
-            f[p[0]][p[1]] = true;
-        }
-        for (int k = 0; k < n; ++k) {
-            for (int i = 0; i < n; ++i) {
-                for (int j = 0; j < n; ++j) {
-                    f[i][j] |= f[i][k] && f[k][j];
-                }
-            }
-        }
-        List<Boolean> ans = new ArrayList<>();
-        for (var q : queries) {
-            ans.add(f[q[0]][q[1]]);
-        }
-        return ans;
+internal class Solution {
+  fun checkIfPrerequisite(n: Int, prerequisites: Array<IntArray>, queries: Array<IntArray>): List<Boolean> {
+    val f = Array(n) { BooleanArray(n) }
+    for (p in prerequisites) {
+      f[p[0]][p[1]] = true
     }
+    for (k in 0 until n) {
+      for (i in 0 until n) {
+        for (j in 0 until n) {
+          f[i][j] = f[i][j] or (f[i][k] && f[k][j])
+        }
+      }
+    }
+    val ans: List<Boolean> = ArrayList()
+    for (q in queries) {
+      ans.add(f[q[0]][q[1]])
+    }
+    return ans
+  }
 }

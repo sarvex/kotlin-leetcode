@@ -1,5 +1,5 @@
-class Solution {
-    public double[] convertTemperature(double celsius) {
-        return new double[] {celsius + 273.15, celsius * 1.8 + 32};
-    }
+internal class Solution {
+  fun convertTemperature(celsius: Double): DoubleArray {
+    return doubleArrayOf(celsius + 273.15, celsius * 1.8 + 32)
+  }
 }

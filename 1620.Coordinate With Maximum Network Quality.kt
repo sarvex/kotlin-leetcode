@@ -1,22 +1,22 @@
-class Solution {
-    public int[] bestCoordinate(int[][] towers, int radius) {
-        int mx = 0;
-        int[] ans = new int[] {0, 0};
-        for (int i = 0; i < 51; ++i) {
-            for (int j = 0; j < 51; ++j) {
-                int t = 0;
-                for (var e : towers) {
-                    double d = Math.sqrt((i - e[0]) * (i - e[0]) + (j - e[1]) * (j - e[1]));
-                    if (d <= radius) {
-                        t += Math.floor(e[2] / (1 + d));
-                    }
-                }
-                if (mx < t) {
-                    mx = t;
-                    ans = new int[] {i, j};
-                }
-            }
+internal class Solution {
+  fun bestCoordinate(towers: Array<IntArray>, radius: Int): IntArray {
+    var mx = 0
+    var ans = intArrayOf(0, 0)
+    for (i in 0..50) {
+      for (j in 0..50) {
+        var t = 0
+        for (e in towers) {
+          val d: Double = sqrt((i - e[0]) * (i - e[0]) + (j - e[1]) * (j - e[1]))
+          if (d <= radius) {
+            t += floor(e[2] / (1 + d))
+          }
         }
-        return ans;
+        if (mx < t) {
+          mx = t
+          ans = intArrayOf(i, j)
+        }
+      }
     }
+    return ans
+  }
 }

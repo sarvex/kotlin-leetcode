@@ -1,16 +1,19 @@
-class Solution {
-    public int numberOfSpecialSubstrings(String s) {
-        int n = s.length();
-        int ans = 0;
-        int[] cnt = new int[26];
-        for (int i = 0, j = 0; i < n; ++i) {
-            int k = s.charAt(i) - 'a';
-            ++cnt[k];
-            while (cnt[k] > 1) {
-                --cnt[s.charAt(j++) - 'a'];
-            }
-            ans += i - j + 1;
-        }
-        return ans;
+internal class Solution {
+  fun numberOfSpecialSubstrings(s: String): Int {
+    val n = s.length
+    var ans = 0
+    val cnt = IntArray(26)
+    var i = 0
+    var j = 0
+    while (i < n) {
+      val k: Int = s[i].code - 'a'.code
+      ++cnt[k]
+      while (cnt[k] > 1) {
+        --cnt[s[j++].code - 'a'.code]
+      }
+      ans += i - j + 1
+      ++i
     }
+    return ans
+  }
 }

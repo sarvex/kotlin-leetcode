@@ -1,28 +1,28 @@
-class Solution {
-    public int palindromePartition(String s, int k) {
-        int n = s.length();
-        int[][] g = new int[n][n];
-        for (int i = n - 1; i >= 0; --i) {
-            for (int j = i; j < n; ++j) {
-                g[i][j] = s.charAt(i) != s.charAt(j) ? 1 : 0;
-                if (i + 1 < j) {
-                    g[i][j] += g[i + 1][j - 1];
-                }
-            }
+internal class Solution {
+  fun palindromePartition(s: String, k: Int): Int {
+    val n = s.length
+    val g = Array(n) { IntArray(n) }
+    for (i in n - 1 downTo 0) {
+      for (j in i until n) {
+        g[i][j] = if (s[i] != s[j]) 1 else 0
+        if (i + 1 < j) {
+          g[i][j] += g[i + 1][j - 1]
         }
-        int[][] f = new int[n + 1][k + 1];
-        for (int i = 1; i <= n; ++i) {
-            for (int j = 1; j <= Math.min(i, k); ++j) {
-                if (j == 1) {
-                    f[i][j] = g[0][i - 1];
-                } else {
-                    f[i][j] = 10000;
-                    for (int h = j - 1; h < i; ++h) {
-                        f[i][j] = Math.min(f[i][j], f[h][j - 1] + g[h][i - 1]);
-                    }
-                }
-            }
-        }
-        return f[n][k];
+      }
     }
+    val f = Array(n + 1) { IntArray(k + 1) }
+    for (i in 1..n) {
+      for (j in 1..min(i, k)) {
+        if (j == 1) {
+          f[i][j] = g[0][i - 1]
+        } else {
+          f[i][j] = 10000
+          for (h in j - 1 until i) {
+            f[i][j] = min(f[i][j], f[h][j - 1] + g[h][i - 1])
+          }
+        }
+      }
+    }
+    return f[n][k]
+  }
 }

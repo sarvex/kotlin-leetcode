@@ -1,18 +1,20 @@
-class Solution {
-    public int canCompleteCircuit(int[] gas, int[] cost) {
-        int n = gas.length;
-        int i = n - 1, j = n - 1;
-        int cnt = 0, s = 0;
-        while (cnt < n) {
-            s += gas[j] - cost[j];
-            ++cnt;
-            j = (j + 1) % n;
-            while (s < 0 && cnt < n) {
-                --i;
-                s += gas[i] - cost[i];
-                ++cnt;
-            }
-        }
-        return s < 0 ? -1 : i;
+internal class Solution {
+  fun canCompleteCircuit(gas: IntArray, cost: IntArray): Int {
+    val n = gas.size
+    var i = n - 1
+    var j = n - 1
+    var cnt = 0
+    var s = 0
+    while (cnt < n) {
+      s += gas[j] - cost[j]
+      ++cnt
+      j = (j + 1) % n
+      while (s < 0 && cnt < n) {
+        --i
+        s += gas[i] - cost[i]
+        ++cnt
+      }
     }
+    return if (s < 0) -1 else i
+  }
 }

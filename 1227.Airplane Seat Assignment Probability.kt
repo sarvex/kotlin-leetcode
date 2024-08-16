@@ -1,5 +1,5 @@
-class Solution {
-    public double nthPersonGetsNthSeat(int n) {
-        return n == 1 ? 1 : .5;
-    }
+internal class Solution {
+  fun nthPersonGetsNthSeat(n: Int): Double {
+    return if (n == 1) 1.0 else .5
+  }
 }

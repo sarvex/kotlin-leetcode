@@ -1,16 +1,18 @@
-class Solution {
-    public List<String> removeAnagrams(String[] words) {
-        List<String> ans = new ArrayList<>();
-        String prev = "";
-        for (String w : words) {
-            char[] cs = w.toCharArray();
-            Arrays.sort(cs);
-            String t = String.valueOf(cs);
-            if (!t.equals(prev)) {
-                ans.add(w);
-            }
-            prev = t;
-        }
-        return ans;
+import java.util.*
+
+internal class Solution {
+  fun removeAnagrams(words: Array<String>): List<String> {
+    val ans: List<String> = ArrayList()
+    var prev = ""
+    for (w in words) {
+      val cs: CharArray = w.toCharArray()
+      Arrays.sort(cs)
+      val t = String(cs)
+      if (t != prev) {
+        ans.add(w)
+      }
+      prev = t
     }
+    return ans
+  }
 }

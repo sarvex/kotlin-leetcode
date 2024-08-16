@@ -1,47 +1,50 @@
-class Solution {
-    public int[][] candyCrush(int[][] board) {
-        int m = board.length, n = board[0].length;
-        boolean run = true;
+internal class Solution {
+  fun candyCrush(board: Array<IntArray>): Array<IntArray> {
+    val m = board.size
+    val n = board[0].size
+    var run = true
 
-        while (run) {
-            run = false;
-            for (int i = 0; i < m; i++) {
-                for (int j = 2; j < n; j++) {
-                    if (board[i][j] != 0 && Math.abs(board[i][j]) == Math.abs(board[i][j - 1])
-                        && Math.abs(board[i][j]) == Math.abs(board[i][j - 2])) {
-                        run = true;
-                        int val = Math.abs(board[i][j]);
-                        board[i][j] = board[i][j - 1] = board[i][j - 2] = -val;
-                    }
-                }
-            }
-            for (int j = 0; j < n; j++) {
-                for (int i = 2; i < m; i++) {
-                    if (board[i][j] != 0 && Math.abs(board[i][j]) == Math.abs(board[i - 1][j])
-                        && Math.abs(board[i][j]) == Math.abs(board[i - 2][j])) {
-                        run = true;
-                        int val = Math.abs(board[i][j]);
-                        board[i][j] = board[i - 1][j] = board[i - 2][j] = -val;
-                    }
-                }
-            }
-            if (run) {
-                for (int j = 0; j < n; j++) {
-                    int k = m - 1;
-                    for (int i = m - 1; i >= 0; i--) {
-                        if (board[i][j] > 0) {
-                            board[k][j] = board[i][j];
-                            k--;
-                        }
-                    }
-                    while (k >= 0) {
-                        board[k][j] = 0;
-                        k--;
-                    }
-                }
-            }
+    while (run) {
+      run = false
+      for (i in 0 until m) {
+        for (j in 2 until n) {
+          if (board[i][j] != 0 && abs(board[i][j]) == abs(board[i][j - 1]) && abs(board[i][j]) == abs(board[i][j - 2])) {
+            run = true
+            val `val`: Int = abs(board[i][j])
+            board[i][j - 2] = -`val`
+            board[i][j - 1] = board[i][j - 2]
+            board[i][j] = board[i][j - 1]
+          }
         }
-
-        return board;
+      }
+      for (j in 0 until n) {
+        for (i in 2 until m) {
+          if (board[i][j] != 0 && abs(board[i][j]) == abs(board[i - 1][j]) && abs(board[i][j]) == abs(board[i - 2][j])) {
+            run = true
+            val `val`: Int = abs(board[i][j])
+            board[i - 2][j] = -`val`
+            board[i - 1][j] = board[i - 2][j]
+            board[i][j] = board[i - 1][j]
+          }
+        }
+      }
+      if (run) {
+        for (j in 0 until n) {
+          var k = m - 1
+          for (i in m - 1 downTo 0) {
+            if (board[i][j] > 0) {
+              board[k][j] = board[i][j]
+              k--
+            }
+          }
+          while (k >= 0) {
+            board[k][j] = 0
+            k--
+          }
+        }
+      }
     }
+
+    return board
+  }
 }

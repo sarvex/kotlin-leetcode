@@ -1,34 +1,35 @@
-class Solution {
-    private int[] a = new int[12];
-    private int[][] dp = new int[12][12];
+internal class Solution {
+  private val a = IntArray(12)
+  private val dp = Array(12) { IntArray(12) }
 
-    public int countDigitOne(int n) {
-        int len = 0;
-        while (n > 0) {
-            a[++len] = n % 10;
-            n /= 10;
-        }
-        for (var e : dp) {
-            Arrays.fill(e, -1);
-        }
-        return dfs(len, 0, true);
+  fun countDigitOne(n: Int): Int {
+    var n = n
+    var len = 0
+    while (n > 0) {
+      a[++len] = n % 10
+      n /= 10
     }
+    for (e in dp) {
+      Arrays.fill(e, -1)
+    }
+    return dfs(len, 0, true)
+  }
 
-    private int dfs(int pos, int cnt, boolean limit) {
-        if (pos <= 0) {
-            return cnt;
-        }
-        if (!limit && dp[pos][cnt] != -1) {
-            return dp[pos][cnt];
-        }
-        int up = limit ? a[pos] : 9;
-        int ans = 0;
-        for (int i = 0; i <= up; ++i) {
-            ans += dfs(pos - 1, cnt + (i == 1 ? 1 : 0), limit && i == up);
-        }
-        if (!limit) {
-            dp[pos][cnt] = ans;
-        }
-        return ans;
+  private fun dfs(pos: Int, cnt: Int, limit: Boolean): Int {
+    if (pos <= 0) {
+      return cnt
     }
+    if (!limit && dp[pos][cnt] != -1) {
+      return dp[pos][cnt]
+    }
+    val up = if (limit) a[pos] else 9
+    var ans = 0
+    for (i in 0..up) {
+      ans += dfs(pos - 1, cnt + (if (i == 1) 1 else 0), limit && i == up)
+    }
+    if (!limit) {
+      dp[pos][cnt] = ans
+    }
+    return ans
+  }
 }

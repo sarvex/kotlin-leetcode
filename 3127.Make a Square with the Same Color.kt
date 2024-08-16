@@ -1,19 +1,21 @@
-class Solution {
-    public boolean canMakeSquare(char[][] grid) {
-        final int[] dirs = {0, 0, 1, 1, 0};
-        for (int i = 0; i < 2; ++i) {
-            for (int j = 0; j < 2; ++j) {
-                int cnt1 = 0, cnt2 = 0;
-                for (int k = 0; k < 4; ++k) {
-                    int x = i + dirs[k], y = j + dirs[k + 1];
-                    cnt1 += grid[x][y] == 'W' ? 1 : 0;
-                    cnt2 += grid[x][y] == 'B' ? 1 : 0;
-                }
-                if (cnt1 != cnt2) {
-                    return true;
-                }
-            }
+internal class Solution {
+  fun canMakeSquare(grid: Array<CharArray>): Boolean {
+    val dirs = intArrayOf(0, 0, 1, 1, 0)
+    for (i in 0..1) {
+      for (j in 0..1) {
+        var cnt1 = 0
+        var cnt2 = 0
+        for (k in 0..3) {
+          val x = i + dirs[k]
+          val y = j + dirs[k + 1]
+          cnt1 += if (grid[x][y] == 'W') 1 else 0
+          cnt2 += if (grid[x][y] == 'B') 1 else 0
         }
-        return false;
+        if (cnt1 != cnt2) {
+          return true
+        }
+      }
     }
+    return false
+  }
 }

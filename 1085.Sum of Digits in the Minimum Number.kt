@@ -1,13 +1,14 @@
-class Solution {
-    public int sumOfDigits(int[] nums) {
-        int x = 100;
-        for (int v : nums) {
-            x = Math.min(x, v);
-        }
-        int s = 0;
-        for (; x > 0; x /= 10) {
-            s += x % 10;
-        }
-        return s & 1 ^ 1;
+internal class Solution {
+  fun sumOfDigits(nums: IntArray): Int {
+    var x = 100
+    for (v in nums) {
+      x = min(x, v)
     }
+    var s = 0
+    while (x > 0) {
+      s += x % 10
+      x /= 10
+    }
+    return s and 1 xor 1
+  }
 }

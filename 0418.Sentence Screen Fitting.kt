@@ -1,18 +1,19 @@
-class Solution {
-    public int wordsTyping(String[] sentence, int rows, int cols) {
-        String s = String.join(" ", sentence) + " ";
-        int m = s.length();
-        int cur = 0;
-        while (rows-- > 0) {
-            cur += cols;
-            if (s.charAt(cur % m) == ' ') {
-                ++cur;
-            } else {
-                while (cur > 0 && s.charAt((cur - 1) % m) != ' ') {
-                    --cur;
-                }
-            }
+internal class Solution {
+  fun wordsTyping(sentence: Array<String?>, rows: Int, cols: Int): Int {
+    var rows = rows
+    val s = java.lang.String.join(" ", *sentence) + " "
+    val m = s.length
+    var cur = 0
+    while (rows-- > 0) {
+      cur += cols
+      if (s[cur % m] == ' ') {
+        ++cur
+      } else {
+        while (cur > 0 && s[(cur - 1) % m] != ' ') {
+          --cur
         }
-        return cur / m;
+      }
     }
+    return cur / m
+  }
 }

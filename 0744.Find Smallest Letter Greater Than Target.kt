@@ -1,7 +1,7 @@
-class Solution {
-    public char nextGreatestLetter(char[] letters, char target) {
-        int i = Arrays.binarySearch(letters, (char) (target + 1));
-        i = i < 0 ? -i - 1 : i;
-        return letters[i % letters.length];
-    }
+internal class Solution {
+  fun nextGreatestLetter(letters: CharArray, target: Char): Char {
+    var i: Int = Arrays.binarySearch(letters, (target.code + 1).toChar())
+    i = if (i < 0) -i - 1 else i
+    return letters[i % letters.size]
+  }
 }

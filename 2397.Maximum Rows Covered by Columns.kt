@@ -1,27 +1,28 @@
-class Solution {
-    public int maximumRows(int[][] matrix, int numSelect) {
-        int m = matrix.length, n = matrix[0].length;
-        int[] rows = new int[m];
-        for (int i = 0; i < m; ++i) {
-            for (int j = 0; j < n; ++j) {
-                if (matrix[i][j] == 1) {
-                    rows[i] |= 1 << j;
-                }
-            }
+internal class Solution {
+  fun maximumRows(matrix: Array<IntArray>, numSelect: Int): Int {
+    val m = matrix.size
+    val n = matrix[0].size
+    val rows = IntArray(m)
+    for (i in 0 until m) {
+      for (j in 0 until n) {
+        if (matrix[i][j] == 1) {
+          rows[i] = rows[i] or (1 shl j)
         }
-        int ans = 0;
-        for (int mask = 1; mask < 1 << n; ++mask) {
-            if (Integer.bitCount(mask) != numSelect) {
-                continue;
-            }
-            int t = 0;
-            for (int x : rows) {
-                if ((x & mask) == x) {
-                    ++t;
-                }
-            }
-            ans = Math.max(ans, t);
-        }
-        return ans;
+      }
     }
+    var ans = 0
+    for (mask in 1 until (1 shl n)) {
+      if (Integer.bitCount(mask) != numSelect) {
+        continue
+      }
+      var t = 0
+      for (x in rows) {
+        if ((x and mask) == x) {
+          ++t
+        }
+      }
+      ans = max(ans, t)
+    }
+    return ans
+  }
 }

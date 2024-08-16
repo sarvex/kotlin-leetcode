@@ -1,27 +1,28 @@
-import java.util.Deque;
+import java.util.*
 
-class Solution {
-    public int[][] allCellsDistOrder(int rows, int cols, int rCenter, int cCenter) {
-        Deque<int[]> q = new ArrayDeque<>();
-        q.offer(new int[] {rCenter, cCenter});
-        boolean[][] vis = new boolean[rows][cols];
-        vis[rCenter][cCenter] = true;
-        int[][] ans = new int[rows * cols][2];
-        int[] dirs = {-1, 0, 1, 0, -1};
-        int idx = 0;
-        while (!q.isEmpty()) {
-            for (int n = q.size(); n > 0; --n) {
-                var p = q.poll();
-                ans[idx++] = p;
-                for (int k = 0; k < 4; ++k) {
-                    int x = p[0] + dirs[k], y = p[1] + dirs[k + 1];
-                    if (x >= 0 && x < rows && y >= 0 && y < cols && !vis[x][y]) {
-                        vis[x][y] = true;
-                        q.offer(new int[] {x, y});
-                    }
-                }
-            }
+internal class Solution {
+  fun allCellsDistOrder(rows: Int, cols: Int, rCenter: Int, cCenter: Int): Array<IntArray> {
+    val q: Deque<IntArray> = ArrayDeque()
+    q.offer(intArrayOf(rCenter, cCenter))
+    val vis = Array(rows) { BooleanArray(cols) }
+    vis[rCenter][cCenter] = true
+    val ans = Array(rows * cols) { IntArray(2) }
+    val dirs = intArrayOf(-1, 0, 1, 0, -1)
+    var idx = 0
+    while (!q.isEmpty()) {
+      for (n in q.size downTo 1) {
+        val p = q.poll()
+        ans[idx++] = p
+        for (k in 0..3) {
+          val x = p[0] + dirs[k]
+          val y = p[1] + dirs[k + 1]
+          if (x >= 0 && x < rows && y >= 0 && y < cols && !vis[x][y]) {
+            vis[x][y] = true
+            q.offer(intArrayOf(x, y))
+          }
         }
-        return ans;
+      }
     }
+    return ans
+  }
 }

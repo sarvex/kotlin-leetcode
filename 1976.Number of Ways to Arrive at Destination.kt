@@ -1,44 +1,46 @@
-class Solution {
-    public int countPaths(int n, int[][] roads) {
-        final long inf = Long.MAX_VALUE / 2;
-        final int mod = (int) 1e9 + 7;
-        long[][] g = new long[n][n];
-        for (var e : g) {
-            Arrays.fill(e, inf);
-        }
-        for (var r : roads) {
-            int u = r[0], v = r[1], t = r[2];
-            g[u][v] = t;
-            g[v][u] = t;
-        }
-        g[0][0] = 0;
-        long[] dist = new long[n];
-        Arrays.fill(dist, inf);
-        dist[0] = 0;
-        long[] f = new long[n];
-        f[0] = 1;
-        boolean[] vis = new boolean[n];
-        for (int i = 0; i < n; ++i) {
-            int t = -1;
-            for (int j = 0; j < n; ++j) {
-                if (!vis[j] && (t == -1 || dist[j] < dist[t])) {
-                    t = j;
-                }
-            }
-            vis[t] = true;
-            for (int j = 0; j < n; ++j) {
-                if (j == t) {
-                    continue;
-                }
-                long ne = dist[t] + g[t][j];
-                if (dist[j] > ne) {
-                    dist[j] = ne;
-                    f[j] = f[t];
-                } else if (dist[j] == ne) {
-                    f[j] = (f[j] + f[t]) % mod;
-                }
-            }
-        }
-        return (int) f[n - 1];
+internal class Solution {
+  fun countPaths(n: Int, roads: Array<IntArray>): Int {
+    val inf: Long = MAX_VALUE / 2
+    val mod = 1e9.toInt() + 7
+    val g = Array(n) { LongArray(n) }
+    for (e in g) {
+      Arrays.fill(e, inf)
     }
+    for (r in roads) {
+      val u = r[0]
+      val v = r[1]
+      val t = r[2]
+      g[u][v] = t.toLong()
+      g[v][u] = t.toLong()
+    }
+    g[0][0] = 0
+    val dist = LongArray(n)
+    Arrays.fill(dist, inf)
+    dist[0] = 0
+    val f = LongArray(n)
+    f[0] = 1
+    val vis = BooleanArray(n)
+    for (i in 0 until n) {
+      var t = -1
+      for (j in 0 until n) {
+        if (!vis[j] && (t == -1 || dist[j] < dist[t])) {
+          t = j
+        }
+      }
+      vis[t] = true
+      for (j in 0 until n) {
+        if (j == t) {
+          continue
+        }
+        val ne = dist[t] + g[t][j]
+        if (dist[j] > ne) {
+          dist[j] = ne
+          f[j] = f[t]
+        } else if (dist[j] == ne) {
+          f[j] = (f[j] + f[t]) % mod
+        }
+      }
+    }
+    return f[n - 1].toInt()
+  }
 }

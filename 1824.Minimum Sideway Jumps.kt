@@ -1,21 +1,21 @@
-class Solution {
-    public int minSideJumps(int[] obstacles) {
-        final int inf = 1 << 30;
-        int[] f = {1, 0, 1};
-        for (int i = 1; i < obstacles.length; ++i) {
-            for (int j = 0; j < 3; ++j) {
-                if (obstacles[i] == j + 1) {
-                    f[j] = inf;
-                    break;
-                }
-            }
-            int x = Math.min(f[0], Math.min(f[1], f[2])) + 1;
-            for (int j = 0; j < 3; ++j) {
-                if (obstacles[i] != j + 1) {
-                    f[j] = Math.min(f[j], x);
-                }
-            }
+internal class Solution {
+  fun minSideJumps(obstacles: IntArray): Int {
+    val inf = 1 shl 30
+    val f = intArrayOf(1, 0, 1)
+    for (i in 1 until obstacles.size) {
+      for (j in 0..2) {
+        if (obstacles[i] == j + 1) {
+          f[j] = inf
+          break
         }
-        return Math.min(f[0], Math.min(f[1], f[2]));
+      }
+      val x: Int = min(f[0], min(f[1], f[2])) + 1
+      for (j in 0..2) {
+        if (obstacles[i] != j + 1) {
+          f[j] = min(f[j], x)
+        }
+      }
     }
+    return min(f[0], min(f[1], f[2]))
+  }
 }

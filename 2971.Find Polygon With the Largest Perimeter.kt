@@ -1,17 +1,19 @@
-class Solution {
-    public long largestPerimeter(int[] nums) {
-        Arrays.sort(nums);
-        int n = nums.length;
-        long[] s = new long[n + 1];
-        for (int i = 1; i <= n; ++i) {
-            s[i] = s[i - 1] + nums[i - 1];
-        }
-        long ans = -1;
-        for (int k = 3; k <= n; ++k) {
-            if (s[k - 1] > nums[k - 1]) {
-                ans = Math.max(ans, s[k]);
-            }
-        }
-        return ans;
+import java.util.*
+
+internal class Solution {
+  fun largestPerimeter(nums: IntArray): Long {
+    Arrays.sort(nums)
+    val n = nums.size
+    val s = LongArray(n + 1)
+    for (i in 1..n) {
+      s[i] = s[i - 1] + nums[i - 1]
     }
+    var ans: Long = -1
+    for (k in 3..n) {
+      if (s[k - 1] > nums[k - 1]) {
+        ans = max(ans, s[k])
+      }
+    }
+    return ans
+  }
 }

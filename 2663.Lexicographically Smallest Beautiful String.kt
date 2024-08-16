@@ -1,28 +1,28 @@
-class Solution {
-    public String smallestBeautifulString(String s, int k) {
-        int n = s.length();
-        char[] cs = s.toCharArray();
-        for (int i = n - 1; i >= 0; --i) {
-            int p = cs[i] - 'a' + 1;
-            for (int j = p; j < k; ++j) {
-                char c = (char) ('a' + j);
-                if ((i > 0 && cs[i - 1] == c) || (i > 1 && cs[i - 2] == c)) {
-                    continue;
-                }
-                cs[i] = c;
-                for (int l = i + 1; l < n; ++l) {
-                    for (int m = 0; m < k; ++m) {
-                        c = (char) ('a' + m);
-                        if ((l > 0 && cs[l - 1] == c) || (l > 1 && cs[l - 2] == c)) {
-                            continue;
-                        }
-                        cs[l] = c;
-                        break;
-                    }
-                }
-                return String.valueOf(cs);
-            }
+internal class Solution {
+  fun smallestBeautifulString(s: String, k: Int): String {
+    val n = s.length
+    val cs: CharArray = s.toCharArray()
+    for (i in n - 1 downTo 0) {
+      val p: Int = cs[i].code - 'a'.code + 1
+      for (j in p until k) {
+        var c: Char = ('a'.code + j).toChar()
+        if ((i > 0 && cs[i - 1] == c) || (i > 1 && cs[i - 2] == c)) {
+          continue
         }
-        return "";
+        cs[i] = c
+        for (l in i + 1 until n) {
+          for (m in 0 until k) {
+            c = ('a'.code + m).toChar()
+            if ((l > 0 && cs[l - 1] == c) || (l > 1 && cs[l - 2] == c)) {
+              continue
+            }
+            cs[l] = c
+            break
+          }
+        }
+        return String(cs)
+      }
     }
+    return ""
+  }
 }

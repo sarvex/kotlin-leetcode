@@ -1,14 +1,14 @@
-class Solution {
-    public int minimumOperations(int[] nums) {
-        boolean[] s = new boolean[101];
-        s[0] = true;
-        int ans = 0;
-        for (int x : nums) {
-            if (!s[x]) {
-                ++ans;
-                s[x] = true;
-            }
-        }
-        return ans;
+internal class Solution {
+  fun minimumOperations(nums: IntArray): Int {
+    val s = BooleanArray(101)
+    s[0] = true
+    var ans = 0
+    for (x in nums) {
+      if (!s[x]) {
+        ++ans
+        s[x] = true
+      }
     }
+    return ans
+  }
 }

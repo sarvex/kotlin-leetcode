@@ -1,25 +1,27 @@
-class Solution {
-    public int maximumsSplicedArray(int[] nums1, int[] nums2) {
-        int s1 = 0, s2 = 0, n = nums1.length;
-        for (int i = 0; i < n; ++i) {
-            s1 += nums1[i];
-            s2 += nums2[i];
-        }
-        return Math.max(s2 + f(nums1, nums2), s1 + f(nums2, nums1));
+internal class Solution {
+  fun maximumsSplicedArray(nums1: IntArray, nums2: IntArray): Int {
+    var s1 = 0
+    var s2 = 0
+    val n = nums1.size
+    for (i in 0 until n) {
+      s1 += nums1[i]
+      s2 += nums2[i]
     }
+    return max(s2 + f(nums1, nums2), s1 + f(nums2, nums1))
+  }
 
-    private int f(int[] nums1, int[] nums2) {
-        int t = nums1[0] - nums2[0];
-        int mx = t;
-        for (int i = 1; i < nums1.length; ++i) {
-            int v = nums1[i] - nums2[i];
-            if (t > 0) {
-                t += v;
-            } else {
-                t = v;
-            }
-            mx = Math.max(mx, t);
-        }
-        return mx;
+  private fun f(nums1: IntArray, nums2: IntArray): Int {
+    var t = nums1[0] - nums2[0]
+    var mx = t
+    for (i in 1 until nums1.size) {
+      val v = nums1[i] - nums2[i]
+      if (t > 0) {
+        t += v
+      } else {
+        t = v
+      }
+      mx = max(mx, t)
     }
+    return mx
+  }
 }

@@ -1,49 +1,57 @@
-class Solution {
-    public boolean[] findAnswer(int n, int[][] edges) {
-        List<int[]>[] g = new List[n];
-        Arrays.setAll(g, k -> new ArrayList<>());
-        int m = edges.length;
-        for (int i = 0; i < m; ++i) {
-            int a = edges[i][0], b = edges[i][1], w = edges[i][2];
-            g[a].add(new int[] {b, w, i});
-            g[b].add(new int[] {a, w, i});
-        }
-        int[] dist = new int[n];
-        final int inf = 1 << 30;
-        Arrays.fill(dist, inf);
-        dist[0] = 0;
-        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[0] - b[0]);
-        pq.offer(new int[] {0, 0});
-        while (!pq.isEmpty()) {
-            var p = pq.poll();
-            int da = p[0], a = p[1];
-            if (da > dist[a]) {
-                continue;
-            }
-            for (var e : g[a]) {
-                int b = e[0], w = e[1];
-                if (dist[b] > dist[a] + w) {
-                    dist[b] = dist[a] + w;
-                    pq.offer(new int[] {dist[b], b});
-                }
-            }
-        }
-        boolean[] ans = new boolean[m];
-        if (dist[n - 1] == inf) {
-            return ans;
-        }
-        Deque<Integer> q = new ArrayDeque<>();
-        q.offer(n - 1);
-        while (!q.isEmpty()) {
-            int a = q.poll();
-            for (var e : g[a]) {
-                int b = e[0], w = e[1], i = e[2];
-                if (dist[a] == dist[b] + w) {
-                    ans[i] = true;
-                    q.offer(b);
-                }
-            }
-        }
-        return ans;
+import java.util.*
+
+internal class Solution {
+  fun findAnswer(n: Int, edges: Array<IntArray>): BooleanArray {
+    val g: Array<List<IntArray>> = arrayOfNulls(n)
+    Arrays.setAll(g) { k -> ArrayList() }
+    val m = edges.size
+    for (i in 0 until m) {
+      val a = edges[i][0]
+      val b = edges[i][1]
+      val w = edges[i][2]
+      g[a].add(intArrayOf(b, w, i))
+      g[b].add(intArrayOf(a, w, i))
     }
+    val dist = IntArray(n)
+    val inf = 1 shl 30
+    Arrays.fill(dist, inf)
+    dist[0] = 0
+    val pq: PriorityQueue<IntArray> = PriorityQueue { a, b -> a.get(0) - b.get(0) }
+    pq.offer(intArrayOf(0, 0))
+    while (!pq.isEmpty()) {
+      val p: Unit = pq.poll()
+      val da: Int = p.get(0)
+      val a: Int = p.get(1)
+      if (da > dist[a]) {
+        continue
+      }
+      for (e in g[a]) {
+        val b = e[0]
+        val w = e[1]
+        if (dist[b] > dist[a] + w) {
+          dist[b] = dist[a] + w
+          pq.offer(intArrayOf(dist[b], b))
+        }
+      }
+    }
+    val ans = BooleanArray(m)
+    if (dist[n - 1] == inf) {
+      return ans
+    }
+    val q: Deque<Int> = ArrayDeque()
+    q.offer(n - 1)
+    while (!q.isEmpty()) {
+      val a: Int = q.poll()
+      for (e in g[a]) {
+        val b = e[0]
+        val w = e[1]
+        val i = e[2]
+        if (dist[a] == dist[b] + w) {
+          ans[i] = true
+          q.offer(b)
+        }
+      }
+    }
+    return ans
+  }
 }

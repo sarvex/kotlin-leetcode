@@ -1,16 +1,18 @@
-class Solution {
-    public boolean verifyPreorder(int[] preorder) {
-        Deque<Integer> stk = new ArrayDeque<>();
-        int last = Integer.MIN_VALUE;
-        for (int x : preorder) {
-            if (x < last) {
-                return false;
-            }
-            while (!stk.isEmpty() && stk.peek() < x) {
-                last = stk.poll();
-            }
-            stk.push(x);
-        }
-        return true;
+import java.util.*
+
+internal class Solution {
+  fun verifyPreorder(preorder: IntArray): Boolean {
+    val stk: Deque<Int> = ArrayDeque()
+    var last: Int = MIN_VALUE
+    for (x in preorder) {
+      if (x < last) {
+        return false
+      }
+      while (!stk.isEmpty() && stk.peek() < x) {
+        last = stk.poll()
+      }
+      stk.push(x)
     }
+    return true
+  }
 }

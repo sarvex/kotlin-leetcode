@@ -1,13 +1,14 @@
-class Solution {
-    public int findMiddleIndex(int[] nums) {
-        int left = 0, right = Arrays.stream(nums).sum();
-        for (int i = 0; i < nums.length; ++i) {
-            right -= nums[i];
-            if (left == right) {
-                return i;
-            }
-            left += nums[i];
-        }
-        return -1;
+internal class Solution {
+  fun findMiddleIndex(nums: IntArray): Int {
+    var left = 0
+    var right: Int = Arrays.stream(nums).sum()
+    for (i in nums.indices) {
+      right -= nums[i]
+      if (left == right) {
+        return i
+      }
+      left += nums[i]
     }
+    return -1
+  }
 }

@@ -1,30 +1,30 @@
-class Solution {
-    public int daysBetweenDates(String date1, String date2) {
-        return Math.abs(calcDays(date1) - calcDays(date2));
-    }
+internal class Solution {
+  fun daysBetweenDates(date1: String, date2: String): Int {
+    return abs(calcDays(date1) - calcDays(date2))
+  }
 
-    private boolean isLeapYear(int year) {
-        return year % 4 == 0 && (year % 100 != 0 || year % 400 == 0);
-    }
+  private fun isLeapYear(year: Int): Boolean {
+    return year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)
+  }
 
-    private int daysInMonth(int year, int month) {
-        int[] days = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-        days[1] += isLeapYear(year) ? 1 : 0;
-        return days[month - 1];
-    }
+  private fun daysInMonth(year: Int, month: Int): Int {
+    val days = intArrayOf(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
+    days[1] += if (isLeapYear(year)) 1 else 0
+    return days[month - 1]
+  }
 
-    private int calcDays(String date) {
-        int year = Integer.parseInt(date.substring(0, 4));
-        int month = Integer.parseInt(date.substring(5, 7));
-        int day = Integer.parseInt(date.substring(8));
-        int days = 0;
-        for (int y = 1971; y < year; ++y) {
-            days += isLeapYear(y) ? 366 : 365;
-        }
-        for (int m = 1; m < month; ++m) {
-            days += daysInMonth(year, m);
-        }
-        days += day;
-        return days;
+  private fun calcDays(date: String): Int {
+    val year: Int = date.substring(0, 4).toInt()
+    val month: Int = date.substring(5, 7).toInt()
+    val day: Int = date.substring(8).toInt()
+    var days = 0
+    for (y in 1971 until year) {
+      days += if (isLeapYear(y)) 366 else 365
     }
+    for (m in 1 until month) {
+      days += daysInMonth(year, m)
+    }
+    days += day
+    return days
+  }
 }

@@ -1,10 +1,13 @@
-class Solution {
-    public int maxSubArray(int[] nums) {
-        int ans = nums[0];
-        for (int i = 1, f = nums[0]; i < nums.length; ++i) {
-            f = Math.max(f, 0) + nums[i];
-            ans = Math.max(ans, f);
-        }
-        return ans;
+internal class Solution {
+  fun maxSubArray(nums: IntArray): Int {
+    var ans = nums[0]
+    var i = 1
+    var f = nums[0]
+    while (i < nums.size) {
+      f = max(f, 0) + nums[i]
+      ans = max(ans, f)
+      ++i
     }
+    return ans
+  }
 }

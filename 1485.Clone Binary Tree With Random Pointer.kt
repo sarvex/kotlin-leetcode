@@ -1,41 +1,40 @@
 /**
  * Definition for Node.
  * public class Node {
- *     int val;
- *     Node left;
- *     Node right;
- *     Node random;
- *     Node() {}
- *     Node(int val) { this.val = val; }
- *     Node(int val, Node left, Node right, Node random) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *         this.random = random;
- *     }
+ * int val;
+ * Node left;
+ * Node right;
+ * Node random;
+ * Node() {}
+ * Node(int val) { this.val = val; }
+ * Node(int val, Node left, Node right, Node random) {
+ * this.val = val;
+ * this.left = left;
+ * this.right = right;
+ * this.random = random;
+ * }
  * }
  */
+internal class Solution {
+  private var mp: Map<Node, NodeCopy>? = null
 
-class Solution {
-    private Map<Node, NodeCopy> mp;
+  fun copyRandomBinaryTree(root: Node?): NodeCopy? {
+    mp = HashMap()
+    return dfs(root)
+  }
 
-    public NodeCopy copyRandomBinaryTree(Node root) {
-        mp = new HashMap<>();
-        return dfs(root);
+  private fun dfs(root: Node?): NodeCopy? {
+    if (root == null) {
+      return null
     }
-
-    private NodeCopy dfs(Node root) {
-        if (root == null) {
-            return null;
-        }
-        if (mp.containsKey(root)) {
-            return mp.get(root);
-        }
-        NodeCopy copy = new NodeCopy(root.val);
-        mp.put(root, copy);
-        copy.left = dfs(root.left);
-        copy.right = dfs(root.right);
-        copy.random = dfs(root.random);
-        return copy;
+    if (mp!!.containsKey(root)) {
+      return mp!![root]
     }
+    val copy: NodeCopy = NodeCopy(root.`val`)
+    mp.put(root, copy)
+    copy.left = dfs(root.left)
+    copy.right = dfs(root.right)
+    copy.random = dfs(root.random)
+    return copy
+  }
 }

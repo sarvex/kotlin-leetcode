@@ -1,17 +1,17 @@
-class Solution {
-    public boolean makeEqual(String[] words) {
-        int[] counter = new int[26];
-        for (String word : words) {
-            for (char c : word.toCharArray()) {
-                ++counter[c - 'a'];
-            }
-        }
-        int n = words.length;
-        for (int i = 0; i < 26; ++i) {
-            if (counter[i] % n != 0) {
-                return false;
-            }
-        }
-        return true;
+internal class Solution {
+  fun makeEqual(words: Array<String>): Boolean {
+    val counter = IntArray(26)
+    for (word in words) {
+      for (c in word.toCharArray()) {
+        ++counter[c.code - 'a'.code]
+      }
     }
+    val n = words.size
+    for (i in 0..25) {
+      if (counter[i] % n != 0) {
+        return false
+      }
+    }
+    return true
+  }
 }

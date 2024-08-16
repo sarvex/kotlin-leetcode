@@ -1,12 +1,12 @@
-class Solution {
-    public int numTrees(int n) {
-        int[] f = new int[n + 1];
-        f[0] = 1;
-        for (int i = 1; i <= n; ++i) {
-            for (int j = 0; j < i; ++j) {
-                f[i] += f[j] * f[i - j - 1];
-            }
-        }
-        return f[n];
+internal class Solution {
+  fun numTrees(n: Int): Int {
+    val f = IntArray(n + 1)
+    f[0] = 1
+    for (i in 1..n) {
+      for (j in 0 until i) {
+        f[i] += f[j] * f[i - j - 1]
+      }
     }
+    return f[n]
+  }
 }

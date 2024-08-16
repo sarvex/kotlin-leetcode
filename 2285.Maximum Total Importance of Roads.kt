@@ -1,15 +1,17 @@
-class Solution {
-    public long maximumImportance(int n, int[][] roads) {
-        int[] deg = new int[n];
-        for (int[] r : roads) {
-            ++deg[r[0]];
-            ++deg[r[1]];
-        }
-        Arrays.sort(deg);
-        long ans = 0;
-        for (int i = 0; i < n; ++i) {
-            ans += (long) (i + 1) * deg[i];
-        }
-        return ans;
+import java.util.*
+
+internal class Solution {
+  fun maximumImportance(n: Int, roads: Array<IntArray>): Long {
+    val deg = IntArray(n)
+    for (r in roads) {
+      ++deg[r[0]]
+      ++deg[r[1]]
     }
+    Arrays.sort(deg)
+    var ans: Long = 0
+    for (i in 0 until n) {
+      ans += (i + 1).toLong() * deg[i]
+    }
+    return ans
+  }
 }

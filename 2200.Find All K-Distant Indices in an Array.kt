@@ -1,15 +1,15 @@
-class Solution {
-    public List<Integer> findKDistantIndices(int[] nums, int key, int k) {
-        int n = nums.length;
-        List<Integer> ans = new ArrayList<>();
-        for (int i = 0; i < n; ++i) {
-            for (int j = 0; j < n; ++j) {
-                if (Math.abs(i - j) <= k && nums[j] == key) {
-                    ans.add(i);
-                    break;
-                }
-            }
+internal class Solution {
+  fun findKDistantIndices(nums: IntArray, key: Int, k: Int): List<Int> {
+    val n = nums.size
+    val ans: List<Int> = ArrayList()
+    for (i in 0 until n) {
+      for (j in 0 until n) {
+        if (abs(i - j) <= k && nums[j] == key) {
+          ans.add(i)
+          break
         }
-        return ans;
+      }
     }
+    return ans
+  }
 }

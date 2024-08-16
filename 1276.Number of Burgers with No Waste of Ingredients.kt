@@ -1,8 +1,8 @@
-class Solution {
-    public List<Integer> numOfBurgers(int tomatoSlices, int cheeseSlices) {
-        int k = 4 * cheeseSlices - tomatoSlices;
-        int y = k / 2;
-        int x = cheeseSlices - y;
-        return k % 2 != 0 || y < 0 || x < 0 ? List.of() : List.of(x, y);
-    }
+internal class Solution {
+  fun numOfBurgers(tomatoSlices: Int, cheeseSlices: Int): List<Int> {
+    val k = 4 * cheeseSlices - tomatoSlices
+    val y = k / 2
+    val x = cheeseSlices - y
+    return if (k % 2 != 0 || y < 0 || x < 0) List.of() else List.of(x, y)
+  }
 }

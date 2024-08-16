@@ -1,7 +1,7 @@
-class Solution {
-    public int maxProductDifference(int[] nums) {
-        Arrays.sort(nums);
-        int n = nums.length;
-        return nums[n - 1] * nums[n - 2] - nums[0] * nums[1];
-    }
+internal class Solution {
+  fun maxProductDifference(nums: IntArray): Int {
+    Arrays.sort(nums)
+    val n = nums.size
+    return nums[n - 1] * nums[n - 2] - nums[0] * nums[1]
+  }
 }

@@ -1,35 +1,35 @@
-class Solution {
-    public long minimumDifference(int[] nums) {
-        int m = nums.length;
-        int n = m / 3;
-        long s = 0;
-        long[] pre = new long[m + 1];
-        PriorityQueue<Integer> pq = new PriorityQueue<>((a, b) -> b - a);
-        for (int i = 1; i <= n * 2; ++i) {
-            int x = nums[i - 1];
-            s += x;
-            pq.offer(x);
-            if (pq.size() > n) {
-                s -= pq.poll();
-            }
-            pre[i] = s;
-        }
-        s = 0;
-        long[] suf = new long[m + 1];
-        pq = new PriorityQueue<>();
-        for (int i = m; i > n; --i) {
-            int x = nums[i - 1];
-            s += x;
-            pq.offer(x);
-            if (pq.size() > n) {
-                s -= pq.poll();
-            }
-            suf[i] = s;
-        }
-        long ans = 1L << 60;
-        for (int i = n; i <= n * 2; ++i) {
-            ans = Math.min(ans, pre[i] - suf[i + 1]);
-        }
-        return ans;
+internal class Solution {
+  fun minimumDifference(nums: IntArray): Long {
+    val m = nums.size
+    val n = m / 3
+    var s: Long = 0
+    val pre = LongArray(m + 1)
+    var pq: PriorityQueue<Int?> = PriorityQueue { a, b -> b - a }
+    for (i in 1..(n * 2)) {
+      val x = nums[i - 1]
+      s += x.toLong()
+      pq.offer(x)
+      if (pq.size() > n) {
+        s -= pq.poll()
+      }
+      pre[i] = s
     }
+    s = 0
+    val suf = LongArray(m + 1)
+    pq = PriorityQueue()
+    for (i in m downTo n + 1) {
+      val x = nums[i - 1]
+      s += x.toLong()
+      pq.offer(x)
+      if (pq.size() > n) {
+        s -= pq.poll()
+      }
+      suf[i] = s
+    }
+    var ans = 1L shl 60
+    for (i in n..(n * 2)) {
+      ans = min(ans, pre[i] - suf[i + 1])
+    }
+    return ans
+  }
 }

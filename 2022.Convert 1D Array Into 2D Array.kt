@@ -1,14 +1,14 @@
-class Solution {
-    public int[][] construct2DArray(int[] original, int m, int n) {
-        if (m * n != original.length) {
-            return new int[0][0];
-        }
-        int[][] ans = new int[m][n];
-        for (int i = 0; i < m; ++i) {
-            for (int j = 0; j < n; ++j) {
-                ans[i][j] = original[i * n + j];
-            }
-        }
-        return ans;
+internal class Solution {
+  fun construct2DArray(original: IntArray, m: Int, n: Int): Array<IntArray> {
+    if (m * n != original.size) {
+      return Array(0) { IntArray(0) }
     }
+    val ans = Array(m) { IntArray(n) }
+    for (i in 0 until m) {
+      for (j in 0 until n) {
+        ans[i][j] = original[i * n + j]
+      }
+    }
+    return ans
+  }
 }

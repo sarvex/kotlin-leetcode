@@ -1,9 +1,9 @@
-class Solution {
-    public int titleToNumber(String columnTitle) {
-        int ans = 0;
-        for (int i = 0; i < columnTitle.length(); ++i) {
-            ans = ans * 26 + (columnTitle.charAt(i) - 'A' + 1);
-        }
-        return ans;
+internal class Solution {
+  fun titleToNumber(columnTitle: String): Int {
+    var ans = 0
+    for (i in 0 until columnTitle.length) {
+      ans = ans * 26 + (columnTitle[i].code - 'A'.code + 1)
     }
+    return ans
+  }
 }

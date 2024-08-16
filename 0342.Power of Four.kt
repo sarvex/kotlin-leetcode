@@ -1,5 +1,5 @@
-class Solution {
-    public boolean isPowerOfFour(int n) {
-        return n > 0 && (n & (n - 1)) == 0 && (n & 0xaaaaaaaa) == 0;
-    }
+internal class Solution {
+  fun isPowerOfFour(n: Int): Boolean {
+    return n > 0 && (n and (n - 1)) == 0 && (n and -0x55555556) == 0
+  }
 }

@@ -1,5 +1,5 @@
-class Solution {
-    public int numberOfMatches(int n) {
-        return n - 1;
-    }
+internal class Solution {
+  fun numberOfMatches(n: Int): Int {
+    return n - 1
+  }
 }

@@ -1,57 +1,48 @@
-class Trie {
-    Map<String, Trie> children = new HashMap<>();
-    int v;
+internal class Trie(var v: Int) {
+  var children: Map<String, Trie> = HashMap()
 
-    Trie(int v) {
-        this.v = v;
+  fun insert(w: String, v: Int): Boolean {
+    var node = this
+    val ps: Array<String> = w.split("/".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+    for (i in 1 until ps.size - 1) {
+      val p = ps[i]
+      if (!node.children.containsKey(p)) {
+        return false
+      }
+      node = node.children[p]
     }
+    if (node.children.containsKey(ps[ps.size - 1])) {
+      return false
+    }
+    node.children.put(ps[ps.size - 1], Trie(v))
+    return true
+  }
 
-    boolean insert(String w, int v) {
-        Trie node = this;
-        var ps = w.split("/");
-        for (int i = 1; i < ps.length - 1; ++i) {
-            var p = ps[i];
-            if (!node.children.containsKey(p)) {
-                return false;
-            }
-            node = node.children.get(p);
-        }
-        if (node.children.containsKey(ps[ps.length - 1])) {
-            return false;
-        }
-        node.children.put(ps[ps.length - 1], new Trie(v));
-        return true;
+  fun search(w: String): Int {
+    var node = this
+    val ps: Array<String> = w.split("/".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+    for (i in 1 until ps.size) {
+      val p = ps[i]
+      if (!node.children.containsKey(p)) {
+        return -1
+      }
+      node = node.children[p]
     }
-
-    int search(String w) {
-        Trie node = this;
-        var ps = w.split("/");
-        for (int i = 1; i < ps.length; ++i) {
-            var p = ps[i];
-            if (!node.children.containsKey(p)) {
-                return -1;
-            }
-            node = node.children.get(p);
-        }
-        return node.v;
-    }
+    return node.v
+  }
 }
 
-class FileSystem {
-    private Trie trie = new Trie(-1);
+internal class FileSystem {
+  private val trie = Trie(-1)
 
-    public FileSystem() {
-    }
+  fun createPath(path: String, value: Int): Boolean {
+    return trie.insert(path, value)
+  }
 
-    public boolean createPath(String path, int value) {
-        return trie.insert(path, value);
-    }
-
-    public int get(String path) {
-        return trie.search(path);
-    }
+  fun get(path: String): Int {
+    return trie.search(path)
+  }
 }
-
 /**
  * Your FileSystem object will be instantiated and called as such:
  * FileSystem obj = new FileSystem();

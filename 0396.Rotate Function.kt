@@ -1,17 +1,17 @@
-class Solution {
-    public int maxRotateFunction(int[] nums) {
-        int f = 0;
-        int s = 0;
-        int n = nums.length;
-        for (int i = 0; i < n; ++i) {
-            f += i * nums[i];
-            s += nums[i];
-        }
-        int ans = f;
-        for (int i = 1; i < n; ++i) {
-            f = f + s - n * nums[n - i];
-            ans = Math.max(ans, f);
-        }
-        return ans;
+internal class Solution {
+  fun maxRotateFunction(nums: IntArray): Int {
+    var f = 0
+    var s = 0
+    val n = nums.size
+    for (i in 0 until n) {
+      f += i * nums[i]
+      s += nums[i]
     }
+    var ans = f
+    for (i in 1 until n) {
+      f = f + s - n * nums[n - i]
+      ans = max(ans, f)
+    }
+    return ans
+  }
 }

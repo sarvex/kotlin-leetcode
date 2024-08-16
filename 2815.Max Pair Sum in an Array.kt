@@ -1,23 +1,25 @@
-class Solution {
-    public int maxSum(int[] nums) {
-        int ans = -1;
-        int n = nums.length;
-        for (int i = 0; i < n; ++i) {
-            for (int j = i + 1; j < n; ++j) {
-                int v = nums[i] + nums[j];
-                if (ans < v && f(nums[i]) == f(nums[j])) {
-                    ans = v;
-                }
-            }
+internal class Solution {
+  fun maxSum(nums: IntArray): Int {
+    var ans = -1
+    val n = nums.size
+    for (i in 0 until n) {
+      for (j in i + 1 until n) {
+        val v = nums[i] + nums[j]
+        if (ans < v && f(nums[i]) == f(nums[j])) {
+          ans = v
         }
-        return ans;
+      }
     }
+    return ans
+  }
 
-    private int f(int x) {
-        int y = 0;
-        for (; x > 0; x /= 10) {
-            y = Math.max(y, x % 10);
-        }
-        return y;
+  private fun f(x: Int): Int {
+    var x = x
+    var y = 0
+    while (x > 0) {
+      y = max(y, x % 10)
+      x /= 10
     }
+    return y
+  }
 }

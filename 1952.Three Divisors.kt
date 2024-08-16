@@ -1,11 +1,11 @@
-class Solution {
-    public boolean isThree(int n) {
-        int cnt = 0;
-        for (int i = 2; i < n; i++) {
-            if (n % i == 0) {
-                ++cnt;
-            }
-        }
-        return cnt == 1;
+internal class Solution {
+  fun isThree(n: Int): Boolean {
+    var cnt = 0
+    for (i in 2 until n) {
+      if (n % i == 0) {
+        ++cnt
+      }
     }
+    return cnt == 1
+  }
 }

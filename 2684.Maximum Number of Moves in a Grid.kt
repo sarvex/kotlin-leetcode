@@ -1,21 +1,22 @@
-class Solution {
-    public int maxMoves(int[][] grid) {
-        int m = grid.length, n = grid[0].length;
-        Set<Integer> q = IntStream.range(0, m).boxed().collect(Collectors.toSet());
-        for (int j = 0; j < n - 1; ++j) {
-            Set<Integer> t = new HashSet<>();
-            for (int i : q) {
-                for (int k = i - 1; k <= i + 1; ++k) {
-                    if (k >= 0 && k < m && grid[i][j] < grid[k][j + 1]) {
-                        t.add(k);
-                    }
-                }
-            }
-            if (t.isEmpty()) {
-                return j;
-            }
-            q = t;
+internal class Solution {
+  fun maxMoves(grid: Array<IntArray>): Int {
+    val m = grid.size
+    val n = grid[0].size
+    var q: Set<Int> = IntStream.range(0, m).boxed().collect(Collectors.toSet())
+    for (j in 0 until n - 1) {
+      val t: Set<Int> = HashSet()
+      for (i in q) {
+        for (k in i - 1..(i + 1)) {
+          if (k >= 0 && k < m && grid[i][j] < grid[k][j + 1]) {
+            t.add(k)
+          }
         }
-        return n - 1;
+      }
+      if (t.isEmpty()) {
+        return j
+      }
+      q = t
     }
+    return n - 1
+  }
 }

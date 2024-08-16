@@ -1,19 +1,21 @@
-class Solution {
-    public String findDifferentBinaryString(String[] nums) {
-        int mask = 0;
-        for (var x : nums) {
-            int cnt = 0;
-            for (int i = 0; i < x.length(); ++i) {
-                if (x.charAt(i) == '1') {
-                    ++cnt;
-                }
-            }
-            mask |= 1 << cnt;
+internal class Solution {
+  fun findDifferentBinaryString(nums: Array<String>): String {
+    var mask = 0
+    for (x in nums) {
+      var cnt = 0
+      for (i in 0 until x.length) {
+        if (x[i] == '1') {
+          ++cnt
         }
-        for (int i = 0;; ++i) {
-            if ((mask >> i & 1) == 0) {
-                return "1".repeat(i) + "0".repeat(nums.length - i);
-            }
-        }
+      }
+      mask = mask or (1 shl cnt)
     }
+    var i = 0
+    while (true) {
+      if ((mask shr i and 1) == 0) {
+        return "1".repeat(i) + "0".repeat(nums.size - i)
+      }
+      ++i
+    }
+  }
 }

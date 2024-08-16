@@ -1,23 +1,23 @@
-class Solution {
-    public int minFlips(String s) {
-        int n = s.length();
-        String target = "01";
-        int cnt = 0;
-        for (int i = 0; i < n; ++i) {
-            if (s.charAt(i) != target.charAt(i & 1)) {
-                ++cnt;
-            }
-        }
-        int ans = Math.min(cnt, n - cnt);
-        for (int i = 0; i < n; ++i) {
-            if (s.charAt(i) != target.charAt(i & 1)) {
-                --cnt;
-            }
-            if (s.charAt(i) != target.charAt((i + n) & 1)) {
-                ++cnt;
-            }
-            ans = Math.min(ans, Math.min(cnt, n - cnt));
-        }
-        return ans;
+internal class Solution {
+  fun minFlips(s: String): Int {
+    val n = s.length
+    val target = "01"
+    var cnt = 0
+    for (i in 0 until n) {
+      if (s[i] != target[i and 1]) {
+        ++cnt
+      }
     }
+    var ans: Int = min(cnt, n - cnt)
+    for (i in 0 until n) {
+      if (s[i] != target[i and 1]) {
+        --cnt
+      }
+      if (s[i] != target[(i + n) and 1]) {
+        ++cnt
+      }
+      ans = min(ans, min(cnt, n - cnt))
+    }
+    return ans
+  }
 }

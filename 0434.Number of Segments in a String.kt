@@ -1,11 +1,11 @@
-class Solution {
-    public int countSegments(String s) {
-        int ans = 0;
-        for (String t : s.split(" ")) {
-            if (!"".equals(t)) {
-                ++ans;
-            }
-        }
-        return ans;
+internal class Solution {
+  fun countSegments(s: String): Int {
+    var ans = 0
+    for (t in s.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()) {
+      if ("" != t) {
+        ++ans
+      }
     }
+    return ans
+  }
 }

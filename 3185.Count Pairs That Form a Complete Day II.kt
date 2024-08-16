@@ -1,11 +1,11 @@
-class Solution {
-    public long countCompleteDayPairs(int[] hours) {
-        int[] cnt = new int[24];
-        long ans = 0;
-        for (int x : hours) {
-            ans += cnt[(24 - x % 24) % 24];
-            ++cnt[x % 24];
-        }
-        return ans;
+internal class Solution {
+  fun countCompleteDayPairs(hours: IntArray): Long {
+    val cnt = IntArray(24)
+    var ans: Long = 0
+    for (x in hours) {
+      ans += cnt[(24 - x % 24) % 24].toLong()
+      ++cnt[x % 24]
     }
+    return ans
+  }
 }

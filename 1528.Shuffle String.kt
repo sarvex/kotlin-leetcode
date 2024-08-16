@@ -1,10 +1,10 @@
-class Solution {
-    public String restoreString(String s, int[] indices) {
-        int n = s.length();
-        char[] ans = new char[n];
-        for (int i = 0; i < n; ++i) {
-            ans[indices[i]] = s.charAt(i);
-        }
-        return String.valueOf(ans);
+internal class Solution {
+  fun restoreString(s: String, indices: IntArray): String {
+    val n = s.length
+    val ans = CharArray(n)
+    for (i in 0 until n) {
+      ans[indices[i]] = s[i]
     }
+    return String(ans)
+  }
 }

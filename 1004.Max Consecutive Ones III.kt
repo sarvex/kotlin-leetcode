@@ -1,12 +1,13 @@
-class Solution {
-    public int longestOnes(int[] nums, int k) {
-        int l = 0, cnt = 0;
-        for (int x : nums) {
-            cnt += x ^ 1;
-            if (cnt > k) {
-                cnt -= nums[l++] ^ 1;
-            }
-        }
-        return nums.length - l;
+internal class Solution {
+  fun longestOnes(nums: IntArray, k: Int): Int {
+    var l = 0
+    var cnt = 0
+    for (x in nums) {
+      cnt += x xor 1
+      if (cnt > k) {
+        cnt -= nums[l++] xor 1
+      }
     }
+    return nums.size - l
+  }
 }

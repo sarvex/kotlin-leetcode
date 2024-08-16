@@ -1,35 +1,32 @@
-class Allocator {
-    private int[] m;
+import java.util.*
 
-    public Allocator(int n) {
-        m = new int[n];
-    }
+internal class Allocator(n: Int) {
+  private val m = IntArray(n)
 
-    public int allocate(int size, int mID) {
-        int cnt = 0;
-        for (int i = 0; i < m.length; ++i) {
-            if (m[i] > 0) {
-                cnt = 0;
-            } else if (++cnt == size) {
-                Arrays.fill(m, i - size + 1, i + 1, mID);
-                return i - size + 1;
-            }
-        }
-        return -1;
+  fun allocate(size: Int, mID: Int): Int {
+    var cnt = 0
+    for (i in m.indices) {
+      if (m[i] > 0) {
+        cnt = 0
+      } else if (++cnt == size) {
+        Arrays.fill(m, i - size + 1, i + 1, mID)
+        return i - size + 1
+      }
     }
+    return -1
+  }
 
-    public int free(int mID) {
-        int ans = 0;
-        for (int i = 0; i < m.length; ++i) {
-            if (m[i] == mID) {
-                m[i] = 0;
-                ++ans;
-            }
-        }
-        return ans;
+  fun free(mID: Int): Int {
+    var ans = 0
+    for (i in m.indices) {
+      if (m[i] == mID) {
+        m[i] = 0
+        ++ans
+      }
     }
+    return ans
+  }
 }
-
 /**
  * Your Allocator object will be instantiated and called as such:
  * Allocator obj = new Allocator(n);

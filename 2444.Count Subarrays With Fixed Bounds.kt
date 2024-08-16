@@ -1,19 +1,21 @@
-class Solution {
-    public long countSubarrays(int[] nums, int minK, int maxK) {
-        long ans = 0;
-        int j1 = -1, j2 = -1, k = -1;
-        for (int i = 0; i < nums.length; ++i) {
-            if (nums[i] < minK || nums[i] > maxK) {
-                k = i;
-            }
-            if (nums[i] == minK) {
-                j1 = i;
-            }
-            if (nums[i] == maxK) {
-                j2 = i;
-            }
-            ans += Math.max(0, Math.min(j1, j2) - k);
-        }
-        return ans;
+internal class Solution {
+  fun countSubarrays(nums: IntArray, minK: Int, maxK: Int): Long {
+    var ans: Long = 0
+    var j1 = -1
+    var j2 = -1
+    var k = -1
+    for (i in nums.indices) {
+      if (nums[i] < minK || nums[i] > maxK) {
+        k = i
+      }
+      if (nums[i] == minK) {
+        j1 = i
+      }
+      if (nums[i] == maxK) {
+        j2 = i
+      }
+      ans += max(0, min(j1, j2) - k)
     }
+    return ans
+  }
 }

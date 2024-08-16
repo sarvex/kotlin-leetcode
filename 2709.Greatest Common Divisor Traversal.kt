@@ -1,76 +1,79 @@
-class UnionFind {
-    private int[] p;
-    private int[] size;
+import java.util.*
 
-    public UnionFind(int n) {
-        p = new int[n];
-        size = new int[n];
-        for (int i = 0; i < n; ++i) {
-            p[i] = i;
-            size[i] = 1;
-        }
-    }
+internal class UnionFind(n: Int) {
+  private val p = IntArray(n)
+  private val size = IntArray(n)
 
-    public int find(int x) {
-        if (p[x] != x) {
-            p[x] = find(p[x]);
-        }
-        return p[x];
+  init {
+    for (i in 0 until n) {
+      p[i] = i
+      size[i] = 1
     }
+  }
 
-    public boolean union(int a, int b) {
-        int pa = find(a), pb = find(b);
-        if (pa == pb) {
-            return false;
-        }
-        if (size[pa] > size[pb]) {
-            p[pb] = pa;
-            size[pa] += size[pb];
-        } else {
-            p[pa] = pb;
-            size[pb] += size[pa];
-        }
-        return true;
+  fun find(x: Int): Int {
+    if (p[x] != x) {
+      p[x] = find(p[x])
     }
+    return p[x]
+  }
+
+  fun union(a: Int, b: Int): Boolean {
+    val pa = find(a)
+    val pb = find(b)
+    if (pa == pb) {
+      return false
+    }
+    if (size[pa] > size[pb]) {
+      p[pb] = pa
+      size[pa] += size[pb]
+    } else {
+      p[pa] = pb
+      size[pb] += size[pa]
+    }
+    return true
+  }
 }
 
-class Solution {
-    private static final int MX = 100010;
-    private static final List<Integer>[] P = new List[MX];
-
-    static {
-        Arrays.setAll(P, k -> new ArrayList<>());
-        for (int x = 1; x < MX; ++x) {
-            int v = x;
-            int i = 2;
-            while (i <= v / i) {
-                if (v % i == 0) {
-                    P[x].add(i);
-                    while (v % i == 0) {
-                        v /= i;
-                    }
-                }
-                ++i;
-            }
-            if (v > 1) {
-                P[x].add(v);
-            }
-        }
+internal class Solution {
+  fun canTraverseAllPairs(nums: IntArray): Boolean {
+    val m = Arrays.stream(nums).max().asInt
+    val n = nums.size
+    val uf = UnionFind(n + m + 1)
+    for (i in 0 until n) {
+      for (j in Solution.Companion.P.get(nums[i])) {
+        uf.union(i, j + n)
+      }
     }
-
-    public boolean canTraverseAllPairs(int[] nums) {
-        int m = Arrays.stream(nums).max().getAsInt();
-        int n = nums.length;
-        UnionFind uf = new UnionFind(n + m + 1);
-        for (int i = 0; i < n; ++i) {
-            for (int j : P[nums[i]]) {
-                uf.union(i, j + n);
-            }
-        }
-        Set<Integer> s = new HashSet<>();
-        for (int i = 0; i < n; ++i) {
-            s.add(uf.find(i));
-        }
-        return s.size() == 1;
+    val s: Set<Int> = HashSet()
+    for (i in 0 until n) {
+      s.add(uf.find(i))
     }
+    return s.size() === 1
+  }
+
+  companion object {
+    private const val MX = 100010
+    private val P: Array<List<Int>> = arrayOfNulls<List>(Solution.Companion.MX)
+
+    init {
+      Arrays.setAll(Solution.Companion.P) { k -> ArrayList() }
+      for (x in 1 until Solution.Companion.MX) {
+        var v: Int = x
+        var i = 2
+        while (i <= v / i) {
+          if (v % i == 0) {
+            Solution.Companion.P.get(x).add(i)
+            while (v % i == 0) {
+              v /= i
+            }
+          }
+          ++i
+        }
+        if (v > 1) {
+          Solution.Companion.P.get(x).add(v)
+        }
+      }
+    }
+  }
 }

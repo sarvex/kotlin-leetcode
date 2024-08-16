@@ -1,21 +1,21 @@
-class Solution {
-    public long minCost(int[] nums, int x) {
-        int n = nums.length;
-        int[][] f = new int[n][n];
-        for (int i = 0; i < n; ++i) {
-            f[i][0] = nums[i];
-            for (int j = 1; j < n; ++j) {
-                f[i][j] = Math.min(f[i][j - 1], nums[(i - j + n) % n]);
-            }
-        }
-        long ans = 1L << 60;
-        for (int j = 0; j < n; ++j) {
-            long cost = 1L * x * j;
-            for (int i = 0; i < n; ++i) {
-                cost += f[i][j];
-            }
-            ans = Math.min(ans, cost);
-        }
-        return ans;
+internal class Solution {
+  fun minCost(nums: IntArray, x: Int): Long {
+    val n = nums.size
+    val f = Array(n) { IntArray(n) }
+    for (i in 0 until n) {
+      f[i][0] = nums[i]
+      for (j in 1 until n) {
+        f[i][j] = min(f[i][j - 1], nums[(i - j + n) % n])
+      }
     }
+    var ans = 1L shl 60
+    for (j in 0 until n) {
+      var cost: Long = 1L * x * j
+      for (i in 0 until n) {
+        cost += f[i][j].toLong()
+      }
+      ans = min(ans, cost)
+    }
+    return ans
+  }
 }

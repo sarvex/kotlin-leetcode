@@ -1,13 +1,13 @@
-class Solution {
-    public String longestCommonPrefix(String[] strs) {
-        int n = strs.length;
-        for (int i = 0; i < strs[0].length(); ++i) {
-            for (int j = 1; j < n; ++j) {
-                if (strs[j].length() <= i || strs[j].charAt(i) != strs[0].charAt(i)) {
-                    return strs[0].substring(0, i);
-                }
-            }
+internal class Solution {
+  fun longestCommonPrefix(strs: Array<String>): String {
+    val n = strs.size
+    for (i in 0 until strs[0].length) {
+      for (j in 1 until n) {
+        if (strs[j].length <= i || strs[j][i] != strs[0][i]) {
+          return strs[0].substring(0, i)
         }
-        return strs[0];
+      }
     }
+    return strs[0]
+  }
 }

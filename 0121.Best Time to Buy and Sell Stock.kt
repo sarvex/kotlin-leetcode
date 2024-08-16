@@ -1,10 +1,11 @@
-class Solution {
-    public int maxProfit(int[] prices) {
-        int ans = 0, mi = prices[0];
-        for (int v : prices) {
-            ans = Math.max(ans, v - mi);
-            mi = Math.min(mi, v);
-        }
-        return ans;
+internal class Solution {
+  fun maxProfit(prices: IntArray): Int {
+    var ans = 0
+    var mi = prices[0]
+    for (v in prices) {
+      ans = max(ans, v - mi)
+      mi = min(mi, v)
     }
+    return ans
+  }
 }

@@ -1,51 +1,52 @@
-class Trie {
-    Trie[] children = new Trie[26];
-    boolean isEnd;
+internal class Trie {
+  var children: Array<Trie> = arrayOfNulls(26)
+  var isEnd: Boolean = false
 
-    void insert(String w) {
-        Trie node = this;
-        for (char c : w.toCharArray()) {
-            c -= 'a';
-            if (node.children[c] == null) {
-                node.children[c] = new Trie();
-            }
-            node = node.children[c];
-        }
-        node.isEnd = true;
+  fun insert(w: String) {
+    var node = this
+    for (c in w.toCharArray()) {
+      var c = c
+      (c -= 'a').toChar()
+      if (node.children[c.code] == null) {
+        node.children[c.code] = Trie()
+      }
+      node = node.children[c.code]
     }
+    node.isEnd = true
+  }
 }
 
-class Solution {
-    private Trie trie = new Trie();
+internal class Solution {
+  private val trie = Trie()
 
-    public List<String> findAllConcatenatedWordsInADict(String[] words) {
-        Arrays.sort(words, (a, b) -> a.length() - b.length());
-        List<String> ans = new ArrayList<>();
-        for (String w : words) {
-            if (dfs(w)) {
-                ans.add(w);
-            } else {
-                trie.insert(w);
-            }
-        }
-        return ans;
+  fun findAllConcatenatedWordsInADict(words: Array<String>): List<String> {
+    Arrays.sort(words) { a, b -> a.length() - b.length() }
+    val ans: List<String> = ArrayList()
+    for (w in words) {
+      if (dfs(w)) {
+        ans.add(w)
+      } else {
+        trie.insert(w)
+      }
     }
+    return ans
+  }
 
-    private boolean dfs(String w) {
-        if ("".equals(w)) {
-            return true;
-        }
-        Trie node = trie;
-        for (int i = 0; i < w.length(); ++i) {
-            int idx = w.charAt(i) - 'a';
-            if (node.children[idx] == null) {
-                return false;
-            }
-            node = node.children[idx];
-            if (node.isEnd && dfs(w.substring(i + 1))) {
-                return true;
-            }
-        }
-        return false;
+  private fun dfs(w: String): Boolean {
+    if ("" == w) {
+      return true
     }
+    var node = trie
+    for (i in 0 until w.length) {
+      val idx: Int = w[i].code - 'a'.code
+      if (node.children[idx] == null) {
+        return false
+      }
+      node = node.children[idx]
+      if (node.isEnd && dfs(w.substring(i + 1))) {
+        return true
+      }
+    }
+    return false
+  }
 }

@@ -1,15 +1,15 @@
-class Solution {
-    public int countTriples(int n) {
-        int res = 0;
-        for (int a = 1; a <= n; ++a) {
-            for (int b = 1; b <= n; ++b) {
-                int t = a * a + b * b;
-                int c = (int) Math.sqrt(t);
-                if (c <= n && c * c == t) {
-                    ++res;
-                }
-            }
+internal class Solution {
+  fun countTriples(n: Int): Int {
+    var res = 0
+    for (a in 1..n) {
+      for (b in 1..n) {
+        val t = a * a + b * b
+        val c = sqrt(t) as Int
+        if (c <= n && c * c == t) {
+          ++res
         }
-        return res;
+      }
     }
+    return res
+  }
 }

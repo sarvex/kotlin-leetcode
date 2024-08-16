@@ -1,16 +1,16 @@
-class Solution {
-    public int xorAllNums(int[] nums1, int[] nums2) {
-        int ans = 0;
-        if (nums2.length % 2 == 1) {
-            for (int v : nums1) {
-                ans ^= v;
-            }
-        }
-        if (nums1.length % 2 == 1) {
-            for (int v : nums2) {
-                ans ^= v;
-            }
-        }
-        return ans;
+internal class Solution {
+  fun xorAllNums(nums1: IntArray, nums2: IntArray): Int {
+    var ans = 0
+    if (nums2.size % 2 == 1) {
+      for (v in nums1) {
+        ans = ans xor v
+      }
     }
+    if (nums1.size % 2 == 1) {
+      for (v in nums2) {
+        ans = ans xor v
+      }
+    }
+    return ans
+  }
 }

@@ -1,14 +1,16 @@
-class Solution {
-    public int longestContinuousSubstring(String s) {
-        int ans = 0;
-        int i = 0, j = 1;
-        for (; j < s.length(); ++j) {
-            ans = Math.max(ans, j - i);
-            if (s.charAt(j) - s.charAt(j - 1) != 1) {
-                i = j;
-            }
-        }
-        ans = Math.max(ans, j - i);
-        return ans;
+internal class Solution {
+  fun longestContinuousSubstring(s: String): Int {
+    var ans = 0
+    var i = 0
+    var j = 1
+    while (j < s.length) {
+      ans = max(ans, j - i)
+      if (s[j].code - s[j - 1].code != 1) {
+        i = j
+      }
+      ++j
     }
+    ans = max(ans, j - i)
+    return ans
+  }
 }

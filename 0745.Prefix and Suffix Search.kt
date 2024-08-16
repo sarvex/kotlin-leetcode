@@ -1,25 +1,24 @@
-class WordFilter {
-    private Map<String, Integer> d = new HashMap<>();
+internal class WordFilter(words: Array<String>) {
+  private val d: Map<String, Int> = HashMap()
 
-    public WordFilter(String[] words) {
-        for (int k = 0; k < words.length; ++k) {
-            String w = words[k];
-            int n = w.length();
-            for (int i = 0; i <= n; ++i) {
-                String a = w.substring(0, i);
-                for (int j = 0; j <= n; ++j) {
-                    String b = w.substring(j);
-                    d.put(a + "." + b, k);
-                }
-            }
+  init {
+    for (k in words.indices) {
+      val w = words[k]
+      val n = w.length
+      for (i in 0..n) {
+        val a: String = w.substring(0, i)
+        for (j in 0..n) {
+          val b: String = w.substring(j)
+          d.put("$a.$b", k)
         }
+      }
     }
+  }
 
-    public int f(String pref, String suff) {
-        return d.getOrDefault(pref + "." + suff, -1);
-    }
+  fun f(pref: String, suff: String): Int {
+    return d.getOrDefault("$pref.$suff", -1)
+  }
 }
-
 /**
  * Your WordFilter object will be instantiated and called as such:
  * WordFilter obj = new WordFilter(words);

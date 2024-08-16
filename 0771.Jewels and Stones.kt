@@ -1,13 +1,13 @@
-class Solution {
-    public int numJewelsInStones(String jewels, String stones) {
-        int[] s = new int[128];
-        for (char c : jewels.toCharArray()) {
-            s[c] = 1;
-        }
-        int ans = 0;
-        for (char c : stones.toCharArray()) {
-            ans += s[c];
-        }
-        return ans;
+internal class Solution {
+  fun numJewelsInStones(jewels: String, stones: String): Int {
+    val s = IntArray(128)
+    for (c in jewels.toCharArray()) {
+      s[c.code] = 1
     }
+    var ans = 0
+    for (c in stones.toCharArray()) {
+      ans += s[c.code]
+    }
+    return ans
+  }
 }

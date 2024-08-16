@@ -1,31 +1,38 @@
-class Solution {
-    public int longestDecomposition(String text) {
-        int ans = 0;
-        for (int i = 0, j = text.length() - 1; i <= j;) {
-            boolean ok = false;
-            for (int k = 1; i + k - 1 < j - k + 1; ++k) {
-                if (check(text, i, j - k + 1, k)) {
-                    ans += 2;
-                    i += k;
-                    j -= k;
-                    ok = true;
-                    break;
-                }
-            }
-            if (!ok) {
-                ++ans;
-                break;
-            }
+internal class Solution {
+  fun longestDecomposition(text: String): Int {
+    var ans = 0
+    var i = 0
+    var j = text.length - 1
+    while (i <= j) {
+      var ok = false
+      var k = 1
+      while (i + k - 1 < j - k + 1) {
+        if (check(text, i, j - k + 1, k)) {
+          ans += 2
+          i += k
+          j -= k
+          ok = true
+          break
         }
-        return ans;
+        ++k
+      }
+      if (!ok) {
+        ++ans
+        break
+      }
     }
+    return ans
+  }
 
-    private boolean check(String s, int i, int j, int k) {
-        while (k-- > 0) {
-            if (s.charAt(i++) != s.charAt(j++)) {
-                return false;
-            }
-        }
-        return true;
+  private fun check(s: String, i: Int, j: Int, k: Int): Boolean {
+    var i = i
+    var j = j
+    var k = k
+    while (k-- > 0) {
+      if (s[i++] != s[j++]) {
+        return false
+      }
     }
+    return true
+  }
 }

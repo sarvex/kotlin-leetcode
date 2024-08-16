@@ -1,17 +1,20 @@
-class Solution {
-    public int getWinner(int[] arr, int k) {
-        int mx = arr[0];
-        for (int i = 1, cnt = 0; i < arr.length; ++i) {
-            if (mx < arr[i]) {
-                mx = arr[i];
-                cnt = 1;
-            } else {
-                ++cnt;
-            }
-            if (cnt == k) {
-                break;
-            }
-        }
-        return mx;
+internal class Solution {
+  fun getWinner(arr: IntArray, k: Int): Int {
+    var mx = arr[0]
+    var i = 1
+    var cnt = 0
+    while (i < arr.size) {
+      if (mx < arr[i]) {
+        mx = arr[i]
+        cnt = 1
+      } else {
+        ++cnt
+      }
+      if (cnt == k) {
+        break
+      }
+      ++i
     }
+    return mx
+  }
 }

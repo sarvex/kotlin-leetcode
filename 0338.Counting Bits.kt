@@ -1,9 +1,9 @@
-class Solution {
-    public int[] countBits(int n) {
-        int[] ans = new int[n + 1];
-        for (int i = 0; i <= n; ++i) {
-            ans[i] = Integer.bitCount(i);
-        }
-        return ans;
+internal class Solution {
+  fun countBits(n: Int): IntArray {
+    val ans = IntArray(n + 1)
+    for (i in 0..n) {
+      ans[i] = Integer.bitCount(i)
     }
+    return ans
+  }
 }

@@ -1,11 +1,11 @@
-class Solution {
-    public int triangularSum(int[] nums) {
-        int n = nums.length;
-        for (int i = n; i >= 0; --i) {
-            for (int j = 0; j < i - 1; ++j) {
-                nums[j] = (nums[j] + nums[j + 1]) % 10;
-            }
-        }
-        return nums[0];
+internal class Solution {
+  fun triangularSum(nums: IntArray): Int {
+    val n = nums.size
+    for (i in n downTo 0) {
+      for (j in 0 until i - 1) {
+        nums[j] = (nums[j] + nums[j + 1]) % 10
+      }
     }
+    return nums[0]
+  }
 }

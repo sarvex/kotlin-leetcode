@@ -1,55 +1,54 @@
-class Bitset {
-    private char[] a;
-    private char[] b;
-    private int cnt;
+internal class Bitset(size: Int) {
+  private var a: CharArray
+  private var b: CharArray
+  private var cnt = 0
 
-    public Bitset(int size) {
-        a = new char[size];
-        b = new char[size];
-        Arrays.fill(a, '0');
-        Arrays.fill(b, '1');
-    }
+  init {
+    a = CharArray(size)
+    b = CharArray(size)
+    Arrays.fill(a, '0')
+    Arrays.fill(b, '1')
+  }
 
-    public void fix(int idx) {
-        if (a[idx] == '0') {
-            a[idx] = '1';
-            ++cnt;
-        }
-        b[idx] = '0';
+  fun fix(idx: Int) {
+    if (a[idx] == '0') {
+      a[idx] = '1'
+      ++cnt
     }
+    b[idx] = '0'
+  }
 
-    public void unfix(int idx) {
-        if (a[idx] == '1') {
-            a[idx] = '0';
-            --cnt;
-        }
-        b[idx] = '1';
+  fun unfix(idx: Int) {
+    if (a[idx] == '1') {
+      a[idx] = '0'
+      --cnt
     }
+    b[idx] = '1'
+  }
 
-    public void flip() {
-        char[] t = a;
-        a = b;
-        b = t;
-        cnt = a.length - cnt;
-    }
+  fun flip() {
+    val t = a
+    a = b
+    b = t
+    cnt = a.size - cnt
+  }
 
-    public boolean all() {
-        return cnt == a.length;
-    }
+  fun all(): Boolean {
+    return cnt == a.size
+  }
 
-    public boolean one() {
-        return cnt > 0;
-    }
+  fun one(): Boolean {
+    return cnt > 0
+  }
 
-    public int count() {
-        return cnt;
-    }
+  fun count(): Int {
+    return cnt
+  }
 
-    public String toString() {
-        return String.valueOf(a);
-    }
+  override fun toString(): String {
+    return String(a)
+  }
 }
-
 /**
  * Your Bitset object will be instantiated and called as such:
  * Bitset obj = new Bitset(size);

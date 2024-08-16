@@ -1,15 +1,17 @@
-class Solution {
-    public long appealSum(String s) {
-        long ans = 0;
-        long t = 0;
-        int[] pos = new int[26];
-        Arrays.fill(pos, -1);
-        for (int i = 0; i < s.length(); ++i) {
-            int c = s.charAt(i) - 'a';
-            t += i - pos[c];
-            ans += t;
-            pos[c] = i;
-        }
-        return ans;
+import java.util.*
+
+internal class Solution {
+  fun appealSum(s: String): Long {
+    var ans: Long = 0
+    var t: Long = 0
+    val pos = IntArray(26)
+    Arrays.fill(pos, -1)
+    for (i in 0 until s.length) {
+      val c: Int = s[i].code - 'a'.code
+      t += (i - pos[c]).toLong()
+      ans += t
+      pos[c] = i
     }
+    return ans
+  }
 }

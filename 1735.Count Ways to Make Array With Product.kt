@@ -1,61 +1,76 @@
-class Solution {
-    private static final int N = 10020;
-    private static final int MOD = (int) 1e9 + 7;
-    private static final long[] F = new long[N];
-    private static final long[] G = new long[N];
-    private static final List<Integer>[] P = new List[N];
+internal class Solution {
+  fun waysToFillArray(queries: Array<IntArray>): IntArray {
+    val m = queries.size
+    val ans = IntArray(m)
+    for (i in 0 until m) {
+      val n = queries[i][0]
+      val k = queries[i][1]
+      var t: Long = 1
+      for (x in Solution.Companion.P.get(k)) {
+        t = t * Solution.Companion.comb(x + n - 1, n - 1) % Solution.Companion.MOD
+      }
+      ans[i] = t.toInt()
+    }
+    return ans
+  }
 
-    static {
-        F[0] = 1;
-        G[0] = 1;
-        Arrays.setAll(P, k -> new ArrayList<>());
-        for (int i = 1; i < N; ++i) {
-            F[i] = F[i - 1] * i % MOD;
-            G[i] = qmi(F[i], MOD - 2, MOD);
-            int x = i;
-            for (int j = 2; j <= x / j; ++j) {
-                if (x % j == 0) {
-                    int cnt = 0;
-                    while (x % j == 0) {
-                        ++cnt;
-                        x /= j;
-                    }
-                    P[i].add(cnt);
-                }
+  companion object {
+    private const val N = 10020
+    private const val MOD = 1e9.toInt() + 7
+    private val F = LongArray(Solution.Companion.N)
+    private val G = LongArray(Solution.Companion.N)
+    private val P: Array<List<Int>> = arrayOfNulls<List>(Solution.Companion.N)
+
+    init {
+      Solution.Companion.F.get(0) = 1
+      Solution.Companion.G.get(0) = 1
+      Arrays.setAll(Solution.Companion.P) { k -> ArrayList() }
+      for (i in 1 until Solution.Companion.N) {
+        Solution.Companion.F.get(i) = Solution.Companion.F.get(i - 1) * i % Solution.Companion.MOD
+        Solution.Companion.G.get(i) = Solution.Companion.qmi(
+          Solution.Companion.F.get(i),
+          (Solution.Companion.MOD - 2).toLong(),
+          Solution.Companion.MOD.toLong()
+        )
+        var x: Int = i
+        var j = 2
+        while (j <= x / j) {
+          if (x % j == 0) {
+            var cnt = 0
+            while (x % j == 0) {
+              ++cnt
+              x /= j
             }
-            if (x > 1) {
-                P[i].add(1);
-            }
+            Solution.Companion.P.get(i).add(cnt)
+          }
+          ++j
         }
-    }
-
-    public static long qmi(long a, long k, long p) {
-        long res = 1;
-        while (k != 0) {
-            if ((k & 1) == 1) {
-                res = res * a % p;
-            }
-            k >>= 1;
-            a = a * a % p;
+        if (x > 1) {
+          Solution.Companion.P.get(i).add(1)
         }
-        return res;
+      }
     }
 
-    public static long comb(int n, int k) {
-        return (F[n] * G[k] % MOD) * G[n - k] % MOD;
-    }
-
-    public int[] waysToFillArray(int[][] queries) {
-        int m = queries.length;
-        int[] ans = new int[m];
-        for (int i = 0; i < m; ++i) {
-            int n = queries[i][0], k = queries[i][1];
-            long t = 1;
-            for (int x : P[k]) {
-                t = t * comb(x + n - 1, n - 1) % MOD;
-            }
-            ans[i] = (int) t;
+    @kotlin.jvm.JvmStatic
+    fun qmi(a: Long, k: Long, p: Long): Long {
+      var a = a
+      var k = k
+      var res: Long = 1
+      while (k != 0L) {
+        if ((k and 1L) == 1L) {
+          res = res * a % p
         }
-        return ans;
+        k = k shr 1
+        a = a * a % p
+      }
+      return res
     }
+
+    @kotlin.jvm.JvmStatic
+    fun comb(n: Int, k: Int): Long {
+      return (Solution.Companion.F.get(n) * Solution.Companion.G.get(k) % Solution.Companion.MOD) * Solution.Companion.G.get(
+        n - k
+      ) % Solution.Companion.MOD
+    }
+  }
 }

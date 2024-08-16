@@ -1,32 +1,40 @@
-class Solution {
-    public int[] platesBetweenCandles(String s, int[][] queries) {
-        int n = s.length();
-        int[] presum = new int[n + 1];
-        for (int i = 0; i < n; ++i) {
-            presum[i + 1] = presum[i] + (s.charAt(i) == '*' ? 1 : 0);
-        }
-        int[] left = new int[n];
-        int[] right = new int[n];
-        for (int i = 0, l = -1; i < n; ++i) {
-            if (s.charAt(i) == '|') {
-                l = i;
-            }
-            left[i] = l;
-        }
-        for (int i = n - 1, r = -1; i >= 0; --i) {
-            if (s.charAt(i) == '|') {
-                r = i;
-            }
-            right[i] = r;
-        }
-        int[] ans = new int[queries.length];
-        for (int k = 0; k < queries.length; ++k) {
-            int i = right[queries[k][0]];
-            int j = left[queries[k][1]];
-            if (i >= 0 && j >= 0 && i < j) {
-                ans[k] = presum[j] - presum[i + 1];
-            }
-        }
-        return ans;
+internal class Solution {
+  fun platesBetweenCandles(s: String, queries: Array<IntArray>): IntArray {
+    val n = s.length
+    val presum = IntArray(n + 1)
+    for (i in 0 until n) {
+      presum[i + 1] = presum[i] + (if (s[i] == '*') 1 else 0)
     }
+    val left = IntArray(n)
+    val right = IntArray(n)
+    run {
+      var i = 0
+      var l = -1
+      while (i < n) {
+        if (s[i] == '|') {
+          l = i
+        }
+        left[i] = l
+        ++i
+      }
+    }
+    var i = n - 1
+    var r = -1
+    while (i >= 0) {
+      if (s[i] == '|') {
+        r = i
+      }
+      right[i] = r
+      --i
+    }
+    val ans = IntArray(queries.size)
+    for (k in queries.indices) {
+      val i = right[queries[k][0]]
+      val j = left[queries[k][1]]
+      if (i >= 0 && j >= 0 && i < j) {
+        ans[k] = presum[j] - presum[i + 1]
+      }
+    }
+    return ans
+  }
 }

@@ -1,11 +1,11 @@
-class Solution {
-    public int findDerangement(int n) {
-        long[] f = new long[n + 1];
-        f[0] = 1;
-        final int mod = (int) 1e9 + 7;
-        for (int i = 2; i <= n; ++i) {
-            f[i] = (i - 1) * (f[i - 1] + f[i - 2]) % mod;
-        }
-        return (int) f[n];
+internal class Solution {
+  fun findDerangement(n: Int): Int {
+    val f = LongArray(n + 1)
+    f[0] = 1
+    val mod = 1e9.toInt() + 7
+    for (i in 2..n) {
+      f[i] = (i - 1) * (f[i - 1] + f[i - 2]) % mod
     }
+    return f[n].toInt()
+  }
 }

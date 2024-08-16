@@ -1,11 +1,11 @@
-class Solution {
-    public int countPrefixes(String[] words, String s) {
-        int ans = 0;
-        for (String w : words) {
-            if (s.startsWith(w)) {
-                ++ans;
-            }
-        }
-        return ans;
+internal class Solution {
+  fun countPrefixes(words: Array<String>, s: String): Int {
+    var ans = 0
+    for (w in words) {
+      if (s.startsWith(w)) {
+        ++ans
+      }
     }
+    return ans
+  }
 }

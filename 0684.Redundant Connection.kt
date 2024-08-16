@@ -1,25 +1,26 @@
-class Solution {
-    private int[] p;
+internal class Solution {
+  private var p: IntArray
 
-    public int[] findRedundantConnection(int[][] edges) {
-        p = new int[1010];
-        for (int i = 0; i < p.length; ++i) {
-            p[i] = i;
-        }
-        for (int[] e : edges) {
-            int a = e[0], b = e[1];
-            if (find(a) == find(b)) {
-                return e;
-            }
-            p[find(a)] = find(b);
-        }
-        return null;
+  fun findRedundantConnection(edges: Array<IntArray>): IntArray? {
+    p = IntArray(1010)
+    for (i in p.indices) {
+      p[i] = i
     }
+    for (e in edges) {
+      val a = e[0]
+      val b = e[1]
+      if (find(a) == find(b)) {
+        return e
+      }
+      p[find(a)] = find(b)
+    }
+    return null
+  }
 
-    private int find(int x) {
-        if (p[x] != x) {
-            p[x] = find(p[x]);
-        }
-        return p[x];
+  private fun find(x: Int): Int {
+    if (p[x] != x) {
+      p[x] = find(p[x])
     }
+    return p[x]
+  }
 }

@@ -1,97 +1,98 @@
-class Node {
-    int l, r;
-    int lmx, rmx, mx;
+internal open class Node(var l: Int, var r: Int) {
+  var lmx: Int
+  var rmx: Int
+  var mx: Int = 1
 
-    Node(int l, int r) {
-        this.l = l;
-        this.r = r;
-        lmx = rmx = mx = 1;
-    }
+  init {
+    rmx = mx
+    lmx = rmx
+  }
 }
 
-class SegmentTree {
-    private char[] s;
-    private Node[] tr;
+internal class SegmentTree(s: CharArray) {
+  private val s: CharArray
+  private val tr: Array<Node>
 
-    public SegmentTree(char[] s) {
-        int n = s.length;
-        this.s = s;
-        tr = new Node[n << 2];
-        build(1, 1, n);
-    }
+  init {
+    val n = s.size
+    this.s = s
+    tr = arrayOfNulls(n shl 2)
+    build(1, 1, n)
+  }
 
-    public void build(int u, int l, int r) {
-        tr[u] = new Node(l, r);
-        if (l == r) {
-            return;
-        }
-        int mid = (l + r) >> 1;
-        build(u << 1, l, mid);
-        build(u << 1 | 1, mid + 1, r);
-        pushup(u);
+  fun build(u: Int, l: Int, r: Int) {
+    tr[u] = Node(l.toChar(), r)
+    if (l == r) {
+      return
     }
+    val mid = (l + r) shr 1
+    build(u shl 1, l, mid)
+    build(u shl 1 or 1, mid + 1, r)
+    pushup(u)
+  }
 
-    public void modify(int u, int x, char v) {
-        if (tr[u].l == x && tr[u].r == x) {
-            s[x - 1] = v;
-            return;
-        }
-        int mid = (tr[u].l + tr[u].r) >> 1;
-        if (x <= mid) {
-            modify(u << 1, x, v);
-        } else {
-            modify(u << 1 | 1, x, v);
-        }
-        pushup(u);
+  fun modify(u: Int, x: Int, v: Char) {
+    if (tr[u].l == x && tr[u].r == x) {
+      s[x - 1] = v
+      return
     }
+    val mid: Int = (tr[u].l + tr[u].r) shr 1
+    if (x <= mid) {
+      modify(u shl 1, x, v)
+    } else {
+      modify(u shl 1 or 1, x, v)
+    }
+    pushup(u)
+  }
 
-    public int query(int u, int l, int r) {
-        if (tr[u].l >= l && tr[u].r <= r) {
-            return tr[u].mx;
-        }
-        int mid = (tr[u].l + tr[u].r) >> 1;
-        int ans = 0;
-        if (r <= mid) {
-            ans = query(u << 1, l, r);
-        }
-        if (l > mid) {
-            ans = Math.max(ans, query(u << 1 | 1, l, r));
-        }
-        return ans;
+  fun query(u: Int, l: Int, r: Int): Int {
+    if (tr[u].l >= l && tr[u].r <= r) {
+      return tr[u].mx
     }
+    val mid: Int = (tr[u].l + tr[u].r) shr 1
+    var ans = 0
+    if (r <= mid) {
+      ans = query(u shl 1, l, r)
+    }
+    if (l > mid) {
+      ans = max(ans, query(u shl 1 or 1, l, r))
+    }
+    return ans
+  }
 
-    private void pushup(int u) {
-        Node root = tr[u];
-        Node left = tr[u << 1], right = tr[u << 1 | 1];
-        root.mx = Math.max(left.mx, right.mx);
-        root.lmx = left.lmx;
-        root.rmx = right.rmx;
-        int a = left.r - left.l + 1;
-        int b = right.r - right.l + 1;
-        if (s[left.r - 1] == s[right.l - 1]) {
-            if (left.lmx == a) {
-                root.lmx += right.lmx;
-            }
-            if (right.rmx == b) {
-                root.rmx += left.rmx;
-            }
-            root.mx = Math.max(root.mx, left.rmx + right.lmx);
-        }
+  private fun pushup(u: Int) {
+    val root = tr[u]
+    val left = tr[u shl 1]
+    val right = tr[u shl 1 or 1]
+    root.mx = max(left.mx, right.mx)
+    root.lmx = left.lmx
+    root.rmx = right.rmx
+    val a: Int = left.r - left.l + 1
+    val b: Int = right.r - right.l + 1
+    if (s[left.r - 1] == s[right.l - 1]) {
+      if (left.lmx == a) {
+        root.lmx += right.lmx
+      }
+      if (right.rmx == b) {
+        root.rmx += left.rmx
+      }
+      root.mx = max(root.mx, left.rmx + right.lmx)
     }
+  }
 }
 
-class Solution {
-    public int[] longestRepeating(String s, String queryCharacters, int[] queryIndices) {
-        SegmentTree tree = new SegmentTree(s.toCharArray());
-        int k = queryIndices.length;
-        int[] ans = new int[k];
-        int n = s.length();
-        for (int i = 0; i < k; ++i) {
-            int x = queryIndices[i] + 1;
-            char v = queryCharacters.charAt(i);
-            tree.modify(1, x, v);
-            ans[i] = tree.query(1, 1, n);
-        }
-        return ans;
+internal class Solution {
+  fun longestRepeating(s: String, queryCharacters: String, queryIndices: IntArray): IntArray {
+    val tree = SegmentTree(s.toCharArray())
+    val k = queryIndices.size
+    val ans = IntArray(k)
+    val n = s.length
+    for (i in 0 until k) {
+      val x = queryIndices[i] + 1
+      val v = queryCharacters[i]
+      tree.modify(1, x, v.code)
+      ans[i] = tree.query(1, 1, n)
     }
+    return ans
+  }
 }

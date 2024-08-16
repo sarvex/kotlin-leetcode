@@ -1,13 +1,15 @@
-class Solution {
-    public int findNthDigit(int n) {
-        int k = 1, cnt = 9;
-        while ((long) k * cnt < n) {
-            n -= k * cnt;
-            ++k;
-            cnt *= 10;
-        }
-        int num = (int) Math.pow(10, k - 1) + (n - 1) / k;
-        int idx = (n - 1) % k;
-        return String.valueOf(num).charAt(idx) - '0';
+internal class Solution {
+  fun findNthDigit(n: Int): Int {
+    var n = n
+    var k = 1
+    var cnt = 9
+    while (k.toLong() * cnt < n) {
+      n -= k * cnt
+      ++k
+      cnt *= 10
     }
+    val num = 10.pow(k - 1) as Int + (n - 1) / k
+    val idx = (n - 1) % k
+    return num.toString()[idx].code - '0'.code
+  }
 }

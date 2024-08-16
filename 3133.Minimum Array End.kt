@@ -1,14 +1,15 @@
-class Solution {
-    public long minEnd(int n, int x) {
-        --n;
-        long ans = x;
-        for (int i = 0; i < 31; ++i) {
-            if ((x >> i & 1) == 0) {
-                ans |= (n & 1) << i;
-                n >>= 1;
-            }
-        }
-        ans |= (long) n << 31;
-        return ans;
+internal class Solution {
+  fun minEnd(n: Int, x: Int): Long {
+    var n = n
+    --n
+    var ans = x.toLong()
+    for (i in 0..30) {
+      if ((x shr i and 1) == 0) {
+        ans = ans or ((n and 1) shl i).toLong()
+        n = n shr 1
+      }
     }
+    ans = ans or (n.toLong() shl 31)
+    return ans
+  }
 }

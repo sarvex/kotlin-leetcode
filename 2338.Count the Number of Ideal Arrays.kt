@@ -1,41 +1,49 @@
-class Solution {
-    private int[][] f;
-    private int[][] c;
-    private int n;
-    private int m;
-    private static final int MOD = (int) 1e9 + 7;
+import java.util.*
 
-    public int idealArrays(int n, int maxValue) {
-        this.n = n;
-        this.m = maxValue;
-        this.f = new int[maxValue + 1][16];
-        for (int[] row : f) {
-            Arrays.fill(row, -1);
-        }
-        c = new int[n][16];
-        for (int i = 0; i < n; ++i) {
-            for (int j = 0; j <= i && j < 16; ++j) {
-                c[i][j] = j == 0 ? 1 : (c[i - 1][j] + c[i - 1][j - 1]) % MOD;
-            }
-        }
-        int ans = 0;
-        for (int i = 1; i <= m; ++i) {
-            ans = (ans + dfs(i, 1)) % MOD;
-        }
-        return ans;
+internal class Solution {
+  private var f: Array<IntArray>
+  private var c: Array<IntArray>
+  private var n = 0
+  private var m = 0
+  fun idealArrays(n: Int, maxValue: Int): Int {
+    this.n = n
+    this.m = maxValue
+    this.f = Array(maxValue + 1) { IntArray(16) }
+    for (row in f) {
+      Arrays.fill(row, -1)
     }
+    c = Array(n) { IntArray(16) }
+    for (i in 0 until n) {
+      var j = 0
+      while (j <= i && j < 16) {
+        c[i][j] = if (j == 0) 1 else (c[i - 1][j] + c[i - 1][j - 1]) % Solution.Companion.MOD
+        ++j
+      }
+    }
+    var ans = 0
+    for (i in 1..m) {
+      ans = (ans + dfs(i, 1)) % Solution.Companion.MOD
+    }
+    return ans
+  }
 
-    private int dfs(int i, int cnt) {
-        if (f[i][cnt] != -1) {
-            return f[i][cnt];
-        }
-        int res = c[n - 1][cnt - 1];
-        if (cnt < n) {
-            for (int k = 2; k * i <= m; ++k) {
-                res = (res + dfs(k * i, cnt + 1)) % MOD;
-            }
-        }
-        f[i][cnt] = res;
-        return res;
+  private fun dfs(i: Int, cnt: Int): Int {
+    if (f[i][cnt] != -1) {
+      return f[i][cnt]
     }
+    var res = c[n - 1][cnt - 1]
+    if (cnt < n) {
+      var k = 2
+      while (k * i <= m) {
+        res = (res + dfs(k * i, cnt + 1)) % Solution.Companion.MOD
+        ++k
+      }
+    }
+    f[i][cnt] = res
+    return res
+  }
+
+  companion object {
+    private const val MOD = 1e9.toInt() + 7
+  }
 }

@@ -1,21 +1,21 @@
-class Solution {
-    public String[] reorderLogFiles(String[] logs) {
-        Arrays.sort(logs, this::cmp);
-        return logs;
-    }
+internal class Solution {
+  fun reorderLogFiles(logs: Array<String>): Array<String> {
+    Arrays.sort(logs) { a: String, b: String -> this.cmp(a, b) }
+    return logs
+  }
 
-    private int cmp(String a, String b) {
-        String[] t1 = a.split(" ", 2);
-        String[] t2 = b.split(" ", 2);
-        boolean d1 = Character.isDigit(t1[1].charAt(0));
-        boolean d2 = Character.isDigit(t2[1].charAt(0));
-        if (!d1 && !d2) {
-            int v = t1[1].compareTo(t2[1]);
-            return v == 0 ? t1[0].compareTo(t2[0]) : v;
-        }
-        if (d1 && d2) {
-            return 0;
-        }
-        return d1 ? 1 : -1;
+  private fun cmp(a: String, b: String): Int {
+    val t1: Array<String> = a.split(" ".toRegex(), limit = 2).toTypedArray()
+    val t2: Array<String> = b.split(" ".toRegex(), limit = 2).toTypedArray()
+    val d1 = Character.isDigit(t1[1][0])
+    val d2 = Character.isDigit(t2[1][0])
+    if (!d1 && !d2) {
+      val v = t1[1].compareTo(t2[1])
+      return if (v == 0) t1[0].compareTo(t2[0]) else v
     }
+    if (d1 && d2) {
+      return 0
+    }
+    return if (d1) 1 else -1
+  }
 }

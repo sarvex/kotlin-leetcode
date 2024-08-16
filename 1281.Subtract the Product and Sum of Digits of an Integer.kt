@@ -1,11 +1,14 @@
-class Solution {
-    public int subtractProductAndSum(int n) {
-        int x = 1, y = 0;
-        for (; n > 0; n /= 10) {
-            int v = n % 10;
-            x *= v;
-            y += v;
-        }
-        return x - y;
+internal class Solution {
+  fun subtractProductAndSum(n: Int): Int {
+    var n = n
+    var x = 1
+    var y = 0
+    while (n > 0) {
+      val v = n % 10
+      x *= v
+      y += v
+      n /= 10
     }
+    return x - y
+  }
 }

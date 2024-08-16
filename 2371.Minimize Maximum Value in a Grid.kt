@@ -1,22 +1,24 @@
-class Solution {
-    public int[][] minScore(int[][] grid) {
-        int m = grid.length, n = grid[0].length;
-        List<int[]> nums = new ArrayList<>();
-        for (int i = 0; i < m; ++i) {
-            for (int j = 0; j < n; ++j) {
-                nums.add(new int[] {grid[i][j], i, j});
-            }
-        }
-        Collections.sort(nums, (a, b) -> a[0] - b[0]);
-        int[] rowMax = new int[m];
-        int[] colMax = new int[n];
-        int[][] ans = new int[m][n];
-        for (int[] num : nums) {
-            int i = num[1], j = num[2];
-            ans[i][j] = Math.max(rowMax[i], colMax[j]) + 1;
-            rowMax[i] = ans[i][j];
-            colMax[j] = ans[i][j];
-        }
-        return ans;
+internal class Solution {
+  fun minScore(grid: Array<IntArray>): Array<IntArray> {
+    val m = grid.size
+    val n = grid[0].size
+    val nums: List<IntArray> = ArrayList()
+    for (i in 0 until m) {
+      for (j in 0 until n) {
+        nums.add(intArrayOf(grid[i][j], i, j))
+      }
     }
+    Collections.sort(nums) { a, b -> a.get(0) - b.get(0) }
+    val rowMax = IntArray(m)
+    val colMax = IntArray(n)
+    val ans = Array(m) { IntArray(n) }
+    for (num in nums) {
+      val i = num[1]
+      val j = num[2]
+      ans[i][j] = max(rowMax[i], colMax[j]) + 1
+      rowMax[i] = ans[i][j]
+      colMax[j] = ans[i][j]
+    }
+    return ans
+  }
 }

@@ -1,41 +1,35 @@
-class CombinationIterator {
-    private int n;
-    private int combinationLength;
-    private String characters;
-    private StringBuilder t = new StringBuilder();
-    private List<String> cs = new ArrayList<>();
-    private int idx = 0;
+internal class CombinationIterator(private val characters: String, private val combinationLength: Int) {
+  private val n = characters.length
+  private val t = StringBuilder()
+  private val cs: List<String> = ArrayList()
+  private var idx = 0
 
-    public CombinationIterator(String characters, int combinationLength) {
-        n = characters.length();
-        this.combinationLength = combinationLength;
-        this.characters = characters;
-        dfs(0);
-    }
+  init {
+    dfs(0)
+  }
 
-    public String next() {
-        return cs.get(idx++);
-    }
+  fun next(): String {
+    return cs[idx++]
+  }
 
-    public boolean hasNext() {
-        return idx < cs.size();
-    }
+  fun hasNext(): Boolean {
+    return idx < cs.size()
+  }
 
-    private void dfs(int i) {
-        if (t.length() == combinationLength) {
-            cs.add(t.toString());
-            return;
-        }
-        if (i == n) {
-            return;
-        }
-        t.append(characters.charAt(i));
-        dfs(i + 1);
-        t.deleteCharAt(t.length() - 1);
-        dfs(i + 1);
+  private fun dfs(i: Int) {
+    if (t.length == combinationLength) {
+      cs.add(t.toString())
+      return
     }
+    if (i == n) {
+      return
+    }
+    t.append(characters[i])
+    dfs(i + 1)
+    t.deleteCharAt(t.length - 1)
+    dfs(i + 1)
+  }
 }
-
 /**
  * Your CombinationIterator object will be instantiated and called as such:
  * CombinationIterator obj = new CombinationIterator(characters, combinationLength);

@@ -1,14 +1,15 @@
-class Solution {
-    public int maxSubarrayLength(int[] nums) {
-        TreeMap<Integer, List<Integer>> d = new TreeMap<>(Comparator.reverseOrder());
-        for (int i = 0; i < nums.length; ++i) {
-            d.computeIfAbsent(nums[i], k -> new ArrayList<>()).add(i);
-        }
-        int ans = 0, k = 1 << 30;
-        for (List<Integer> idx : d.values()) {
-            ans = Math.max(ans, idx.get(idx.size() - 1) - k + 1);
-            k = Math.min(k, idx.get(0));
-        }
-        return ans;
+internal class Solution {
+  fun maxSubarrayLength(nums: IntArray): Int {
+    val d: TreeMap<Int, List<Int>> = TreeMap(Comparator.reverseOrder())
+    for (i in nums.indices) {
+      d.computeIfAbsent(nums[i]) { k -> ArrayList() }.add(i)
     }
+    var ans = 0
+    var k = 1 shl 30
+    for (idx in d.values()) {
+      ans = Math.max(ans, idx[idx.size() - 1] - k + 1)
+      k = Math.min(k, idx[0])
+    }
+    return ans
+  }
 }

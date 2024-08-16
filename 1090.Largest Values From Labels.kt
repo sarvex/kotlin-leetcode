@@ -1,21 +1,25 @@
-class Solution {
-    public int largestValsFromLabels(int[] values, int[] labels, int numWanted, int useLimit) {
-        int n = values.length;
-        int[][] pairs = new int[n][2];
-        for (int i = 0; i < n; ++i) {
-            pairs[i] = new int[] {values[i], labels[i]};
-        }
-        Arrays.sort(pairs, (a, b) -> b[0] - a[0]);
-        Map<Integer, Integer> cnt = new HashMap<>();
-        int ans = 0, num = 0;
-        for (int i = 0; i < n && num < numWanted; ++i) {
-            int v = pairs[i][0], l = pairs[i][1];
-            if (cnt.getOrDefault(l, 0) < useLimit) {
-                cnt.merge(l, 1, Integer::sum);
-                num += 1;
-                ans += v;
-            }
-        }
-        return ans;
+internal class Solution {
+  fun largestValsFromLabels(values: IntArray, labels: IntArray, numWanted: Int, useLimit: Int): Int {
+    val n = values.size
+    val pairs = Array(n) { IntArray(2) }
+    for (i in 0 until n) {
+      pairs[i] = intArrayOf(values[i], labels[i])
     }
+    Arrays.sort(pairs) { a, b -> b.get(0) - a.get(0) }
+    val cnt: Map<Int, Int> = HashMap()
+    var ans = 0
+    var num = 0
+    var i = 0
+    while (i < n && num < numWanted) {
+      val v = pairs[i][0]
+      val l = pairs[i][1]
+      if (cnt.getOrDefault(l, 0) < useLimit) {
+        cnt.merge(l, 1) { a: Int, b: Int -> Integer.sum(a, b) }
+        num += 1
+        ans += v
+      }
+      ++i
+    }
+    return ans
+  }
 }

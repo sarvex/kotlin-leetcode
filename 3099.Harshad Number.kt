@@ -1,9 +1,11 @@
-class Solution {
-    public int sumOfTheDigitsOfHarshadNumber(int x) {
-        int s = 0;
-        for (int y = x; y > 0; y /= 10) {
-            s += y % 10;
-        }
-        return x % s == 0 ? s : -1;
+internal class Solution {
+  fun sumOfTheDigitsOfHarshadNumber(x: Int): Int {
+    var s = 0
+    var y = x
+    while (y > 0) {
+      s += y % 10
+      y /= 10
     }
+    return if (x % s == 0) s else -1
+  }
 }

@@ -1,49 +1,53 @@
-class Solution {
-    private static final int N = 3010;
-    private static final int MOD = (int) 1e9 + 7;
-    private static final long[] f = new long[N];
-    private static final long[] g = new long[N];
+internal class Solution {
+  fun makeStringSorted(s: String): Int {
+    val cnt = IntArray(26)
+    val n = s.length
+    for (i in 0 until n) {
+      ++cnt[s[i].code - 'a'.code]
+    }
+    var ans: Long = 0
+    for (i in 0 until n) {
+      var m = 0
+      for (j in s[i].code - 'a'.code - 1 downTo 0) {
+        m += cnt[j]
+      }
+      var t: Long = m * Solution.Companion.f.get(n - i - 1) % Solution.Companion.MOD
+      for (v in cnt) {
+        t = t * Solution.Companion.g.get(v) % Solution.Companion.MOD
+      }
+      --cnt[s[i].code - 'a'.code]
+      ans = (ans + t + Solution.Companion.MOD) % Solution.Companion.MOD
+    }
+    return ans.toInt()
+  }
 
-    static {
-        f[0] = 1;
-        g[0] = 1;
-        for (int i = 1; i < N; ++i) {
-            f[i] = f[i - 1] * i % MOD;
-            g[i] = qmi(f[i], MOD - 2);
-        }
+  companion object {
+    private const val N = 3010
+    private const val MOD = 1e9.toInt() + 7
+    private val f = LongArray(Solution.Companion.N)
+    private val g = LongArray(Solution.Companion.N)
+
+    init {
+      Solution.Companion.f.get(0) = 1
+      Solution.Companion.g.get(0) = 1
+      for (i in 1 until Solution.Companion.N) {
+        Solution.Companion.f.get(i) = Solution.Companion.f.get(i - 1) * i % Solution.Companion.MOD
+        Solution.Companion.g.get(i) = Solution.Companion.qmi(Solution.Companion.f.get(i), Solution.Companion.MOD - 2)
+      }
     }
 
-    public static long qmi(long a, int k) {
-        long res = 1;
-        while (k != 0) {
-            if ((k & 1) == 1) {
-                res = res * a % MOD;
-            }
-            k >>= 1;
-            a = a * a % MOD;
+    fun qmi(a: Long, k: Int): Long {
+      var a = a
+      var k = k
+      var res: Long = 1
+      while (k != 0) {
+        if ((k and 1) == 1) {
+          res = res * a % Solution.Companion.MOD
         }
-        return res;
+        k = k shr 1
+        a = a * a % Solution.Companion.MOD
+      }
+      return res
     }
-
-    public int makeStringSorted(String s) {
-        int[] cnt = new int[26];
-        int n = s.length();
-        for (int i = 0; i < n; ++i) {
-            ++cnt[s.charAt(i) - 'a'];
-        }
-        long ans = 0;
-        for (int i = 0; i < n; ++i) {
-            int m = 0;
-            for (int j = s.charAt(i) - 'a' - 1; j >= 0; --j) {
-                m += cnt[j];
-            }
-            long t = m * f[n - i - 1] % MOD;
-            for (int v : cnt) {
-                t = t * g[v] % MOD;
-            }
-            --cnt[s.charAt(i) - 'a'];
-            ans = (ans + t + MOD) % MOD;
-        }
-        return (int) ans;
-    }
+  }
 }

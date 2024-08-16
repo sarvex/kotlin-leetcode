@@ -1,11 +1,11 @@
-class Solution {
-    public long minimumHealth(int[] damage, int armor) {
-        long s = 0;
-        int mx = damage[0];
-        for (int v : damage) {
-            s += v;
-            mx = Math.max(mx, v);
-        }
-        return s - Math.min(mx, armor) + 1;
+internal class Solution {
+  fun minimumHealth(damage: IntArray, armor: Int): Long {
+    var s: Long = 0
+    var mx = damage[0]
+    for (v in damage) {
+      s += v.toLong()
+      mx = max(mx, v)
     }
+    return s - min(mx, armor) + 1
+  }
 }

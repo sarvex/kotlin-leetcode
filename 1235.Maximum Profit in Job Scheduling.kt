@@ -1,43 +1,45 @@
-class Solution {
-    private int[][] jobs;
-    private int[] f;
-    private int n;
+internal class Solution {
+  private var jobs: Array<IntArray>
+  private var f: IntArray
+  private var n = 0
 
-    public int jobScheduling(int[] startTime, int[] endTime, int[] profit) {
-        n = profit.length;
-        jobs = new int[n][3];
-        for (int i = 0; i < n; ++i) {
-            jobs[i] = new int[] {startTime[i], endTime[i], profit[i]};
-        }
-        Arrays.sort(jobs, (a, b) -> a[0] - b[0]);
-        f = new int[n];
-        return dfs(0);
+  fun jobScheduling(startTime: IntArray, endTime: IntArray, profit: IntArray): Int {
+    n = profit.size
+    jobs = Array(n) { IntArray(3) }
+    for (i in 0 until n) {
+      jobs[i] = intArrayOf(startTime[i], endTime[i], profit[i])
     }
+    Arrays.sort(jobs) { a, b -> a.get(0) - b.get(0) }
+    f = IntArray(n)
+    return dfs(0)
+  }
 
-    private int dfs(int i) {
-        if (i >= n) {
-            return 0;
-        }
-        if (f[i] != 0) {
-            return f[i];
-        }
-        int e = jobs[i][1], p = jobs[i][2];
-        int j = search(jobs, e, i + 1);
-        int ans = Math.max(dfs(i + 1), p + dfs(j));
-        f[i] = ans;
-        return ans;
+  private fun dfs(i: Int): Int {
+    if (i >= n) {
+      return 0
     }
+    if (f[i] != 0) {
+      return f[i]
+    }
+    val e = jobs[i][1]
+    val p = jobs[i][2]
+    val j = search(jobs, e, i + 1)
+    val ans: Int = max(dfs(i + 1), p + dfs(j))
+    f[i] = ans
+    return ans
+  }
 
-    private int search(int[][] jobs, int x, int i) {
-        int left = i, right = n;
-        while (left < right) {
-            int mid = (left + right) >> 1;
-            if (jobs[mid][0] >= x) {
-                right = mid;
-            } else {
-                left = mid + 1;
-            }
-        }
-        return left;
+  private fun search(jobs: Array<IntArray>, x: Int, i: Int): Int {
+    var left = i
+    var right = n
+    while (left < right) {
+      val mid = (left + right) shr 1
+      if (jobs[mid][0] >= x) {
+        right = mid
+      } else {
+        left = mid + 1
+      }
     }
+    return left
+  }
 }

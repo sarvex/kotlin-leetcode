@@ -1,35 +1,35 @@
-class Solution {
-    private int m;
-    private int n;
-    private int[][] grid;
+internal class Solution {
+  private var m = 0
+  private var n = 0
+  private var grid: Array<IntArray>
 
-    public int[] findBall(int[][] grid) {
-        m = grid.length;
-        n = grid[0].length;
-        this.grid = grid;
-        int[] ans = new int[n];
-        for (int j = 0; j < n; ++j) {
-            ans[j] = dfs(0, j);
-        }
-        return ans;
+  fun findBall(grid: Array<IntArray>): IntArray {
+    m = grid.size
+    n = grid[0].size
+    this.grid = grid
+    val ans = IntArray(n)
+    for (j in 0 until n) {
+      ans[j] = dfs(0, j)
     }
+    return ans
+  }
 
-    private int dfs(int i, int j) {
-        if (i == m) {
-            return j;
-        }
-        if (j == 0 && grid[i][j] == -1) {
-            return -1;
-        }
-        if (j == n - 1 && grid[i][j] == 1) {
-            return -1;
-        }
-        if (grid[i][j] == 1 && grid[i][j + 1] == -1) {
-            return -1;
-        }
-        if (grid[i][j] == -1 && grid[i][j - 1] == 1) {
-            return -1;
-        }
-        return grid[i][j] == 1 ? dfs(i + 1, j + 1) : dfs(i + 1, j - 1);
+  private fun dfs(i: Int, j: Int): Int {
+    if (i == m) {
+      return j
     }
+    if (j == 0 && grid[i][j] == -1) {
+      return -1
+    }
+    if (j == n - 1 && grid[i][j] == 1) {
+      return -1
+    }
+    if (grid[i][j] == 1 && grid[i][j + 1] == -1) {
+      return -1
+    }
+    if (grid[i][j] == -1 && grid[i][j - 1] == 1) {
+      return -1
+    }
+    return if (grid[i][j] == 1) dfs(i + 1, j + 1) else dfs(i + 1, j - 1)
+  }
 }

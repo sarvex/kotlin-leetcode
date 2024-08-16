@@ -1,14 +1,15 @@
-class Solution {
-    public int[] findingUsersActiveMinutes(int[][] logs, int k) {
-        Map<Integer, Set<Integer>> d = new HashMap<>();
-        for (var log : logs) {
-            int i = log[0], t = log[1];
-            d.computeIfAbsent(i, key -> new HashSet<>()).add(t);
-        }
-        int[] ans = new int[k];
-        for (var ts : d.values()) {
-            ++ans[ts.size() - 1];
-        }
-        return ans;
+internal class Solution {
+  fun findingUsersActiveMinutes(logs: Array<IntArray>, k: Int): IntArray {
+    val d: Map<Int, Set<Int>> = HashMap()
+    for (log in logs) {
+      val i = log[0]
+      val t = log[1]
+      d.computeIfAbsent(i) { key -> HashSet() }.add(t)
     }
+    val ans = IntArray(k)
+    for (ts in d.values()) {
+      ++ans[ts.size() - 1]
+    }
+    return ans
+  }
 }

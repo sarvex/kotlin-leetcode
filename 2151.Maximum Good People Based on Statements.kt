@@ -1,26 +1,26 @@
-class Solution {
-    public int maximumGood(int[][] statements) {
-        int ans = 0;
-        for (int mask = 1; mask < 1 << statements.length; ++mask) {
-            ans = Math.max(ans, check(mask, statements));
-        }
-        return ans;
+internal class Solution {
+  fun maximumGood(statements: Array<IntArray>): Int {
+    var ans = 0
+    for (mask in 1 until (1 shl statements.size)) {
+      ans = max(ans, check(mask, statements))
     }
+    return ans
+  }
 
-    private int check(int mask, int[][] statements) {
-        int cnt = 0;
-        int n = statements.length;
-        for (int i = 0; i < n; ++i) {
-            if (((mask >> i) & 1) == 1) {
-                for (int j = 0; j < n; ++j) {
-                    int v = statements[i][j];
-                    if (v < 2 && ((mask >> j) & 1) != v) {
-                        return 0;
-                    }
-                }
-                ++cnt;
-            }
+  private fun check(mask: Int, statements: Array<IntArray>): Int {
+    var cnt = 0
+    val n = statements.size
+    for (i in 0 until n) {
+      if (((mask shr i) and 1) == 1) {
+        for (j in 0 until n) {
+          val v = statements[i][j]
+          if (v < 2 && ((mask shr j) and 1) != v) {
+            return 0
+          }
         }
-        return cnt;
+        ++cnt
+      }
     }
+    return cnt
+  }
 }

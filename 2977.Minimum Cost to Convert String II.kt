@@ -1,86 +1,90 @@
-class Node {
-    Node[] children = new Node[26];
-    int v = -1;
+import java.util.*
+
+internal open class Node {
+  var children: Array<Node> = arrayOfNulls(26)
+  var v: Int = -1
 }
 
-class Solution {
-    private final long inf = 1L << 60;
-    private Node root = new Node();
-    private int idx;
+internal class Solution {
+  private val inf = 1L shl 60
+  private val root = Node()
+  private var idx = 0
 
-    private long[][] g;
-    private char[] s;
-    private char[] t;
-    private Long[] f;
+  private var g: Array<LongArray>
+  private var s: CharArray
+  private var t: CharArray
+  private var f: Array<Long>
 
-    public long minimumCost(
-        String source, String target, String[] original, String[] changed, int[] cost) {
-        int m = cost.length;
-        g = new long[m << 1][m << 1];
-        s = source.toCharArray();
-        t = target.toCharArray();
-        for (int i = 0; i < g.length; ++i) {
-            Arrays.fill(g[i], inf);
-            g[i][i] = 0;
-        }
-        for (int i = 0; i < m; ++i) {
-            int x = insert(original[i]);
-            int y = insert(changed[i]);
-            g[x][y] = Math.min(g[x][y], cost[i]);
-        }
-        for (int k = 0; k < idx; ++k) {
-            for (int i = 0; i < idx; ++i) {
-                if (g[i][k] >= inf) {
-                    continue;
-                }
-                for (int j = 0; j < idx; ++j) {
-                    g[i][j] = Math.min(g[i][j], g[i][k] + g[k][j]);
-                }
-            }
-        }
-        f = new Long[s.length];
-        long ans = dfs(0);
-        return ans >= inf ? -1 : ans;
+  fun minimumCost(
+    source: String, target: String, original: Array<String>, changed: Array<String>, cost: IntArray
+  ): Long {
+    val m = cost.size
+    g = Array(m shl 1) { LongArray(m shl 1) }
+    s = source.toCharArray()
+    t = target.toCharArray()
+    for (i in g.indices) {
+      Arrays.fill(g[i], inf)
+      g[i][i] = 0
     }
-
-    private int insert(String w) {
-        Node node = root;
-        for (char c : w.toCharArray()) {
-            int i = c - 'a';
-            if (node.children[i] == null) {
-                node.children[i] = new Node();
-            }
-            node = node.children[i];
-        }
-        if (node.v < 0) {
-            node.v = idx++;
-        }
-        return node.v;
+    for (i in 0 until m) {
+      val x = insert(original[i])
+      val y = insert(changed[i])
+      g[x][y] = min(g[x][y], cost[i])
     }
-
-    private long dfs(int i) {
-        if (i >= s.length) {
-            return 0;
+    for (k in 0 until idx) {
+      for (i in 0 until idx) {
+        if (g[i][k] >= inf) {
+          continue
         }
-        if (f[i] != null) {
-            return f[i];
+        for (j in 0 until idx) {
+          g[i][j] = min(g[i][j], g[i][k] + g[k][j])
         }
-        long res = s[i] == t[i] ? dfs(i + 1) : inf;
-        Node p = root, q = root;
-        for (int j = i; j < s.length; ++j) {
-            p = p.children[s[j] - 'a'];
-            q = q.children[t[j] - 'a'];
-            if (p == null || q == null) {
-                break;
-            }
-            if (p.v < 0 || q.v < 0) {
-                continue;
-            }
-            long t = g[p.v][q.v];
-            if (t < inf) {
-                res = Math.min(res, t + dfs(j + 1));
-            }
-        }
-        return f[i] = res;
+      }
     }
+    f = arrayOfNulls(s.size)
+    val ans = dfs(0)
+    return if (ans >= inf) -1 else ans
+  }
+
+  private fun insert(w: String): Int {
+    var node = root
+    for (c in w.toCharArray()) {
+      val i: Int = c.code - 'a'.code
+      if (node.children.get(i) == null) {
+        node.children.get(i) = Node()
+      }
+      node = node.children.get(i)
+    }
+    if (node.v < 0) {
+      node.v = idx++
+    }
+    return node.v
+  }
+
+  private fun dfs(i: Int): Long {
+    if (i >= s.size) {
+      return 0
+    }
+    if (f[i] != null) {
+      return f[i]
+    }
+    var res = if (s[i] == t[i]) dfs(i + 1) else inf
+    var p = root
+    var q = root
+    for (j in i until s.size) {
+      p = p.children.get(s[j].code - 'a'.code)
+      q = q.children.get(t[j].code - 'a'.code)
+      if (p == null || q == null) {
+        break
+      }
+      if (p.v < 0 || q.v < 0) {
+        continue
+      }
+      val t = g[p.v][q.v]
+      if (t < inf) {
+        res = min(res, t + dfs(j + 1))
+      }
+    }
+    return res.also { f[i] = it }
+  }
 }

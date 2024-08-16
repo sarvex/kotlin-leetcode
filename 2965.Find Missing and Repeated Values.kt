@@ -1,20 +1,22 @@
-class Solution {
-    public int[] findMissingAndRepeatedValues(int[][] grid) {
-        int n = grid.length;
-        int[] cnt = new int[n * n + 1];
-        int[] ans = new int[2];
-        for (int[] row : grid) {
-            for (int x : row) {
-                if (++cnt[x] == 2) {
-                    ans[0] = x;
-                }
-            }
+internal class Solution {
+  fun findMissingAndRepeatedValues(grid: Array<IntArray>): IntArray {
+    val n = grid.size
+    val cnt = IntArray(n * n + 1)
+    val ans = IntArray(2)
+    for (row in grid) {
+      for (x in row) {
+        if (++cnt[x] == 2) {
+          ans[0] = x
         }
-        for (int x = 1;; ++x) {
-            if (cnt[x] == 0) {
-                ans[1] = x;
-                return ans;
-            }
-        }
+      }
     }
+    var x = 1
+    while (true) {
+      if (cnt[x] == 0) {
+        ans[1] = x
+        return ans
+      }
+      ++x
+    }
+  }
 }

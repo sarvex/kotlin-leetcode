@@ -1,27 +1,29 @@
-class Solution {
-    public int numberOfPaths(int n, int[][] corridors) {
-        Set<Integer>[] g = new Set[n + 1];
-        for (int i = 0; i <= n; ++i) {
-            g[i] = new HashSet<>();
-        }
-        for (var c : corridors) {
-            int a = c[0], b = c[1];
-            g[a].add(b);
-            g[b].add(a);
-        }
-        int ans = 0;
-        for (int c = 1; c <= n; ++c) {
-            var nxt = new ArrayList<>(g[c]);
-            int m = nxt.size();
-            for (int i = 0; i < m; ++i) {
-                for (int j = i + 1; j < m; ++j) {
-                    int a = nxt.get(i), b = nxt.get(j);
-                    if (g[b].contains(a)) {
-                        ++ans;
-                    }
-                }
-            }
-        }
-        return ans / 3;
+internal class Solution {
+  fun numberOfPaths(n: Int, corridors: Array<IntArray>): Int {
+    val g: Array<Set<Int>> = arrayOfNulls(n + 1)
+    for (i in 0..n) {
+      g[i] = HashSet()
     }
+    for (c in corridors) {
+      val a = c[0]
+      val b = c[1]
+      g[a].add(b)
+      g[b].add(a)
+    }
+    var ans = 0
+    for (c in 1..n) {
+      val nxt: ArrayList = ArrayList(g[c])
+      val m: Int = nxt.size()
+      for (i in 0 until m) {
+        for (j in i + 1 until m) {
+          val a: Int = nxt.get(i)
+          val b: Int = nxt.get(j)
+          if (g[b].contains(a)) {
+            ++ans
+          }
+        }
+      }
+    }
+    return ans / 3
+  }
 }

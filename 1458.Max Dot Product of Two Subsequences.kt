@@ -1,17 +1,18 @@
-class Solution {
-    public int maxDotProduct(int[] nums1, int[] nums2) {
-        int m = nums1.length, n = nums2.length;
-        int[][] f = new int[m + 1][n + 1];
-        for (var g : f) {
-            Arrays.fill(g, Integer.MIN_VALUE);
-        }
-        for (int i = 1; i <= m; ++i) {
-            for (int j = 1; j <= n; ++j) {
-                int v = nums1[i - 1] * nums2[j - 1];
-                f[i][j] = Math.max(f[i - 1][j], f[i][j - 1]);
-                f[i][j] = Math.max(f[i][j], Math.max(f[i - 1][j - 1], 0) + v);
-            }
-        }
-        return f[m][n];
+internal class Solution {
+  fun maxDotProduct(nums1: IntArray, nums2: IntArray): Int {
+    val m = nums1.size
+    val n = nums2.size
+    val f = Array(m + 1) { IntArray(n + 1) }
+    for (g in f) {
+      Arrays.fill(g, MIN_VALUE)
     }
+    for (i in 1..m) {
+      for (j in 1..n) {
+        val v = nums1[i - 1] * nums2[j - 1]
+        f[i][j] = max(f[i - 1][j], f[i][j - 1])
+        f[i][j] = max(f[i][j], max(f[i - 1][j - 1], 0) + v)
+      }
+    }
+    return f[m][n]
+  }
 }

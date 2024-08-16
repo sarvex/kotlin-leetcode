@@ -1,19 +1,24 @@
-class Solution {
-    public long maxSpending(int[][] values) {
-        int m = values.length, n = values[0].length;
-        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[0] - b[0]);
-        for (int i = 0; i < m; ++i) {
-            pq.offer(new int[] {values[i][n - 1], i, n - 1});
-        }
-        long ans = 0;
-        for (int d = 1; !pq.isEmpty(); ++d) {
-            var p = pq.poll();
-            int v = p[0], i = p[1], j = p[2];
-            ans += (long) v * d;
-            if (j > 0) {
-                pq.offer(new int[] {values[i][j - 1], i, j - 1});
-            }
-        }
-        return ans;
+internal class Solution {
+  fun maxSpending(values: Array<IntArray>): Long {
+    val m = values.size
+    val n = values[0].size
+    val pq: PriorityQueue<IntArray> = PriorityQueue { a, b -> a.get(0) - b.get(0) }
+    for (i in 0 until m) {
+      pq.offer(intArrayOf(values[i][n - 1], i, n - 1))
     }
+    var ans: Long = 0
+    var d = 1
+    while (!pq.isEmpty()) {
+      val p: Unit = pq.poll()
+      val v: Int = p.get(0)
+      val i: Int = p.get(1)
+      val j: Int = p.get(2)
+      ans += v.toLong() * d
+      if (j > 0) {
+        pq.offer(intArrayOf(values[i][j - 1], i, j - 1))
+      }
+      ++d
+    }
+    return ans
+  }
 }

@@ -1,24 +1,21 @@
-class KthLargest {
-    private PriorityQueue<Integer> minQ;
-    private int k;
+internal class KthLargest(private val k: Int, nums: IntArray) {
+  private val minQ: PriorityQueue<Int>
 
-    public KthLargest(int k, int[] nums) {
-        this.k = k;
-        minQ = new PriorityQueue<>(k);
-        for (int x : nums) {
-            add(x);
-        }
+  init {
+    minQ = PriorityQueue(k)
+    for (x in nums) {
+      add(x)
     }
+  }
 
-    public int add(int val) {
-        minQ.offer(val);
-        if (minQ.size() > k) {
-            minQ.poll();
-        }
-        return minQ.peek();
+  fun add(`val`: Int): Int {
+    minQ.offer(`val`)
+    if (minQ.size() > k) {
+      minQ.poll()
     }
+    return minQ.peek()
+  }
 }
-
 /**
  * Your KthLargest object will be instantiated and called as such:
  * KthLargest obj = new KthLargest(k, nums);

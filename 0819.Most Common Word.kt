@@ -1,31 +1,34 @@
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.*
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
-class Solution {
-    private static Pattern pattern = Pattern.compile("[a-z]+");
-
-    public String mostCommonWord(String paragraph, String[] banned) {
-        Set<String> bannedWords = new HashSet<>();
-        for (String word : banned) {
-            bannedWords.add(word);
-        }
-        Map<String, Integer> counter = new HashMap<>();
-        Matcher matcher = pattern.matcher(paragraph.toLowerCase());
-        while (matcher.find()) {
-            String word = matcher.group();
-            if (bannedWords.contains(word)) {
-                continue;
-            }
-            counter.put(word, counter.getOrDefault(word, 0) + 1);
-        }
-        int max = Integer.MIN_VALUE;
-        String ans = null;
-        for (Map.Entry<String, Integer> entry : counter.entrySet()) {
-            if (entry.getValue() > max) {
-                max = entry.getValue();
-                ans = entry.getKey();
-            }
-        }
-        return ans;
+internal class Solution {
+  fun mostCommonWord(paragraph: String, banned: Array<String?>): String? {
+    val bannedWords: Set<String> = HashSet()
+    for (word in banned) {
+      bannedWords.add(word)
     }
+    val counter: Map<String, Int> = HashMap()
+    val matcher: Matcher = Solution.Companion.pattern.matcher(paragraph.lowercase(Locale.getDefault()))
+    while (matcher.find()) {
+      val word = matcher.group()
+      if (bannedWords.contains(word)) {
+        continue
+      }
+      counter.put(word, counter.getOrDefault(word, 0) + 1)
+    }
+    var max: Int = MIN_VALUE
+    var ans: String? = null
+    for (entry in counter.entrySet()) {
+      if (entry.getValue() > max) {
+        max = entry.getValue()
+        ans = entry.getKey()
+      }
+    }
+    return ans
+  }
+
+  companion object {
+    private val pattern: Pattern = Pattern.compile("[a-z]+")
+  }
 }

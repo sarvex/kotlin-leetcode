@@ -1,49 +1,57 @@
-class Solution {
-    public int[][] resultGrid(int[][] image, int threshold) {
-        int n = image.length;
-        int m = image[0].length;
-        int[][] ans = new int[n][m];
-        int[][] ct = new int[n][m];
-        for (int i = 0; i + 2 < n; ++i) {
-            for (int j = 0; j + 2 < m; ++j) {
-                boolean region = true;
-                for (int k = 0; k < 3; ++k) {
-                    for (int l = 0; l < 2; ++l) {
-                        region
-                            &= Math.abs(image[i + k][j + l] - image[i + k][j + l + 1]) <= threshold;
-                    }
-                }
-                for (int k = 0; k < 2; ++k) {
-                    for (int l = 0; l < 3; ++l) {
-                        region
-                            &= Math.abs(image[i + k][j + l] - image[i + k + 1][j + l]) <= threshold;
-                    }
-                }
-                if (region) {
-                    int tot = 0;
-                    for (int k = 0; k < 3; ++k) {
-                        for (int l = 0; l < 3; ++l) {
-                            tot += image[i + k][j + l];
-                        }
-                    }
-                    for (int k = 0; k < 3; ++k) {
-                        for (int l = 0; l < 3; ++l) {
-                            ct[i + k][j + l]++;
-                            ans[i + k][j + l] += tot / 9;
-                        }
-                    }
-                }
+internal class Solution {
+  fun resultGrid(image: Array<IntArray>, threshold: Int): Array<IntArray> {
+    val n = image.size
+    val m = image[0].size
+    val ans = Array(n) { IntArray(m) }
+    val ct = Array(n) { IntArray(m) }
+    run {
+      var i = 0
+      while (i + 2 < n) {
+        var j = 0
+        while (j + 2 < m) {
+          val region = true
+          for (k in 0..2) {
+            for (l in 0..1) {
+              region
+              = region
+              and(abs(image[i + k][j + l] - image[i + k][j + l + 1]) <= threshold)
             }
-        }
-        for (int i = 0; i < n; ++i) {
-            for (int j = 0; j < m; ++j) {
-                if (ct[i][j] == 0) {
-                    ans[i][j] = image[i][j];
-                } else {
-                    ans[i][j] /= ct[i][j];
-                }
+          }
+          for (k in 0..1) {
+            for (l in 0..2) {
+              region
+              = region
+              and(abs(image[i + k][j + l] - image[i + k + 1][j + l]) <= threshold)
             }
+          }
+          if (region) {
+            var tot = 0
+            for (k in 0..2) {
+              for (l in 0..2) {
+                tot += image[i + k][j + l]
+              }
+            }
+            for (k in 0..2) {
+              for (l in 0..2) {
+                ct[i + k][j + l]++
+                ans[i + k][j + l] += tot / 9
+              }
+            }
+          }
+          ++j
         }
-        return ans;
+        ++i
+      }
     }
+    for (i in 0 until n) {
+      for (j in 0 until m) {
+        if (ct[i][j] == 0) {
+          ans[i][j] = image[i][j]
+        } else {
+          ans[i][j] /= ct[i][j]
+        }
+      }
+    }
+    return ans
+  }
 }

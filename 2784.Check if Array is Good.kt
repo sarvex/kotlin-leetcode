@@ -1,18 +1,18 @@
-class Solution {
-    public boolean isGood(int[] nums) {
-        int n = nums.length - 1;
-        int[] cnt = new int[201];
-        for (int x : nums) {
-            ++cnt[x];
-        }
-        if (cnt[n] != 2) {
-            return false;
-        }
-        for (int i = 1; i < n; ++i) {
-            if (cnt[i] != 1) {
-                return false;
-            }
-        }
-        return true;
+internal class Solution {
+  fun isGood(nums: IntArray): Boolean {
+    val n = nums.size - 1
+    val cnt = IntArray(201)
+    for (x in nums) {
+      ++cnt[x]
     }
+    if (cnt[n] != 2) {
+      return false
+    }
+    for (i in 1 until n) {
+      if (cnt[i] != 1) {
+        return false
+      }
+    }
+    return true
+  }
 }

@@ -1,14 +1,14 @@
-class Solution {
-    public int minimumRightShifts(List<Integer> nums) {
-        int n = nums.size();
-        int i = 1;
-        while (i < n && nums.get(i - 1) < nums.get(i)) {
-            ++i;
-        }
-        int k = i + 1;
-        while (k < n && nums.get(k - 1) < nums.get(k) && nums.get(k) < nums.get(0)) {
-            ++k;
-        }
-        return k < n ? -1 : n - i;
+internal class Solution {
+  fun minimumRightShifts(nums: List<Int>): Int {
+    val n: Int = nums.size()
+    var i = 1
+    while (i < n && nums[i - 1] < nums[i]) {
+      ++i
     }
+    var k = i + 1
+    while (k < n && nums[k - 1] < nums[k] && nums[k] < nums[0]) {
+      ++k
+    }
+    return if (k < n) -1 else n - i
+  }
 }

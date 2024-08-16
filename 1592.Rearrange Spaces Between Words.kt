@@ -1,24 +1,24 @@
-class Solution {
-    public String reorderSpaces(String text) {
-        int cnt = 0;
-        for (char c : text.toCharArray()) {
-            if (c == ' ') {
-                ++cnt;
-            }
-        }
-        String[] words = text.split("\\s+");
-        List<String> res = new ArrayList<>();
-        for (String w : words) {
-            if (!"".equals(w)) {
-                res.add(w);
-            }
-        }
-        int m = res.size() - 1;
-        if (m == 0) {
-            return res.get(0) + " ".repeat(cnt);
-        }
-        String ans = String.join(" ".repeat(cnt / m), res);
-        ans += " ".repeat(cnt % m);
-        return ans;
+internal class Solution {
+  fun reorderSpaces(text: String): String {
+    var cnt = 0
+    for (c in text.toCharArray()) {
+      if (c == ' ') {
+        ++cnt
+      }
     }
+    val words: Array<String> = text.split("\\s+".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+    val res: List<String> = ArrayList()
+    for (w in words) {
+      if ("" != w) {
+        res.add(w)
+      }
+    }
+    val m: Int = res.size() - 1
+    if (m == 0) {
+      return res[0] + " ".repeat(cnt)
+    }
+    var ans = java.lang.String.join(" ".repeat(cnt / m), res)
+    ans += " ".repeat(cnt % m)
+    return ans
+  }
 }

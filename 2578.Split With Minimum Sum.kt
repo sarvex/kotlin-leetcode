@@ -1,19 +1,24 @@
-class Solution {
-    public int splitNum(int num) {
-        int[] cnt = new int[10];
-        int n = 0;
-        for (; num > 0; num /= 10) {
-            ++cnt[num % 10];
-            ++n;
-        }
-        int[] ans = new int[2];
-        for (int i = 0, j = 0; i < n; ++i) {
-            while (cnt[j] == 0) {
-                ++j;
-            }
-            --cnt[j];
-            ans[i & 1] = ans[i & 1] * 10 + j;
-        }
-        return ans[0] + ans[1];
+internal class Solution {
+  fun splitNum(num: Int): Int {
+    var num = num
+    val cnt = IntArray(10)
+    var n = 0
+    while (num > 0) {
+      ++cnt[num % 10]
+      ++n
+      num /= 10
     }
+    val ans = IntArray(2)
+    var i = 0
+    var j = 0
+    while (i < n) {
+      while (cnt[j] == 0) {
+        ++j
+      }
+      --cnt[j]
+      ans[i and 1] = ans[i and 1] * 10 + j
+      ++i
+    }
+    return ans[0] + ans[1]
+  }
 }

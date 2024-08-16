@@ -1,28 +1,28 @@
-class Solution {
-    public int numPermsDISequence(String s) {
-        final int mod = (int) 1e9 + 7;
-        int n = s.length();
-        int[][] f = new int[n + 1][n + 1];
-        f[0][0] = 1;
-        for (int i = 1; i <= n; ++i) {
-            if (s.charAt(i - 1) == 'D') {
-                for (int j = 0; j <= i; ++j) {
-                    for (int k = j; k < i; ++k) {
-                        f[i][j] = (f[i][j] + f[i - 1][k]) % mod;
-                    }
-                }
-            } else {
-                for (int j = 0; j <= i; ++j) {
-                    for (int k = 0; k < j; ++k) {
-                        f[i][j] = (f[i][j] + f[i - 1][k]) % mod;
-                    }
-                }
-            }
+internal class Solution {
+  fun numPermsDISequence(s: String): Int {
+    val mod = 1e9.toInt() + 7
+    val n = s.length
+    val f = Array(n + 1) { IntArray(n + 1) }
+    f[0][0] = 1
+    for (i in 1..n) {
+      if (s[i - 1] == 'D') {
+        for (j in 0..i) {
+          for (k in j until i) {
+            f[i][j] = (f[i][j] + f[i - 1][k]) % mod
+          }
         }
-        int ans = 0;
-        for (int j = 0; j <= n; ++j) {
-            ans = (ans + f[n][j]) % mod;
+      } else {
+        for (j in 0..i) {
+          for (k in 0 until j) {
+            f[i][j] = (f[i][j] + f[i - 1][k]) % mod
+          }
         }
-        return ans;
+      }
     }
+    var ans = 0
+    for (j in 0..n) {
+      ans = (ans + f[n][j]) % mod
+    }
+    return ans
+  }
 }

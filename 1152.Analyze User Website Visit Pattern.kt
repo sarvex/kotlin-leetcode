@@ -1,52 +1,44 @@
-class Solution {
-    public List<String> mostVisitedPattern(String[] username, int[] timestamp, String[] website) {
-        Map<String, List<Node>> d = new HashMap<>();
-        int n = username.length;
-        for (int i = 0; i < n; ++i) {
-            String user = username[i];
-            int ts = timestamp[i];
-            String site = website[i];
-            d.computeIfAbsent(user, k -> new ArrayList<>()).add(new Node(user, ts, site));
-        }
-        Map<String, Integer> cnt = new HashMap<>();
-        for (var sites : d.values()) {
-            int m = sites.size();
-            Set<String> s = new HashSet<>();
-            if (m > 2) {
-                Collections.sort(sites, (a, b) -> a.ts - b.ts);
-                for (int i = 0; i < m - 2; ++i) {
-                    for (int j = i + 1; j < m - 1; ++j) {
-                        for (int k = j + 1; k < m; ++k) {
-                            s.add(sites.get(i).site + "," + sites.get(j).site + ","
-                                + sites.get(k).site);
-                        }
-                    }
-                }
-            }
-            for (String t : s) {
-                cnt.put(t, cnt.getOrDefault(t, 0) + 1);
-            }
-        }
-        int mx = 0;
-        String t = "";
-        for (var e : cnt.entrySet()) {
-            if (mx < e.getValue() || (mx == e.getValue() && e.getKey().compareTo(t) < 0)) {
-                mx = e.getValue();
-                t = e.getKey();
-            }
-        }
-        return Arrays.asList(t.split(","));
+internal class Solution {
+  fun mostVisitedPattern(username: Array<String?>, timestamp: IntArray, website: Array<String?>): List<String> {
+    val d: Map<String, List<Node>> = HashMap()
+    val n = username.size
+    for (i in 0 until n) {
+      val user = username[i]
+      val ts = timestamp[i]
+      val site = website[i]
+      d.computeIfAbsent(user) { k -> ArrayList() }.add(Node(user, ts, site))
     }
+    val cnt: Map<String, Int> = HashMap()
+    for (sites in d.values()) {
+      val m: Int = sites.size()
+      val s: Set<String> = HashSet()
+      if (m > 2) {
+        Collections.sort(sites) { a, b -> a.ts - b.ts }
+        for (i in 0 until m - 2) {
+          for (j in i + 1 until m - 1) {
+            for (k in j + 1 until m) {
+              s.add(
+                ((sites.get(i).site + "," + sites.get(j).site).toString() + ","
+                    + sites.get(k).site)
+              )
+            }
+          }
+        }
+      }
+      for (t in s) {
+        cnt.put(t, cnt.getOrDefault(t, 0) + 1)
+      }
+    }
+    var mx = 0
+    var t = ""
+    for (e in cnt.entrySet()) {
+      if (mx < e.getValue() || (mx == e.getValue() && e.getKey().compareTo(t) < 0)) {
+        mx = e.getValue()
+        t = e.getKey()
+      }
+    }
+    return Arrays.asList(t.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray())
+  }
 }
 
-class Node {
-    String user;
-    int ts;
-    String site;
-
-    Node(String user, int ts, String site) {
-        this.user = user;
-        this.ts = ts;
-        this.site = site;
-    }
-}
+internal open class Node(var user: String, var ts: Int, var site: String) 

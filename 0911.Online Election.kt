@@ -1,30 +1,29 @@
-class TopVotedCandidate {
-    private int[] times;
-    private int[] wins;
+internal class TopVotedCandidate(persons: IntArray, times: IntArray) {
+  private val times: IntArray
+  private val wins: IntArray
 
-    public TopVotedCandidate(int[] persons, int[] times) {
-        int n = persons.length;
-        wins = new int[n];
-        this.times = times;
-        int[] cnt = new int[n];
-        int cur = 0;
-        for (int i = 0; i < n; ++i) {
-            int p = persons[i];
-            ++cnt[p];
-            if (cnt[cur] <= cnt[p]) {
-                cur = p;
-            }
-            wins[i] = cur;
-        }
+  init {
+    val n = persons.size
+    wins = IntArray(n)
+    this.times = times
+    val cnt = IntArray(n)
+    var cur = 0
+    for (i in 0 until n) {
+      val p = persons[i]
+      ++cnt[p]
+      if (cnt[cur] <= cnt[p]) {
+        cur = p
+      }
+      wins[i] = cur
     }
+  }
 
-    public int q(int t) {
-        int i = Arrays.binarySearch(times, t + 1);
-        i = i < 0 ? -i - 2 : i - 1;
-        return wins[i];
-    }
+  fun q(t: Int): Int {
+    var i: Int = Arrays.binarySearch(times, t + 1)
+    i = if (i < 0) -i - 2 else i - 1
+    return wins[i]
+  }
 }
-
 /**
  * Your TopVotedCandidate object will be instantiated and called as such:
  * TopVotedCandidate obj = new TopVotedCandidate(persons, times);

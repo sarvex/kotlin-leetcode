@@ -1,35 +1,36 @@
-class Solution {
-    private int ans;
+internal class Solution {
+  private var ans = 0
 
-    public int minCharacters(String a, String b) {
-        int m = a.length(), n = b.length();
-        int[] cnt1 = new int[26];
-        int[] cnt2 = new int[26];
-        for (int i = 0; i < m; ++i) {
-            ++cnt1[a.charAt(i) - 'a'];
-        }
-        for (int i = 0; i < n; ++i) {
-            ++cnt2[b.charAt(i) - 'a'];
-        }
-        ans = m + n;
-        for (int i = 0; i < 26; ++i) {
-            ans = Math.min(ans, m + n - cnt1[i] - cnt2[i]);
-        }
-        f(cnt1, cnt2);
-        f(cnt2, cnt1);
-        return ans;
+  fun minCharacters(a: String, b: String): Int {
+    val m = a.length
+    val n = b.length
+    val cnt1 = IntArray(26)
+    val cnt2 = IntArray(26)
+    for (i in 0 until m) {
+      ++cnt1[a[i].code - 'a'.code]
     }
+    for (i in 0 until n) {
+      ++cnt2[b[i].code - 'a'.code]
+    }
+    ans = m + n
+    for (i in 0..25) {
+      ans = min(ans, m + n - cnt1[i] - cnt2[i])
+    }
+    f(cnt1, cnt2)
+    f(cnt2, cnt1)
+    return ans
+  }
 
-    private void f(int[] cnt1, int[] cnt2) {
-        for (int i = 1; i < 26; ++i) {
-            int t = 0;
-            for (int j = i; j < 26; ++j) {
-                t += cnt1[j];
-            }
-            for (int j = 0; j < i; ++j) {
-                t += cnt2[j];
-            }
-            ans = Math.min(ans, t);
-        }
+  private fun f(cnt1: IntArray, cnt2: IntArray) {
+    for (i in 1..25) {
+      var t = 0
+      for (j in i..25) {
+        t += cnt1[j]
+      }
+      for (j in 0 until i) {
+        t += cnt2[j]
+      }
+      ans = min(ans, t)
     }
+  }
 }

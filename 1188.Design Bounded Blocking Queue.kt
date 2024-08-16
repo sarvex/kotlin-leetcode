@@ -1,27 +1,29 @@
-class BoundedBlockingQueue {
-    private Semaphore s1;
-    private Semaphore s2;
-    private Deque<Integer> q = new ArrayDeque<>();
+internal class BoundedBlockingQueue(capacity: Int) {
+  private val s1: Semaphore
+  private val s2: Semaphore
+  private val q: Deque<Int> = ArrayDeque()
 
-    public BoundedBlockingQueue(int capacity) {
-        s1 = new Semaphore(capacity);
-        s2 = new Semaphore(0);
-    }
+  init {
+    s1 = Semaphore(capacity)
+    s2 = Semaphore(0)
+  }
 
-    public void enqueue(int element) throws InterruptedException {
-        s1.acquire();
-        q.offer(element);
-        s2.release();
-    }
+  @kotlin.Throws(InterruptedException::class)
+  fun enqueue(element: Int) {
+    s1.acquire()
+    q.offer(element)
+    s2.release()
+  }
 
-    public int dequeue() throws InterruptedException {
-        s2.acquire();
-        int ans = q.poll();
-        s1.release();
-        return ans;
-    }
+  @kotlin.Throws(InterruptedException::class)
+  fun dequeue(): Int {
+    s2.acquire()
+    val ans: Int = q.poll()
+    s1.release()
+    return ans
+  }
 
-    public int size() {
-        return q.size();
-    }
+  fun size(): Int {
+    return q.size()
+  }
 }

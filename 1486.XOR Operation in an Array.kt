@@ -1,9 +1,9 @@
-class Solution {
-    public int xorOperation(int n, int start) {
-        int ans = 0;
-        for (int i = 0; i < n; ++i) {
-            ans ^= start + 2 * i;
-        }
-        return ans;
+internal class Solution {
+  fun xorOperation(n: Int, start: Int): Int {
+    var ans = 0
+    for (i in 0 until n) {
+      ans = ans xor start + 2 * i
     }
+    return ans
+  }
 }

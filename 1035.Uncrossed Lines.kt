@@ -1,16 +1,17 @@
-class Solution {
-    public int maxUncrossedLines(int[] nums1, int[] nums2) {
-        int m = nums1.length, n = nums2.length;
-        int[][] f = new int[m + 1][n + 1];
-        for (int i = 1; i <= m; ++i) {
-            for (int j = 1; j <= n; ++j) {
-                if (nums1[i - 1] == nums2[j - 1]) {
-                    f[i][j] = f[i - 1][j - 1] + 1;
-                } else {
-                    f[i][j] = Math.max(f[i - 1][j], f[i][j - 1]);
-                }
-            }
+internal class Solution {
+  fun maxUncrossedLines(nums1: IntArray, nums2: IntArray): Int {
+    val m = nums1.size
+    val n = nums2.size
+    val f = Array(m + 1) { IntArray(n + 1) }
+    for (i in 1..m) {
+      for (j in 1..n) {
+        if (nums1[i - 1] == nums2[j - 1]) {
+          f[i][j] = f[i - 1][j - 1] + 1
+        } else {
+          f[i][j] = max(f[i - 1][j], f[i][j - 1])
         }
-        return f[m][n];
+      }
     }
+    return f[m][n]
+  }
 }

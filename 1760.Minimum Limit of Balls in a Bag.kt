@@ -1,21 +1,22 @@
-class Solution {
-    public int minimumSize(int[] nums, int maxOperations) {
-        int left = 1, right = 0;
-        for (int x : nums) {
-            right = Math.max(right, x);
-        }
-        while (left < right) {
-            int mid = (left + right) >> 1;
-            long cnt = 0;
-            for (int x : nums) {
-                cnt += (x - 1) / mid;
-            }
-            if (cnt <= maxOperations) {
-                right = mid;
-            } else {
-                left = mid + 1;
-            }
-        }
-        return left;
+internal class Solution {
+  fun minimumSize(nums: IntArray, maxOperations: Int): Int {
+    var left = 1
+    var right = 0
+    for (x in nums) {
+      right = max(right, x)
     }
+    while (left < right) {
+      val mid = (left + right) shr 1
+      var cnt: Long = 0
+      for (x in nums) {
+        cnt += ((x - 1) / mid).toLong()
+      }
+      if (cnt <= maxOperations) {
+        right = mid
+      } else {
+        left = mid + 1
+      }
+    }
+    return left
+  }
 }

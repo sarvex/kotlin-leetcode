@@ -1,5 +1,5 @@
-class Solution {
-    public int distinctIntegers(int n) {
-        return Math.max(1, n - 1);
-    }
+internal class Solution {
+  fun distinctIntegers(n: Int): Int {
+    return max(1, n - 1)
+  }
 }

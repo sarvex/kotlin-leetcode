@@ -1,39 +1,40 @@
-class Solution {
-    public int[] numSmallerByFrequency(String[] queries, String[] words) {
-        int n = words.length;
-        int[] nums = new int[n];
-        for (int i = 0; i < n; ++i) {
-            nums[i] = f(words[i]);
-        }
-        Arrays.sort(nums);
-        int m = queries.length;
-        int[] ans = new int[m];
-        for (int i = 0; i < m; ++i) {
-            int x = f(queries[i]);
-            int l = 0, r = n;
-            while (l < r) {
-                int mid = (l + r) >> 1;
-                if (nums[mid] > x) {
-                    r = mid;
-                } else {
-                    l = mid + 1;
-                }
-            }
-            ans[i] = n - l;
-        }
-        return ans;
+internal class Solution {
+  fun numSmallerByFrequency(queries: Array<String>, words: Array<String>): IntArray {
+    val n = words.size
+    val nums = IntArray(n)
+    for (i in 0 until n) {
+      nums[i] = f(words[i])
     }
+    Arrays.sort(nums)
+    val m = queries.size
+    val ans = IntArray(m)
+    for (i in 0 until m) {
+      val x = f(queries[i])
+      var l = 0
+      var r = n
+      while (l < r) {
+        val mid = (l + r) shr 1
+        if (nums[mid] > x) {
+          r = mid
+        } else {
+          l = mid + 1
+        }
+      }
+      ans[i] = n - l
+    }
+    return ans
+  }
 
-    private int f(String s) {
-        int[] cnt = new int[26];
-        for (int i = 0; i < s.length(); ++i) {
-            ++cnt[s.charAt(i) - 'a'];
-        }
-        for (int x : cnt) {
-            if (x > 0) {
-                return x;
-            }
-        }
-        return 0;
+  private fun f(s: String): Int {
+    val cnt = IntArray(26)
+    for (i in 0 until s.length) {
+      ++cnt[s[i].code - 'a'.code]
     }
+    for (x in cnt) {
+      if (x > 0) {
+        return x
+      }
+    }
+    return 0
+  }
 }

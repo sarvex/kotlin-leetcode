@@ -1,20 +1,21 @@
-class Solution {
-    public int countCompleteSubarrays(int[] nums) {
-        Set<Integer> s = new HashSet<>();
-        for (int x : nums) {
-            s.add(x);
-        }
-        int cnt = s.size();
-        int ans = 0, n = nums.length;
-        for (int i = 0; i < n; ++i) {
-            s.clear();
-            for (int j = i; j < n; ++j) {
-                s.add(nums[j]);
-                if (s.size() == cnt) {
-                    ++ans;
-                }
-            }
-        }
-        return ans;
+internal class Solution {
+  fun countCompleteSubarrays(nums: IntArray): Int {
+    val s: Set<Int> = HashSet()
+    for (x in nums) {
+      s.add(x)
     }
+    val cnt: Int = s.size()
+    var ans = 0
+    val n = nums.size
+    for (i in 0 until n) {
+      s.clear()
+      for (j in i until n) {
+        s.add(nums[j])
+        if (s.size() === cnt) {
+          ++ans
+        }
+      }
+    }
+    return ans
+  }
 }

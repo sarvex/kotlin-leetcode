@@ -1,56 +1,56 @@
-class ExamRoom {
-    private TreeSet<int[]> ts = new TreeSet<>((a, b) -> {
-        int d1 = dist(a), d2 = dist(b);
-        return d1 == d2 ? a[0] - b[0] : d2 - d1;
-    });
-    private Map<Integer, Integer> left = new HashMap<>();
-    private Map<Integer, Integer> right = new HashMap<>();
-    private int n;
+internal class ExamRoom(private val n: Int) {
+  private val ts: TreeSet<IntArray> = TreeSet { a, b ->
+    val d1 = dist(a)
+    val d2 = dist(b)
+    if (d1 == d2) a.get(0) - b.get(0) else d2 - d1
+  }
+  private val left: Map<Int, Int> = HashMap()
+  private val right: Map<Int, Int> = HashMap()
 
-    public ExamRoom(int n) {
-        this.n = n;
-        add(new int[] {-1, n});
-    }
+  init {
+    add(intArrayOf(-1, n))
+  }
 
-    public int seat() {
-        int[] s = ts.first();
-        int p = (s[0] + s[1]) >> 1;
-        if (s[0] == -1) {
-            p = 0;
-        } else if (s[1] == n) {
-            p = n - 1;
-        }
-        del(s);
-        add(new int[] {s[0], p});
-        add(new int[] {p, s[1]});
-        return p;
+  fun seat(): Int {
+    val s: IntArray = ts.first()
+    var p = (s[0] + s[1]) shr 1
+    if (s[0] == -1) {
+      p = 0
+    } else if (s[1] == n) {
+      p = n - 1
     }
+    del(s)
+    add(intArrayOf(s[0], p))
+    add(intArrayOf(p, s[1]))
+    return p
+  }
 
-    public void leave(int p) {
-        int l = left.get(p), r = right.get(p);
-        del(new int[] {l, p});
-        del(new int[] {p, r});
-        add(new int[] {l, r});
-    }
+  fun leave(p: Int) {
+    val l = left[p]!!
+    val r = right[p]!!
+    del(intArrayOf(l, p))
+    del(intArrayOf(p, r))
+    add(intArrayOf(l, r))
+  }
 
-    private int dist(int[] s) {
-        int l = s[0], r = s[1];
-        return l == -1 || r == n ? r - l - 1 : (r - l) >> 1;
-    }
+  private fun dist(s: IntArray): Int {
+    val l = s[0]
+    val r = s[1]
+    return if (l == -1 || r == n) r - l - 1 else (r - l) shr 1
+  }
 
-    private void add(int[] s) {
-        ts.add(s);
-        left.put(s[1], s[0]);
-        right.put(s[0], s[1]);
-    }
+  private fun add(s: IntArray) {
+    ts.add(s)
+    left.put(s[1], s[0])
+    right.put(s[0], s[1])
+  }
 
-    private void del(int[] s) {
-        ts.remove(s);
-        left.remove(s[1]);
-        right.remove(s[0]);
-    }
+  private fun del(s: IntArray) {
+    ts.remove(s)
+    left.remove(s[1])
+    right.remove(s[0])
+  }
 }
-
 /**
  * Your ExamRoom object will be instantiated and called as such:
  * ExamRoom obj = new ExamRoom(n);

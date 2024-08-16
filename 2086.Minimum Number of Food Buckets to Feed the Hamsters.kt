@@ -1,19 +1,21 @@
-class Solution {
-    public int minimumBuckets(String street) {
-        int n = street.length();
-        int ans = 0;
-        for (int i = 0; i < n; ++i) {
-            if (street.charAt(i) == 'H') {
-                if (i + 1 < n && street.charAt(i + 1) == '.') {
-                    ++ans;
-                    i += 2;
-                } else if (i > 0 && street.charAt(i - 1) == '.') {
-                    ++ans;
-                } else {
-                    return -1;
-                }
-            }
+internal class Solution {
+  fun minimumBuckets(street: String): Int {
+    val n = street.length
+    var ans = 0
+    var i = 0
+    while (i < n) {
+      if (street[i] == 'H') {
+        if (i + 1 < n && street[i + 1] == '.') {
+          ++ans
+          i += 2
+        } else if (i > 0 && street[i - 1] == '.') {
+          ++ans
+        } else {
+          return -1
         }
-        return ans;
+      }
+      ++i
     }
+    return ans
+  }
 }

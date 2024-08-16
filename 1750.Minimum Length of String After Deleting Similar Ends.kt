@@ -1,16 +1,17 @@
-class Solution {
-    public int minimumLength(String s) {
-        int i = 0, j = s.length() - 1;
-        while (i < j && s.charAt(i) == s.charAt(j)) {
-            while (i + 1 < j && s.charAt(i) == s.charAt(i + 1)) {
-                ++i;
-            }
-            while (i < j - 1 && s.charAt(j) == s.charAt(j - 1)) {
-                --j;
-            }
-            ++i;
-            --j;
-        }
-        return Math.max(0, j - i + 1);
+internal class Solution {
+  fun minimumLength(s: String): Int {
+    var i = 0
+    var j = s.length - 1
+    while (i < j && s[i] == s[j]) {
+      while (i + 1 < j && s[i] == s[i + 1]) {
+        ++i
+      }
+      while (i < j - 1 && s[j] == s[j - 1]) {
+        --j
+      }
+      ++i
+      --j
     }
+    return max(0, j - i + 1)
+  }
 }

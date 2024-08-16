@@ -1,29 +1,30 @@
-class Solution {
-    public int[] findRightInterval(int[][] intervals) {
-        int n = intervals.length;
-        int[][] arr = new int[n][0];
-        for (int i = 0; i < n; ++i) {
-            arr[i] = new int[] {intervals[i][0], i};
-        }
-        Arrays.sort(arr, (a, b) -> a[0] - b[0]);
-        int[] ans = new int[n];
-        for (int i = 0; i < n; ++i) {
-            int j = search(arr, intervals[i][1]);
-            ans[i] = j < n ? arr[j][1] : -1;
-        }
-        return ans;
+internal class Solution {
+  fun findRightInterval(intervals: Array<IntArray>): IntArray {
+    val n = intervals.size
+    val arr = Array(n) { IntArray(0) }
+    for (i in 0 until n) {
+      arr[i] = intArrayOf(intervals[i][0], i)
     }
+    Arrays.sort(arr) { a, b -> a.get(0) - b.get(0) }
+    val ans = IntArray(n)
+    for (i in 0 until n) {
+      val j = search(arr, intervals[i][1])
+      ans[i] = if (j < n) arr[j][1] else -1
+    }
+    return ans
+  }
 
-    private int search(int[][] arr, int x) {
-        int l = 0, r = arr.length;
-        while (l < r) {
-            int mid = (l + r) >> 1;
-            if (arr[mid][0] >= x) {
-                r = mid;
-            } else {
-                l = mid + 1;
-            }
-        }
-        return l;
+  private fun search(arr: Array<IntArray>, x: Int): Int {
+    var l = 0
+    var r = arr.size
+    while (l < r) {
+      val mid = (l + r) shr 1
+      if (arr[mid][0] >= x) {
+        r = mid
+      } else {
+        l = mid + 1
+      }
     }
+    return l
+  }
 }

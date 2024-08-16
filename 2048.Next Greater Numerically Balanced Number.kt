@@ -1,20 +1,28 @@
-class Solution {
-    public int nextBeautifulNumber(int n) {
-        for (int x = n + 1;; ++x) {
-            int[] cnt = new int[10];
-            for (int y = x; y > 0; y /= 10) {
-                ++cnt[y % 10];
-            }
-            boolean ok = true;
-            for (int y = x; y > 0; y /= 10) {
-                if (y % 10 != cnt[y % 10]) {
-                    ok = false;
-                    break;
-                }
-            }
-            if (ok) {
-                return x;
-            }
+internal class Solution {
+  fun nextBeautifulNumber(n: Int): Int {
+    var x = n + 1
+    while (true) {
+      val cnt = IntArray(10)
+      run {
+        var y = x
+        while (y > 0) {
+          ++cnt[y % 10]
+          y /= 10
         }
+      }
+      var ok = true
+      var y = x
+      while (y > 0) {
+        if (y % 10 != cnt[y % 10]) {
+          ok = false
+          break
+        }
+        y /= 10
+      }
+      if (ok) {
+        return x
+      }
+      ++x
     }
+  }
 }

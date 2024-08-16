@@ -1,9 +1,9 @@
-class Solution {
-    public int[] constructRectangle(int area) {
-        int w = (int) Math.sqrt(area);
-        while (area % w != 0) {
-            --w;
-        }
-        return new int[] {area / w, w};
+internal class Solution {
+  fun constructRectangle(area: Int): IntArray {
+    var w = sqrt(area) as Int
+    while (area % w != 0) {
+      --w
     }
+    return intArrayOf(area / w, w)
+  }
 }

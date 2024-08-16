@@ -1,64 +1,59 @@
-class Solution {
-    public boolean isRectangleCover(int[][] rectangles) {
-        long area = 0;
-        int minX = rectangles[0][0], minY = rectangles[0][1];
-        int maxX = rectangles[0][2], maxY = rectangles[0][3];
-        Map<Pair, Integer> cnt = new HashMap<>();
+internal class Solution {
+  fun isRectangleCover(rectangles: Array<IntArray>): Boolean {
+    var area: Long = 0
+    var minX = rectangles[0][0]
+    var minY = rectangles[0][1]
+    var maxX = rectangles[0][2]
+    var maxY = rectangles[0][3]
+    val cnt: Map<Solution.Pair, Int> = HashMap()
 
-        for (int[] r : rectangles) {
-            area += (r[2] - r[0]) * (r[3] - r[1]);
+    for (r in rectangles) {
+      area += ((r[2] - r[0]) * (r[3] - r[1])).toLong()
 
-            minX = Math.min(minX, r[0]);
-            minY = Math.min(minY, r[1]);
-            maxX = Math.max(maxX, r[2]);
-            maxY = Math.max(maxY, r[3]);
+      minX = min(minX, r[0])
+      minY = min(minY, r[1])
+      maxX = max(maxX, r[2])
+      maxY = max(maxY, r[3])
 
-            cnt.merge(new Pair(r[0], r[1]), 1, Integer::sum);
-            cnt.merge(new Pair(r[0], r[3]), 1, Integer::sum);
-            cnt.merge(new Pair(r[2], r[3]), 1, Integer::sum);
-            cnt.merge(new Pair(r[2], r[1]), 1, Integer::sum);
-        }
-
-        if (area != (long) (maxX - minX) * (maxY - minY)
-            || cnt.getOrDefault(new Pair(minX, minY), 0) != 1
-            || cnt.getOrDefault(new Pair(minX, maxY), 0) != 1
-            || cnt.getOrDefault(new Pair(maxX, maxY), 0) != 1
-            || cnt.getOrDefault(new Pair(maxX, minY), 0) != 1) {
-            return false;
-        }
-
-        cnt.remove(new Pair(minX, minY));
-        cnt.remove(new Pair(minX, maxY));
-        cnt.remove(new Pair(maxX, maxY));
-        cnt.remove(new Pair(maxX, minY));
-
-        return cnt.values().stream().allMatch(c -> c == 2 || c == 4);
+      cnt.merge(Solution.Pair(r[0], r[1]), 1) { a: Int, b: Int -> Integer.sum(a, b) }
+      cnt.merge(Solution.Pair(r[0], r[3]), 1) { a: Int, b: Int -> Integer.sum(a, b) }
+      cnt.merge(Solution.Pair(r[2], r[3]), 1) { a: Int, b: Int -> Integer.sum(a, b) }
+      cnt.merge(Solution.Pair(r[2], r[1]), 1) { a: Int, b: Int -> Integer.sum(a, b) }
     }
 
-    private static class Pair {
-        final int first;
-        final int second;
-
-        Pair(int first, int second) {
-            this.first = first;
-            this.second = second;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) {
-                return true;
-            }
-            if (o == null || getClass() != o.getClass()) {
-                return false;
-            }
-            Pair pair = (Pair) o;
-            return first == pair.first && second == pair.second;
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(first, second);
-        }
+    if (area != (maxX - minX).toLong() * (maxY - minY) || cnt.getOrDefault(
+        Solution.Pair(minX, minY),
+        0
+      ) !== 1 || cnt.getOrDefault(Solution.Pair(minX, maxY), 0) !== 1 || cnt.getOrDefault(
+        Solution.Pair(maxX, maxY),
+        0
+      ) !== 1 || cnt.getOrDefault(Solution.Pair(maxX, minY), 0) !== 1
+    ) {
+      return false
     }
+
+    cnt.remove(Solution.Pair(minX, minY))
+    cnt.remove(Solution.Pair(minX, maxY))
+    cnt.remove(Solution.Pair(maxX, maxY))
+    cnt.remove(Solution.Pair(maxX, minY))
+
+    return cnt.values().stream().allMatch { c -> c === 2 || c === 4 }
+  }
+
+  private class Pair(val first: Int, val second: Int) {
+    override fun equals(o: Any?): Boolean {
+      if (this === o) {
+        return true
+      }
+      if (o == null || javaClass != o.javaClass) {
+        return false
+      }
+      val pair: Solution.Pair = o as Solution.Pair
+      return first == pair.first && second == pair.second
+    }
+
+    override fun hashCode(): Int {
+      return Objects.hash(first, second)
+    }
+  }
 }

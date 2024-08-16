@@ -1,5 +1,5 @@
-class Solution {
-    public boolean xorGame(int[] nums) {
-        return nums.length % 2 == 0 || Arrays.stream(nums).reduce(0, (a, b) -> a ^ b) == 0;
-    }
+internal class Solution {
+  fun xorGame(nums: IntArray): Boolean {
+    return nums.size % 2 == 0 || Arrays.stream(nums).reduce(0) { a, b -> a xor b } === 0
+  }
 }

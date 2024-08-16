@@ -1,19 +1,24 @@
-class Solution {
-    public int projectionArea(int[][] grid) {
-        int xy = 0, yz = 0, zx = 0;
-        for (int i = 0, n = grid.length; i < n; ++i) {
-            int maxYz = 0;
-            int maxZx = 0;
-            for (int j = 0; j < n; ++j) {
-                if (grid[i][j] > 0) {
-                    ++xy;
-                }
-                maxYz = Math.max(maxYz, grid[i][j]);
-                maxZx = Math.max(maxZx, grid[j][i]);
-            }
-            yz += maxYz;
-            zx += maxZx;
+internal class Solution {
+  fun projectionArea(grid: Array<IntArray>): Int {
+    var xy = 0
+    var yz = 0
+    var zx = 0
+    var i = 0
+    val n = grid.size
+    while (i < n) {
+      var maxYz = 0
+      var maxZx = 0
+      for (j in 0 until n) {
+        if (grid[i][j] > 0) {
+          ++xy
         }
-        return xy + yz + zx;
+        maxYz = max(maxYz, grid[i][j])
+        maxZx = max(maxZx, grid[j][i])
+      }
+      yz += maxYz
+      zx += maxZx
+      ++i
     }
+    return xy + yz + zx
+  }
 }

@@ -1,33 +1,35 @@
-class Solution {
-    public int smallestDistancePair(int[] nums, int k) {
-        Arrays.sort(nums);
-        int left = 0, right = nums[nums.length - 1] - nums[0];
-        while (left < right) {
-            int mid = (left + right) >> 1;
-            if (count(mid, nums) >= k) {
-                right = mid;
-            } else {
-                left = mid + 1;
-            }
-        }
-        return left;
+internal class Solution {
+  fun smallestDistancePair(nums: IntArray, k: Int): Int {
+    Arrays.sort(nums)
+    var left = 0
+    var right = nums[nums.size - 1] - nums[0]
+    while (left < right) {
+      val mid = (left + right) shr 1
+      if (count(mid, nums) >= k) {
+        right = mid
+      } else {
+        left = mid + 1
+      }
     }
+    return left
+  }
 
-    private int count(int dist, int[] nums) {
-        int cnt = 0;
-        for (int i = 0; i < nums.length; ++i) {
-            int left = 0, right = i;
-            while (left < right) {
-                int mid = (left + right) >> 1;
-                int target = nums[i] - dist;
-                if (nums[mid] >= target) {
-                    right = mid;
-                } else {
-                    left = mid + 1;
-                }
-            }
-            cnt += i - left;
+  private fun count(dist: Int, nums: IntArray): Int {
+    var cnt = 0
+    for (i in nums.indices) {
+      var left = 0
+      var right: Int = i
+      while (left < right) {
+        val mid = (left + right) shr 1
+        val target = nums[i] - dist
+        if (nums[mid] >= target) {
+          right = mid
+        } else {
+          left = mid + 1
         }
-        return cnt;
+      }
+      cnt += i - left
     }
+    return cnt
+  }
 }

@@ -1,25 +1,26 @@
-class Solution {
-    public long maxPoints(int[][] points) {
-        int n = points[0].length;
-        long[] f = new long[n];
-        final long inf = 1L << 60;
-        for (int[] p : points) {
-            long[] g = new long[n];
-            long lmx = -inf, rmx = -inf;
-            for (int j = 0; j < n; ++j) {
-                lmx = Math.max(lmx, f[j] + j);
-                g[j] = Math.max(g[j], p[j] + lmx - j);
-            }
-            for (int j = n - 1; j >= 0; --j) {
-                rmx = Math.max(rmx, f[j] - j);
-                g[j] = Math.max(g[j], p[j] + rmx + j);
-            }
-            f = g;
-        }
-        long ans = 0;
-        for (long x : f) {
-            ans = Math.max(ans, x);
-        }
-        return ans;
+internal class Solution {
+  fun maxPoints(points: Array<IntArray>): Long {
+    val n = points[0].size
+    var f = LongArray(n)
+    val inf = 1L shl 60
+    for (p in points) {
+      val g = LongArray(n)
+      var lmx = -inf
+      var rmx = -inf
+      for (j in 0 until n) {
+        lmx = max(lmx, f[j] + j)
+        g[j] = max(g[j], p[j] + lmx - j)
+      }
+      for (j in n - 1 downTo 0) {
+        rmx = max(rmx, f[j] - j)
+        g[j] = max(g[j], p[j] + rmx + j)
+      }
+      f = g
     }
+    var ans: Long = 0
+    for (x in f) {
+      ans = max(ans, x)
+    }
+    return ans
+  }
 }

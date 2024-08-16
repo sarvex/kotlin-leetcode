@@ -1,13 +1,16 @@
-class Solution {
-    public int accountBalanceAfterPurchase(int purchaseAmount) {
-        int diff = 100, x = 0;
-        for (int y = 100; y >= 0; y -= 10) {
-            int t = Math.abs(y - purchaseAmount);
-            if (t < diff) {
-                diff = t;
-                x = y;
-            }
-        }
-        return 100 - x;
+internal class Solution {
+  fun accountBalanceAfterPurchase(purchaseAmount: Int): Int {
+    var diff = 100
+    var x = 0
+    var y = 100
+    while (y >= 0) {
+      val t: Int = abs(y - purchaseAmount)
+      if (t < diff) {
+        diff = t
+        x = y
+      }
+      y -= 10
     }
+    return 100 - x
+  }
 }

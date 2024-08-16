@@ -1,9 +1,9 @@
-class Solution {
-    public int maximizeSum(int[] nums, int k) {
-        int x = 0;
-        for (int v : nums) {
-            x = Math.max(x, v);
-        }
-        return k * x + k * (k - 1) / 2;
+internal class Solution {
+  fun maximizeSum(nums: IntArray, k: Int): Int {
+    var x = 0
+    for (v in nums) {
+      x = max(x, v)
     }
+    return k * x + k * (k - 1) / 2
+  }
 }

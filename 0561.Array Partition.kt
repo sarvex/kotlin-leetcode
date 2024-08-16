@@ -1,10 +1,12 @@
-class Solution {
-    public int arrayPairSum(int[] nums) {
-        Arrays.sort(nums);
-        int ans = 0;
-        for (int i = 0; i < nums.length; i += 2) {
-            ans += nums[i];
-        }
-        return ans;
+internal class Solution {
+  fun arrayPairSum(nums: IntArray): Int {
+    Arrays.sort(nums)
+    var ans = 0
+    var i = 0
+    while (i < nums.size) {
+      ans += nums[i]
+      i += 2
     }
+    return ans
+  }
 }

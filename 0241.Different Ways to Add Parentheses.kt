@@ -1,38 +1,40 @@
-class Solution {
-    private static Map<String, List<Integer>> memo = new HashMap<>();
+internal class Solution {
+  fun diffWaysToCompute(expression: String): List<Int> {
+    return dfs(expression)
+  }
 
-    public List<Integer> diffWaysToCompute(String expression) {
-        return dfs(expression);
+  private fun dfs(exp: String): List<Int> {
+    if (Solution.Companion.memo.containsKey(exp)) {
+      return Solution.Companion.memo.get(exp)
     }
-
-    private List<Integer> dfs(String exp) {
-        if (memo.containsKey(exp)) {
-            return memo.get(exp);
-        }
-        List<Integer> ans = new ArrayList<>();
-        if (exp.length() < 3) {
-            ans.add(Integer.parseInt(exp));
-            return ans;
-        }
-        for (int i = 0; i < exp.length(); ++i) {
-            char c = exp.charAt(i);
-            if (c == '-' || c == '+' || c == '*') {
-                List<Integer> left = dfs(exp.substring(0, i));
-                List<Integer> right = dfs(exp.substring(i + 1));
-                for (int a : left) {
-                    for (int b : right) {
-                        if (c == '-') {
-                            ans.add(a - b);
-                        } else if (c == '+') {
-                            ans.add(a + b);
-                        } else {
-                            ans.add(a * b);
-                        }
-                    }
-                }
+    val ans: List<Int> = ArrayList()
+    if (exp.length < 3) {
+      ans.add(exp.toInt())
+      return ans
+    }
+    for (i in 0 until exp.length) {
+      val c = exp[i]
+      if (c == '-' || c == '+' || c == '*') {
+        val left = dfs(exp.substring(0, i))
+        val right = dfs(exp.substring(i + 1))
+        for (a in left) {
+          for (b in right) {
+            if (c == '-') {
+              ans.add(a - b)
+            } else if (c == '+') {
+              ans.add(a + b)
+            } else {
+              ans.add(a * b)
             }
+          }
         }
-        memo.put(exp, ans);
-        return ans;
+      }
     }
+    Solution.Companion.memo.put(exp, ans)
+    return ans
+  }
+
+  companion object {
+    private val memo: Map<String, List<Int>> = HashMap()
+  }
 }

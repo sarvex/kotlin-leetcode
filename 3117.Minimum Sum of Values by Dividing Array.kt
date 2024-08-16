@@ -1,37 +1,38 @@
-class Solution {
-    private int[] nums;
-    private int[] andValues;
-    private final int inf = 1 << 29;
-    private Map<Long, Integer> f = new HashMap<>();
+internal class Solution {
+  private var nums: IntArray
+  private var andValues: IntArray
+  private val inf = 1 shl 29
+  private val f: Map<Long, Int> = HashMap()
 
-    public int minimumValueSum(int[] nums, int[] andValues) {
-        this.nums = nums;
-        this.andValues = andValues;
-        int ans = dfs(0, 0, -1);
-        return ans >= inf ? -1 : ans;
+  fun minimumValueSum(nums: IntArray, andValues: IntArray): Int {
+    this.nums = nums
+    this.andValues = andValues
+    val ans = dfs(0, 0, -1)
+    return if (ans >= inf) -1 else ans
+  }
+
+  private fun dfs(i: Int, j: Int, a: Int): Int {
+    var a = a
+    if (nums.size - i < andValues.size - j) {
+      return inf
+    }
+    if (j == andValues.size) {
+      return if (i == nums.size) 0 else inf
+    }
+    a = a and nums[i]
+    if (a < andValues[j]) {
+      return inf
+    }
+    val key = i.toLong() shl 36 or (j.toLong() shl 32) or a.toLong()
+    if (f.containsKey(key)) {
+      return f[key]!!
     }
 
-    private int dfs(int i, int j, int a) {
-        if (nums.length - i < andValues.length - j) {
-            return inf;
-        }
-        if (j == andValues.length) {
-            return i == nums.length ? 0 : inf;
-        }
-        a &= nums[i];
-        if (a < andValues[j]) {
-            return inf;
-        }
-        long key = (long) i << 36 | (long) j << 32 | a;
-        if (f.containsKey(key)) {
-            return f.get(key);
-        }
-
-        int ans = dfs(i + 1, j, a);
-        if (a == andValues[j]) {
-            ans = Math.min(ans, dfs(i + 1, j + 1, -1) + nums[i]);
-        }
-        f.put(key, ans);
-        return ans;
+    var ans = dfs(i + 1, j, a)
+    if (a == andValues[j]) {
+      ans = min(ans, dfs(i + 1, j + 1, -1) + nums[i])
     }
+    f.put(key, ans)
+    return ans
+  }
 }

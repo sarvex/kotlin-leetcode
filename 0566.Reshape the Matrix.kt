@@ -1,13 +1,14 @@
-class Solution {
-    public int[][] matrixReshape(int[][] mat, int r, int c) {
-        int m = mat.length, n = mat[0].length;
-        if (m * n != r * c) {
-            return mat;
-        }
-        int[][] ans = new int[r][c];
-        for (int i = 0; i < m * n; ++i) {
-            ans[i / c][i % c] = mat[i / n][i % n];
-        }
-        return ans;
+internal class Solution {
+  fun matrixReshape(mat: Array<IntArray>, r: Int, c: Int): Array<IntArray> {
+    val m = mat.size
+    val n = mat[0].size
+    if (m * n != r * c) {
+      return mat
     }
+    val ans = Array(r) { IntArray(c) }
+    for (i in 0 until m * n) {
+      ans[i / c][i % c] = mat[i / n][i % n]
+    }
+    return ans
+  }
 }

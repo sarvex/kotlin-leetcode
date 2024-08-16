@@ -1,35 +1,35 @@
-class Trie {
-    Trie[] children = new Trie[26];
+internal class Trie {
+  var children: Array<Trie> = arrayOfNulls(26)
 }
 
-class Solution {
-    public int minimumLengthEncoding(String[] words) {
-        Trie root = new Trie();
-        for (String w : words) {
-            Trie cur = root;
-            for (int i = w.length() - 1; i >= 0; i--) {
-                int idx = w.charAt(i) - 'a';
-                if (cur.children[idx] == null) {
-                    cur.children[idx] = new Trie();
-                }
-                cur = cur.children[idx];
-            }
+internal class Solution {
+  fun minimumLengthEncoding(words: Array<String>): Int {
+    val root = Trie()
+    for (w in words) {
+      var cur = root
+      for (i in w.length - 1 downTo 0) {
+        val idx: Int = w[i].code - 'a'.code
+        if (cur.children[idx] == null) {
+          cur.children[idx] = Trie()
         }
-        return dfs(root, 1);
+        cur = cur.children[idx]
+      }
     }
+    return dfs(root, 1)
+  }
 
-    private int dfs(Trie cur, int l) {
-        boolean isLeaf = true;
-        int ans = 0;
-        for (int i = 0; i < 26; i++) {
-            if (cur.children[i] != null) {
-                isLeaf = false;
-                ans += dfs(cur.children[i], l + 1);
-            }
-        }
-        if (isLeaf) {
-            ans += l;
-        }
-        return ans;
+  private fun dfs(cur: Trie, l: Int): Int {
+    var isLeaf = true
+    var ans = 0
+    for (i in 0..25) {
+      if (cur.children[i] != null) {
+        isLeaf = false
+        ans += dfs(cur.children[i], l + 1)
+      }
     }
+    if (isLeaf) {
+      ans += l
+    }
+    return ans
+  }
 }

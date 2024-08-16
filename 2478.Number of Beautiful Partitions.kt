@@ -1,28 +1,28 @@
-class Solution {
-    public int beautifulPartitions(String s, int k, int minLength) {
-        int n = s.length();
-        if (!prime(s.charAt(0)) || prime(s.charAt(n - 1))) {
-            return 0;
-        }
-        int[][] f = new int[n + 1][k + 1];
-        int[][] g = new int[n + 1][k + 1];
-        f[0][0] = 1;
-        g[0][0] = 1;
-        final int mod = (int) 1e9 + 7;
-        for (int i = 1; i <= n; ++i) {
-            if (i >= minLength && !prime(s.charAt(i - 1)) && (i == n || prime(s.charAt(i)))) {
-                for (int j = 1; j <= k; ++j) {
-                    f[i][j] = g[i - minLength][j - 1];
-                }
-            }
-            for (int j = 0; j <= k; ++j) {
-                g[i][j] = (g[i - 1][j] + f[i][j]) % mod;
-            }
-        }
-        return f[n][k];
+internal class Solution {
+  fun beautifulPartitions(s: String, k: Int, minLength: Int): Int {
+    val n = s.length
+    if (!prime(s[0]) || prime(s[n - 1])) {
+      return 0
     }
+    val f = Array(n + 1) { IntArray(k + 1) }
+    val g = Array(n + 1) { IntArray(k + 1) }
+    f[0][0] = 1
+    g[0][0] = 1
+    val mod = 1e9.toInt() + 7
+    for (i in 1..n) {
+      if (i >= minLength && !prime(s[i - 1]) && (i == n || prime(s[i]))) {
+        for (j in 1..k) {
+          f[i][j] = g[i - minLength][j - 1]
+        }
+      }
+      for (j in 0..k) {
+        g[i][j] = (g[i - 1][j] + f[i][j]) % mod
+      }
+    }
+    return f[n][k]
+  }
 
-    private boolean prime(char c) {
-        return c == '2' || c == '3' || c == '5' || c == '7';
-    }
+  private fun prime(c: Char): Boolean {
+    return c == '2' || c == '3' || c == '5' || c == '7'
+  }
 }

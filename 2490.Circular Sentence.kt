@@ -1,12 +1,12 @@
-class Solution {
-    public boolean isCircularSentence(String sentence) {
-        var ss = sentence.split(" ");
-        int n = ss.length;
-        for (int i = 0; i < n; ++i) {
-            if (ss[i].charAt(ss[i].length() - 1) != ss[(i + 1) % n].charAt(0)) {
-                return false;
-            }
-        }
-        return true;
+internal class Solution {
+  fun isCircularSentence(sentence: String): Boolean {
+    val ss: Array<String> = sentence.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+    val n = ss.size
+    for (i in 0 until n) {
+      if (ss[i][ss[i].length - 1] != ss[(i + 1) % n][0]) {
+        return false
+      }
     }
+    return true
+  }
 }

@@ -1,15 +1,15 @@
-class Solution {
-    public int[] intersect(int[] nums1, int[] nums2) {
-        int[] cnt = new int[1001];
-        for (int x : nums1) {
-            ++cnt[x];
-        }
-        List<Integer> ans = new ArrayList<>();
-        for (int x : nums2) {
-            if (cnt[x]-- > 0) {
-                ans.add(x);
-            }
-        }
-        return ans.stream().mapToInt(Integer::intValue).toArray();
+internal class Solution {
+  fun intersect(nums1: IntArray, nums2: IntArray): IntArray {
+    val cnt = IntArray(1001)
+    for (x in nums1) {
+      ++cnt[x]
     }
+    val ans: List<Int> = ArrayList()
+    for (x in nums2) {
+      if (cnt[x]-- > 0) {
+        ans.add(x)
+      }
+    }
+    return ans.stream().mapToInt(Integer::intValue).toArray()
+  }
 }

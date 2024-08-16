@@ -1,22 +1,23 @@
-class Solution {
-    public int countBeautifulPairs(int[] nums) {
-        int[] cnt = new int[10];
-        int ans = 0;
-        for (int x : nums) {
-            for (int y = 0; y < 10; ++y) {
-                if (cnt[y] > 0 && gcd(x % 10, y) == 1) {
-                    ans += cnt[y];
-                }
-            }
-            while (x > 9) {
-                x /= 10;
-            }
-            ++cnt[x];
+internal class Solution {
+  fun countBeautifulPairs(nums: IntArray): Int {
+    val cnt = IntArray(10)
+    var ans = 0
+    for (x in nums) {
+      var x = x
+      for (y in 0..9) {
+        if (cnt[y] > 0 && gcd(x % 10, y) == 1) {
+          ans += cnt[y]
         }
-        return ans;
+      }
+      while (x > 9) {
+        x /= 10
+      }
+      ++cnt[x]
     }
+    return ans
+  }
 
-    private int gcd(int a, int b) {
-        return b == 0 ? a : gcd(b, a % b);
-    }
+  private fun gcd(a: Int, b: Int): Int {
+    return if (b == 0) a else gcd(b, a % b)
+  }
 }

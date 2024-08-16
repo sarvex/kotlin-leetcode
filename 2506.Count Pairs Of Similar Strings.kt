@@ -1,15 +1,15 @@
-class Solution {
-    public int similarPairs(String[] words) {
-        int ans = 0;
-        Map<Integer, Integer> cnt = new HashMap<>();
-        for (var w : words) {
-            int v = 0;
-            for (int i = 0; i < w.length(); ++i) {
-                v |= 1 << (w.charAt(i) - 'a');
-            }
-            ans += cnt.getOrDefault(v, 0);
-            cnt.put(v, cnt.getOrDefault(v, 0) + 1);
-        }
-        return ans;
+internal class Solution {
+  fun similarPairs(words: Array<String>): Int {
+    var ans = 0
+    val cnt: Map<Int, Int> = HashMap()
+    for (w in words) {
+      var v = 0
+      for (i in 0 until w.length) {
+        v = v or (1 shl (w[i].code - 'a'.code))
+      }
+      ans += cnt.getOrDefault(v, 0)
+      cnt.put(v, cnt.getOrDefault(v, 0) + 1)
     }
+    return ans
+  }
 }

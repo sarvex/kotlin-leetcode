@@ -1,30 +1,30 @@
-class Solution {
-    private int[] color;
-    private int[][] g;
+internal class Solution {
+  private var color: IntArray
+  private var g: Array<IntArray>
 
-    public boolean isBipartite(int[][] graph) {
-        int n = graph.length;
-        color = new int[n];
-        g = graph;
-        for (int i = 0; i < n; ++i) {
-            if (color[i] == 0 && !dfs(i, 1)) {
-                return false;
-            }
-        }
-        return true;
+  fun isBipartite(graph: Array<IntArray>): Boolean {
+    val n = graph.size
+    color = IntArray(n)
+    g = graph
+    for (i in 0 until n) {
+      if (color[i] == 0 && !dfs(i, 1)) {
+        return false
+      }
     }
+    return true
+  }
 
-    private boolean dfs(int u, int c) {
-        color[u] = c;
-        for (int v : g[u]) {
-            if (color[v] == 0) {
-                if (!dfs(v, 3 - c)) {
-                    return false;
-                }
-            } else if (color[v] == c) {
-                return false;
-            }
+  private fun dfs(u: Int, c: Int): Boolean {
+    color[u] = c
+    for (v in g[u]) {
+      if (color[v] == 0) {
+        if (!dfs(v, 3 - c)) {
+          return false
         }
-        return true;
+      } else if (color[v] == c) {
+        return false
+      }
     }
+    return true
+  }
 }

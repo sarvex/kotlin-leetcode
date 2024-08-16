@@ -1,11 +1,12 @@
-class Solution {
-    public int alternateDigitSum(int n) {
-        int ans = 0, sign = 1;
-        for (char c : String.valueOf(n).toCharArray()) {
-            int x = c - '0';
-            ans += sign * x;
-            sign *= -1;
-        }
-        return ans;
+internal class Solution {
+  fun alternateDigitSum(n: Int): Int {
+    var ans = 0
+    var sign = 1
+    for (c in n.toString().toCharArray()) {
+      val x: Int = c.code - '0'.code
+      ans += sign * x
+      sign *= -1
     }
+    return ans
+  }
 }

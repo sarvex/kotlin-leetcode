@@ -1,46 +1,46 @@
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
+ * int val;
+ * TreeNode left;
+ * TreeNode right;
+ * TreeNode() {}
+ * TreeNode(int val) { this.val = val; }
+ * TreeNode(int val, TreeNode left, TreeNode right) {
+ * this.val = val;
+ * this.left = left;
+ * this.right = right;
+ * }
  * }
  */
-class Solution {
-    private Map<Integer, Integer> counter;
-    private int mx;
+internal class Solution {
+  private var counter: Map<Int, Int>? = null
+  private var mx = 0
 
-    public int[] findFrequentTreeSum(TreeNode root) {
-        counter = new HashMap<>();
-        mx = Integer.MIN_VALUE;
-        dfs(root);
-        List<Integer> res = new ArrayList<>();
-        for (Map.Entry<Integer, Integer> entry : counter.entrySet()) {
-            if (entry.getValue() == mx) {
-                res.add(entry.getKey());
-            }
-        }
-        int[] ans = new int[res.size()];
-        for (int i = 0; i < res.size(); ++i) {
-            ans[i] = res.get(i);
-        }
-        return ans;
+  fun findFrequentTreeSum(root: TreeNode?): IntArray {
+    counter = HashMap()
+    mx = MIN_VALUE
+    dfs(root)
+    val res: List<Int> = ArrayList()
+    for (entry in counter.entrySet()) {
+      if (entry.getValue() === mx) {
+        res.add(entry.getKey())
+      }
     }
+    val ans = IntArray(res.size())
+    for (i in 0 until res.size()) {
+      ans[i] = res[i]
+    }
+    return ans
+  }
 
-    private int dfs(TreeNode root) {
-        if (root == null) {
-            return 0;
-        }
-        int s = root.val + dfs(root.left) + dfs(root.right);
-        counter.put(s, counter.getOrDefault(s, 0) + 1);
-        mx = Math.max(mx, counter.get(s));
-        return s;
+  private fun dfs(root: TreeNode?): Int {
+    if (root == null) {
+      return 0
     }
+    val s: Int = root.`val` + dfs(root.left) + dfs(root.right)
+    counter.put(s, counter!!.getOrDefault(s, 0) + 1)
+    mx = Math.max(mx, counter!![s]!!)
+    return s
+  }
 }

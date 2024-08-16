@@ -1,93 +1,93 @@
-class Solution {
-    private int m;
-    private int n;
-    private int[][] grid;
+internal class Solution {
+  private var m = 0
+  private var n = 0
+  private var grid: Array<IntArray>
 
-    public int numDistinctIslands2(int[][] grid) {
-        m = grid.length;
-        n = grid[0].length;
-        this.grid = grid;
-        Set<List<List<Integer>>> s = new HashSet<>();
-        for (int i = 0; i < m; ++i) {
-            for (int j = 0; j < n; ++j) {
-                if (grid[i][j] == 1) {
-                    List<Integer> shape = new ArrayList<>();
-                    dfs(i, j, shape);
-                    s.add(normalize(shape));
-                }
-            }
+  fun numDistinctIslands2(grid: Array<IntArray>): Int {
+    m = grid.size
+    n = grid[0].size
+    this.grid = grid
+    val s: Set<List<List<Int>>> = HashSet()
+    for (i in 0 until m) {
+      for (j in 0 until n) {
+        if (grid[i][j] == 1) {
+          val shape: List<Int> = ArrayList()
+          dfs(i, j, shape)
+          s.add(normalize(shape))
         }
-        return s.size();
+      }
     }
+    return s.size()
+  }
 
-    private List<List<Integer>> normalize(List<Integer> shape) {
-        List<int[]>[] shapes = new List[8];
-        for (int i = 0; i < 8; ++i) {
-            shapes[i] = new ArrayList<>();
-        }
-        for (int e : shape) {
-            int i = e / n;
-            int j = e % n;
-            shapes[0].add(new int[] {i, j});
-            shapes[1].add(new int[] {i, -j});
-            shapes[2].add(new int[] {-i, j});
-            shapes[3].add(new int[] {-i, -j});
-            shapes[4].add(new int[] {j, i});
-            shapes[5].add(new int[] {j, -i});
-            shapes[6].add(new int[] {-j, i});
-            shapes[7].add(new int[] {-j, -i});
-        }
-        for (List<int[]> e : shapes) {
-            e.sort((a, b) -> {
-                int i1 = a[0];
-                int j1 = a[1];
-                int i2 = b[0];
-                int j2 = b[1];
-                if (i1 == i2) {
-                    return j1 - j2;
-                }
-                return i1 - i2;
-            });
-            int a = e.get(0)[0];
-            int b = e.get(0)[1];
-            for (int k = e.size() - 1; k >= 0; --k) {
-                int i = e.get(k)[0];
-                int j = e.get(k)[1];
-                e.set(k, new int[] {i - a, j - b});
-            }
-        }
-        Arrays.sort(shapes, (a, b) -> {
-            for (int k = 0; k < a.size(); ++k) {
-                int i1 = a.get(k)[0];
-                int j1 = a.get(k)[1];
-                int i2 = b.get(k)[0];
-                int j2 = b.get(k)[1];
-                if (i1 != i2) {
-                    return i1 - i2;
-                }
-                if (j1 != j2) {
-                    return j1 - j2;
-                }
-            }
-            return 0;
-        });
-        List<List<Integer>> ans = new ArrayList<>();
-        for (int[] e : shapes[0]) {
-            ans.add(Arrays.asList(e[0], e[1]));
-        }
-        return ans;
+  private fun normalize(shape: List<Int>): List<List<Int>> {
+    val shapes: Array<List<IntArray>> = arrayOfNulls(8)
+    for (i in 0..7) {
+      shapes[i] = ArrayList()
     }
+    for (e in shape) {
+      val i = e / n
+      val j = e % n
+      shapes[0].add(intArrayOf(i, j))
+      shapes[1].add(intArrayOf(i, -j))
+      shapes[2].add(intArrayOf(-i, j))
+      shapes[3].add(intArrayOf(-i, -j))
+      shapes[4].add(intArrayOf(j, i))
+      shapes[5].add(intArrayOf(j, -i))
+      shapes[6].add(intArrayOf(-j, i))
+      shapes[7].add(intArrayOf(-j, -i))
+    }
+    for (e in shapes) {
+      e.sort { a, b ->
+        val i1: Int = a.get(0)
+        val j1: Int = a.get(1)
+        val i2: Int = b.get(0)
+        val j2: Int = b.get(1)
+        if (i1 == i2) {
+          return@sort j1 - j2
+        }
+        i1 - i2
+      }
+      val a = e[0][0]
+      val b = e[0][1]
+      for (k in e.size() - 1 downTo 0) {
+        val i = e[k][0]
+        val j = e[k][1]
+        e.set(k, intArrayOf(i - a, j - b))
+      }
+    }
+    Arrays.sort(shapes) { a, b ->
+      for (k in 0 until a.size()) {
+        val i1: Int = a.get(k).get(0)
+        val j1: Int = a.get(k).get(1)
+        val i2: Int = b.get(k).get(0)
+        val j2: Int = b.get(k).get(1)
+        if (i1 != i2) {
+          return@sort i1 - i2
+        }
+        if (j1 != j2) {
+          return@sort j1 - j2
+        }
+      }
+      0
+    }
+    val ans: List<List<Int>> = ArrayList()
+    for (e in shapes[0]) {
+      ans.add(Arrays.asList(e[0], e[1]))
+    }
+    return ans
+  }
 
-    private void dfs(int i, int j, List<Integer> shape) {
-        shape.add(i * n + j);
-        grid[i][j] = 0;
-        int[] dirs = {-1, 0, 1, 0, -1};
-        for (int k = 0; k < 4; ++k) {
-            int x = i + dirs[k];
-            int y = j + dirs[k + 1];
-            if (x >= 0 && x < m && y >= 0 && y < n && grid[x][y] == 1) {
-                dfs(x, y, shape);
-            }
-        }
+  private fun dfs(i: Int, j: Int, shape: List<Int>) {
+    shape.add(i * n + j)
+    grid[i][j] = 0
+    val dirs = intArrayOf(-1, 0, 1, 0, -1)
+    for (k in 0..3) {
+      val x = i + dirs[k]
+      val y = j + dirs[k + 1]
+      if (x >= 0 && x < m && y >= 0 && y < n && grid[x][y] == 1) {
+        dfs(x, y, shape)
+      }
     }
+  }
 }

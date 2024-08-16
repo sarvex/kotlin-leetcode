@@ -1,20 +1,20 @@
-class Solution {
-    public long maxMatrixSum(int[][] matrix) {
-        long s = 0;
-        int cnt = 0;
-        int mi = Integer.MAX_VALUE;
-        for (var row : matrix) {
-            for (var v : row) {
-                s += Math.abs(v);
-                mi = Math.min(mi, Math.abs(v));
-                if (v < 0) {
-                    ++cnt;
-                }
-            }
+internal class Solution {
+  fun maxMatrixSum(matrix: Array<IntArray>): Long {
+    var s: Long = 0
+    var cnt = 0
+    var mi: Int = MAX_VALUE
+    for (row in matrix) {
+      for (v in row) {
+        s += abs(v)
+        mi = min(mi, abs(v))
+        if (v < 0) {
+          ++cnt
         }
-        if (cnt % 2 == 0 || mi == 0) {
-            return s;
-        }
-        return s - mi * 2;
+      }
     }
+    if (cnt % 2 == 0 || mi == 0) {
+      return s
+    }
+    return s - mi * 2
+  }
 }

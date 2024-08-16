@@ -1,45 +1,46 @@
-class Solution {
-    private final int bits = 4;
-    private int n;
-    private List<Integer> price;
-    private List<List<Integer>> special;
-    private Map<Integer, Integer> f = new HashMap<>();
+internal class Solution {
+  private val bits = 4
+  private var n = 0
+  private var price: List<Int>? = null
+  private var special: List<List<Int>>? = null
+  private val f: Map<Int, Int> = HashMap()
 
-    public int shoppingOffers(
-        List<Integer> price, List<List<Integer>> special, List<Integer> needs) {
-        n = needs.size();
-        this.price = price;
-        this.special = special;
-        int mask = 0;
-        for (int i = 0; i < n; ++i) {
-            mask |= needs.get(i) << (i * bits);
-        }
-        return dfs(mask);
+  fun shoppingOffers(
+    price: List<Int>?, special: List<List<Int>>?, needs: List<Int>
+  ): Int {
+    n = needs.size()
+    this.price = price
+    this.special = special
+    var mask = 0
+    for (i in 0 until n) {
+      mask = mask or (needs[i] shl (i * bits))
     }
+    return dfs(mask)
+  }
 
-    private int dfs(int cur) {
-        if (f.containsKey(cur)) {
-            return f.get(cur);
-        }
-        int ans = 0;
-        for (int i = 0; i < n; ++i) {
-            ans += price.get(i) * (cur >> (i * bits) & 0xf);
-        }
-        for (List<Integer> offer : special) {
-            int nxt = cur;
-            boolean ok = true;
-            for (int j = 0; j < n; ++j) {
-                if ((cur >> (j * bits) & 0xf) < offer.get(j)) {
-                    ok = false;
-                    break;
-                }
-                nxt -= offer.get(j) << (j * bits);
-            }
-            if (ok) {
-                ans = Math.min(ans, offer.get(n) + dfs(nxt));
-            }
-        }
-        f.put(cur, ans);
-        return ans;
+  private fun dfs(cur: Int): Int {
+    if (f.containsKey(cur)) {
+      return f[cur]!!
     }
+    var ans = 0
+    for (i in 0 until n) {
+      ans += price!![i] * (cur shr (i * bits) and 0xf)
+    }
+    for (offer in special!!) {
+      var nxt = cur
+      var ok = true
+      for (j in 0 until n) {
+        if ((cur shr (j * bits) and 0xf) < offer[j]) {
+          ok = false
+          break
+        }
+        nxt -= offer[j] shl (j * bits)
+      }
+      if (ok) {
+        ans = Math.min(ans, offer[n] + dfs(nxt))
+      }
+    }
+    f.put(cur, ans)
+    return ans
+  }
 }

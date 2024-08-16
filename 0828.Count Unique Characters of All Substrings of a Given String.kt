@@ -1,20 +1,20 @@
-class Solution {
-    public int uniqueLetterString(String s) {
-        List<Integer>[] d = new List[26];
-        Arrays.setAll(d, k -> new ArrayList<>());
-        for (int i = 0; i < 26; ++i) {
-            d[i].add(-1);
-        }
-        for (int i = 0; i < s.length(); ++i) {
-            d[s.charAt(i) - 'A'].add(i);
-        }
-        int ans = 0;
-        for (var v : d) {
-            v.add(s.length());
-            for (int i = 1; i < v.size() - 1; ++i) {
-                ans += (v.get(i) - v.get(i - 1)) * (v.get(i + 1) - v.get(i));
-            }
-        }
-        return ans;
+internal class Solution {
+  fun uniqueLetterString(s: String): Int {
+    val d: Array<List<Int>> = arrayOfNulls(26)
+    Arrays.setAll(d) { k -> ArrayList() }
+    for (i in 0..25) {
+      d[i].add(-1)
     }
+    for (i in 0 until s.length) {
+      d[s[i].code - 'A'.code].add(i)
+    }
+    var ans = 0
+    for (v in d) {
+      v.add(s.length)
+      for (i in 1 until v.size() - 1) {
+        ans += (v[i] - v[i - 1]) * (v[i + 1] - v[i])
+      }
+    }
+    return ans
+  }
 }

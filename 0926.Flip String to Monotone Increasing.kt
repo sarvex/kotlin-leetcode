@@ -1,19 +1,20 @@
-class Solution {
-    public int minFlipsMonoIncr(String s) {
-        int n = s.length();
-        int tot = 0;
-        for (int i = 0; i < n; ++i) {
-            if (s.charAt(i) == '0') {
-                ++tot;
-            }
-        }
-        int ans = tot, cur = 0;
-        for (int i = 1; i <= n; ++i) {
-            if (s.charAt(i - 1) == '0') {
-                ++cur;
-            }
-            ans = Math.min(ans, i - cur + tot - cur);
-        }
-        return ans;
+internal class Solution {
+  fun minFlipsMonoIncr(s: String): Int {
+    val n = s.length
+    var tot = 0
+    for (i in 0 until n) {
+      if (s[i] == '0') {
+        ++tot
+      }
     }
+    var ans = tot
+    var cur = 0
+    for (i in 1..n) {
+      if (s[i - 1] == '0') {
+        ++cur
+      }
+      ans = min(ans, i - cur + tot - cur)
+    }
+    return ans
+  }
 }
